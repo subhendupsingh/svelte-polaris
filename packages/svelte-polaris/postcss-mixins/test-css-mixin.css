@@ -1,0 +1,4 @@
+@define-mixin test-css-mixin {
+  border: 2px dotted blue !important;
+  --test-css-mixin-was-here: yes;
+}
