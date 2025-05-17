@@ -1,6 +1,9 @@
 <script lang="ts">
 	import AccountConnection from '$lib/components/account-connection/account-connection.svelte';
+	import Avatar from '$lib/components/avatar/avatar.svelte';
+	import Button from '$lib/components/button/button.svelte';
 	import Link from '$lib/components/link/link.svelte';
+	import PageActions from '$lib/components/page-actions/page-actions.svelte';
 
 	let accountName = 'Example App';
 	let connected = false;
@@ -28,3 +31,22 @@
 		</p>
 	{/snippet}
 </AccountConnection>
+
+<Avatar
+	customer={true}
+	name="Example App"
+	source="https://avatar.iran.liara.run/public/44"
+	size="xl"
+	initials="EA"
+	accessibilityLabel="Example App"
+/>
+
+<PageActions
+	primaryAction={{
+		content: 'Save'
+	}}
+>
+	{#snippet secondaryActions()}
+		<Button variant="secondary">Cancel</Button>
+	{/snippet}
+</PageActions>
