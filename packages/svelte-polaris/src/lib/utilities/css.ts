@@ -120,3 +120,23 @@ export function createStyleString(styleObject: Record<string, string>) {
   }
   return styleString.trim(); // Trim any trailing space
 }
+
+export function mapResponsiveProp(
+  responsiveProp: ResponsiveProp<boolean>,
+  callback: (value: boolean) => string,
+): ResponsiveProp<string> {
+  if (typeof responsiveProp === 'boolean') {
+    return callback(responsiveProp);
+  }
+
+  return Object.fromEntries(
+    Object.entries(responsiveProp).map(([breakpointsAlias, value]) => [
+      breakpointsAlias,
+      callback(value),
+    ]),
+  );
+}
+
+export function applyStyles(styles: Record<string, string | undefined>): string {
+    return createStyleString(sanitizeCustomProperties(styles));
+}

@@ -26,11 +26,12 @@ const mediaQueriesCssPath = path.resolve(
 );
 
 const IS_BUILD_LIB_CSS_STEP = process.env.BUILD_CONTEXT === 'postcss_cli';
-
+const mixinsDir = path.join(__dirname, '../postcss-mixins');
+console.log('mixinsDir',mixinsDir);
 const postcssPlugins = [
   postcssImport(),
   postcssMixins({
-    mixinsDir: path.join(__dirname, '../postcss-mixins'),
+    mixinsDir,
   }),
   postcssNesting({
     noIsPseudoSelector: true,

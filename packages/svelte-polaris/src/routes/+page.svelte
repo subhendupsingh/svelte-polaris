@@ -1,20 +1,30 @@
 <script lang="ts">
-	import Bleed from '$lib/components/bleed/bleed.svelte';
-	import BlockStack from '$lib/components/block-stack/block-stack.svelte';
-	import Box from '$lib/components/box/box.svelte';
-	import Button from '$lib/components/button/button.svelte';
-	import Text from '$lib/components/text/text.svelte';
+	import AccountConnection from '$lib/components/account-connection/account-connection.svelte';
+	import Link from '$lib/components/link/link.svelte';
+
+	let accountName = 'Example App';
+	let connected = false;
+	let buttonText = 'Connect';
+	let handleAction = () => {};
+	let details = 'Details';
+	let terms = 'By clicking <strong>Connect</strong>, you agree to accept Sample App’s';
 </script>
 
-<Box background="bg-fill-info">
-	<BlockStack gap="100">
-		<Text as="h2" variant="heading2xl">Content inside a card</Text>
-		<Bleed marginInline="0">
-			<Text as="p" variant="bodyMd">Content inside a card</Text>
-		</Bleed>
-
-		<div>
-			<Button variant="primary" fullWidth={false}>Button</Button>
-		</div>
-	</BlockStack>
-</Box>
+<AccountConnection
+	{accountName}
+	{connected}
+	title="Example App"
+	action={{
+		content: buttonText,
+		onAction: handleAction
+	}}
+	{details}
+>
+	{#snippet termsOfService()}
+		<p>
+			By clicking <strong>Connect</strong>, you agree to accept Sample App’s{' '}
+			<Link url="Example App">terms and conditions</Link>. You’ll pay a commission rate of 15% on
+			sales made through Sample App.
+		</p>
+	{/snippet}
+</AccountConnection>

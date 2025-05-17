@@ -8,7 +8,6 @@
 	} from './button.types.js';
 	import styles from './button.module.css';
 	import { useBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
-	import type { Snippet } from 'svelte';
 	import UnstyledButton from './unstyled-button.svelte';
 	import Text from '../text/text.svelte';
 	import Spinner from '../spinner/spinner.svelte';
@@ -43,8 +42,9 @@
 		ariaControls,
 		ariaExpanded,
 		ariaChecked,
+		triggerProps,
 		children
-	}: ButtonProps & LinkButtonProps & ActionButtonProps & { children?: Snippet } = $props();
+	}: ButtonProps & LinkButtonProps & ActionButtonProps = $props();
 	const hasPlainText = $derived(['plain', 'monochromePlain'].includes(variant));
 	const { mdUp } = useBreakpoints();
 
@@ -127,8 +127,7 @@
 		return disclosure === 'up' ? upIcon : downIcon;
 	}
 </script>
-
-<UnstyledButton {...commonProps} {...linkProps} {...actionProps} disabled={isDisabled}>
+<UnstyledButton {triggerProps} {...commonProps} {...linkProps} {...actionProps} disabled={isDisabled}>
 	{#if loading}
 		<span class={styles.Spinner}>
 			<Spinner size="small" accessibilityLabel="Loading" />

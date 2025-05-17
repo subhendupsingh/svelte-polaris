@@ -1,5 +1,5 @@
+import type { Popover } from 'bits-ui';
 import type { Component } from 'svelte';
-
 export type Target = '_blank' | '_self' | '_parent' | '_top';
 
 export type IconSource = Component;
@@ -39,6 +39,25 @@ export interface BaseButton {
   ariaDescribedBy?: string;
   /** Indicates the current checked state of the button when acting as a toggle or switch */
   ariaChecked?: 'false' | 'true';
+  /** Callback when clicked */
+  onClick?(): unknown;
+  /** Callback when button becomes focused */
+  onFocus?(): void;
+  /** Callback when focus leaves button */
+  onBlur?(): void;
+  /** Callback when a keypress event is registered on the button */
+  onKeyPress?(event: KeyboardEvent): void;
+  /** Callback when a keyup event is registered on the button */
+  onKeyUp?(event: KeyboardEvent): void;
+  /** Callback when a keydown event is registered on the button */
+  onKeyDown?(event: KeyboardEvent): void;
+  /** Callback when mouse enter */
+  onMouseEnter?(): void;
+  /** Callback when element is touched */
+  onTouchStart?(): void;
+  /** Callback when pointerdown event is being triggered */
+  onPointerDown?(event: PointerEvent): void;
+  tiggerProps?: Popover.TriggerProps
 }
 
 export interface Action {

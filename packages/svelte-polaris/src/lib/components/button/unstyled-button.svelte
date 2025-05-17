@@ -21,6 +21,7 @@
 		ariaExpanded,
 		ariaDescribedBy,
 		ariaChecked,
+		triggerProps,
 		onClick,
 		onFocus,
 		onBlur,
@@ -68,17 +69,30 @@
         </UnstyledLink>
     {/if}
 {:else}
-    <button
-        {...interactiveProps}
-        {...restProps}
-        aria-disabled={disabled}
-        type={submit ? 'submit' : 'button'}
-        aria-busy={loading ? true : undefined}
-        aria-controls={ariaControls}
-        aria-expanded={ariaExpanded}
-        aria-describedby={ariaDescribedBy}
-        aria-pressed={pressed}
-        tabIndex={disabled ? -1 : undefined}>
-        {@render children?.()}
-    </button>
+	{#if triggerProps}
+		<button {...restProps} {...triggerProps}>{@render children?.()}</button>
+	{:else}
+		<button
+			{...interactiveProps}
+			{...restProps}
+			{...triggerProps}
+			onclick={onClick}
+			onfocus={onFocus}
+			onblur={onBlur}
+			onkeydown={onKeyDown}
+			onkeypress={onKeyPress}
+			onkeyup={onKeyUp}
+			onmouseenter={onMouseEnter}
+			ontouchstart={onTouchStart}
+			aria-disabled={disabled}
+			type={submit ? 'submit' : 'button'}
+			aria-busy={loading ? true : undefined}
+			aria-controls={ariaControls}
+			aria-expanded={ariaExpanded}
+			aria-describedby={ariaDescribedBy}
+			aria-pressed={pressed}
+			tabIndex={disabled ? -1 : undefined}>
+			{@render children?.()}
+		</button>
+	{/if}
 {/if}

@@ -8,7 +8,9 @@ import type {
   LoadableAction,
   PlainAction,
 } from '$utilities/types.js';
+import type { Snippet } from 'svelte';
 import type { UnstyledButtonProps } from './unstyled-button.types.js';
+import type { Popover } from 'bits-ui';
 
 export interface ButtonProps extends BaseButton {
   /**
@@ -34,6 +36,8 @@ export interface ButtonProps extends BaseButton {
   tone?: 'critical' | 'success';
   /** Changes the visual appearance of the Button. */
   variant?: 'plain' | 'primary' | 'secondary' | 'tertiary' | 'monochromePlain';
+  children?: Snippet;
+  triggerProps?: Popover.TriggerProps;
 }
 
 export interface CommonButtonProps
