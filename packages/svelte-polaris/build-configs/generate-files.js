@@ -27,31 +27,12 @@ const componentDir = path.join(baseDir, componentName);
 // Content for the files (you can customize this)
 const svelteContent = `<script lang="ts">
   import styles from './${componentName}.module.css';
-  // Your Svelte component logic here
 </script>
-
-<div class={styles.${componentName.toLowerCase()}}>
-  <h1>${componentName} Component</h1>
-</div>
 `;
 
-const cssModuleContent = `/* CSS Modules for ${componentName} */
-.${componentName.toLowerCase()} {
-  /* Add your component-specific styles here */
-  border: 1px solid #ccc;
-  padding: 16px;
-  margin: 8px;
-}
-`;
+const cssModuleContent = ``;
 
-const typesContent = `// Type definitions for ${componentName}
-export interface ${componentName}Props {
-  // Define your component props here
-  // exampleProp?: string;
-}
-
-// Add other related types or interfaces
-`;
+const typesContent = `// Type definitions for ${componentName}`;
 
 // Create the directory if it doesn't exist
 if (!fs.existsSync(componentDir)) {

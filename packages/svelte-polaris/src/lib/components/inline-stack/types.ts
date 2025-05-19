@@ -2,18 +2,17 @@ import type { ResponsiveProp } from "$utilities/css.js";
 import type { SpaceScale } from "@shopify/polaris-tokens";
 import type { Snippet } from "svelte";
 
-type Align =
+export type Align =
   | 'start'
   | 'center'
   | 'end'
   | 'space-around'
   | 'space-between'
   | 'space-evenly';
-type BlockAlign = 'start' | 'center' | 'end' | 'baseline' | 'stretch';
-
-type Gap = ResponsiveProp<SpaceScale>;
-type Direction = ResponsiveProp<'row' | 'row-reverse'>;
-type Element = 'div' | 'span' | 'li' | 'ol' | 'ul';
+export type BlockAlign = 'start' | 'center' | 'end' | 'baseline' | 'stretch';
+export type Gap = ResponsiveProp<SpaceScale>;
+export type Direction = ResponsiveProp<'row' | 'row-reverse'>;
+export type Element = 'div' | 'span' | 'li' | 'ol' | 'ul';
 export interface InlineStackProps {
   children?: Snippet;
   /** HTML Element type

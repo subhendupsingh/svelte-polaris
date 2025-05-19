@@ -6,10 +6,12 @@
 	import Card from '$lib/components/card/card.svelte';
 	import FormLayout from '$lib/components/form-layout/types.js';
 	import Grid from '$lib/components/grid/index.js';
+	import InlineGrid from '$lib/components/inline-grid/inline-grid.svelte';
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
 	import LegacyCard from '$lib/components/legacy-card/legacy-card.svelte';
 	import Link from '$lib/components/link/link.svelte';
 	import PageActions from '$lib/components/page-actions/page-actions.svelte';
+	import Placeholder from '$lib/components/placeholder/placeholder.svelte';
 	import Tag from '$lib/components/tag/tag.svelte';
 	import TextField from '$lib/components/text-field/text-field.svelte';
 
@@ -108,106 +110,3 @@
 	};
 </script>
 
-{#snippet select()}
-	abc
-{/snippet}
-
-{#snippet verticalContentMarkup()}
-	<InlineStack gap="200">
-		{#each tags as tag}
-			<Tag>{tag}</Tag>
-		{/each}
-	</InlineStack>
-{/snippet}
-
-<Card>
-	<BlockStack gap="400">
-		<TextField label="Store name" {value} autoComplete="off" />
-
-		<TextField
-			label="Quantity"
-			type="number"
-			align="right"
-			labelAction={{ content: 'Look up codes' }}
-			{value}
-			onChange={(newValue) => (value = newValue)}
-			autoComplete="off"
-		/>
-
-		<TextField label="Email" type="email" {value} autoComplete="email" />
-
-		<TextField label="Shipping address" {value} multiline={4} autoComplete="off" />
-
-		<FormLayout>
-			<FormLayout.Group condensed>
-				<TextField
-					label="Gift cards expire after"
-					type="number"
-					placeholder="Example: North America, Europe"
-					helpText="We’ll use this address if we need to contact you about your account."
-					labelHidden
-					prefix="$"
-					{value}
-					autoComplete="off"
-					connectedRight={select}
-				/>
-
-				<TextField labelHidden label="Collection rule content" error={true} autoComplete="off" />
-
-				<TextField labelHidden label="Collection rule content" disabled={true} autoComplete="off" />
-			</FormLayout.Group>
-		</FormLayout>
-
-		<TextField
-			label="Tags"
-			placeholder="Search tags"
-			autoComplete="off"
-			error="Store name is required"
-			verticalContent={verticalContentMarkup}
-		/>
-
-		<TextField
-			label="Store name"
-			{value}
-			onChange={(newValue) => (value = newValue)}
-			maxLength={20}
-			autoComplete="off"
-			loading
-			showCharacterCount
-		/>
-
-		<TextField
-			label="Store name"
-			{value}
-			onChange={(newValue) => (value = newValue)}
-			clearButton
-			onClearButtonClick={() => (value = '')}
-			autoComplete="off"
-		/>
-
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div onkeydown={handleKeyDown}>
-			<TextField
-				type="text"
-				label="State"
-				bind:value={value}
-				suggestion={suggestion}
-				onChange={handleChange}
-				autoComplete="off"
-			/>
-		</div>
-	</BlockStack>
-</Card>
-
-<Grid columns={{sm: 3}}>
-	<Grid.Cell columnSpan={{xs: 6, sm: 4, md: 4, lg: 8, xl: 8}}>
-	  <LegacyCard title="Sales" sectioned>
-		<p>View a summary of your online store’s sales.</p>
-	  </LegacyCard>
-	</Grid.Cell>
-	<Grid.Cell columnSpan={{xs: 6, sm: 2, md: 2, lg: 4, xl: 4}}>
-	  <LegacyCard title="Orders" sectioned>
-		<p>View a summary of your online store’s orders.</p>
-	  </LegacyCard>
-	</Grid.Cell>
-  </Grid>
