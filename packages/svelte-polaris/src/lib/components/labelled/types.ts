@@ -1,6 +1,7 @@
 import type { Snippet } from "svelte";
 import type { LabelProps } from "../label/types.js";
 import type { Action } from "$utilities/types.js";
+import type { Error } from "$utilities/types.js";
 
 export interface LabelledProps {
     /** A unique identifier for the label */

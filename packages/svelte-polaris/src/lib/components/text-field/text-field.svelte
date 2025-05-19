@@ -9,7 +9,6 @@
 	import { browser } from '$app/environment';
 	import TextFieldResizer from './components/resizer/text-field-resizer.svelte';
 	import { Key } from '$utilities/types.js';
-	import type { ChangeEventHandler } from 'svelte/elements';
 	import CreateElement from './create-element.svelte';
 	import Labelled from '../labelled/labelled.svelte';
 	import Connected from '../connected/connected.svelte';
@@ -20,7 +19,7 @@
 		suffix,
 		verticalContent,
 		placeholder,
-		value = '',
+		value = $bindable(''),
 		helpText,
 		label,
 		labelAction,
@@ -86,8 +85,37 @@
 	let verticalContentRef = $state<HTMLDivElement>();
 	let buttonPressTimer = $state<number>();
 	let spinnerRef = $state<HTMLDivElement>();
-	let describedBy: string[] = $state([]);
-	const labelledBy: string[] = $state([]);
+	let describedBy: string[] = $derived.by(() => {
+		const newDescribedByArray: string[] = [];
+		if (error) {
+			newDescribedByArray.push(`${id}Error`);
+		}
+		if (helpText) {
+			newDescribedByArray.push(helpTextID(id));
+		}
+		if (showCharacterCount) {
+			newDescribedByArray.push(`${id}-CharacterCounter`);
+		}
+		return newDescribedByArray;
+	});
+	const labelledBy: string[] = $derived.by(()=>{
+		const newLabelledByArray: string[] = [];
+		if (prefix) {
+			newLabelledByArray.push(`${id}-Prefix`);
+		}
+
+		if (suffix) {
+			newLabelledByArray.push(`${id}-Suffix`);
+		}
+
+		if (verticalContent) {
+			newLabelledByArray.push(`${id}-VerticalContent`);
+		}
+
+		newLabelledByArray.unshift(labelID(id));
+		return newLabelledByArray;
+	});
+
 	const isSupportedInputType = $derived(
 		type === 'text' ||
 		type === 'tel' ||
@@ -108,41 +136,8 @@
 		return `${id}Label`;
 	}
 
-	$effect(() => {
-		const input = inputRef;
-		
-		if (!input || !isSupportedInputType || !suggestion) {
-			return;
-		}
 
-		input.setSelectionRange(value.length, suggestion.length);
-
-		if (error) {
-			describedBy.push(`${id}Error`);
-		}
-		if (helpText) {
-			describedBy.push(helpTextID(id));
-		}
-		if (showCharacterCount) {
-			describedBy.push(`${id}-CharacterCounter`);
-		}
-
-		if (prefix) {
-			labelledBy.push(`${id}-Prefix`);
-		}
-
-		if (suffix) {
-			labelledBy.push(`${id}-Suffix`);
-		}
-
-		if (verticalContent) {
-			labelledBy.push(`${id}-VerticalContent`);
-		}
-
-		labelledBy.unshift(labelID(id));
-	});
-
-	const normalizedValue = $derived(suggestion ? suggestion : value);
+	let normalizedValue = $derived(suggestion ? suggestion : value);
 	const normalizedStep = $derived(step != null ? step : 1);
 	const normalizedMax = $derived(max != null ? max : Infinity);
 	const normalizedMin = $derived(min != null ? min : -Infinity);
@@ -422,6 +417,10 @@
 	}
 
 	function handleChange(event: Event) {
+		if(inputRef && suggestion){
+			inputRef.value = suggestion;
+			inputRef.setSelectionRange(value.length, suggestion.length);
+		}
 		onChange && onChange((event.target as HTMLInputElement).value, id);
 	}
 
@@ -439,7 +438,6 @@
 			style,
 			autoComplete,
 			className: inputClassName,
-			ref: multiline ? textAreaRef : inputRef,
 			min,
 			max,
 			step,
@@ -484,6 +482,13 @@
 
 		return props;
 	});
+
+	const characterCount = $derived(normalizedValue.length);
+	const characterCountLabel = $derived(maxLength
+		? `${characterCount} of ${maxLength} characters used`
+		: `${characterCount} characters`);
+	const characterCountText = $derived(!maxLength ? characterCount : `${characterCount}/${maxLength}`);
+	const clearButtonVisible = $derived(normalizedValue !== '');
 </script>
 
 {#snippet prefixMarkup()}
@@ -491,11 +496,14 @@
 		<div
 			class={classNames(styles.Prefix, styles.PrefixIcon)}
 			id={`${id}-Prefix`}
-			bind:this={prefixRef}
-		>
-			<Text as="span" variant="bodyMd">
-				{prefix}
-			</Text>
+			bind:this={prefixRef}>
+			{#if  typeof prefix === "string"}
+				<Text as="span" variant="bodyMd">
+					{prefix}
+				</Text>
+			{:else}
+				{@render prefix()}
+			{/if}
 		</div>
 	{/if}
 {/snippet}
@@ -503,9 +511,13 @@
 {#snippet suffixMarkup()}
 	{#if suffix}
 		<div class={styles.Suffix} id={`${id}-Suffix`} bind:this={suffixRef}>
-			<Text as="span" variant="bodyMd">
-				{suffix}
-			</Text>
+			{#if typeof suffix === "string"}
+				<Text as="span" variant="bodyMd">
+					{suffix}
+				</Text>
+			{:else}
+				{@render suffix()}
+			{/if}
 		</div>
 	{/if}
 {/snippet}
@@ -520,12 +532,6 @@
 
 {#snippet characterCountMarkup()}
 	{#if showCharacterCount}
-		{@const characterCount = normalizedValue.length}
-		{@const characterCountLabel = maxLength
-			? `${characterCount} of ${maxLength} characters used`
-			: `${characterCount} characters`}
-		{@const characterCountText = !maxLength ? characterCount : `${characterCount}/${maxLength}`}
-
 		<div
 			id={`${id}-CharacterCounter`}
 			class={characterCountClassName}
@@ -541,7 +547,6 @@
 {/snippet}
 
 {#snippet clearButtonMarkup()}
-	{@const clearButtonVisible = normalizedValue !== ''}
 	{#if clearButton && clearButtonVisible}
 		<button type="button" class={styles.ClearButton} onclick={handleClearButtonPress} {disabled}>
 			<Text as="span" visuallyHidden>Clear</Text>
@@ -584,8 +589,8 @@
 			bind:this={verticalContentRef}
 			onclick={handleClickChild}
 		>
-			{verticalContent}
-			<CreateElement {...inputProps} />
+			{@render verticalContent()}
+			<CreateElement bind:elementRef={inputRef} bind:value {...inputProps} />
 		</div>
 	{/if}
 {/snippet}
@@ -594,7 +599,7 @@
 	{#if verticalContent}
 		{@render inputWithVerticalContentMarkup()}
 	{:else}
-		<CreateElement {...inputProps} />
+		<CreateElement bind:elementRef={inputRef} bind:value {...inputProps} />
 	{/if}
 {/snippet}
 

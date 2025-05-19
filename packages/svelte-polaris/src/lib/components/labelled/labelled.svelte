@@ -5,6 +5,7 @@
 	import type { LabelledProps } from './types.js';
 	import Text from '../text/text.svelte';
 	import Label from '../label/label.svelte';
+	import InlineError from '../inline-error/inline-error.svelte';
 
 	let {
 		id,
@@ -54,7 +55,7 @@
 {#snippet errorMarkup()}
 	{#if error && typeof error !== 'boolean'}
 		<div class={styles.Error}>
-			<!-- <InlineError message={error} fieldID={id} /> -->
+			<InlineError message={error} fieldID={id} />
 		</div>
 	{/if}
 {/snippet}

@@ -1,5 +1,6 @@
 import type { Snippet } from "svelte";
 import type { LabelledProps } from "../labelled/types.js";
+import type { Error } from "$utilities/types.js";
 
 export interface ResizerProps {
     contents?: string;
@@ -69,9 +70,9 @@ export interface Interactive {
 
 export interface NonMutuallyExclusiveProps {
   /** Text to display before value */
-  prefix?: Snippet;
+  prefix?: Snippet | string;
   /** Text to display after value */
-  suffix?: Snippet;
+  suffix?: Snippet | string;
   /** Content to vertically display above the input value */
   verticalContent?: Snippet;
   /** Hint text to display */

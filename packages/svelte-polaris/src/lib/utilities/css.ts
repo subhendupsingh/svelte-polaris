@@ -28,7 +28,7 @@ export function variationName(name: string, value: string) {
 export const isFalsyString = (value: string | undefined) => value != null && value !== '' && value != undefined;
 
 export function sanitizeCustomProperties(
-  styles: Record<string, string | undefined | null>,
+  styles: Record<string, string | number | undefined | null>,
 ): Record<string, string> {
   const nonNullValues: [string, string][] = Object.entries(styles).filter(
     ([_, value]) => value != null && value !== '' && value != undefined,
@@ -137,6 +137,6 @@ export function mapResponsiveProp(
   );
 }
 
-export function applyStyles(styles: Record<string, string | undefined>): string {
+export function applyStyles(styles: Record<string, string | number | undefined>): string {
     return createStyleString(sanitizeCustomProperties(styles));
 }

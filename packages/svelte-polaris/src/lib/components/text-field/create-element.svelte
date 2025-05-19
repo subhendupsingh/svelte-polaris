@@ -41,7 +41,7 @@
 
 	let {
 		multiline = false,
-		value: currentValue, // Rename to avoid conflict if we were to use bind:value internally
+		value: currentValue = $bindable(),
 		className,
 		elementRef = $bindable(),
 		// Event handlers can be destructured if special logic is needed,
@@ -59,17 +59,32 @@
 	const tagName = $derived(multiline ? 'textarea' : 'input');
 </script>
 
-<svelte:element
-	this={tagName}
-	bind:this={elementRef}
-	class={className}
-	value={currentValue}
-	{...restProps}
-	{onfocus}
-	{onblur}
-	{onclick}
-	{onkeypress}
-	{onkeydown}
-	{oninput}
-	{onchange}
-/>
+{#if tagName == 'input'}
+	<input
+		bind:this={elementRef}
+		class={className}
+		bind:value={currentValue}
+		{...restProps}
+		{onfocus}
+		{onblur}
+		{onclick}
+		{onkeypress}
+		{onkeydown}
+		{oninput}
+		{onchange}
+	/>
+{:else if tagName == 'textarea'}
+	<textarea
+		bind:this={elementRef}
+		class={className}
+		bind:value={currentValue}
+		{...restProps}
+		{onfocus}
+		{onblur}
+		{onclick}
+		{onkeypress}
+		{onkeydown}
+		{oninput}
+		{onchange}
+	></textarea>
+{/if}
