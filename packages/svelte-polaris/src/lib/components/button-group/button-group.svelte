@@ -21,9 +21,10 @@
 		noWrap?: boolean;
 		/** Button components */
 		children?: Snippet;
+		itemCount?: number
 	}
 
-	let { children, gap, variant, fullWidth, connectedTop, noWrap }: ButtonGroupProps = $props();
+	let { children, gap, variant, fullWidth, connectedTop, noWrap, itemCount }: ButtonGroupProps = $props();
 
 	const className = $derived(
 		classNames(
@@ -43,13 +44,5 @@
 	data-buttongroup-full-width={fullWidth}
 	data-buttongroup-no-wrap={noWrap}
 >
-	{#if Array.isArray(children)}
-		<InlineStack gap="200">
-			{#each children as child, i}
-				<ButtonGroupItem button={child} />
-			{/each}
-		</InlineStack>
-	{:else}
-		{@render children?.()}
-	{/if}
+	{@render children?.()}
 </div>

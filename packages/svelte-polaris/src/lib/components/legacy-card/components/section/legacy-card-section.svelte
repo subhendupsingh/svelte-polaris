@@ -6,7 +6,7 @@
 	import Text from '$lib/components/text/text.svelte';
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
 	import ButtonFrom from '$lib/components/button/button-from.svelte';
-	import ButtonGroup from '$lib/components/button-group/button-group.svelte';
+	import ButtonGroup from '$lib/components/button-group/index.js';
 
 	interface LegacyCardSectionProps {
 		title?: string;
@@ -44,7 +44,9 @@
                     <InlineStack wrap={false} gap="400" blockAlign="center">
                         <ButtonGroup>
                             {#each actions as action}
-                                <ButtonFrom overrides={{ variant: 'plain' }} {action} />
+							<ButtonGroup.Item>
+								<ButtonFrom overrides={{ variant: 'plain' }} {action} />
+							</ButtonGroup.Item>
                             {/each}
                         </ButtonGroup>
                     </InlineStack>

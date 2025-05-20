@@ -21,6 +21,8 @@
 	import Page from '$lib/components/page/page.svelte';
 	import Badge from '$lib/components/badge/badge.svelte';
 	import DeleteIcon from '@shopify/polaris-icons/dist/svg/DeleteIcon.svg?component';
+	import MediaCard from '$lib/components/media-card/media-card.svelte';
+	import { applyStyles } from '$utilities/css.js';
 	// Call the function to get the reactive media query state
 	const mediaQuery = useMediaQuery();
 
@@ -79,43 +81,67 @@
 <p>(Raw value: {mediaQuery.isNavigationCollapsed})</p> -->
 
 <Page
-      backAction={{content: 'Products', url: '#'}}
-      title="3/4 inch Leather pet collar"
-      subtitle="Perfect for any pet"
-      compactTitle
-	  narrowWidth
-      primaryAction={{content: 'Save', disabled: true, helpText: 'You need permission to import products.',}}
-      secondaryActions={[
-        {
-          content: 'Duplicate',
-          accessibilityLabel: 'Secondary action label',
-		  destructive: true,
-		  icon: DeleteIcon,
-          onAction: () => alert('Duplicate action'),
-        },
-        {
-          content: 'View on your store',
-          onAction: () => alert('View on your store action'),
-        },
-      ]}
-      actionGroups={[
-        {
-          title: 'Promote',
-          actions: [
-            {
-              content: 'Share on Facebook',
-              accessibilityLabel: 'Individual action label',
-              onAction: () => alert('Share on Facebook action'),
-            },
-          ],
-        },
-      ]}
-      pagination={{
-        hasPrevious: true,
-        hasNext: true,
-      }}
-    >
-      <LegacyCard title="Credit card" sectioned>
-        <p>Credit card information</p>
-      </LegacyCard>
-    </Page>
+	backAction={{ content: 'Products', url: '#' }}
+	title="3/4 inch Leather pet collar"
+	subtitle="Perfect for any pet"
+	compactTitle
+	primaryAction={{
+		content: 'Save',
+		disabled: true,
+		helpText: 'You need permission to import products.'
+	}}
+	secondaryActions={[
+		{
+			content: 'Duplicate',
+			accessibilityLabel: 'Secondary action label',
+			destructive: true,
+			icon: DeleteIcon,
+			onAction: () => alert('Duplicate action')
+		},
+		{
+			content: 'View on your store',
+			onAction: () => alert('View on your store action')
+		}
+	]}
+	actionGroups={[
+		{
+			title: 'Promote',
+			actions: [
+				{
+					content: 'Share on Facebook',
+					accessibilityLabel: 'Individual action label',
+					onAction: () => alert('Share on Facebook action')
+				}
+			]
+		}
+	]}
+	pagination={{
+		hasPrevious: true,
+		hasNext: true
+	}}
+>
+	<MediaCard
+		title="Get closer to launching your store"
+		primaryAction={{
+			content: 'Add a product',
+			onAction: () => {}
+		}}
+		secondaryAction={{
+			content: 'Learn more',
+			onAction: () => {}
+		}}
+		description="Start your business with eye-catching inventory."
+		popoverActions={[{ content: 'Dismiss', onAction: () => {} }]}
+	>
+		<img
+			alt=""
+			width="100%"
+			height="100%"
+			style={applyStyles({
+				objectFit: 'cover',
+				objectPosition: 'center'
+			})}
+			src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+		/>
+	</MediaCard>
+</Page>

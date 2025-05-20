@@ -4,7 +4,7 @@
 	import styles from '../../legacy-card.module.css';
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
 	import Text from '$lib/components/text/text.svelte';
-	import ButtonGroup from '$lib/components/button-group/button-group.svelte';
+	import ButtonGroup from '$lib/components/button-group/index.js';
 	import ButtonFrom from '$lib/components/button/button-from.svelte';
 
 	interface LegacyCardHeaderProps {
@@ -26,7 +26,9 @@
 				<InlineStack wrap={false} gap="400" blockAlign="center">
 					<ButtonGroup>
 						{#each actions as action}
-							<ButtonFrom overrides={{ variant: 'plain' }} {action} />
+							<ButtonGroup.Item>
+								<ButtonFrom overrides={{ variant: 'plain' }} {action} />
+							</ButtonGroup.Item>
 						{/each}
 					</ButtonGroup>
 				</InlineStack>

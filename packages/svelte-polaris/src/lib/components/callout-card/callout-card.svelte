@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { classNames } from '$utilities/css.js';
 	import BlockStack from '../block-stack/block-stack.svelte';
-	import ButtonGroup from '../button-group/button-group.svelte';
+	import ButtonGroup from '../button-group/index.js';
 	import ButtonFrom from '../button/button-from.svelte';
 	import Button from '../button/button.svelte';
 	import LegacyCardSection from '../legacy-card/components/section/legacy-card-section.svelte';
@@ -43,8 +43,12 @@
 {#snippet buttonMarkup()}
 	{#if secondaryAction}
 		<ButtonGroup>
-			{@render primaryActionMarkup()}
-			{@render secondaryActionMarkup()}
+			<ButtonGroup.Item>
+				{@render primaryActionMarkup()}
+			</ButtonGroup.Item>
+			<ButtonGroup.Item>
+				{@render secondaryActionMarkup()}
+			</ButtonGroup.Item>
 		</ButtonGroup>
 	{:else}
 		{@render primaryActionMarkup()}

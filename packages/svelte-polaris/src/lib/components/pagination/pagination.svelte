@@ -12,7 +12,7 @@
 	import Text from '../text/text.svelte';
 	import { classNames } from '$utilities/css.js';
 	import InlineStack from '../inline-stack/inline-stack.svelte';
-	import ButtonGroup from '../button-group/button-group.svelte';
+	import ButtonGroup from '../button-group/index.js';
 	let {
 		hasNext,
 		hasPrevious,
@@ -197,9 +197,15 @@
 		{@render previousButtonEvents()}
 		{@render nextButtonEvents()}
 		<ButtonGroup variant="segmented">
-			{@render constructedPrevious()}
-			{@render labelMarkup1()}
-			{@render constructedNext()}
+			<ButtonGroup.Item>
+				{@render constructedPrevious()}
+			</ButtonGroup.Item>
+			<ButtonGroup.Item>
+				{@render labelMarkup1()}
+			</ButtonGroup.Item>
+			<ButtonGroup.Item>
+				{@render constructedNext()}
+			</ButtonGroup.Item>
 		</ButtonGroup>
 	</nav>
 {/if}
