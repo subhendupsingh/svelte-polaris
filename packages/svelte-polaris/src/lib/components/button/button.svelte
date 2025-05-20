@@ -43,6 +43,14 @@
 		ariaExpanded,
 		ariaChecked,
 		triggerProps,
+		onClick,
+		onFocus,
+		onBlur,
+		onKeyDown,
+		onKeyPress,
+		onKeyUp,
+		onMouseEnter,
+		onTouchStart,
 		children
 	}: ButtonProps & LinkButtonProps & ActionButtonProps = $props();
 	const hasPlainText = $derived(['plain', 'monochromePlain'].includes(variant));
@@ -127,7 +135,7 @@
 		return disclosure === 'up' ? upIcon : downIcon;
 	}
 </script>
-<UnstyledButton {triggerProps} {...commonProps} {...linkProps} {...actionProps} disabled={isDisabled}>
+<UnstyledButton {onClick} {onFocus} {onBlur} {onKeyDown} {onKeyPress} {onKeyUp} {onMouseEnter} {onTouchStart} {triggerProps} {...commonProps} {...linkProps} {...actionProps} disabled={isDisabled}>
 	{#if loading}
 		<span class={styles.Spinner}>
 			<Spinner size="small" accessibilityLabel="Loading" />

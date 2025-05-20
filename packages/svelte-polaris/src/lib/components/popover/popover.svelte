@@ -88,20 +88,22 @@
 							<div class={popoverClassNames}>
 								<div class={styles.ContentContainer}>
 									<div class={contentClassNames}>
-										{#if sectioned}
-											<div class={styles.Section}>
-												<Box
-													paddingInlineStart="300"
-													paddingInlineEnd="300"
-													paddingBlockStart="200"
-													paddingBlockEnd="150"
-												>
-													{@render children?.()}
-												</Box>
-											</div>
-										{:else}
-											{@render children?.()}
-										{/if}
+										<div class={styles.Pane}>
+											{#if sectioned}
+												<div class={styles.Section}>
+													<Box
+														paddingInlineStart="300"
+														paddingInlineEnd="300"
+														paddingBlockStart="200"
+														paddingBlockEnd="150"
+													>
+														{@render children?.()}
+													</Box>
+												</div>
+											{:else}
+												{@render children?.()}
+											{/if}
+										</div>
 									</div>
 								</div>
 							</div>

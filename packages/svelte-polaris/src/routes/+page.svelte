@@ -8,12 +8,21 @@
 	import Grid from '$lib/components/grid/index.js';
 	import InlineGrid from '$lib/components/inline-grid/inline-grid.svelte';
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
+	import Layout from '$lib/components/layout/index.js';
 	import LegacyCard from '$lib/components/legacy-card/legacy-card.svelte';
 	import Link from '$lib/components/link/link.svelte';
 	import PageActions from '$lib/components/page-actions/page-actions.svelte';
+	import Pagination from '$lib/components/pagination/pagination.svelte';
 	import Placeholder from '$lib/components/placeholder/placeholder.svelte';
 	import Tag from '$lib/components/tag/tag.svelte';
 	import TextField from '$lib/components/text-field/text-field.svelte';
+	import Tooltip from '$lib/components/tooltip/tooltip.svelte';
+	import { useMediaQuery } from '$lib/use/use-mediaquery.svelte.js';
+	import Page from '$lib/components/page/page.svelte';
+	import Badge from '$lib/components/badge/badge.svelte';
+	import DeleteIcon from '@shopify/polaris-icons/dist/svg/DeleteIcon.svg?component';
+	// Call the function to get the reactive media query state
+	const mediaQuery = useMediaQuery();
 
 	let accountName = 'Example App';
 	let connected = false;
@@ -24,89 +33,89 @@
 	const tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'];
 
 	let value = $state<string | undefined>('');
-	
-	let suggestion = $derived.by(()=>{
-		if(value){
-			//@ts-ignore
-			const sug = suggestions.find((suggestion) => suggestion.toLowerCase().startsWith(value.toLowerCase()));
-			return sug;
-		}
-		return '';
-	});
-
-	let suggestions = $state([
-		'Alabama',
-		'Alaska',
-		'American Samoa',
-		'Arizona',
-		'Arkansas',
-		'California',
-		'Colorado',
-		'Connecticut',
-		'Delaware',
-		'District of Columbia',
-		'Florida',
-		'Georgia',
-		'Guam',
-		'Hawaii',
-		'Idaho',
-		'Illinois',
-		'Indiana',
-		'Iowa',
-		'Kansas',
-		'Kentucky',
-		'Louisiana',
-		'Maine',
-		'Maryland',
-		'Massachusetts',
-		'Michigan',
-		'Minnesota',
-		'Icon Outlying Islands',
-		'Mississippi',
-		'Missouri',
-		'Montana',
-		'Nebraska',
-		'Nevada',
-		'New Hampshire',
-		'New Jersey',
-		'New Mexico',
-		'New York',
-		'North Carolina',
-		'North Dakota',
-		'Northern Mariana Islands',
-		'Ohio',
-		'Oklahoma',
-		'Oregon',
-		'Pennsylvania',
-		'Puerto Rico',
-		'Rhode Island',
-		'South Carolina',
-		'South Dakota',
-		'Tennessee',
-		'Texas',
-		'U.S. Virgin Islands',
-		'Utah',
-		'Vermont',
-		'Virginia',
-		'Washington',
-		'West Virginia',
-		'Wisconsin',
-		'Wyoming'
-	]);
-
-	const handleChange = (value: string) => {
-		suggestion = value && suggestions.find((suggestion) => suggestion.toLowerCase().startsWith(value.toLowerCase()));
-		value = suggestion ? suggestion : value;
-	};
-
-	const handleKeyDown = (event: KeyboardEvent) => {
-		if (event.key === 'Enter' || event.key === 'Tab') {
-			value = suggestion || value;
-			suggestion = '';
-		} else if (event.key === 'Backspace') {
-			value = value;
-			suggestion = '';
-		}
-	};
 </script>
 
+<!-- <Layout>
+	<Layout.Section variant="oneThird">
+		<LegacyCard title="Order details" sectioned>
+			<p>
+				Use to follow a normal section with a secondary section to create a 2/3 + 1/3 layout on
+				detail pages (such as individual product or order pages). Can also be used on any page that
+				needs to structure a lot of content. This layout stacks the columns on small screens.
+			</p>
+		</LegacyCard>
+	</Layout.Section>
+	<Layout.Section variant="oneThird">
+		<LegacyCard title="Tags" sectioned>
+			<p>Add tags to your order.</p>
+		</LegacyCard>
+	</Layout.Section>
+
+	<Layout.Section variant="oneThird">
+		<LegacyCard title="Tags" sectioned>
+			<p>Add tags to your order.</p>
+		</LegacyCard>
+	</Layout.Section>
+</Layout>
+
+<Tooltip customTrigger content="Tooltip content Tooltip content" open={true}>
+	{#snippet trigger({props})}
+		<button {...props}>Trigger</button>
+	{/snippet}
+</Tooltip>
+
+<Pagination
+	label="Results"
+	hasPrevious
+	onPrevious={() => {
+		console.log('Previous');
+	}}
+	hasNext
+	onNext={() => {
+		console.log('Next');
+	}}
+/>
+
+<p>(Raw value: {mediaQuery.isNavigationCollapsed})</p> -->
+
+<Page
+      backAction={{content: 'Products', url: '#'}}
+      title="3/4 inch Leather pet collar"
+      subtitle="Perfect for any pet"
+      compactTitle
+	  narrowWidth
+      primaryAction={{content: 'Save', disabled: true, helpText: 'You need permission to import products.',}}
+      secondaryActions={[
+        {
+          content: 'Duplicate',
+          accessibilityLabel: 'Secondary action label',
+		  destructive: true,
+		  icon: DeleteIcon,
+          onAction: () => alert('Duplicate action'),
+        },
+        {
+          content: 'View on your store',
+          onAction: () => alert('View on your store action'),
+        },
+      ]}
+      actionGroups={[
+        {
+          title: 'Promote',
+          actions: [
+            {
+              content: 'Share on Facebook',
+              accessibilityLabel: 'Individual action label',
+              onAction: () => alert('Share on Facebook action'),
+            },
+          ],
+        },
+      ]}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+      }}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
