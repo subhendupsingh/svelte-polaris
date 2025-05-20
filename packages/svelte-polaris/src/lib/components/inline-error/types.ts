@@ -6,3 +6,7 @@ export interface InlineErrorProps {
   /** Unique identifier of the invalid form field that the message describes */
   fieldID: string;
 }
+
+export function errorTextID(id: string) {
+  return `${id}Error`;
+}

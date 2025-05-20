@@ -23,6 +23,8 @@
 	import DeleteIcon from '@shopify/polaris-icons/dist/svg/DeleteIcon.svg?component';
 	import MediaCard from '$lib/components/media-card/media-card.svelte';
 	import { applyStyles } from '$utilities/css.js';
+	import Checkbox from '$lib/components/checkbox/checkbox.svelte';
+	import ChoiceList from '$lib/components/choice-list/choice-list.svelte';
 	// Call the function to get the reactive media query state
 	const mediaQuery = useMediaQuery();
 
@@ -144,4 +146,17 @@
 			src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
 		/>
 	</MediaCard>
+
+	<Checkbox label="Basic checkbox" checked={false} onChange={(e) => console.log(e)} />
+
+	<ChoiceList
+		title="Company name"
+		choices={[
+			{ label: 'Hidden', value: 'hidden' },
+			{ label: 'Optional', value: 'optional' },
+			{ label: 'Required', value: 'required' }
+		]}
+		selected={['optional']}
+		onChange={(e) => console.log(e)}
+	/>
 </Page>

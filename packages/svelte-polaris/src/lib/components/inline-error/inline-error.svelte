@@ -3,11 +3,8 @@
 	import styles from './inline-error.module.css';
 	import AlertCircleIcon from '@shopify/polaris-icons/dist/svg/AlertCircleIcon.svg?component';
 	import Text from '../text/text.svelte';
-	import type { InlineErrorProps } from './types.js';
+	import { errorTextID, type InlineErrorProps } from './types.js';
 	let { message, fieldID }: InlineErrorProps = $props();
-	function errorTextID(id: string) {
-		return `${id}Error`;
-	}
 </script>
 
 {#if message}

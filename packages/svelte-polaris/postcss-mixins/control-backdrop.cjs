@@ -1,4 +1,4 @@
-const {nullish} = require('./utils');
+const {nullish} = require('./utils.cjs');
 
 const DEFAULT_STYLE = 'base';
 
