@@ -1,3 +1,4 @@
+import { EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY, type EphemeralPresenceManagerContextType } from "$lib/components/app-provider/types.js";
 import type { ThemeName } from "@shopify/polaris-tokens";
 import { getContext, setContext } from "svelte";
 
@@ -37,4 +38,17 @@ export function useThemeName() {
 
   return themeName;
 }
+
+export function useEphemeralPresenceManager() {
+    const ephemeralPresenceManager = useContext<EphemeralPresenceManagerContextType | undefined>(EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY);
+
+    if (!ephemeralPresenceManager) {
+        throw new Error(
+            'No ephemeral presence manager was provided. Your application must be wrapped in an <AppProvider> component. See https://polaris.shopify.com/components/app-provider for implementation instructions.',
+        );
+    }
+
+    return ephemeralPresenceManager;
+}
+
 

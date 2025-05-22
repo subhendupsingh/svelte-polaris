@@ -137,6 +137,7 @@ export function mapResponsiveProp(
   );
 }
 
-export function applyStyles(styles: Record<string, string | number | undefined>): string {
+export function applyStyles(styles: Record<string, string | number | undefined> | undefined): string {
+    if (!styles) return '';
     return createStyleString(sanitizeCustomProperties(styles));
 }

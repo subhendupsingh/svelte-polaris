@@ -47,8 +47,6 @@
 		chevronOffset: 0
 	});
 
-	$inspect("states", states);
-
 	const setScrollableContainers = () => {
 		const containers: (HTMLElement | Document)[] = [];
 		let scrollableContainer = forNode(activator);
@@ -126,7 +124,7 @@
 
 	function getMarginsForNode(node: HTMLElement) {
 		// Accounts for when the node is moved between documents
-		const window = node.ownerDocument.defaultView || globalThis.window;
+		const window = node?.ownerDocument.defaultView || globalThis.window;
 		const nodeStyles = window.getComputedStyle(node);
 		return {
 			activator: parseFloat(nodeStyles.marginTop || '0'),
@@ -136,35 +134,35 @@
 	}
 
 	function getZIndexForLayerFromNode(node: HTMLElement) {
-		const layerNode = node.closest(layer.selector) || node.ownerDocument.body;
+		const layerNode = node.closest(layer.selector) || node?.ownerDocument?.body;
 		const zIndex =
-			layerNode === node.ownerDocument.body
+			layerNode === node?.ownerDocument?.body
 				? 'auto'
 				: parseInt(window.getComputedStyle(layerNode).zIndex || '0', 10);
 		return zIndex === 'auto' || isNaN(zIndex) ? null : zIndex;
 	}
 
 	const handleMeasurement = () => {
-		console.log("Calling handleMeasurement in PositionedOverlay")
 		const { lockPosition, top } = states;
 
 		observer?.disconnect();
 		if (overlayRef == null || firstScrollableContainer() == null) {
 			return;
 		}
-		const document = activator.ownerDocument;
+		const document = activator?.ownerDocument;
 		const preferredActivator = preferInputActivator
 			? activator.querySelector('input') || activator
 			: activator;
 		const activatorRect = getRectForNode(preferredActivator);
 		const currentOverlayRect = getRectForNode(overlayRef);
 		const scrollableElement = isDocument(firstScrollableContainer())
-			? document.body
+			? document?.body
 			: firstScrollableContainer();
 		const scrollableContainerRect = scrollableElement ? getRectForNode(scrollableElement) : null;
 
 		if (!scrollableContainerRect) {
-			throw new Error('Scrollable container rect is null, cannot calculate position');
+			//throw new Error('Scrollable container rect is null, cannot calculate position');
+			return;
 		}
 
 		const overlayRect =

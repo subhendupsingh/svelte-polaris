@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useToggle } from '$lib/use/use-toggle.svelte.js';
+	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import styles from '../../button-group.module.css';
 	import { classNames } from '$utilities/css.js';
 	import type { ButtonProps } from '$lib/components/button/button.types.js';
@@ -11,17 +11,15 @@
 	}
 
 	let { children, variant }: ItemProps = $props();
-
-	const {
-		value: focused,
-		setTrue: forceTrueFocused,
-		setFalse: forceFalseFocused
-	} = useToggle(false);
+	
+	const focused = new UseToggle(false);
+	const forceTrueFocused = focused.setTrue;
+	const forceFalseFocused = focused.setFalse;
 
 	const className = $derived(
 		classNames(
 			styles.Item,
-			focused && styles['Item-focused'],
+			focused.value && styles['Item-focused'],
 			variant === 'plain' && styles['Item-plain']
 		)
 	);

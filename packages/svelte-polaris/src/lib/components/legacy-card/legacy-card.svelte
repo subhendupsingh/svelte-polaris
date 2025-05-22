@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useToggle } from '$lib/use/use-toggle.svelte.js';
+	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import { classNames } from '$utilities/css.js';
 	import type { ComplexAction, DisableableAction } from '$utilities/types.js';
 	import type { Snippet } from 'svelte';
@@ -48,8 +48,8 @@
 		footerActionAlignment = 'right'
 	}: LegacyCardProps = $props();
 
-	const { value: secondaryActionsPopoverOpen, toggle: toggleSecondaryActionsPopoverOpen } =
-		useToggle(false);
+	const secondaryActionsPopoverOpen = new UseToggle(false);
+	const toggleSecondaryActionsPopoverOpen = secondaryActionsPopoverOpen.toggle;
 
 	const className = $derived(
 		classNames(styles.LegacyCard, subdued && styles.subdued, hideOnPrint && styles.hideOnPrint)
@@ -67,7 +67,7 @@
 		{#if secondaryFooterActions.length === 1}
 			<ButtonFrom action={secondaryFooterActions[0]} overrides={{ variant: 'secondary' }} />
 		{:else}
-			<Popover active={secondaryActionsPopoverOpen} onClose={toggleSecondaryActionsPopoverOpen}>
+			<Popover active={secondaryActionsPopoverOpen.value} onClose={toggleSecondaryActionsPopoverOpen}>
 				{#snippet activator({ props })}
 					<Button triggerProps={props} disclosure onClick={toggleSecondaryActionsPopoverOpen}>
 						{secondaryFooterActionsDisclosureText || 'More'}

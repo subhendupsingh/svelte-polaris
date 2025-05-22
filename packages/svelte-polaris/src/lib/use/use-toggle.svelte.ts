@@ -1,22 +1,19 @@
-export function useToggle(initialState: boolean) {
-    let value = $state(initialState);
+export class UseToggle {
+  value = $state<boolean>(false);
+  //set initial state
+  constructor(initialState: boolean) {
+    this.value = initialState;
+  }
 
-    const toggle = () => {
-        value = !value;
-    }
+  toggle = () => {
+    this.value = !this.value;
+  }
 
-    const setTrue = () => {
-        value = true;
-    }
+  setTrue = () => {
+    this.value = true;
+  }
 
-    const setFalse = () => {
-        value = false;
-    }
-
-    return {
-        get value() { return value; },
-        toggle,
-        setTrue,
-        setFalse
-    }
+  setFalse = () => {
+    this.value = false;
+  }
 }

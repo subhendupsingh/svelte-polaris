@@ -16,7 +16,6 @@
 	import Placeholder from '$lib/components/placeholder/placeholder.svelte';
 	import Tag from '$lib/components/tag/tag.svelte';
 	import TextField from '$lib/components/text-field/text-field.svelte';
-	import Tooltip from '$lib/components/tooltip/tooltip.svelte';
 	import { useMediaQuery } from '$lib/use/use-mediaquery.svelte.js';
 	import Page from '$lib/components/page/page.svelte';
 	import Badge from '$lib/components/badge/badge.svelte';
@@ -28,6 +27,8 @@
 	import Popover from '$lib/components/popover-polaris/index.js';
 	import ActionList from '$lib/components/action-list/action-list.svelte';
 	import { onMount } from 'svelte';
+	import Text from '$lib/components/text/text.svelte';
+	import Tooltip from '$lib/components/tooltip-polaris/tooltip-polaris.svelte';
 	// Call the function to get the reactive media query state
 	const mediaQuery = useMediaQuery();
 
@@ -41,12 +42,19 @@
 
 	let value = $state<string | undefined>('');
 
+	let activator = $state<HTMLElement>();
+	let activator1 = $state<HTMLElement>();
+
 	let popoverActive = $state(true);
+	let popoverActive1 = $state(true);
+
 	let togglePopoverActive = () => {
 		popoverActive = !popoverActive;
 	};
 
-	let activator = $state<HTMLElement>();
+	let togglePopoverActive1 = () => {
+		popoverActive1 = !popoverActive1;
+	};
 </script>
 
 <!-- <Layout>
@@ -91,7 +99,6 @@
 />
 
 <p>(Raw value: {mediaQuery.isNavigationCollapsed})</p> -->
-<Button bind:ref={activator}>Button</Button>
 
 <Page
 	backAction={{ content: 'Products', url: '#' }}
@@ -171,24 +178,26 @@
 		onChange={(e) => console.log(e)}
 	/>
 
-	{#if activator}
-		<Popover
-			active={popoverActive}
-			{activator}
-			autofocusTarget="first-node"
-			onClose={togglePopoverActive}
-		>
-			<Popover.Pane fixed>
-				<Popover.Section>
-					<p>Available sales channels</p>
-				</Popover.Section>
-			</Popover.Pane>
-			<Popover.Pane>
-				<ActionList
-					actionRole="menuitem"
-					items={[{ content: 'Online store' }, { content: 'Facebook' }, { content: 'Shopify POS' }]}
-				/>
-			</Popover.Pane>
-		</Popover>
-	{/if}
+	<!-- {#if activator} -->
+	<Popover active={popoverActive} autofocusTarget="first-node" onClose={togglePopoverActive}>
+		{#snippet trigger()}
+			<Button pressed={false} onClick={() => (popoverActive = !popoverActive)}>Button</Button>
+		{/snippet}
+		<Popover.Pane fixed>
+			<Popover.Section>
+				<p>Available sales channels</p>
+			</Popover.Section>
+		</Popover.Pane>
+		<Popover.Pane>
+			<ActionList
+				actionRole="menuitem"
+				items={[{ content: 'Online store' }, { content: 'Facebook' }, { content: 'Shopify POS' }]}
+			/>
+		</Popover.Pane>
+	</Popover>
+	<!-- {/if} -->
 </Page>
+
+<Tooltip hasUnderline active content="This order has shipping labels.">
+	<span>Hover me</span>
+</Tooltip>

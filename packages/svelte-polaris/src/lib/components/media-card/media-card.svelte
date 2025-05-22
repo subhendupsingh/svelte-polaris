@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useToggle } from '$lib/use/use-toggle.svelte.js';
+	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import styles from './media-card.module.css';
 	import type { MediaCardProps } from './types.js';
 	import Text from '$lib/components/text/text.svelte';
@@ -28,7 +28,8 @@
 		onDismiss
 	}: MediaCardProps = $props();
 
-	const { value: popoverActive, toggle: togglePopoverActive } = useToggle(false);
+	const popoverActive = new UseToggle(false);
+	const togglePopoverActive = popoverActive.toggle;
 	const actionClassName = $derived(classNames(styles.ActionContainer, portrait && styles.portrait));
 	const mediaCardClassName = $derived(classNames(styles.MediaCard, portrait && styles.portrait));
 
@@ -93,7 +94,7 @@
 {#snippet popoverActionsMarkup()}
 	{#if popoverActions.length > 0}
 		<Popover
-			active={popoverActive}
+			active={popoverActive.value}
 			onClose={togglePopoverActive}
 			preferredAlignment="start"
 			preferredPosition="bottom"

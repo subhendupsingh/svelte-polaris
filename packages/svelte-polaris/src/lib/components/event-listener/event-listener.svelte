@@ -14,12 +14,12 @@
 	};
 
 	onMount(() => {
-		console.log("In EventListner onMount");
+		//console.log("In EventListner onMount");
 		attachListener();
 	});
 
 	onDestroy(() => {
-		console.log("In EventListner onDestroy");
+		//console.log("In EventListner onDestroy");
 		detachListener();
 	});
 </script>

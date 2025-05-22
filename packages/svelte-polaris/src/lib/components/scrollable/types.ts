@@ -70,7 +70,7 @@ export function performScrollHint(elem?: HTMLDivElement | null) {
 }
 
 export const forNode = (node: HTMLElement): HTMLElement | Document => {
-    const closestElement = node.closest(scrollable.selector);
+    const closestElement = node?.closest(scrollable.selector);
     return closestElement instanceof HTMLElement ? closestElement : document;
   };
   

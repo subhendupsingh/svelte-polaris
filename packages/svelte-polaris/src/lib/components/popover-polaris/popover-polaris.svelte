@@ -8,6 +8,7 @@
 	import { setActivatorAttributes, type PopoverProps } from './types.js';
 	import PopoverOverlay from './components/popover-overlay/popover-overlay.svelte';
 	import Portal from '../portal/portal.svelte';
+	import { onMount, tick } from 'svelte';
 
 	let {
 		activatorWrapper = 'div',
@@ -21,6 +22,7 @@
 		preferInputActivator = true,
 		zIndexOverride,
 		forceUpdatePosition,
+		trigger,
 		...rest
 	}: PopoverProps = $props();
 
@@ -49,9 +51,13 @@
 	}
 	const handleClose = (source: PopoverCloseSource) => {
 		onClose(source);
+        
 		if (activatorContainer == null || preventFocusOnClose) {
 			return;
 		}
+
+        activatorNode?.setAttribute("data-state", active===true ? 'open' : 'close')
+        
 		if (source === PopoverCloseSource.FocusOut && activatorNode) {
 			const focusableActivator =
 				findFirstFocusableNodeIncludingDisabled(activatorNode) ||
@@ -128,33 +134,43 @@
 		};
 	});
 
-	$effect(() => {
+	/* $effect(() => {
 		if (!activatorNode && activatorContainer) {
 			activatorNode = activatorContainer.firstElementChild as HTMLElement;
 		} else if (activatorNode && activatorContainer && !activatorContainer.contains(activatorNode)) {
 			//TODO:
-			//activatorNode = activatorContainer.firstElementChild as HTMLElement;
+			activatorNode = activatorContainer.firstElementChild as HTMLElement;
 		}
-		setAccessibilityAttributes();
-	});
 
-	$effect(() => {
 		if (activatorNode && activatorContainer) {
 			//TODO:
-			//activatorNode = activatorContainer.firstElementChild as HTMLElement;
+			activatorNode = activatorContainer.firstElementChild as HTMLElement;
 		}
+
+		setAccessibilityAttributes();
+	}); */
+
+    onMount(async () => {
+        await tick();
+		if (!activatorNode && activatorContainer) {
+			activatorNode = activatorContainer.firstElementChild as HTMLElement;
+		} else if (activatorNode && activatorContainer && !activatorContainer.contains(activatorNode)) {
+			//TODO:
+			activatorNode = activatorContainer.firstElementChild as HTMLElement;
+		}
+
+		if (activatorNode && activatorContainer) {
+			//TODO:
+			activatorNode = activatorContainer.firstElementChild as HTMLElement;
+		}
+
 		setAccessibilityAttributes();
 	});
 
-	/* $effect(() => {
-        if (forceUpdatePosition && overlayRef) {
-            forceUpdatePosition();
-        }
-    }) */
-
-	const renderActivator = (node: Node) => {
+    // DONOT REMOVE THIS, HANDLES POSITIONING OF OVERLAY
+	/* const renderActivator = (node: Node) => {
 		forceUpdatePosition?.();
-	};
+	}; */
 </script>
 
 {#snippet portalMarkup()}
@@ -179,16 +195,9 @@
 {/snippet}
 
 <svelte:element this={activatorWrapper}>
-	<button
-		onclick={() => {
-			active = !active;
-		}}
-		use:renderActivator
-		bind:this={activatorNode}
-	>
-		Activator
-	</button>
 	<div bind:this={activatorContainer}>
-		{@render portalMarkup()}
+		{@render trigger?.()}
 	</div>
+
+    {@render portalMarkup()}
 </svelte:element>

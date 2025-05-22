@@ -20,7 +20,7 @@ export interface PopoverProps {
      * If using a button, use the default or tertiary variant
      * which will show an active state when popover is active
      */
-    activator: HTMLElement;
+    activator?: HTMLElement;
     /**
      * Use the activator's input element to calculate the Popover position
      * @default true
@@ -64,6 +64,7 @@ export interface PopoverProps {
      */
     captureOverscroll?: boolean;
     forceUpdatePosition?: () => void;
+    trigger: Snippet;
 }
 
 export type CloseTarget = 'activator' | 'next-node';

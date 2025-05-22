@@ -1,20 +1,18 @@
 <script lang="ts">
 	import type { ItemProps } from '../../types.js';
 	import styles from '../../connected.module.css';
-	import { useToggle } from '$lib/use/use-toggle.svelte.js';
+	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import { classNames } from '$utilities/css.js';
 	let { children, position }: ItemProps = $props();
 
-	const {
-		value: focused,
-		setTrue: forceTrueFocused,
-		setFalse: forceFalseFocused
-	} = useToggle(false);
+	const focused = new UseToggle(false);
+	const forceTrueFocused = focused.setTrue;
+	const forceFalseFocused = focused.setFalse;
 
 	const className = $derived(
 		classNames(
 			styles.Item,
-			focused && styles['Item-focused'],
+			focused.value && styles['Item-focused'],
 			position === 'primary' ? styles['Item-primary'] : styles['Item-connection']
 		)
 	);

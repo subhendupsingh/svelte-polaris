@@ -2,13 +2,14 @@
 	import ActionList from '$lib/components/action-list/action-list.svelte';
 	import Button from '$lib/components/button/button.svelte';
 	import Popover from '$lib/components/popover/popover.svelte';
-	import { useToggle } from '$lib/use/use-toggle.svelte.js';
+	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import styles from './rollup-actions.module.css';
 	import type { RollupActionsProps } from './types.js';
 	import MenuHorizontalIcon from '@shopify/polaris-icons/dist/svg/MenuHorizontalIcon.svg?component';
 
 	let { accessibilityLabel, items = [], sections = [] }: RollupActionsProps = $props();
-	const { value: rollupOpen, toggle: toggleRollupOpen } = useToggle(false);
+	const rollupOpen = new UseToggle(false);
+	const toggleRollupOpen = rollupOpen.toggle;
 </script>
 
 {#if items.length > 0 || sections.length > 0}
@@ -24,7 +25,7 @@
 	{/snippet}
 
 	<Popover
-		active={rollupOpen}
+		active={rollupOpen.value}
 		preferredAlignment="end"
 		onClose={toggleRollupOpen}
 		hideOnPrint>
