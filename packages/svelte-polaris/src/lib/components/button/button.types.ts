@@ -38,6 +38,7 @@ export interface ButtonProps extends BaseButton {
   variant?: 'plain' | 'primary' | 'secondary' | 'tertiary' | 'monochromePlain';
   children?: Snippet;
   triggerProps?: Popover.TriggerProps;
+  ref?: HTMLElement
 }
 
 export interface CommonButtonProps

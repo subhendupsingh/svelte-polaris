@@ -5,6 +5,7 @@
 
 	let {
 		id,
+		ref = $bindable(),
 		children,
 		className,
 		url,
@@ -70,12 +71,13 @@
     {/if}
 {:else}
 	{#if triggerProps}
-		<button {...restProps} {...triggerProps}>{@render children?.()}</button>
+		<button {...restProps} {...triggerProps} bind:this={ref}>{@render children?.()}</button>
 	{:else}
 		<button
 			{...interactiveProps}
 			{...restProps}
 			{...triggerProps}
+			bind:this={ref}
 			onclick={onClick}
 			onfocus={onFocus}
 			onblur={onBlur}

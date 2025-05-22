@@ -25,6 +25,9 @@
 	import { applyStyles } from '$utilities/css.js';
 	import Checkbox from '$lib/components/checkbox/checkbox.svelte';
 	import ChoiceList from '$lib/components/choice-list/choice-list.svelte';
+	import Popover from '$lib/components/popover-polaris/index.js';
+	import ActionList from '$lib/components/action-list/action-list.svelte';
+	import { onMount } from 'svelte';
 	// Call the function to get the reactive media query state
 	const mediaQuery = useMediaQuery();
 
@@ -37,6 +40,13 @@
 	const tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'];
 
 	let value = $state<string | undefined>('');
+
+	let popoverActive = $state(true);
+	let togglePopoverActive = () => {
+		popoverActive = !popoverActive;
+	};
+
+	let activator = $state<HTMLElement>();
 </script>
 
 <!-- <Layout>
@@ -81,6 +91,7 @@
 />
 
 <p>(Raw value: {mediaQuery.isNavigationCollapsed})</p> -->
+<Button bind:ref={activator}>Button</Button>
 
 <Page
 	backAction={{ content: 'Products', url: '#' }}
@@ -159,4 +170,25 @@
 		selected={['optional']}
 		onChange={(e) => console.log(e)}
 	/>
+
+	{#if activator}
+		<Popover
+			active={popoverActive}
+			{activator}
+			autofocusTarget="first-node"
+			onClose={togglePopoverActive}
+		>
+			<Popover.Pane fixed>
+				<Popover.Section>
+					<p>Available sales channels</p>
+				</Popover.Section>
+			</Popover.Pane>
+			<Popover.Pane>
+				<ActionList
+					actionRole="menuitem"
+					items={[{ content: 'Online store' }, { content: 'Facebook' }, { content: 'Shopify POS' }]}
+				/>
+			</Popover.Pane>
+		</Popover>
+	{/if}
 </Page>

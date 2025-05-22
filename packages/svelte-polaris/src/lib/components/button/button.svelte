@@ -43,6 +43,7 @@
 		ariaExpanded,
 		ariaChecked,
 		triggerProps,
+		ref = $bindable(),
 		onClick,
 		onFocus,
 		onBlur,
@@ -135,7 +136,7 @@
 		return disclosure === 'up' ? upIcon : downIcon;
 	}
 </script>
-<UnstyledButton {onClick} {onFocus} {onBlur} {onKeyDown} {onKeyPress} {onKeyUp} {onMouseEnter} {onTouchStart} {triggerProps} {...commonProps} {...linkProps} {...actionProps} disabled={isDisabled}>
+<UnstyledButton bind:ref {onClick} {onFocus} {onBlur} {onKeyDown} {onKeyPress} {onKeyUp} {onMouseEnter} {onTouchStart} {triggerProps} {...commonProps} {...linkProps} {...actionProps} disabled={isDisabled}>
 	{#if loading}
 		<span class={styles.Spinner}>
 			<Spinner size="small" accessibilityLabel="Loading" />

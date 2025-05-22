@@ -2,7 +2,7 @@ const scopeCustomProperty = require('./scope-custom-property.cjs');
 
 module.exports = (mixin, componentName, componentProp, declarationProp) => {
     return {
-        /* ...scopeCustomProperty(mixin, componentName, componentProp, true), */
+        ...scopeCustomProperty(mixin, componentName, componentProp, true),
         [declarationProp]: `var(--pc-${componentName}-${componentProp}-xs)`,
         '@media (--p-breakpoints-sm-up)': {
             [declarationProp]: `var(
