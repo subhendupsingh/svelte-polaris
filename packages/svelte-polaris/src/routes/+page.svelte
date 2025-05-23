@@ -33,6 +33,7 @@
 	import Icon from '$lib/components/icon/icon.svelte';
 	import SearchIcon from '@shopify/polaris-icons/dist/svg/SearchIcon.svg?component';
 	import Listbox from '$lib/components/listbox/index.js';
+	import DatePicker from '$lib/components/datepicker/datepicker.svelte';
 	// Call the function to get the reactive media query state
 	const mediaQuery = useMediaQuery();
 
@@ -209,7 +210,7 @@
 		hasNext: true
 	}}
 >
-	<MediaCard
+	<!-- <MediaCard
 		title="Get closer to launching your store"
 		primaryAction={{
 			content: 'Add a product',
@@ -240,17 +241,8 @@
 		<Listbox.Option value="UniqueValue-3" children="Item 3" />
 	</Listbox>
 
-	<!-- 
 
-	<Listbox accessibilityLabel="Listbox with Action example">
-		<Listbox.Option value="UniqueValue-1">Item 1</Listbox.Option>
-		<Listbox.Option value="UniqueValue-2" divider>Item 2</Listbox.Option>
-		<Listbox.Action value="ActionValue">
-			<InlineStack>
-				<div>Add item</div>
-			</InlineStack>
-		</Listbox.Action>
-	</Listbox> -->
+	
 
 	<Combobox>
 		{#snippet activator()}
@@ -262,5 +254,19 @@
 				{@render optionsMarkup()}
 			</Listbox>
 		{/if}
-	</Combobox>
+	</Combobox> -->
+
+	<DatePicker
+      month={1}
+      year={2025}
+      onChange={() => {}}
+      onMonthChange={() => {}}
+      selected={{
+		start: new Date('Wed Feb 07 2025 00:00:00 GMT-0500 (EST)'),
+		end: new Date('Sat Feb 10 2025 00:00:00 GMT-0500 (EST)'),
+	  }}
+	  disableDatesBefore={new Date('Sat Feb 03 2025 00:00:00 GMT-0500 (EST)')}
+      disableDatesAfter={new Date('Sun Feb 18 2025 00:00:00 GMT-0500 (EST)')}
+      allowRange
+    />
 </Page>
