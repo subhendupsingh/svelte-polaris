@@ -7,7 +7,6 @@
 	import Button from '../button/button.svelte';
 	import InlineStack from '../inline-stack/inline-stack.svelte';
 	import MenuHorizontalIcon from '@shopify/polaris-icons/dist/svg/MenuHorizontalIcon.svg?component';
-	import Popover from '../popover/popover.svelte';
 	import ActionList from '../action-list/action-list.svelte';
 	import ButtonFrom from '../button/button-from.svelte';
 	import { classNames } from '$utilities/css.js';
@@ -15,6 +14,7 @@
 	import Box from '../box/box.svelte';
 	import LegacyCard from '../legacy-card/components/index.js';
 	import BlockStack from '../block-stack/block-stack.svelte';
+	import Popover from '../popover/index.js';
 
 	let {
 		title,
@@ -78,10 +78,9 @@
 	{/if}
 {/snippet}
 
-{#snippet popoverActivator(props: any)}
+{#snippet popoverActivator()}
 	<InlineStack blockAlign="center">
 		<Button
-			triggerProps={props}
 			icon={MenuHorizontalIcon}
 			onClick={togglePopoverActive}
 			size="slim"
@@ -96,11 +95,11 @@
 		<Popover
 			active={popoverActive.value}
 			onClose={togglePopoverActive}
-			preferredAlignment="start"
-			preferredPosition="bottom"
+			preferredAlignment="left"
+			preferredPosition="below"
 		>
-			{#snippet activator({ props })}
-				  {@render popoverActivator(props)}
+			{#snippet trigger()}
+				  {@render popoverActivator()}
 			{/snippet}
 			<ActionList items={popoverActions} onActionAnyItem={togglePopoverActive} />
 		</Popover>

@@ -2,6 +2,7 @@ import CompleteIcon from "$lib/icons/complete-icon.svelte";
 import PartiallyCompleteIcon from "$lib/icons/partially-complete-icon.svelte";
 import IncompleteIcon from "$lib/icons/incomplete-icon.svelte";
 import type { IconSource } from "$utilities/types.js";
+import type { Snippet } from "svelte";
 
 export type Tone =
   | 'info'
@@ -50,7 +51,7 @@ export const DEFAULT_SIZE: Size = 'medium';
 
 interface NonMutuallyExclusiveProps {
   /** The content to display inside the badge. */
-  children?: string;
+  children?: string|Snippet;
   /** Colors and labels the badge with the given tone. */
   tone?: Tone;
   /** Render a pip showing the progress of a given task. */

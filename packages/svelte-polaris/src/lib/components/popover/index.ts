@@ -1,5 +1,5 @@
 import PaneComponent from "./components/pane/pane.svelte";
-import PopoverPolarisComponent from "./popover-polaris.svelte";
+import PopoverPolarisComponent from "./popover.svelte";
 import SectionComponent from "./components/section/section.svelte";
 
 type PopoverCompoundType = typeof PopoverPolarisComponent & {

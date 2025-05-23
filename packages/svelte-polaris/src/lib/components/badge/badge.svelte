@@ -42,8 +42,12 @@
 	{/if}
 	
 	{#if children}
-		<Text as="span" variant="bodySm" fontWeight={tone === 'new' ? 'medium' : undefined}>
-			{children}
-		</Text>
+		{#if typeof children === 'string'}
+			<Text as="span" variant="bodySm" fontWeight={tone === 'new' ? 'medium' : undefined}>
+				{children}
+			</Text>
+		{:else}
+			{@render children()}
+		{/if}
 	{/if}
 </span>

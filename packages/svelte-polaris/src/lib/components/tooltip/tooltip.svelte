@@ -1,118 +1,209 @@
 <script lang="ts">
-	import { applyStyles, classNames } from '$utilities/css.js';
+	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
+	import { useEphemeralPresenceManager } from '$utilities/contexts.js';
+	import { findFirstFocusableNode } from '$utilities/focus.js';
+	import { noop } from '$utilities/noop.js';
+	import Portal from '../portal/portal.svelte';
+	import TooltipOverlay from './components/tooltip-overlay/tooltip-overlay.svelte';
 	import styles from './tooltip.module.css';
-	import { Tooltip } from 'bits-ui';
-	import { type Snippet } from 'svelte';
-	import type { TooltipProps } from './types.js';
-
-	type TriggerWithProps = {
-		trigger: Snippet<[{ props?: Tooltip.TriggerProps }]>;
-		triggerProps?: Tooltip.TriggerProps;
-		customTrigger?: true
-	};
-
-	type TriggerWithoutProps = {
-		trigger: Snippet;
-		triggerProps?: Tooltip.TriggerProps;
-		customTrigger?: false;
-	};
-
-	type TriggerProps = TriggerWithProps | TriggerWithoutProps;
-	type Props = Tooltip.RootProps & TooltipProps & TriggerProps;
+	import { HOVER_OUT_TIMEOUT, type TooltipProps } from './types.js';
+	import Text from '$lib/components/text/text.svelte';
+	import { classNames } from '$utilities/css.js';
 
 	let {
-		open = $bindable(false),
-		onOpenChange,
-		trigger,
-		hasUnderline,
-		triggerProps = {},
+		children,
 		content,
-		borderRadius = '200',
 		dismissOnMouseOut,
-		active: originalActive,
+		active: originalActive = false,
 		hoverDelay,
-		preferredPosition,
+		preferredPosition = 'above',
 		activatorWrapper = 'span',
 		accessibilityLabel,
 		width = 'default',
 		padding = 'default',
 		borderRadius: borderRadiusProp,
 		zIndexOverride,
-		persistOnClick,
+		hasUnderline,
+		persistOnClick = false,
 		onOpen,
-		onClose,
-		customTrigger,
-		...restProps
-	}: Props = $props();
+		onClose
+	}: TooltipProps = $props();
+
+	const borderRadius = $derived(borderRadiusProp || '200');
+
+	const active = new UseToggle(Boolean(originalActive));
+	const handleBlur = active.setFalse;
+	const setActiveTrue = active.setTrue;
+
+	const persist = new UseToggle(Boolean(originalActive) && Boolean(persistOnClick));
+	const togglePersisting = persist.toggle;
+
+	let activatorNode = $state<HTMLDivElement>();
+	const { presenceList, addPresence, removePresence } = useEphemeralPresenceManager();
+	const id = $props.id();
+	let activatorContainer = $state<HTMLDivElement>();
+	let mouseEntered = $state(false);
+	let shouldAnimate = $state(Boolean(!originalActive));
+	let hoverDelayTimeout = $state<NodeJS.Timeout | null>(null);
+	let hoverOutTimeout = $state<NodeJS.Timeout | null>(null);
+
+	const handleFocus = () => {
+		if (originalActive !== false) {
+			setActiveTrue();
+		}
+	};
+
+	const handleOpen = () => {
+		shouldAnimate = !presenceList.tooltip && !active.value;
+		onOpen?.();
+		addPresence('tooltip');
+	};
+
+	const handleClose = () => {
+		onClose?.();
+		shouldAnimate = false;
+		hoverOutTimeout = setTimeout(() => {
+			removePresence('tooltip');
+		}, HOVER_OUT_TIMEOUT);
+	};
+
+	const handleKeyUp = (event: KeyboardEvent) => {
+		if (event.key !== 'Escape') return;
+		handleClose?.();
+		handleBlur();
+		persistOnClick && togglePersisting();
+	};
+
+	function setActivator(node: HTMLElement | null) {
+		let activatorContainerRef: any = activatorContainer;
+		if (node == null) {
+			activatorContainerRef.current = null;
+			activatorNode = undefined;
+			return;
+		}
+
+		if (node.firstElementChild) {
+			activatorNode = node.firstElementChild as HTMLDivElement;
+		}
+
+		activatorContainerRef = node;
+	}
+
+	function handleMouseEnter() {
+		mouseEntered = true;
+		if (hoverDelay && !presenceList.tooltip) {
+			hoverDelayTimeout = setTimeout(() => {
+				handleOpen();
+				handleFocus();
+			}, hoverDelay);
+		} else {
+			handleOpen();
+			handleFocus();
+		}
+	}
+
+	function handleMouseLeave() {
+		if (hoverDelayTimeout) {
+			clearTimeout(hoverDelayTimeout);
+			hoverDelayTimeout = null;
+		}
+
+		mouseEntered = false;
+		handleClose();
+		if (!persist.value) {
+			handleBlur();
+		}
+	}
+
+	function handleMouseEnterFix() {
+		!mouseEntered && handleMouseEnter();
+	}
+
+	const firstFocusable = $derived(
+		activatorContainer ? findFirstFocusableNode(activatorContainer) : null
+	);
+
+	$effect(() => {
+		const accessibilityNode = firstFocusable || activatorContainer;
+		if (!accessibilityNode) return;
+
+		accessibilityNode.tabIndex = 0;
+		accessibilityNode.setAttribute('aria-describedby', id);
+		accessibilityNode.setAttribute('data-polaris-tooltip-activator', 'true');
+
+		return () => {
+			if (hoverDelayTimeout) {
+				clearTimeout(hoverDelayTimeout);
+			}
+			if (hoverOutTimeout) {
+				clearTimeout(hoverOutTimeout);
+			}
+		};
+	});
+
+	$effect(() => {
+		if (originalActive === false && active.value) {
+			handleClose();
+			handleBlur();
+		}
+	});
 
 	const wrapperClassNames = $derived(
-		classNames(styles.TooltipContainer, hasUnderline && styles.HasUnderline)
+		classNames(
+			activatorWrapper === 'div' && styles.TooltipContainer,
+			hasUnderline && styles.HasUnderline
+		)
 	);
-
-	const containerClassName = classNames(
-		styles.TooltipOverlay,
-		preferredPosition === 'top' && styles.positionedAbove
-	);
-
-	const contentClassName = classNames(styles.Content, width && styles[width]);
-
-	const style = {
-		'--pc-tooltip-border-radius': borderRadius
-			? `var(--p-border-radius-${borderRadius})`
-			: undefined,
-		'--pc-tooltip-padding':
-			padding && padding === 'default'
-				? 'var(--p-space-100) var(--p-space-200)'
-				: `var(--p-space-${padding})`
-	};
 </script>
 
-<Tooltip.Provider>
-	<Tooltip.Root bind:open {onOpenChange}>
-		{#if customTrigger}
-			<Tooltip.Trigger class={styles.Trigger} {...triggerProps}>
-				{#snippet child({ props }: { props: Tooltip.TriggerProps })}
-					{@render trigger({ props })}
-				{/snippet}
-			</Tooltip.Trigger>
-		{:else}
-			<Tooltip.Trigger class={styles.Trigger} {...triggerProps}>
-				{@render trigger()}
-			</Tooltip.Trigger>
-		{/if}
-		<Tooltip.Portal>
-			<Tooltip.Content forceMount>
-				{#snippet child({ props, wrapperProps, open })}
-					{#if open}
-						<div {...wrapperProps}>
-							<div {...props} class={containerClassName} style={applyStyles(style)} {...restProps}>
-								<Tooltip.Arrow height={11} width={19}>
-									{#snippet child({ props })}
-										<svg {...props} class={styles.Tail} width="19" height="11" fill="none"
-											><path
-												d="m0 2 6.967 7.25a3 3 0 0 0 4.243.083L18.829 2h-1.442l-6.87 6.612a2 2 0 0 1-2.83-.055L1.387 2H0Z"
-												fill="var(--p-color-tooltip-tail-down-border)"
-											></path><path
-												d="M1.387 0h16v2l-6.87 6.612a2 2 0 0 1-2.83-.055L1.387 2V0Z"
-												fill="var(--p-color-bg-surface)"
-											></path></svg
-										>
-									{/snippet}
-								</Tooltip.Arrow>
-								<div class={wrapperClassNames}>
-									<div class={contentClassName} style={applyStyles(style)}>
-										{#if typeof content === 'string'}
-											{content}
-										{:else}
-											{@render content?.()}
-										{/if}
-									</div>
-								</div>
-							</div>
-						</div>
-					{/if}
-				{/snippet}
-			</Tooltip.Content>
-		</Tooltip.Portal>
-	</Tooltip.Root>
-</Tooltip.Provider>
+{#snippet portalMarkup()}
+	{#if activatorNode}
+		<Portal idPrefix="tooltip">
+			<TooltipOverlay
+				{id}
+				{preferredPosition}
+				activator={activatorNode}
+				active={active.value}
+				{accessibilityLabel}
+				onClose={noop}
+				preventInteraction={dismissOnMouseOut}
+				{width}
+				{padding}
+				{borderRadius}
+				{zIndexOverride}
+				instant={!shouldAnimate}
+			>
+				<Text as="span" variant="bodyMd">
+					{content}
+				</Text>
+			</TooltipOverlay>
+		</Portal>
+	{/if}
+{/snippet}
+
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<svelte:element
+	this={activatorWrapper}
+	class={wrapperClassNames}
+	onfocus={() => {
+		handleOpen();
+		handleFocus();
+	}}
+	onblur={() => {
+		originalActive === false;
+		handleClose();
+		handleBlur();
+
+		if (persistOnClick) {
+			togglePersisting();
+		}
+	}}
+	onmouseleave={handleMouseLeave}
+	onmouseover={handleMouseEnterFix}
+	onmousedown={persistOnClick ? togglePersisting : undefined}
+>
+	<div bind:this={activatorContainer} use:setActivator>
+		{@render children?.()}
+	</div>
+	{@render portalMarkup()}
+</svelte:element>

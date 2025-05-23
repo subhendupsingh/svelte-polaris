@@ -1,12 +1,13 @@
 import { EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY, type EphemeralPresenceManagerContextType } from "$lib/components/app-provider/types.js";
 import type { ThemeName } from "@shopify/polaris-tokens";
 import { getContext, setContext } from "svelte";
+import { MAPPED_ACTION_CONTEXT_KEY, type MappedActionContextType } from "./listbox/types.js";
 
-export const SCROLLABLE_CONTEXT_KEY = Symbol("scrollable");
+export const SCROLLABLE_CONTEXT_KEY = 'scrollable';
 export type ScrollToPositionFn = (scrollY: number) => void;
-export const useContext = <T>(key: symbol) => getContext<T>(key);
+export const useContext = <T>(key: string) => getContext<T>(key);
 
-export const PORTALS_MANAGER_KEY = Symbol('PortalsManager'); // Unique key for the context
+export const PORTALS_MANAGER_KEY = 'PortalsManager'; // Unique key for the context
 
 // Define the types for your context value (mirroring your React types)
 export type PortalsContainerElement = HTMLDivElement | null; // Or your actual definition
@@ -26,7 +27,7 @@ export function usePortalsManager() {
   return portalsManager;
 }
 
-export const THEME_NAME_KEY = Symbol('ThemeName');
+export const THEME_NAME_KEY = 'ThemeName';
 export function useThemeName() {
   const themeName = useContext<ThemeName | null>(THEME_NAME_KEY);
 
@@ -50,5 +51,18 @@ export function useEphemeralPresenceManager() {
 
     return ephemeralPresenceManager;
 }
+
+export function useMappedAction() {
+    const mappedAction = useContext<MappedActionContextType | undefined>(MAPPED_ACTION_CONTEXT_KEY);
+
+    if (!mappedAction) {
+        throw new Error(
+            'No mapped action was provided. Your application must be wrapped in an <AppProvider> component. See https://polaris.shopify.com/components/app-provider for implementation instructions.',
+        );
+    }
+
+    return mappedAction;
+}
+
 
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ActionList from '$lib/components/action-list/action-list.svelte';
-	import Popover from '$lib/components/popover/popover.svelte';
+	import Popover from '$lib/components/popover/index.js';
 	import SecondaryAction from '../secondary-action/secondary-action.svelte';
 	import styles from './menu-group.module.css';
 	import type { MenuGroupProps } from './types.js';
@@ -35,19 +35,19 @@
 	};
 </script>
 
-{#snippet popoverActivator(triggerProps: any)}
-	<SecondaryAction disclosure {disabled} {icon} {accessibilityLabel} onClick={handleClick} {...triggerProps}>
+{#snippet popoverActivator()}
+	<SecondaryAction disclosure {disabled} {icon} {accessibilityLabel} onClick={handleClick}>
 		{title}
 	</SecondaryAction>
 {/snippet}
 
 <Popover
 	active={Boolean(active)}
-	preferredAlignment="start"
+	preferredAlignment="left"
 	onClose={handleClose}
 	hideOnPrint>
-	{#snippet activator({props})}
-		{@render popoverActivator(props)}
+	{#snippet trigger()}
+		{@render popoverActivator()}
 	{/snippet}
 
 	<ActionList items={actions} {sections} onActionAnyItem={handleClose} />

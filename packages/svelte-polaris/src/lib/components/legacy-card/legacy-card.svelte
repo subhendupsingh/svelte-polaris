@@ -8,9 +8,9 @@
 	import LegacyCardSection from './components/section/legacy-card-section.svelte';
 	import { Button } from '$lib/index.js';
 	import ButtonFrom from '../button/button-from.svelte';
-	import Popover from '../popover/popover.svelte';
 	import ActionList from '../action-list/action-list.svelte';
 	import InlineStack from '../inline-stack/inline-stack.svelte';
+	import Popover from '../popover/index.js';
 
 	interface LegacyCardProps {
 		/** Title content for the card */
@@ -68,8 +68,8 @@
 			<ButtonFrom action={secondaryFooterActions[0]} overrides={{ variant: 'secondary' }} />
 		{:else}
 			<Popover active={secondaryActionsPopoverOpen.value} onClose={toggleSecondaryActionsPopoverOpen}>
-				{#snippet activator({ props })}
-					<Button triggerProps={props} disclosure onClick={toggleSecondaryActionsPopoverOpen}>
+				{#snippet trigger()}
+					<Button disclosure onClick={toggleSecondaryActionsPopoverOpen}>
 						{secondaryFooterActionsDisclosureText || 'More'}
 					</Button>
 				{/snippet}

@@ -24,11 +24,15 @@
 	import { applyStyles } from '$utilities/css.js';
 	import Checkbox from '$lib/components/checkbox/checkbox.svelte';
 	import ChoiceList from '$lib/components/choice-list/choice-list.svelte';
-	import Popover from '$lib/components/popover-polaris/index.js';
+	import Popover from '$lib/components/popover/index.js';
 	import ActionList from '$lib/components/action-list/action-list.svelte';
 	import { onMount } from 'svelte';
 	import Text from '$lib/components/text/text.svelte';
-	import Tooltip from '$lib/components/tooltip-polaris/tooltip-polaris.svelte';
+	import Tooltip from '$lib/components/tooltip/tooltip.svelte';
+	import Combobox from '$lib/components/combobox/index.js';
+	import Icon from '$lib/components/icon/icon.svelte';
+	import SearchIcon from '@shopify/polaris-icons/dist/svg/SearchIcon.svg?component';
+	import Listbox from '$lib/components/listbox/index.js';
 	// Call the function to get the reactive media query state
 	const mediaQuery = useMediaQuery();
 
@@ -54,6 +58,42 @@
 
 	let togglePopoverActive1 = () => {
 		popoverActive1 = !popoverActive1;
+	};
+
+	const deselectedOptions = [
+		{ value: 'rustic', label: 'Rustic' },
+		{ value: 'antique', label: 'Antique' },
+		{ value: 'vinyl', label: 'Vinyl' },
+		{ value: 'vintage', label: 'Vintage' },
+		{ value: 'refurbished', label: 'Refurbished' }
+	];
+	let selectedOption = $state<string | undefined>();
+	let inputValue = $state('');
+	let options = $state(deselectedOptions);
+
+	const escapeSpecialRegExCharacters = (value: string) =>
+		value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+	const updateText = (value: string) => {
+		inputValue = value;
+
+		if (value === '') {
+			options = deselectedOptions;
+			return;
+		}
+
+		const filterRegex = new RegExp(escapeSpecialRegExCharacters(value), 'i');
+		const resultOptions = deselectedOptions.filter((option) => option.label.match(filterRegex));
+		options = resultOptions;
+	};
+
+	const updateSelection = (selected: string) => {
+		const matchedOption = options.find((option) => {
+			return option.value.match(selected);
+		});
+
+		selectedOption = selected;
+		inputValue = (matchedOption && matchedOption.label) || '';
 	};
 </script>
 
@@ -99,6 +139,35 @@
 />
 
 <p>(Raw value: {mediaQuery.isNavigationCollapsed})</p> -->
+
+{#snippet cboxIcon()}
+	<Icon source={SearchIcon} />
+{/snippet}
+
+{#snippet cboxActivator()}
+	<Combobox.TextField
+		prefix={cboxIcon}
+		onChange={updateText}
+		label="Search tags"
+		labelHidden
+		value={inputValue}
+		placeholder="Search tags"
+		autoComplete="off"
+	/>
+{/snippet}
+
+{#snippet optionsMarkup()}
+	{#if options.length > 0}
+		{#each options as option}
+			<Listbox.Option
+				value={option.value}
+				selected={selectedOption === option.value}
+				accessibilityLabel={option.label}
+				children={option.label}
+			/>
+		{/each}
+	{/if}
+{/snippet}
 
 <Page
 	backAction={{ content: 'Products', url: '#' }}
@@ -165,39 +234,33 @@
 		/>
 	</MediaCard>
 
-	<Checkbox label="Basic checkbox" checked={false} onChange={(e) => console.log(e)} />
+	<Listbox accessibilityLabel="Basic Listbox example">
+		<Listbox.Option value="UniqueValue-1" children="Item 1" />
+		<Listbox.Option value="UniqueValue-2" children="Item 2" />
+		<Listbox.Option value="UniqueValue-3" children="Item 3" />
+	</Listbox>
 
-	<ChoiceList
-		title="Company name"
-		choices={[
-			{ label: 'Hidden', value: 'hidden' },
-			{ label: 'Optional', value: 'optional' },
-			{ label: 'Required', value: 'required' }
-		]}
-		selected={['optional']}
-		onChange={(e) => console.log(e)}
-	/>
+	<!-- 
 
-	<!-- {#if activator} -->
-	<Popover active={popoverActive} autofocusTarget="first-node" onClose={togglePopoverActive}>
-		{#snippet trigger()}
-			<Button pressed={false} onClick={() => (popoverActive = !popoverActive)}>Button</Button>
+	<Listbox accessibilityLabel="Listbox with Action example">
+		<Listbox.Option value="UniqueValue-1">Item 1</Listbox.Option>
+		<Listbox.Option value="UniqueValue-2" divider>Item 2</Listbox.Option>
+		<Listbox.Action value="ActionValue">
+			<InlineStack>
+				<div>Add item</div>
+			</InlineStack>
+		</Listbox.Action>
+	</Listbox> -->
+
+	<Combobox>
+		{#snippet activator()}
+			{@render cboxActivator()}
 		{/snippet}
-		<Popover.Pane fixed>
-			<Popover.Section>
-				<p>Available sales channels</p>
-			</Popover.Section>
-		</Popover.Pane>
-		<Popover.Pane>
-			<ActionList
-				actionRole="menuitem"
-				items={[{ content: 'Online store' }, { content: 'Facebook' }, { content: 'Shopify POS' }]}
-			/>
-		</Popover.Pane>
-	</Popover>
-	<!-- {/if} -->
+	
+		{#if options.length > 0}
+			<Listbox onSelect={updateSelection}>
+				{@render optionsMarkup()}
+			</Listbox>
+		{/if}
+	</Combobox>
 </Page>
-
-<Tooltip hasUnderline active content="This order has shipping labels.">
-	<span>Hover me</span>
-</Tooltip>

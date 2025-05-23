@@ -74,8 +74,8 @@
 {/snippet}
 {#snippet constructedPrevious()}
 	{#if previousTooltip && hasPrevious}
-		<Tooltip trigger={prev} activatorWrapper="span" preferredPosition="bottom">
-			{previousTooltip}
+		<Tooltip content={previousTooltip}>
+			{@render prev()}
 		</Tooltip>
 	{:else}
 		{@render prev()}
@@ -95,7 +95,7 @@
 
 {#snippet constructedNext()}
 	{#if nextTooltip && hasNext}
-		<Tooltip trigger={next} activatorWrapper="span" preferredPosition="bottom">
+		<Tooltip content={nextTooltip}>
 			{@render next()}
 		</Tooltip>
 	{:else}
@@ -135,7 +135,7 @@
 	{#if label}
 		<Box padding="300" paddingBlockStart="0" paddingBlockEnd="0">
 			<Text as="span" variant="bodySm" fontWeight="medium">
-				{#if typeof label==='string'}
+				{#if typeof label === 'string'}
 					{label}
 				{:else}
 					{@render label?.()}
@@ -147,14 +147,14 @@
 
 {#snippet labelTextMarkup()}
 	{#if hasNext && hasPrevious}
-		{#if typeof label==='string'}
+		{#if typeof label === 'string'}
 			<span>{label}</span>
 		{:else}
 			{@render label?.()}
 		{/if}
 	{:else}
 		<Text tone="subdued" as="span">
-			{#if typeof label==='string'}
+			{#if typeof label === 'string'}
 				{label}
 			{:else}
 				{@render label?.()}

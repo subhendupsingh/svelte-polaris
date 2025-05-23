@@ -10,3 +10,7 @@ export interface LabelProps {
     /** Visual required indicator for the label */
     requiredIndicator?: boolean;
 }
+
+export function labelID(id: string) {
+    return `${id}Label`;
+}

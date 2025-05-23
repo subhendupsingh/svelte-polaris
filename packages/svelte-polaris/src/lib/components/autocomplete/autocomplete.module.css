@@ -1,0 +1,13 @@
+.Loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: var(--p-space-200) var(--p-space-400);
+}
+
+.SectionWrapper {
+    >*:not(:first-child) {
+        margin-top: var(--p-space-200);
+    }
+}

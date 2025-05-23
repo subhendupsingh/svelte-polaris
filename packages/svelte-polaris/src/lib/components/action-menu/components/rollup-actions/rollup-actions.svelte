@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ActionList from '$lib/components/action-list/action-list.svelte';
 	import Button from '$lib/components/button/button.svelte';
-	import Popover from '$lib/components/popover/popover.svelte';
+	import Popover from '$lib/components/popover/index.js';
 	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import styles from './rollup-actions.module.css';
 	import type { RollupActionsProps } from './types.js';
@@ -13,24 +13,23 @@
 </script>
 
 {#if items.length > 0 || sections.length > 0}
-	{#snippet activatorMarkup(props: any)}
+	{#snippet activatorMarkup()}
 		<div class={styles.RollupActivator}>
 			<Button
 				icon={MenuHorizontalIcon}
 				accessibilityLabel="View actions"
 				onClick={toggleRollupOpen}
-				{...props}
 			/>
 		</div>
 	{/snippet}
 
 	<Popover
 		active={rollupOpen.value}
-		preferredAlignment="end"
+		preferredAlignment="right"
 		onClose={toggleRollupOpen}
 		hideOnPrint>
-		{#snippet activator({props})}
-			{@render activatorMarkup(props)}
+		{#snippet trigger()}
+			{@render activatorMarkup()}
 		{/snippet}
 		<ActionList {items} {sections} onActionAnyItem={toggleRollupOpen} />
 	</Popover>

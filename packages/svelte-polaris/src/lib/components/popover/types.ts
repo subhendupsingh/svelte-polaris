@@ -1,38 +1,31 @@
 import type { Snippet } from "svelte";
-import { Popover as PopoverPrimitive } from "bits-ui"
+import type { PopoverCloseSource } from "./components/popover-overlay/types.js";
+import type { PopoverAutofocusTarget } from "./components/popover-overlay/types.js";
+import type { PopoverOverlayProps } from "./components/popover-overlay/types.js";
+import type { AriaAttributes } from "svelte/elements";
 
-export enum PopoverCloseSource {
-    Click,
-    EscapeKeypress,
-    FocusOut,
-    ScrollOut,
-}
-
-export type PopoverAutofocusTarget = 'none' | 'first-node' | 'container';
-
-
-type ContentProps = PopoverPrimitive.ContentProps;
-
+export type { PopoverCloseSource };
+export type { PopoverAutofocusTarget };
 
 export interface PopoverProps {
     /** The content to display inside the popover */
     children?: Snippet;
     /** The preferred direction to open the popover */
-    preferredPosition?: ContentProps['side'];
+    preferredPosition?: PopoverOverlayProps['preferredPosition'];
     /** The preferred alignment of the popover relative to its activator */
-    preferredAlignment?: ContentProps['align'];
+    preferredAlignment?: PopoverOverlayProps['preferredAlignment'];
     /** Show or hide the Popover */
-    active?: boolean;
+    active: boolean;
     /** The element to activate the Popover.
      * If using a button, use the default or tertiary variant
      * which will show an active state when popover is active
      */
-    activator?: Snippet<[{ props: PopoverPrimitive.TriggerProps}]>
+    activator?: HTMLElement;
     /**
      * Use the activator's input element to calculate the Popover position
      * @default true
      */
-    preferInputActivator?: boolean;
+    preferInputActivator?: PopoverOverlayProps['preferInputActivator'];
     /**
      * The element type to wrap the activator with
      * @default 'div'
@@ -52,15 +45,17 @@ export interface PopoverProps {
     fluidContent?: boolean;
     /** Remains in a fixed position */
     fixed?: boolean;
+    /** Used to illustrate the type of popover element */
+    ariaHaspopup?: string;
     /** Allow the popover overlay to be hidden when printing */
     hideOnPrint?: boolean;
     /** Callback when popover is closed */
-    onClose?(): void;
+    onClose(source: PopoverCloseSource): void;
     /**
      * The preferred auto focus target defaulting to the popover container
      * @default 'container'
      */
-    autofocusTarget?: boolean;
+    autofocusTarget?: PopoverAutofocusTarget;
     /** Prevents closing the popover when other overlays are clicked */
     preventCloseOnChildOverlayClick?: boolean;
     /**
@@ -68,7 +63,40 @@ export interface PopoverProps {
      * @default false
      */
     captureOverscroll?: boolean;
-    preventInteraction?: boolean;
-    classNames?: string;
-    sideOffset?: ContentProps['sideOffset'];
+    forceUpdatePosition?: () => void;
+    trigger: Snippet;
+}
+
+export type CloseTarget = 'activator' | 'next-node';
+export interface PopoverPublicAPI {
+    forceUpdatePosition(): void;
+    close(target?: CloseTarget): void;
+}
+
+export function setActivatorAttributes(
+    activator: HTMLElement,
+    {
+        id,
+        active = false,
+        ariaHaspopup,
+        activatorDisabled = false,
+    }: {
+        id: string;
+        active: boolean;
+        ariaHaspopup: AriaAttributes['aria-haspopup'];
+        activatorDisabled: boolean;
+    },
+) {
+    if (!activatorDisabled) {
+        activator.tabIndex = activator.tabIndex || 0;
+    }
+
+    activator.setAttribute('aria-controls', id);
+    activator.setAttribute('aria-owns', id);
+    activator.setAttribute('aria-expanded', String(active));
+    activator.setAttribute('data-state', active ? 'open' : 'closed');
+
+    if (ariaHaspopup != null) {
+        activator.setAttribute('aria-haspopup', String(ariaHaspopup));
+    }
 }
