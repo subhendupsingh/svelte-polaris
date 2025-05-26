@@ -5,7 +5,7 @@
 
     let { children, value }: { children?: Snippet, value: IndexContextType } = $props();
 
-    setContext(INDEX_CONTEXT_KEY, value)
+    setContext(INDEX_CONTEXT_KEY, () => value)
 </script>
 
 {@render children?.()}

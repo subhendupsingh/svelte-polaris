@@ -5,7 +5,7 @@
 
     let { children, value }: { children?: Snippet, value: ScrollContextType } = $props();
 
-    setContext(SCROLL_CONTEXT_KEY, value)
+    setContext(SCROLL_CONTEXT_KEY, () => value)
 </script>
 
 {@render children?.()}

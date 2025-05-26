@@ -5,7 +5,7 @@
 
     let { children, value }: { children?: Snippet, value: RowContextType } = $props();
 
-    setContext(ROW_CONTEXT_KEY, value)
+    setContext(ROW_CONTEXT_KEY, () => value)
 </script>
 
 {@render children?.()}

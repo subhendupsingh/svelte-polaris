@@ -4,7 +4,7 @@
 
     let { value, children }: { value: MappedActionContextType; children?: Snippet } = $props();
     
-    setContext<MappedActionContextType>(MAPPED_ACTION_CONTEXT_KEY, value);
+    setContext(MAPPED_ACTION_CONTEXT_KEY, () => value);
 </script>
 
 {@render children?.()}

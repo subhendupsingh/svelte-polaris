@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
-	import { useEphemeralPresenceManager } from '$utilities/contexts.js';
 	import { findFirstFocusableNode } from '$utilities/focus.js';
 	import { noop } from '$utilities/noop.js';
 	import Portal from '../portal/portal.svelte';
@@ -9,6 +8,8 @@
 	import { HOVER_OUT_TIMEOUT, type TooltipProps } from './types.js';
 	import Text from '$lib/components/text/text.svelte';
 	import { classNames } from '$utilities/css.js';
+	import { useContext } from '$utilities/contexts.js';
+	import { EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY, type EphemeralPresenceManagerContextType } from '../app-provider/types.js';
 
 	let {
 		children,
@@ -39,7 +40,8 @@
 	const togglePersisting = persist.toggle;
 
 	let activatorNode = $state<HTMLDivElement>();
-	const { presenceList, addPresence, removePresence } = useEphemeralPresenceManager();
+	const useEphemeralPresenceManager = useContext<EphemeralPresenceManagerContextType>(EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY)
+	const { presenceList, addPresence, removePresence } = $derived(useEphemeralPresenceManager());
 	const id = $props.id();
 	let activatorContainer = $state<HTMLDivElement>();
 	let mouseEntered = $state(false);

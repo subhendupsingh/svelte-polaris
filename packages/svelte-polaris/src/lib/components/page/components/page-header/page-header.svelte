@@ -11,7 +11,6 @@
 	} from './types.js';
 	import Box from '$lib/components/box/box.svelte';
 	import Breadcrumbs from '$lib/components/breadcrumbs/breadcrumbs.svelte';
-	import { useMediaQuery } from '$lib/use/use-mediaquery.svelte.js';
 	import Pagination from '$lib/components/pagination/pagination.svelte';
 	import { classNames } from '$utilities/css.js';
 	import PageTitle from './components/page-title/page-title.svelte';
@@ -24,6 +23,8 @@
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
 	import FilterActionsProvider from '$lib/components/app-provider/filteraction-provider.svelte';
 	import ConditionalRender from '$lib/components/conditional-render/conditional-render.svelte';
+	import { useContext } from '$utilities/contexts.js';
+	import { MEDIA_QUERY_CONTEXT_KEY, type MediaQueryState } from '$lib/components/app-provider/types.js';
 
 	let {
 		title,
@@ -66,7 +67,7 @@
 		return hasActionGroups || hasArrayOfSecondaryActions || hasConstructForSecondaryActions;
 	});
 
-	const { isNavigationCollapsed } = useMediaQuery();
+	const mediaQueryStateContext = useContext<MediaQueryState>(MEDIA_QUERY_CONTEXT_KEY);
 	const labelForPageReadyAccessibilityLabel = $derived(pageReadyAccessibilityLabel || title);
 
 	function shouldShowIconOnly(isMobile: boolean, action: PrimaryAction): PrimaryAction {
@@ -94,9 +95,9 @@
 	const headerClassNames = $derived(
 		classNames(
 			isSingleRow && styles.isSingleRow,
-			(backAction || (pagination && !isNavigationCollapsed)) && styles.hasNavigation,
+			(backAction || (pagination && !mediaQueryStateContext()?.isNavigationCollapsed)) && styles.hasNavigation,
 			secondaryActions && styles.hasActionMenu,
-			isNavigationCollapsed && styles.mobileView,
+			mediaQueryStateContext()?.isNavigationCollapsed && styles.mobileView,
 			!backAction && styles.noBreadcrumbs,
 			title && title.length < LONG_TITLE && styles.mediumTitle,
 			title && title.length > LONG_TITLE && styles.longTitle
@@ -191,7 +192,7 @@
 		actionMenuMarkup,
 		additionalMetadataMarkup,
 		breadcrumbMarkup,
-		isNavigationCollapsed,
+		isNavigationCollapsed: mediaQueryStateContext()?.isNavigationCollapsed,
 		pageTitleMarkup,
 		paginationMarkup,
 		primaryActionMarkup,
@@ -210,7 +211,7 @@
 {/snippet}
 
 {#snippet paginationMarkup()}
-	{#if pagination && !isNavigationCollapsed}
+	{#if pagination && !mediaQueryStateContext()?.isNavigationCollapsed}
 		<div class={styles.PaginationWrapper}>
 			<Box printHidden>
 				<Pagination
@@ -258,7 +259,7 @@
 
 			{#snippet content()}
 				{@const { content, accessibilityLabel, icon } = shouldShowIconOnly(
-					isNavigationCollapsed,
+					mediaQueryStateContext()?.isNavigationCollapsed,
 					primaryAction
 				)}
 				<ButtonFrom
@@ -274,7 +275,7 @@
 			{#snippet actionMarkup()}
 				{#if helpText}
 					{#if typeof helpText === 'string'}
-						<Tooltip preferredPosition="bottom" trigger={content} content={helpText} />
+						<Tooltip preferredPosition="below" content={helpText} />
 					{/if}
 				{:else}
 					{@render content()}
@@ -297,7 +298,7 @@
 		<ActionMenu
 			actions={secondaryActions}
 			groups={actionGroups}
-			rollup={isNavigationCollapsed}
+			rollup={mediaQueryStateContext()?.isNavigationCollapsed}
 			rollupActionsLabel={title ? `View actions for ${title}` : undefined}
 			{onActionRollup}
 		/>
@@ -310,7 +311,7 @@
 	<Box
 		printHidden
 		paddingBlockEnd="100"
-		paddingInlineEnd={secondaryActions && isNavigationCollapsed ? '1000' : undefined}
+		paddingInlineEnd={secondaryActions && mediaQueryStateContext()?.isNavigationCollapsed ? '1000' : undefined}
 	>
 		<InlineStack gap="400" align="space-between" blockAlign="center">
 			{@render breadcrumbMarkup()}

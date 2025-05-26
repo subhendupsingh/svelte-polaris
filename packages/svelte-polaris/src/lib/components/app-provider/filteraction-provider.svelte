@@ -13,7 +13,7 @@
 
 	// Provide the 'filterActions' value using the defined context key.
 	// The 'filterActions' prop itself is reactive if passed from a reactive source.
-	setContext(FILTER_ACTIONS_CONTEXT_KEY, filterActions); // [cite: 200]
+	setContext(FILTER_ACTIONS_CONTEXT_KEY, () => filterActions); // [cite: 200]
 </script>
 
 {@render children()}

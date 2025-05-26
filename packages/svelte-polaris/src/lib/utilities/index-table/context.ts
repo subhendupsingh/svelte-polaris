@@ -1,7 +1,7 @@
 
 export interface RowContextType {
   itemId?: string;
-  selected?: boolean | 'indeterminate';
+  selected?: boolean;
   disabled?: boolean;
   position?: number;
   onInteraction?: (event: MouseEvent | KeyboardEvent) => void;

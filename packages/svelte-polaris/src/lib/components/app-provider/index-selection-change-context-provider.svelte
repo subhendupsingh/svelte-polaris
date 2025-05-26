@@ -5,7 +5,7 @@
 
     let { children, value }: { children?: Snippet, value: HandleSelectionChange } = $props();
 
-    setContext(INDEX_SELECTION_CHANGE_CONTEXT_KEY, value)
+    setContext(INDEX_SELECTION_CHANGE_CONTEXT_KEY, () => value)
 </script>
 
 {@render children?.()}

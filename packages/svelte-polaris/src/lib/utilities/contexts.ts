@@ -5,7 +5,13 @@ import { MAPPED_ACTION_CONTEXT_KEY, type MappedActionContextType } from "./listb
 
 export const SCROLLABLE_CONTEXT_KEY = 'scrollable';
 export type ScrollToPositionFn = (scrollY: number) => void;
-export const useContext = <T>(key: string) => getContext<T>(key);
+export const useContext = <T>(key: string): (() => T) => {
+  const context = getContext<T>(key) as any;
+  if (!context) {
+    throw new Error(`No context found for key: ${key}`);
+  }
+  return context;
+}
 
 export const PORTALS_MANAGER_KEY = 'PortalsManager'; // Unique key for the context
 
@@ -15,7 +21,7 @@ export interface PortalsManager {
   container?: PortalsContainerElement;
 }
 
-export function usePortalsManager() {
+/* export function usePortalsManager() {
   const portalsManager = useContext<PortalsManager | undefined>(PORTALS_MANAGER_KEY);
 
   if (!portalsManager) {
@@ -25,7 +31,7 @@ export function usePortalsManager() {
   }
 
   return portalsManager;
-}
+} */
 
 export const THEME_NAME_KEY = 'ThemeName';
 export function useThemeName() {
@@ -40,7 +46,7 @@ export function useThemeName() {
   return themeName;
 }
 
-export function useEphemeralPresenceManager() {
+/* export function useEphemeralPresenceManager() {
     const ephemeralPresenceManager = useContext<EphemeralPresenceManagerContextType | undefined>(EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY);
 
     if (!ephemeralPresenceManager) {
@@ -50,9 +56,9 @@ export function useEphemeralPresenceManager() {
     }
 
     return ephemeralPresenceManager;
-}
+} */
 
-export function useMappedAction() {
+/* export function useMappedAction() {
     const mappedAction = useContext<MappedActionContextType | undefined>(MAPPED_ACTION_CONTEXT_KEY);
 
     if (!mappedAction) {
@@ -62,7 +68,7 @@ export function useMappedAction() {
     }
 
     return mappedAction;
-}
+} */
 
 
 

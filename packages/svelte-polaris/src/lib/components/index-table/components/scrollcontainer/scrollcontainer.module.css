@@ -1,3 +1,11 @@
-.container {
-  /* Add your styles for scrollcontainer here */
+.ScrollContainer {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  border-radius: inherit;
+}
+
+.ScrollContainer::-webkit-scrollbar {
+  display: none;
 }

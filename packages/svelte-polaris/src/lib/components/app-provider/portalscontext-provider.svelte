@@ -5,7 +5,7 @@
 
     let { container, children }: {container?: PortalsContainerElement, children: Snippet} =$props();
   
-    setContext<PortalsManager | undefined>(PORTALS_MANAGER_KEY, { container });
+    setContext(PORTALS_MANAGER_KEY, () => ({ container }));
   
   </script>
   

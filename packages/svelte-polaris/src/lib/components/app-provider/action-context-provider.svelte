@@ -5,7 +5,7 @@
 
     let { children, value }: { children?: Snippet, value?: boolean } = $props();
     
-    setContext<boolean>(ACTION_CONTEXT_KEY, value || false);
+    setContext(ACTION_CONTEXT_KEY, () => value || false);
 </script>
 
 {@render children?.()}

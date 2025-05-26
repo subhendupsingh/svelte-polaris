@@ -6,7 +6,7 @@
 
 	let { children, value }: { children?: Snippet, value: StickyManager } = $props();
 
-	setContext(STICKY_MANAGER_CONTEXT_KEY, value);
+	setContext(STICKY_MANAGER_CONTEXT_KEY, () => value);
 </script>
 
 {#if children}

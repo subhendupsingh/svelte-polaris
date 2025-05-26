@@ -7,7 +7,7 @@
 		// isMobile: false,
 	});
 
-	setContext(MEDIA_QUERY_CONTEXT_KEY, mediaQueryState);
+	setContext(MEDIA_QUERY_CONTEXT_KEY, () => mediaQueryState);
 
 	onMount(() => { 
 		if (typeof window !== 'undefined' && window.matchMedia) {

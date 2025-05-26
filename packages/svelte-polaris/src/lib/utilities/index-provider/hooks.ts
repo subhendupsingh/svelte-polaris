@@ -1,40 +1,38 @@
 import { useContext } from '$utilities/contexts.js';
-import type { IndexContextType } from './context.js';
-import {SELECT_ALL_ITEMS, SelectionType} from './types.js';
+import type { IndexContextType, IndexRowContextType } from './context.js';
+import { SELECT_ALL_ITEMS } from './types.js';
 import type {
   HandleSelectionChange,
-  Range,
   BulkSelectionDataOptions,
-  HandleBulkSelectionOptions,
 } from './types.js';
 
 export const INDEX_SELECTION_CHANGE_CONTEXT_KEY = 'IndexSelectionChangeContext';
 export const INDEX_ROW_CONTEXT_KEY = 'IndexRowContext';
 export const INDEX_CONTEXT_KEY = 'IndexContext';
 
-export function useIndexSelectionChange() {
-  const onSelectionChange = useContext(INDEX_SELECTION_CHANGE_CONTEXT_KEY);
+/* export function useIndexSelectionChange() {
+  const onSelectionChange = useContext<HandleSelectionChange>(INDEX_SELECTION_CHANGE_CONTEXT_KEY);
   if (!onSelectionChange) {
     throw new Error(`Missing IndexProvider context`);
   }
   return onSelectionChange;
-}
+} */
 
-export function useIndexRow() {
-  const indexRow = useContext(INDEX_ROW_CONTEXT_KEY);
+/* export function useIndexRow() {
+  const indexRow = useContext<IndexRowContextType>(INDEX_ROW_CONTEXT_KEY);
   if (!indexRow) {
     throw new Error(`Missing IndexProvider context`);
   }
   return indexRow;
-}
+} */
 
-export function useIndexValue() {
+/* export function useIndexValue() {
   const index = useContext<IndexContextType>(INDEX_CONTEXT_KEY);
   if (!index) {
     throw new Error(`Missing IndexProvider context`);
   }
   return index;
-}
+} */
 
 export function useBulkSelectionData({
   selectedItemsCount,
@@ -60,7 +58,7 @@ export function useBulkSelectionData({
   const bulkActionsLabel = getBulkActionsLabel();
   const bulkActionsAccessibilityLabel = getBulkActionsAccessibilityLabel();
 
-  let bulkSelectState: boolean | 'indeterminate' | undefined = 'indeterminate';
+  let bulkSelectState: boolean | undefined = undefined;
   if (!selectedItemsCount || selectedItemsCount === 0) {
     bulkSelectState = undefined;
   } else if (
@@ -116,44 +114,4 @@ export function useBulkSelectionData({
       return `Select all ${resourceName.plural}`;
     }
   }
-}
-
-export function useHandleBulkSelection({
-  onSelectionChange = () => {},
-}: HandleBulkSelectionOptions) {
-  let lastSelected = $state<number | null>(null);
-
-  const handleSelectionChange: HandleSelectionChange = (
-      selectionType: SelectionType,
-      toggleType: boolean,
-      selection?: string | Range,
-      sortOrder?: number,
-    ) => {
-      const prevSelected = lastSelected;
-
-      if (SelectionType.Multi && typeof sortOrder === 'number') {
-        lastSelected = sortOrder;
-      }
-
-      if (
-        selectionType === SelectionType.Single ||
-        (selectionType === SelectionType.Multi &&
-          (typeof prevSelected !== 'number' || typeof sortOrder !== 'number'))
-      ) {
-        onSelectionChange(SelectionType.Single, toggleType, selection);
-      } else if (selectionType === SelectionType.Multi) {
-        const min = Math.min(prevSelected as number, sortOrder as number);
-        const max = Math.max(prevSelected as number, sortOrder as number);
-        onSelectionChange(selectionType, toggleType, [min, max]);
-      } else if (
-        selectionType === SelectionType.Page ||
-        selectionType === SelectionType.All
-      ) {
-        onSelectionChange(selectionType, toggleType);
-      } else if (selectionType === SelectionType.Range) {
-        onSelectionChange(SelectionType.Range, toggleType, selection);
-      }
-    };
-
-  return handleSelectionChange;
 }

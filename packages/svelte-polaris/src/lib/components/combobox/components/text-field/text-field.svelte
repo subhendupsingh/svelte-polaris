@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { labelID } from '$lib/components/label/types.js';
 	import type { TextFieldProps } from '$lib/components/text-field/types.js';
-	import { useComboboxTextField } from '$utilities/combobox/hooks.js';
 	import TextField from '$lib/components/text-field/text-field.svelte';
+	import { COMBOBOX_TEXT_FIELD_CONTEXT_KEY, type ComboboxTextFieldType } from '$utilities/combobox/types.js';
+	import { useContext } from '$utilities/contexts.js';
 
 	let {
 		value,
@@ -15,7 +16,7 @@
 		...rest
 	}: TextFieldProps = $props();
 
-	const comboboxTextFieldContext = useComboboxTextField();
+	const comboboxTextFieldContext = useContext<ComboboxTextFieldType>(COMBOBOX_TEXT_FIELD_CONTEXT_KEY);
 	const {
 		activeOptionId,
 		listboxId,
@@ -25,7 +26,7 @@
 		onTextFieldFocus,
 		onTextFieldChange,
 		onTextFieldBlur
-	} = comboboxTextFieldContext;
+	} = $derived(comboboxTextFieldContext());
 	const uniqueId = $props.id();
 	const textFieldId = $derived(idProp || uniqueId);
 	const labelId = $derived(labelID(idProp || uniqueId));

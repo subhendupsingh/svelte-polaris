@@ -7,9 +7,11 @@
 	import { setRootProperty } from '$utilities/set-root-property.js';
 	import { classNames } from '$utilities/css.js';
 	import sharedStyles from '../../index-table.module.css';
+	import { browser } from '$app/environment';
 
 	let { children }: { children: Snippet } = $props();
-	const { position } = useContext<RowContextType>(ROW_CONTEXT_KEY);
+	const rowContext = useContext<RowContextType>(ROW_CONTEXT_KEY);
+	const { position } = $derived(rowContext());
 	let checkboxNode = $state<HTMLTableDataCellElement | null>(null);
 
 	const handleResize = debounce(() => {
@@ -20,12 +22,14 @@
 	});
 
 	onMount(() => {
+		if (!browser) return;
 		handleResize();
-		window.addEventListener('resize', handleResize);
+		window?.addEventListener('resize', handleResize);
 	});
 
 	onDestroy(() => {
-		window.removeEventListener('resize', handleResize);
+		if (!browser) return;
+		window?.removeEventListener('resize', handleResize);
 	});
 
 	const checkboxClassName = $derived(

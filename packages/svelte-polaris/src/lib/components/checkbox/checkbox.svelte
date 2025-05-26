@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { classNames, variationName } from '$utilities/css.js';
 	import { noop } from '$utilities/noop.js';
-	import MinusIcon from '@shopify/polaris-icons/dist/svg/MinusIcon.svg?component';
 	import Choice from '../choice/choice.svelte';
 	import { helpTextID } from '../choice/types.js';
-	import Icon from '../icon/icon.svelte';
 	import { errorTextID } from '../inline-error/types.js';
 	import styles from './checkbox.module.css';
 	import type { CheckboxProps } from './types.js';
@@ -31,12 +29,19 @@
 		bleedInlineStart,
 		bleedInlineEnd,
 		isWithinListbox,
-		tone
+		tone,
+		checkBoxRef = $bindable(),
 	}: CheckboxProps = $props();
 
 	let inputNode = $state<HTMLInputElement | undefined>(undefined);
 	const uniqId = $props.id();
 	const id = idProp ?? uniqId;
+
+	checkBoxRef = {
+		focus: () => {
+			inputNode?.focus();
+		}
+	};
 
 	const handleBlur = () => {
 		onBlur && onBlur();

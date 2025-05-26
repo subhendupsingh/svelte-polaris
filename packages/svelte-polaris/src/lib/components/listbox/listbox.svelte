@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
-	import { useComboboxListbox } from '$utilities/combobox/hooks.js';
 	import { debounce } from '$utilities/debounce.js';
 	import { scrollOptionIntoView } from '$utilities/listbox/utilities.js';
 	import { scrollable } from '$utilities/shared.js';
-	import { Key, type NavigableOption } from '$utilities/types.js';
+	import { Key, type ComboboxListboxType, type NavigableOption } from '$utilities/types.js';
 	import KeypressListener from '../keypress-listener/keypress-listener.svelte';
 	import styles from './listbox.module.css';
 	import Text from '../text/text.svelte';
@@ -19,6 +18,8 @@
 	} from './types.js';
 	import ListboxContentProvider from '../app-provider/list-box-content-provider.svelte';
 	import WithinListBoxContextProvider from '../app-provider/within-list-box-context-provider.svelte';
+	import { useContext } from '$utilities/contexts.js';
+	import { COMBOBOX_LIST_BOX_CONTEXT_KEY } from '$utilities/combobox/types.js';
 	let {
 		children,
 		autoSelection = AutoSelection.FirstSelected,
@@ -42,7 +43,7 @@
 	const enableKeyboardEvents = keyboardEventsEnabled.setTrue;
 	const disableKeyboardEvents = keyboardEventsEnabled.setFalse;
 
-	const {
+	/* const {
 		listboxId,
 		textFieldLabelId,
 		textFieldFocused,
@@ -51,13 +52,15 @@
 		setListboxId,
 		onOptionSelected,
 		onKeyToBottom
-	} = useComboboxListbox() || {};
+	} = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY) || {}; */
 
-	const inCombobox = Boolean(setActiveOptionId);
+	const comboboxListBoxContext = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY);
+
+	const inCombobox = Boolean(comboboxListBoxContext()?.setActiveOptionId);
 
 	$effect(() => {
-		if (setListboxId && !listboxId) {
-			setListboxId(listId);
+		if (comboboxListBoxContext()?.setListboxId && !comboboxListBoxContext()?.listboxId) {
+			comboboxListBoxContext()?.setListboxId?.(listId);
 		}
 	});
 
@@ -107,9 +110,9 @@
 
 	const handleScrollIntoViewDebounced = debounce(handleScrollIntoView, 50);
 	const handleKeyToBottom = () => {
-		if (onKeyToBottom) {
+		if (comboboxListBoxContext()?.onKeyToBottom) {
 			lazyLoading = true;
-			return Promise.resolve(onKeyToBottom());
+			return Promise.resolve(comboboxListBoxContext()?.onKeyToBottom?.());
 		}
 	};
 
@@ -119,7 +122,7 @@
 		nextOption.element?.setAttribute(OPTION_FOCUS_ATTRIBUTE, 'true');
 		handleScrollIntoViewDebounced(nextOption);
 		activeOption = nextOption;
-		setActiveOptionId?.(nextOption.domId);
+		comboboxListBoxContext()?.setActiveOptionId?.(nextOption.domId);
 		onActiveOptionChange?.(nextOption.value, nextOption.domId);
 	};
 
@@ -219,7 +222,7 @@
 	const onOptionSelect = (option: NavigableOption) => {
 		handleChangeActiveOption(option);
 
-		if (onOptionSelected) onOptionSelected();
+		if (comboboxListBoxContext()?.onOptionSelected) comboboxListBoxContext()?.onOptionSelected?.();
 		if (onSelect) onSelect(option.value);
 	};
 
@@ -228,7 +231,7 @@
 
 		if (direction === 'down') {
 			if (currentIndex === lastIndex) {
-				nextIndex = willLoadMoreOptions ? currentIndex + 1 : 0;
+				nextIndex = comboboxListBoxContext()?.willLoadMoreOptions ? currentIndex + 1 : 0;
 			} else {
 				nextIndex = currentIndex + 1;
 			}
@@ -262,7 +265,7 @@
 			const triggerLazyLoad = nextIndex >= lastIndex;
 			const isDisabled = element?.getAttribute('aria-disabled') === 'true';
 
-			if (triggerLazyLoad && willLoadMoreOptions) {
+			if (triggerLazyLoad && comboboxListBoxContext()?.willLoadMoreOptions) {
 				await handleKeyToBottom();
 			}
 
@@ -332,7 +335,7 @@
 </script>
 
 {#snippet listeners()}
-	{#if keyboardEventsEnabled || textFieldFocused}
+	{#if keyboardEventsEnabled || comboboxListBoxContext()?.textFieldFocused}
 		<KeypressListener keyEvent="keydown" keyCode={Key.DownArrow} handler={handleDownArrow} />
 		<KeypressListener keyEvent="keydown" keyCode={Key.UpArrow} handler={handleUpArrow} />
 		<KeypressListener keyEvent="keydown" keyCode={Key.Enter} handler={handleEnter} />
@@ -351,7 +354,7 @@
 			role="listbox"
 			class={styles.Listbox}
 			aria-label={inCombobox ? undefined : accessibilityLabel}
-			aria-labelledby={textFieldLabelId}
+			aria-labelledby={comboboxListBoxContext()?.textFieldLabelId}
 			aria-busy={Boolean(loading)}
 			aria-activedescendant={activeOption && activeOption.domId}
 			tabindex="0"

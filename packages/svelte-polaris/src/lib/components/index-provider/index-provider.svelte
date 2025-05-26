@@ -4,7 +4,8 @@
 	import IndexSelectionChangeContextProvider from '../app-provider/index-selection-change-context-provider.svelte';
 	import IndexRowContextProvider from '../app-provider/index-row-context-provider.svelte';
 	import type { IndexProviderProps } from '$utilities/index-provider/types.js';
-	import { useBulkSelectionData, useHandleBulkSelection } from '$utilities/index-provider/hooks.js';
+	import { useBulkSelectionData } from '$utilities/index-provider/hooks.js';
+	import { HandleBulkSelection } from '$lib/use/use-bulk-selection.svelte.js';
 
 	let {
 		children,
@@ -34,7 +35,7 @@
 		defaultPaginatedSelectAllText
 	});
 
-	const handleSelectionChange = useHandleBulkSelection({ onSelectionChange });
+	const handleSelection = new HandleBulkSelection({ onSelectionChange });
 
 	const contextValue = $derived({
 		itemCount,
@@ -51,17 +52,17 @@
 		condensed
 	});
 
-    const rowContextValue = $derived({
-        selectable: isSelectableIndex,
-        selectMode: selectMode && isSelectableIndex,
-        condensed
-    })
+	const rowContextValue = $derived({
+		selectable: isSelectableIndex,
+		selectMode: selectMode && isSelectableIndex,
+		condensed,
+	});
 </script>
 
 <IndexContextProvider value={contextValue}>
 	<IndexRowContextProvider value={rowContextValue}>
-		<IndexSelectionChangeContextProvider value={handleSelectionChange}>
-			{children}
+		<IndexSelectionChangeContextProvider value={handleSelection.handleSelectionChange}>
+			{@render children?.()}
 		</IndexSelectionChangeContextProvider>
 	</IndexRowContextProvider>
 </IndexContextProvider>

@@ -4,7 +4,7 @@
     import { type Snippet } from 'svelte';
     
     let { children, value }: { children?: Snippet, value?: ListboxContextType } = $props();
-    setContext<ListboxContextType|undefined>(LISTBOX_CONTEXT_KEY, value);
+    setContext(LISTBOX_CONTEXT_KEY, () => value);
 </script>
 
 {@render children?.()}

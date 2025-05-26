@@ -1,6 +1,34 @@
 <script lang="ts">
-  import styles from './index-table.module.css';
+	import IndexProvider from '../index-provider/index-provider.svelte';
+	import IndexTableBase from './index-table-base.svelte';
+	import type { IndexTableProps } from './types.js';
+	let {
+		children,
+		selectable = true,
+		itemCount,
+		selectedItemsCount = 0,
+		resourceName: passedResourceName,
+		loading,
+		hasMoreItems,
+		condensed,
+		onSelectionChange,
+		paginatedSelectAllText,
+		...restProps
+	}: IndexTableProps = $props();
 </script>
 
-<div class={styles.container}>
-  </div>
+<IndexProvider
+	selectable={selectable && !condensed}
+	{itemCount}
+	{selectedItemsCount}
+	resourceName={passedResourceName}
+	{loading}
+	{hasMoreItems}
+	{condensed}
+	{onSelectionChange}
+	{paginatedSelectAllText}
+>
+	<IndexTableBase {...restProps}>
+		{@render children?.()}
+	</IndexTableBase>
+</IndexProvider>

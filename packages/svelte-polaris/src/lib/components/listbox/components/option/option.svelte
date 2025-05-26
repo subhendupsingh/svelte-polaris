@@ -4,7 +4,7 @@
 		type MappedActionContextType
 	} from '$lib/utilities/listbox/types.js';
 	import UnstyledLink from '$lib/components/button/unstyled-link.svelte';
-	import { useContext, useMappedAction } from '$utilities/contexts.js';
+	import { useContext } from '$utilities/contexts.js';
 	import { classNames } from '$utilities/css.js';
 	import {
 		ACTION_CONTEXT_KEY,
@@ -25,9 +25,11 @@
 		divider
 	}: OptionProps = $props();
 
-	const isAction = useContext(ACTION_CONTEXT_KEY);
-	const { onOptionSelect } = useContext<ListboxContextType>(LISTBOX_CONTEXT_KEY) || {};
-	const { role, url, external, onAction, destructive } = useContext<MappedActionContextType>(MAPPED_ACTION_CONTEXT_KEY) || {};
+	const isAction = useContext<boolean>(ACTION_CONTEXT_KEY);
+	//const { onOptionSelect } = useContext<ListboxContextType>(LISTBOX_CONTEXT_KEY) || {};
+	const listBoxContext = useContext<ListboxContextType>(LISTBOX_CONTEXT_KEY) || {};
+	//const { role, url, external, onAction, destructive } = useContext<MappedActionContextType>(MAPPED_ACTION_CONTEXT_KEY) || {};
+	const mappedActionContext = useContext<MappedActionContextType>(MAPPED_ACTION_CONTEXT_KEY) || {};
 	
 	let listItemRef = $state<HTMLLIElement>();
 	let domId = $props.id();
@@ -37,10 +39,10 @@
 	const handleOptionSelect = (event: KeyboardEvent | MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
-		onAction && onAction();
+		mappedActionContext().onAction && mappedActionContext().onAction?.();
 
-		if (listItemRef && !onAction) {
-			onOptionSelect({
+		if (listItemRef && !mappedActionContext().onAction) {
+			listBoxContext()?.onOptionSelect({
 				domId,
 				value,
 				element: listItemRef,
@@ -57,7 +59,7 @@
 		[listboxWithinSectionDataSelector.attribute]: isWithinSection
 	});
 
-	const legacyRoleSupport = role || 'option';
+	const legacyRoleSupport = mappedActionContext().role || 'option';
 </script>
 
 {#snippet content()}
@@ -72,8 +74,8 @@
 {/snippet}
 
 {#snippet contentMarkup()}
-	{#if url}
-		<UnstyledLink {url} {external}>
+	{#if mappedActionContext().url}
+		<UnstyledLink url={mappedActionContext().url} external={mappedActionContext().external}>
 			{@render content()}
 		</UnstyledLink>
 	{:else}
@@ -86,7 +88,7 @@
 	data-listbox-option
 	data-listbox-option-action={isAction}
 	data-listbox-option-value={value}
-	data-listbox-option-destructive={destructive}
+	data-listbox-option-destructive={mappedActionContext().destructive}
 	data-within-section={isWithinSection}
 	class={classNames(styles.Option, divider && styles.divider)}
 	id={domId}

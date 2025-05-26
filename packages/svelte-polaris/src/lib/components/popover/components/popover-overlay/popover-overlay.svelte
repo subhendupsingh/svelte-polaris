@@ -167,7 +167,7 @@
 
 	function wasPolarisPortalDescendant(
 		composedPath: readonly EventTarget[],
-		portalsContainerElement: PortalsContainerElement
+		portalsContainerElement?: PortalsContainerElement
 	): boolean {
 		return composedPath.some(
 			(eventTarget) => eventTarget instanceof Node && portalsContainerElement?.contains(eventTarget)
@@ -182,7 +182,7 @@
 		const target = event.target as HTMLElement;
 		const composedPath = event.composedPath();
 		const wasDescendant = rest.preventCloseOnChildOverlayClick
-			? wasPolarisPortalDescendant(composedPath, context!.container)
+			? wasPolarisPortalDescendant(composedPath, context()?.container)
 			: wasContentNodeDescendant(composedPath, contentNode);
 		const isActivatorDescendant = nodeContainsDescendant(activator, target);
 		if (

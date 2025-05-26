@@ -13,16 +13,17 @@
 
 	let { children, selected, disabled }: TextOptionProps = $props();
 
-	const { allowMultiple } = useContext<ComboboxListboxOptionType>(COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY) || {};
-	const isAction = useContext<boolean>(ACTION_CONTEXT_KEY) || false;
+	//const { allowMultiple } = useContext<ComboboxListboxOptionType>(COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY) || {};
+	const comboboxListboxOptionContext = useContext<ComboboxListboxOptionType>(COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY) || {};
+	const actionContext = useContext<boolean>(ACTION_CONTEXT_KEY) || false;
 
 	const textOptionClassName = $derived(
 		classNames(
 			styles.TextOption,
-			selected && !allowMultiple && styles.selected,
+			selected && !comboboxListboxOptionContext()?.allowMultiple && styles.selected,
 			disabled && styles.disabled,
-			allowMultiple && styles.allowMultiple,
-			isAction && styles.isAction
+			comboboxListboxOptionContext()?.allowMultiple && styles.allowMultiple,
+			actionContext() && styles.isAction
 		)
 	);
 </script>
@@ -52,7 +53,7 @@
 
 <div class={textOptionClassName}>
 	<div class={styles.Content}>
-		{#if allowMultiple && !isAction}
+		{#if comboboxListboxOptionContext()?.allowMultiple && !actionContext()}
 			<div class={styles.Checkbox}>
 				{#if typeof children === 'string'}
 					<Checkbox {disabled} checked={selected} label={children} />

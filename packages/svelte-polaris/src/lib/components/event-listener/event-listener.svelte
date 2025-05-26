@@ -5,12 +5,12 @@
 
 	const attachListener = () => {
 		const window = customWindow || globalThis.window;
-		window.addEventListener(event, handler, { capture, passive });
+		window?.addEventListener(event, handler, { capture, passive });
 	};
 
 	const detachListener = (prevProps?: BaseEventProps) => {
 		const window = customWindow || globalThis.window;
-		window.removeEventListener(event, handler, capture);
+		window?.removeEventListener(event, handler, capture);
 	};
 
 	onMount(() => {

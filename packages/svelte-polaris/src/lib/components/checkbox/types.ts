@@ -1,4 +1,5 @@
 import type { ResponsiveProp } from "$utilities/css.js";
+import type { CheckboxHandles } from "$utilities/types.js";
 import type { ChoiceBleedProps } from "../choice/types.js";
 
 export interface CheckboxProps extends ChoiceBleedProps {
@@ -38,4 +39,5 @@ export interface CheckboxProps extends ChoiceBleedProps {
     tone?: 'magic';
     /** Whether the checkbox is within a listbox */
     isWithinListbox?: boolean;
+    checkBoxRef?: CheckboxHandles | null;
 }

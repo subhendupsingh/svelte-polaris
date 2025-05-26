@@ -1,4 +1,5 @@
 import type { Snippet } from "svelte";
+import type { Range } from "../../use/use-index-resource-state.svelte.js";
 
 export type IndexSelectedItems = string[] | 'All';
 
@@ -12,7 +13,7 @@ export enum SelectionType {
     Range = 'range',
 }
 
-export type Range = [number, number];
+//export type Range = [number, number];
 
 export interface IndexProviderProps {
     children?: Snippet;

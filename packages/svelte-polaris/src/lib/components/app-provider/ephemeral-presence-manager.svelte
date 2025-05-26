@@ -56,16 +56,16 @@
 		};
 	});
 
-	setContext<EphemeralPresenceManagerContextType | undefined>(
+	setContext(
 		EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY,
-		value
+		() => value
 	);
 
 	$effect(() => {
 		//console.log('Setting ephemeral presence manager context', value);
-		setContext<EphemeralPresenceManagerContextType | undefined>(
+		setContext(
 			EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY,
-			value
+			() => value
 		);
 	});
 </script>

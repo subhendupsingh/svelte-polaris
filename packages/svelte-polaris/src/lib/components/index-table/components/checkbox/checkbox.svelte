@@ -1,18 +1,22 @@
 <script lang="ts">
 	import styles from './checkbox.module.css';
-	import sharedStyles from '../../index-table.module.css';
 	import type { CheckboxProps } from './types.js';
 	import { useContext } from '$utilities/contexts.js';
-	import type { IndexRowContextType } from '$utilities/index-provider/context.js';
-	import { ROW_CONTEXT_KEY, type RowContextType } from '$utilities/index-table/context.js';
+	import { ROW_CONTEXT_KEY } from '$utilities/index-table/context.js';
 	import CheckboxWrapper from './checkbox-wrapper.svelte';
 	import { noop } from '$utilities/noop.js';
-	import { useIndexValue } from '$utilities/index-provider/hooks.js';
+	import Checkbox from '$lib/components/checkbox/checkbox.svelte';
+	import { getContext } from 'svelte';
+	import type { IndexContextType } from '$utilities/index-provider/context.js';
+	import { INDEX_CONTEXT_KEY } from '$utilities/index-provider/hooks.js';
 
 	let { accessibilityLabel }: CheckboxProps = $props();
-	const { resourceName } = useIndexValue();
-	const { itemId, selected, disabled, onInteraction } = useContext<RowContextType>(ROW_CONTEXT_KEY);
-	const label = accessibilityLabel ? accessibilityLabel : `Select ${resourceName}`;
+	const indexContext = useContext<IndexContextType>(INDEX_CONTEXT_KEY);
+	const { resourceName } = $derived(indexContext());
+
+	const rowContext = getContext<Function>(ROW_CONTEXT_KEY);
+	const { itemId, selected, disabled, onInteraction } = $derived(rowContext());
+	const label = $derived(accessibilityLabel ? accessibilityLabel : `Select ${resourceName}`);
 </script>
 
 <CheckboxWrapper>

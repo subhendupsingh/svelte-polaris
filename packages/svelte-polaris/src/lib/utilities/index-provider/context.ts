@@ -3,7 +3,7 @@ import type {SELECT_ALL_ITEMS} from './types.js';
 
 export interface IndexContextType {
   loading?: boolean;
-  bulkSelectState?: boolean | 'indeterminate';
+  bulkSelectState?: boolean;
   resourceName: {
     singular: string;
     plural: string;

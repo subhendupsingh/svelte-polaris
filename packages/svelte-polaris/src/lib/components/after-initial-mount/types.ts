@@ -1,0 +1,1 @@
+// Type definitions for after-initial-mount component

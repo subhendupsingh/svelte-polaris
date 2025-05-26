@@ -4,7 +4,7 @@
 	import styles from './loading.module.css';
 	import type { LoadingProps } from './types.js';
 	let { children, accessibilityLabel: label }: LoadingProps = $props();
-	const { setLoading } = useListbox();
+	const { setLoading } = $derived(useListbox()());
 
 	$effect(() => {
 		setLoading(label);
