@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { useBreakpoints } from "$lib/use/use-breakpoints.svelte.js";
+	import { UseBreakpoints } from "$lib/use/use-breakpoints.svelte.js";
 	import { classNames, variationName } from "$utilities/css.js";
 	import Text from "../text/text.svelte";
     import styles from './icon.module.css';
@@ -13,7 +13,9 @@
         )
     );
 
-    const {mdDown} = useBreakpoints();
+    const bp = new UseBreakpoints()
+    let breakpoints = $derived(bp.getCurrentBreakpoints());
+    const mdDown = $derived(breakpoints?.mdDown);
 </script>
 
 <span class={className}>

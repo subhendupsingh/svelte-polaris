@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
+	import { UseBreakpoints, useBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
 	import Avatar from '../avatar/avatar.svelte';
 	import type { AccountConnectionProps } from './types.js';
 	import Text from '../text/text.svelte';
@@ -20,7 +20,8 @@
 		termsOfService
 	}: AccountConnectionProps = $props();
 
-	const breakpoints = useBreakpoints();
+	const bp = new UseBreakpoints();
+	const breakpoints = $derived(bp.getCurrentBreakpoints());
 
 	const initials = $derived(
 		accountName
@@ -58,7 +59,7 @@
 
 {#snippet termsOfServiceMarkup()}
 	{#if termsOfService}
-		<Box paddingBlockStart={breakpoints.mdUp ? '400' : '500'}>
+		<Box paddingBlockStart={breakpoints?.mdUp ? '400' : '500'}>
 			{#if typeof termsOfService === 'string'}
 				<Text as="span" variant="bodyMd">
 					{termsOfService}

@@ -7,6 +7,10 @@
 	import Text from '$lib/components/text/text.svelte';
 	import LegacyCard from '$lib/components/legacy-card/legacy-card.svelte';
 	import { IndexResourceState } from '$lib/use/use-index-resource-state.svelte.js';
+	import { applyStyles } from '$utilities/css.js';
+	import BlockStack from '$lib/components/block-stack/block-stack.svelte';
+	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
+	import { UseBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
 
 	const orders = [
 		{
@@ -16,7 +20,8 @@
 			customer: 'Jaydon Stanton',
 			total: '$969.44',
 			paymentStatus: 'complete',
-			fulfillmentStatus: 'incomplete'
+			fulfillmentStatus: 'incomplete',
+			disabled: false
 		},
 		{
 			id: '1019',
@@ -25,7 +30,8 @@
 			customer: 'Ruben Westerfelt',
 			total: '$701.19',
 			paymentStatus: 'incomplete',
-			fulfillmentStatus: 'incomplete'
+			fulfillmentStatus: 'incomplete',
+			disabled: false
 		},
 		{
 			id: '1018',
@@ -34,7 +40,8 @@
 			customer: 'Leo Carder',
 			total: '$798.24',
 			paymentStatus: 'incomplete',
-			fulfillmentStatus: 'incomplete'
+			fulfillmentStatus: 'incomplete',
+			disabled: false
 		}
 	];
 
@@ -43,8 +50,36 @@
 		plural: 'orders'
 	};
 
-	//const {selectedResources, allResourcesSelected, handleSelectionChange} = new IndexResourceState(orders)
-	const indexResourceState = new IndexResourceState(orders);
+	const selectableOrders = orders.filter((order) => !order.disabled);
+	const indexResourceState = new IndexResourceState(selectableOrders);
+	let isTableCondensed = $state(false);
+
+  const promotedBulkActions = [
+    {
+      content: 'Create shipping labels',
+      onAction: () => console.log('Todo: implement bulk edit'),
+    },
+  ];
+
+  const bulkActions = [
+    {
+      content: 'Add tags',
+      onAction: () => console.log('Todo: implement bulk add tags'),
+    },
+    {
+      content: 'Remove tags',
+      onAction: () => console.log('Todo: implement bulk remove tags'),
+    },
+    {
+      icon: DeleteIcon,
+      destructive: true,
+      content: 'Delete orders',
+      onAction: () => console.log('Todo: implement bulk delete'),
+    },
+  ]
+
+  const bp = new UseBreakpoints()
+  let smDown = $derived(bp.getCurrentBreakpoints()?.smDown);
 </script>
 
 {#snippet paymentStatus(progress: BadgeProps['progress'])}
@@ -54,31 +89,6 @@
 {#snippet fulfillmentStatus(progress: BadgeProps['progress'])}
 	<Badge {progress}>Unfulfilled</Badge>
 {/snippet}
-
-<!-- {#snippet rowMarkup()}
-	{#each orders as { id, order, date, customer, total }, index}
-		<IndexTable.Row
-			{id}
-			position={index}
-			selected={indexResourceState.selectedResources.includes(id)}
-		>
-			<IndexTable.Cell>
-				<Text variant="bodyMd" fontWeight="bold" as="span">
-					{order}
-				</Text>
-			</IndexTable.Cell>
-			<IndexTable.Cell>{date}</IndexTable.Cell>
-			<IndexTable.Cell>{customer}</IndexTable.Cell>
-			<IndexTable.Cell>
-				<Text as="span" alignment="end" numeric>
-					{total}
-				</Text>
-			</IndexTable.Cell>
-			<IndexTable.Cell>{@render paymentStatus('complete')}</IndexTable.Cell>
-			<IndexTable.Cell>{@render fulfillmentStatus('incomplete')}</IndexTable.Cell>
-		</IndexTable.Row>
-	{/each}
-{/snippet} -->
 
 <Page
 	backAction={{ content: 'Products', url: '#' }}
@@ -122,7 +132,8 @@
 >
 	<LegacyCard>
 		<IndexTable
-			itemCount={orders.length}
+			condensed={smDown}
+			itemCount={selectableOrders.length}
 			{resourceName}
 			onSelectionChange={indexResourceState.handleSelectionChange}
 			selectedItemsCount={indexResourceState.allResourcesSelected
@@ -139,26 +150,49 @@
 		>
 			<!-- {@render rowMarkup()} -->
 
-			{#each orders as { id, order, date, customer, total }, index}
+			{#each orders as { id, order, date, customer, total, disabled }, index}
 				<IndexTable.Row
 					{id}
 					position={index}
+					{disabled}
 					selected={indexResourceState.selectedResources.includes(id)}
 				>
-					<IndexTable.Cell>
-						<Text variant="bodyMd" fontWeight="bold" as="span">
-							{order}
-						</Text>
-					</IndexTable.Cell>
-					<IndexTable.Cell>{date}</IndexTable.Cell>
-					<IndexTable.Cell>{customer}</IndexTable.Cell>
-					<IndexTable.Cell>
-						<Text as="span" alignment="end" numeric>
-							{total}
-						</Text>
-					</IndexTable.Cell>
-					<IndexTable.Cell>{@render paymentStatus('complete')}</IndexTable.Cell>
-					<IndexTable.Cell>{@render fulfillmentStatus('incomplete')}</IndexTable.Cell>
+					{#if !isTableCondensed}
+						<IndexTable.Cell>
+							<Text variant="bodyMd" fontWeight="bold" as="span">
+								{order}
+							</Text>
+						</IndexTable.Cell>
+						<IndexTable.Cell>{date}</IndexTable.Cell>
+						<IndexTable.Cell>{customer}</IndexTable.Cell>
+						<IndexTable.Cell>
+							<Text as="span" alignment="end" numeric>
+								{total}
+							</Text>
+						</IndexTable.Cell>
+						<IndexTable.Cell>{@render paymentStatus('complete')}</IndexTable.Cell>
+						<IndexTable.Cell>{@render fulfillmentStatus('incomplete')}</IndexTable.Cell>
+					{:else}
+						<div style={applyStyles({ padding: '12px 16px', width: '100%' })}>
+							<BlockStack gap="100">
+								<Text as="span" variant="bodySm" tone="subdued">
+									{order} • {date}
+								</Text>
+								<InlineStack align="space-between">
+									<Text as="span" variant="bodyMd" fontWeight="semibold">
+										{customer}
+									</Text>
+									<Text as="span" variant="bodyMd">
+										{total}
+									</Text>
+								</InlineStack>
+								<InlineStack align="start" gap="100">
+									{@render paymentStatus('complete')}
+									{@render fulfillmentStatus('incomplete')}
+								</InlineStack>
+							</BlockStack>
+						</div>
+					{/if}
 				</IndexTable.Row>
 			{/each}
 		</IndexTable>

@@ -73,7 +73,6 @@
 	const handleSelectionChange = $derived(useIndexSelectionChange());
 
 	function handleSelectPage(checked: boolean) {
-		console.log("checked", checked);
 		handleSelectionChange(SelectionType.Page, checked);
 	}
 

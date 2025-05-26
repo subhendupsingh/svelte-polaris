@@ -84,9 +84,9 @@
 			hiddenPromotedActions,
 			hasMeasured: containerWidth !== Infinity
 		}; */
-    states.visiblePromotedActions = visiblePromotedActions;
-    states.hiddenPromotedActions = hiddenPromotedActions;
-    states.hasMeasured = containerWidth !== Infinity;
+		states.visiblePromotedActions = visiblePromotedActions;
+		states.hiddenPromotedActions = hiddenPromotedActions;
+		states.hasMeasured = containerWidth !== Infinity;
 	});
 
 	const activatorLabel = $derived(

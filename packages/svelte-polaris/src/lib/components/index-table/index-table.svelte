@@ -10,7 +10,7 @@
 		resourceName: passedResourceName,
 		loading,
 		hasMoreItems,
-		condensed,
+		condensed = $bindable(),
 		onSelectionChange,
 		paginatedSelectAllText,
 		...restProps

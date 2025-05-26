@@ -14,7 +14,6 @@ export class HandleBulkSelection {
 
 
     public handleSelectionChange =(selectionType: SelectionType, toggleType: boolean, selection?: string | Range, sortOrder?: number): void => {
-        console.log("handleSelectionChange", selectionType, toggleType, selection, sortOrder);
         const prevSelected = this.lastSelected;
         
         if (selectionType === SelectionType.Multi && typeof sortOrder === 'number') {

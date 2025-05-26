@@ -27,13 +27,13 @@
 		resourceName,
 		selectMode,
 		bulkSelectState
-	} = useBulkSelectionData({
+	} = $derived(useBulkSelectionData({
 		selectedItemsCount,
 		itemCount,
 		hasMoreItems,
 		resourceName: passedResourceName,
 		defaultPaginatedSelectAllText
-	});
+	}));
 
 	const handleSelection = new HandleBulkSelection({ onSelectionChange });
 

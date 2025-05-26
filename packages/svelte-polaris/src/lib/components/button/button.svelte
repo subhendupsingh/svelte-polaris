@@ -7,7 +7,7 @@
 		LinkButtonProps
 	} from './button.types.js';
 	import styles from './button.module.css';
-	import { useBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
+	import { UseBreakpoints, useBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
 	import UnstyledButton from './unstyled-button.svelte';
 	import Text from '../text/text.svelte';
 	import Spinner from '../spinner/spinner.svelte';
@@ -55,7 +55,8 @@
 		children
 	}: ButtonProps & LinkButtonProps & ActionButtonProps = $props();
 	const hasPlainText = $derived(['plain', 'monochromePlain'].includes(variant));
-	const { mdUp } = useBreakpoints();
+	const bp = new UseBreakpoints();
+	const breakpoints = $derived(bp.getCurrentBreakpoints());
 
 	const textFontWeight = $derived(() => {
 		if (hasPlainText) {
@@ -63,7 +64,7 @@
 		}
 
 		if (variant === 'primary') {
-			return mdUp ? 'medium' : 'semibold';
+			return breakpoints?.mdUp ? 'medium' : 'semibold';
 		}
 
 		return 'medium';

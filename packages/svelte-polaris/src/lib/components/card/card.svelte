@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { useBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
 	import type { BorderRadiusAliasOrScale } from '@shopify/polaris-tokens';
 	import Box from '../box/box.svelte';
 	import ShadowBevel from '../shadow-bevel/shadow-bevel.svelte';
 	import type { CardProps } from './types.js';
+	import { UseBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
 	let {
 		children,
 		background = 'bg-surface',
@@ -12,8 +12,9 @@
 	}: CardProps = $props();
 
 	const defaultBorderRadius: BorderRadiusAliasOrScale = '300';
-	let breakpoints = useBreakpoints();
-	const hasBorderRadius = $derived(Boolean(breakpoints[`${roundedAbove}Up`]));
+	const bp = new UseBreakpoints()
+	let breakpoints = $derived(bp.getCurrentBreakpoints());
+	const hasBorderRadius = $derived(Boolean(breakpoints?.[`${roundedAbove}Up`]));
 </script>
 
 <ShadowBevel boxShadow="100" borderRadius={hasBorderRadius ? defaultBorderRadius : '0'} zIndex="32">

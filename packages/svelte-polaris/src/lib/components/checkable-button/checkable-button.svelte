@@ -3,6 +3,7 @@
 	import Checkbox from '../checkbox/checkbox.svelte';
 	import styles from './checkable-button.module.css';
 	import type { CheckableButtonProps } from './types.js';
+	import Text from '../text/text.svelte';
 
 	let {
 		accessibilityLabel,
@@ -27,5 +28,13 @@
 			onChange={onToggleAll}
 			bind:checkBoxRef
 		/>
+
+		{#if label}
+			<span class={styles.Label} aria-live={ariaLive}>
+				<Text as="span" variant="bodySm" fontWeight="medium">
+					{label}
+				</Text>
+			</span>
+		{/if}
 	</div>
 </div>

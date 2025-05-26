@@ -2,8 +2,15 @@
 	import { UseToggle } from '$lib/use/use-toggle.svelte.js';
 	import { classNames } from '$utilities/css.js';
 	import { debounce } from '$utilities/debounce.js';
-	import { INDEX_CONTEXT_KEY, INDEX_SELECTION_CHANGE_CONTEXT_KEY } from '$utilities/index-provider/hooks.js';
-	import { SELECT_ALL_ITEMS, SelectionType, type HandleSelectionChange } from '$utilities/index-provider/types.js';
+	import {
+		INDEX_CONTEXT_KEY,
+		INDEX_SELECTION_CHANGE_CONTEXT_KEY
+	} from '$utilities/index-provider/hooks.js';
+	import {
+		SELECT_ALL_ITEMS,
+		SelectionType,
+		type HandleSelectionChange
+	} from '$utilities/index-provider/types.js';
 	import styles from './index-table.module.css';
 	import {
 		SCROLL_BAR_DEBOUNCE_PERIOD,
@@ -58,8 +65,8 @@
 		condensed
 	} = useIndexValue(); */
 
-	const indexValueContext = useContext<IndexContextType>(INDEX_CONTEXT_KEY)
-		const {
+	const indexValueContext = useContext<IndexContextType>(INDEX_CONTEXT_KEY);
+	const {
 		loading,
 		bulkSelectState,
 		resourceName,
@@ -74,7 +81,9 @@
 	} = $derived(indexValueContext());
 
 	//const handleSelectionChange = useIndexSelectionChange();
-	const handleSelectionChangeContext = useContext<HandleSelectionChange>(INDEX_SELECTION_CHANGE_CONTEXT_KEY);
+	const handleSelectionChangeContext = useContext<HandleSelectionChange>(
+		INDEX_SELECTION_CHANGE_CONTEXT_KEY
+	);
 	const handleSelectionChange = $derived(handleSelectionChangeContext());
 	const hasMoreLeftColumns = new UseToggle(false);
 	const toggleHasMoreLeftColumns = hasMoreLeftColumns.toggle;
@@ -439,7 +448,8 @@
 		{@render sharedMarkup()}
 		<ScrollContainer
 			bind:scrollableContainerRef={scrollableContainerElement}
-			onScroll={handleScrollContainerScroll}>
+			onScroll={handleScrollContainerScroll}
+		>
 			<table bind:this={tableElement} class={tableClassNames}>
 				<thead>
 					<tr class={styles.HeadingRow}>{@render headingsMarkup()}</tr>
@@ -537,18 +547,18 @@
 			Tag="th"
 			tagProps={{ 'data-index-table-heading': true }}
 			id={heading.id}
-			selectable={selectable}
-			sortable={sortable}
-			sortColumnIndex={sortColumnIndex}
-			onSort={onSort}
-			sortDirection={sortDirection}
-			defaultSortDirection={defaultSortDirection}
-			sortToggleLabels={sortToggleLabels}
-			resourceName={resourceName}
-			bulkSelectState={bulkSelectState}
-			selectMode={selectMode}
-			itemCount={itemCount}
-			selectedItemsCount={selectedItemsCount}
+			{selectable}
+			{sortable}
+			{sortColumnIndex}
+			{onSort}
+			{sortDirection}
+			{defaultSortDirection}
+			{sortToggleLabels}
+			{resourceName}
+			{bulkSelectState}
+			{selectMode}
+			{itemCount}
+			{selectedItemsCount}
 		/>
 		<!-- {@render renderHeading(heading, index, 'th', { 'data-index-table-heading': true }, heading.id)} -->
 	{/each}
@@ -556,24 +566,24 @@
 
 {#snippet stickyHeadingsMarkup()}
 	{#each headings as heading, index}
-	<RenderHeading
+		<RenderHeading
 			{heading}
 			{headings}
 			{index}
 			Tag="div"
 			tagProps={{ 'data-index-table-sticky-heading': true }}
-			selectable={selectable}
-			sortable={sortable}
-			sortColumnIndex={sortColumnIndex}
-			onSort={onSort}
-			sortDirection={sortDirection}
-			defaultSortDirection={defaultSortDirection}
-			sortToggleLabels={sortToggleLabels}
-			resourceName={resourceName}
-			bulkSelectState={bulkSelectState}
-			selectMode={selectMode}
-			itemCount={itemCount}
-			selectedItemsCount={selectedItemsCount}
+			{selectable}
+			{sortable}
+			{sortColumnIndex}
+			{onSort}
+			{sortDirection}
+			{defaultSortDirection}
+			{sortToggleLabels}
+			{resourceName}
+			{bulkSelectState}
+			{selectMode}
+			{itemCount}
+			{selectedItemsCount}
 		/>
 		<!-- {@render renderHeading(heading, index, 'div', { 'data-index-table-sticky-heading': true })} -->
 	{/each}

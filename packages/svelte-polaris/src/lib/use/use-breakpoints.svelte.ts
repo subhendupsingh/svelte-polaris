@@ -1,11 +1,5 @@
-import { browser } from '$app/environment';
-import { getMediaConditions, themeDefault } from '@shopify/polaris-tokens';
-import type {
-  BreakpointsAlias,
-  BreakpointsAliasDirection,
-  BreakpointsTokenGroup,
-} from '@shopify/polaris-tokens';
-import { onDestroy } from 'svelte';
+import { browser } from "$app/environment";
+import { getMediaConditions, themeDefault, type BreakpointsAlias, type BreakpointsAliasDirection, type BreakpointsTokenGroup } from "@shopify/polaris-tokens";
 
 const Breakpoints = {
   // TODO: Update to smDown
@@ -28,13 +22,13 @@ const noWindowMatches: MediaQueryList = {
 function noop() { }
 
 export function navigationBarCollapsed() {
-  return typeof window === 'undefined'
+  return !browser
     ? noWindowMatches
     : window.matchMedia(`(max-width: ${Breakpoints.navigationBarCollapsed})`);
 }
 
 export function stackedContent() {
-  return typeof window === 'undefined'
+  return !browser
     ? noWindowMatches
     : window.matchMedia(`(max-width: ${Breakpoints.stackedContent})`);
 }
@@ -54,141 +48,14 @@ type BreakpointsMatches = {
   [DirectionAlias in BreakpointsDirectionAlias]: boolean;
 };
 
+const hookCallbacks = new Set<
+  (breakpointAlias: BreakpointsDirectionAlias, matches: boolean) => void
+>();
+
 const breakpointsQueryEntries = getBreakpointsQueryEntries(
   themeDefault.breakpoints,
 );
 
-function getMatches(
-  defaults?: UseBreakpointsOptions['defaults'],
-  /**
-   * Used to force defaults on initial client side render so they match SSR
-   * values and hence avoid a Hydration error.
-   */
-  forceDefaults?: boolean,
-) {
-  const isServer = !browser;
-
-  if (!isServer && !forceDefaults) {
-    return Object.fromEntries(
-      breakpointsQueryEntries.map(([directionAlias, query]) => [
-        directionAlias,
-        browser ? window.matchMedia(query).matches : false,
-      ]),
-    ) as BreakpointsMatches;
-  }
-
-  if (typeof defaults === 'object' && defaults !== null) {
-    return Object.fromEntries(
-      breakpointsQueryEntries.map(([directionAlias]) => [
-        directionAlias,
-        defaults[directionAlias] ?? false,
-      ]),
-    ) as BreakpointsMatches;
-  }
-
-  return Object.fromEntries(
-    breakpointsQueryEntries.map(([directionAlias]) => [
-      directionAlias,
-      defaults ?? false,
-    ]),
-  ) as BreakpointsMatches;
-}
-
-export interface UseBreakpointsOptions {
-  /**
-   * Default values applied during SSR. Accepts a single value to use for each
-   * breakpoint alias, or an object for configuring select breakpoints.
-   *
-   * @default false
-   */
-  defaults:
-  | boolean
-  | {
-    [DirectionAlias in BreakpointsDirectionAlias]?: boolean;
-  };
-}
-
-/**
- * Retrieves media query matches for each directional Polaris `breakpoints` alias.
- *
- * @example
- * const {smUp} = useBreakpoints();
- * return smUp && 'Hello world';
- *
- * @example
- * const {mdUp} = useBreakpoints({defaults: {mdUp: true}});
- * mdUp //=> `true` during SSR
- *
- * @example
- * const breakpoints = useBreakpoints({defaults: true});
- * breakpoints //=> All values will be `true` during SSR
- */
-export function useBreakpoints(options?: UseBreakpointsOptions) {
-  // On SSR, and initial CSR, we force usage of the defaults to avoid a
-  // hydration mismatch error.
-  // Later, in the effect, we will call this again on the client side without
-  // any defaults to trigger a more accurate client side evaluation.
-  //let breakpoints = $state<BreakpointsMatches>(getMatches(options?.defaults, true));
-  let currentBreakpoints = $state<BreakpointsMatches>(
-    getMatches(options?.defaults, true),
-  );
-
-  if (browser) {
-    /* const setBreakpoints = (value: BreakpointsMatches) => {
-      breakpoints = value;
-    }; */
-
-    const handler = () => {
-      // When media query changes, get fresh matches without forcing defaults.
-      currentBreakpoints = getMatches(options?.defaults, false);
-    };
-
-    // useIsomorphicLayoutEffect - setup
-    const mediaQueryLists = breakpointsQueryEntries.map(([_, query]) => browser ? window.matchMedia(query) : null);
-
-    mediaQueryLists.forEach((mql) => {
-       /* if (mql) {
-         mql.addListener(handler);
-       } else {
-         mql?.onchange = handler;
-       } */
-      
-      if (mql) {
-        mql.onchange = handler;
-      }
-    });
-
-    // Trigger the breakpoint recalculation at least once client-side to ensure
-    // we don't have stale default values from SSR.
-    handler();
-
-    // useIsomorphicLayoutEffect - teardown
-    onDestroy(() => {
-      mediaQueryLists.forEach((mql) => {
-        if (mql) {
-          mql.onchange = null;
-        }
-      });
-    });
-  }
-
-  return currentBreakpoints;
-}
-
-/**
- * Converts `breakpoints` tokens into directional media query entries.
- *
- * @example
- * const breakpointsQueryEntries = getBreakpointsQueryEntries(breakpoints);
- * breakpointsQueryEntries === [
- *   ['xsUp', '(min-width: ...)'],
- *   ['xsDown', '(max-width: ...)'],
- *   ['xsOnly', '(min-width: ...) and (max-width: ...)'],
- *   ['smUp', '(min-width: ...) and (max-width: ...)'],
- *   ['mdUp', '(min-width: ...) and (max-width: ...)'],
- *   // etc.
- * ]
- */
 export function getBreakpointsQueryEntries(breakpoints: BreakpointsTokenGroup) {
   const mediaConditionEntries = Object.entries(getMediaConditions(breakpoints));
 
@@ -208,4 +75,97 @@ export function getBreakpointsQueryEntries(breakpoints: BreakpointsTokenGroup) {
 
 function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getDefaultMatches(defaults?: UseBreakpointsOptions['defaults']) {
+  return Object.fromEntries(
+    breakpointsQueryEntries.map(([directionAlias]) => [
+      directionAlias,
+      typeof defaults === 'boolean'
+        ? defaults
+        : defaults?.[directionAlias] ?? false,
+    ]),
+  ) as BreakpointsMatches;
+}
+
+function getLiveMatches() {
+  return Object.fromEntries(
+    breakpointsQueryEntries.map(([directionAlias, query]) => [
+      directionAlias,
+      window.matchMedia(query).matches,
+    ]),
+  ) as BreakpointsMatches;
+}
+
+export interface UseBreakpointsOptions {
+  /**
+   * Default values applied during SSR. Accepts a single value to use for each
+   * breakpoint alias, or an object for configuring select breakpoints.
+   *
+   * @default false
+   */
+  defaults:
+  | boolean
+  | {
+    [DirectionAlias in BreakpointsDirectionAlias]?: boolean;
+  };
+}
+
+export class UseBreakpoints {
+  breakpoints = $state<BreakpointsMatches>();
+  options?: UseBreakpointsOptions;
+
+  constructor(options?: UseBreakpointsOptions) {
+    this.options = options;
+    this.breakpoints = getDefaultMatches(options?.defaults);
+    this.startTracking();
+    this.registerCallbacks();
+  }
+
+  registerCallbacks() {
+    if (browser) {
+      breakpointsQueryEntries.forEach(([breakpointAlias, query]) => {
+        const eventListener = (event: { matches: boolean }) => {
+          for (const hookCallback of hookCallbacks) {
+            hookCallback(breakpointAlias, event.matches);
+          }
+        };
+        const mql = window.matchMedia(query);
+        if (mql.addListener) {
+          mql.addListener(eventListener);
+        } else {
+          mql.addEventListener('change', eventListener);
+        }
+      });
+    }
+  }
+
+  startTracking() {
+    $effect(() => {
+      this.breakpoints = getLiveMatches();
+      const callback = (
+        breakpointAlias: BreakpointsDirectionAlias,
+        matches: boolean,
+      ) => {
+        // @ts-ignore
+        this.breakpoints = {
+          ...(this.breakpoints ?? {}),
+          [breakpointAlias]: matches,
+        }
+      };
+
+      hookCallbacks.add(callback);
+      return () => {
+        hookCallbacks.delete(callback);
+      }
+    })
+  }
+
+  getCurrentBreakpoints() {
+    return this.breakpoints;
+  }
+}
+
+export function useBreakpoints(options?: UseBreakpointsOptions) {
+  return new UseBreakpoints(options);
 }
