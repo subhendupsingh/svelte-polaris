@@ -12,7 +12,7 @@
 	import { classNames } from '$utilities/css.js';
 	import ButtonGroup from '../button-group/index.js';
 	import Box from '../box/box.svelte';
-	import LegacyCard from '../legacy-card/components/index.js';
+	import LegacyCard from '../legacy-card/index.js';
 	import BlockStack from '../block-stack/block-stack.svelte';
 	import Popover from '../popover/index.js';
 

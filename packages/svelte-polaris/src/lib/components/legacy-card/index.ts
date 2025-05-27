@@ -1,5 +1,5 @@
-import LegacyCardSvelte from '../legacy-card.svelte';
-import LegacyCardSectionSvelte from './section/legacy-card-section.svelte';
+import LegacyCardSvelte from './legacy-card.svelte';
+import LegacyCardSectionSvelte from './components/section/legacy-card-section.svelte';
 
 // Create a type for the compound component.
 // It's the type of the LegacyCardSvelte component, augmented with a 'Section' property

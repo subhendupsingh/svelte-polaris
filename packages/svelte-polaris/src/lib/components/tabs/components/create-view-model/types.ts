@@ -1,0 +1,1 @@
+// Type definitions for create-view-model component

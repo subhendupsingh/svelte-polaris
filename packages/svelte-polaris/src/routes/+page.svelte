@@ -5,12 +5,13 @@
 	import type { BadgeProps } from '$lib/components/badge/types.js';
 	import IndexTable from '$lib/components/index-table/index.js';
 	import Text from '$lib/components/text/text.svelte';
-	import LegacyCard from '$lib/components/legacy-card/legacy-card.svelte';
+	import LegacyCard from '$lib/components/legacy-card/index.js';
 	import { IndexResourceState } from '$lib/use/use-index-resource-state.svelte.js';
 	import { applyStyles } from '$utilities/css.js';
 	import BlockStack from '$lib/components/block-stack/block-stack.svelte';
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
 	import { UseBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
+	import Tabs from '$lib/components/tabs/tabs.svelte';
 
 	const orders = [
 		{
@@ -54,32 +55,61 @@
 	const indexResourceState = new IndexResourceState(selectableOrders);
 	let isTableCondensed = $state(false);
 
-  const promotedBulkActions = [
-    {
-      content: 'Create shipping labels',
-      onAction: () => console.log('Todo: implement bulk edit'),
-    },
-  ];
+	const promotedBulkActions = [
+		{
+			content: 'Create shipping labels',
+			onAction: () => console.log('Todo: implement bulk edit')
+		}
+	];
 
-  const bulkActions = [
-    {
-      content: 'Add tags',
-      onAction: () => console.log('Todo: implement bulk add tags'),
-    },
-    {
-      content: 'Remove tags',
-      onAction: () => console.log('Todo: implement bulk remove tags'),
-    },
-    {
-      icon: DeleteIcon,
-      destructive: true,
-      content: 'Delete orders',
-      onAction: () => console.log('Todo: implement bulk delete'),
-    },
-  ]
+	const bulkActions = [
+		{
+			content: 'Add tags',
+			onAction: () => console.log('Todo: implement bulk add tags')
+		},
+		{
+			content: 'Remove tags',
+			onAction: () => console.log('Todo: implement bulk remove tags')
+		},
+		{
+			icon: DeleteIcon,
+			destructive: true,
+			content: 'Delete orders',
+			onAction: () => console.log('Todo: implement bulk delete')
+		}
+	];
 
-  const bp = new UseBreakpoints()
-  let smDown = $derived(bp.getCurrentBreakpoints()?.smDown);
+	const bp = new UseBreakpoints();
+	let smDown = $derived(bp.getCurrentBreakpoints()?.smDown);
+
+	let selected = $state(0);
+
+	const handleTabChange = (selectedTabIndex: number) => (selected = selectedTabIndex);
+
+	const tabs = [
+		{
+			id: 'all-customers-1',
+			content: 'All',
+			accessibilityLabel: 'All customers',
+			panelID: 'all-customers-content-1',
+			badge: "10"
+		},
+		{
+			id: 'accepts-marketing-1',
+			content: 'Accepts marketing',
+			panelID: 'accepts-marketing-content-1'
+		},
+		{
+			id: 'repeat-customers-1',
+			content: 'Repeat customers',
+			panelID: 'repeat-customers-content-1'
+		},
+		{
+			id: 'prospects-1',
+			content: 'Prospects',
+			panelID: 'prospects-content-1'
+		}
+	];
 </script>
 
 {#snippet paymentStatus(progress: BadgeProps['progress'])}
@@ -130,6 +160,12 @@
 		hasNext: true
 	}}
 >
+	<Tabs {tabs} {selected} onSelect={handleTabChange}>
+		<LegacyCard.Section title={tabs[selected].content}>
+			<p>Tab {selected} selected</p>
+		</LegacyCard.Section>
+	</Tabs>
+
 	<LegacyCard>
 		<IndexTable
 			condensed={smDown}
