@@ -40,7 +40,8 @@
 		onToggleAll,
 		onMoreActionPopoverToggle,
 		width,
-		selectMode
+		selectMode,
+		ref = $bindable(),
 	}: BulkActionsProps = $props();
 
 	let popoverActive = $state(false);
@@ -105,7 +106,8 @@
 		selected,
 		onToggleAll,
 		disabled,
-		ariaLive
+		ariaLive,
+		ref
 	});
 
 	const togglePopover = () => {

@@ -20,7 +20,8 @@
 	import { Key } from '$utilities/types.js';
 	import { overlay } from '$utilities/shared.js';
 	import Pane from '../pane/pane.svelte';
-	import { PORTALS_MANAGER_KEY, useContext, type PortalsManager } from '$utilities/contexts.js';
+	import { useContext, type PortalsManager } from '$utilities/contexts.js';
+	import { PORTALS_MANAGER_CONTEXT_KEY } from '$utilities/portals/types.js';
 
 	let {
 		active,
@@ -33,6 +34,7 @@
 		zIndexOverride,
 		overlayRef = $bindable(),
 		forceUpdatePosition = $bindable(),
+		autofocusTarget = 'none',
 		...rest
 	}: PopoverOverlayProps = $props();
 
@@ -53,7 +55,7 @@
 	let contentNode = $state<HTMLDivElement>();
 	let enteringTimer = $state<number>();
 	let observer: ResizeObserver;
-	let context = useContext<PortalsManager | undefined>(PORTALS_MANAGER_KEY);
+	let context = $derived(useContext<{container: PortalsContainerElement}>(PORTALS_MANAGER_CONTEXT_KEY)?.());
 
 	function changeTransitionStatus(transitionStatus: TransitionStatus, cb?: () => void) {
 		states = { transitionStatus };
@@ -63,7 +65,7 @@
 	}
 
 	function focusContent() {
-		if (rest.autofocusTarget === 'none' || contentNode == null) {
+		if (autofocusTarget === 'none' || contentNode == null) {
 			return;
 		}
 
@@ -74,7 +76,7 @@
 
 			const focusableChild = findFirstKeyboardFocusableNode(contentNode);
 
-			if (focusableChild && rest.autofocusTarget === 'first-node') {
+			if (focusableChild && autofocusTarget === 'first-node') {
 				focusableChild.focus({
 					preventScroll: process.env.NODE_ENV === 'development'
 				});
@@ -182,7 +184,7 @@
 		const target = event.target as HTMLElement;
 		const composedPath = event.composedPath();
 		const wasDescendant = rest.preventCloseOnChildOverlayClick
-			? wasPolarisPortalDescendant(composedPath, context()?.container)
+			? wasPolarisPortalDescendant(composedPath, context?.container)
 			: wasContentNodeDescendant(composedPath, contentNode);
 		const isActivatorDescendant = nodeContainsDescendant(activator, target);
 		if (
@@ -255,7 +257,7 @@
 		<div class={styles.FocusTracker} tabIndex={0} onfocus={handleFocusFirstItem}></div>
 		<div class={styles.ContentContainer}>
 			<div
-				tabIndex={rest.autofocusTarget === 'none' ? undefined : -1}
+				tabIndex={autofocusTarget === 'none' ? undefined : -1}
 				class={contentClassNames}
 				style={contentStyles ? applyStyles(contentStyles) : undefined}
 				bind:this={contentNode}
@@ -263,7 +265,7 @@
 				{@render renderPopoverContent()}
 			</div>
 		</div>
-		<div class={styles.FocusTracker} tabIndex={0} onfocus={handleFocusLastItem}></div>
+		<!-- <div class={styles.FocusTracker} tabIndex={0} onfocus={handleFocusLastItem}></div> -->
 	</div>
 {/snippet}
 

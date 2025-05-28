@@ -7,7 +7,7 @@ export interface LabelledProps {
     /** A unique identifier for the label */
     id: LabelProps['id'];
     /** Text for the label */
-    label: Snippet | string;
+    label: string;
     /** Error to display beneath the label */
     error?: Error | boolean;
     /** An action */

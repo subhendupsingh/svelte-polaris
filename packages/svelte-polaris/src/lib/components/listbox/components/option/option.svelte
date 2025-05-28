@@ -39,9 +39,9 @@
 	const handleOptionSelect = (event: KeyboardEvent | MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
-		mappedActionContext().onAction && mappedActionContext().onAction?.();
+		mappedActionContext()?.onAction && mappedActionContext()?.onAction?.();
 
-		if (listItemRef && !mappedActionContext().onAction) {
+		if (listItemRef && !mappedActionContext()?.onAction) {
 			listBoxContext()?.onOptionSelect({
 				domId,
 				value,
@@ -59,7 +59,7 @@
 		[listboxWithinSectionDataSelector.attribute]: isWithinSection
 	});
 
-	const legacyRoleSupport = mappedActionContext().role || 'option';
+	const legacyRoleSupport = mappedActionContext()?.role || 'option';
 </script>
 
 {#snippet content()}
@@ -68,14 +68,13 @@
 			{children}
 		</TextOption>
 	{:else}
-		{typeof children === 'string' ? "string" : "not string"}
 		{@render children?.()}
 	{/if}
 {/snippet}
 
 {#snippet contentMarkup()}
-	{#if mappedActionContext().url}
-		<UnstyledLink url={mappedActionContext().url} external={mappedActionContext().external}>
+	{#if mappedActionContext()?.url}
+		<UnstyledLink url={mappedActionContext()?.url} external={mappedActionContext()?.external}>
 			{@render content()}
 		</UnstyledLink>
 	{:else}
@@ -88,7 +87,7 @@
 	data-listbox-option
 	data-listbox-option-action={isAction}
 	data-listbox-option-value={value}
-	data-listbox-option-destructive={mappedActionContext().destructive}
+	data-listbox-option-destructive={mappedActionContext()?.destructive}
 	data-within-section={isWithinSection}
 	class={classNames(styles.Option, divider && styles.divider)}
 	id={domId}

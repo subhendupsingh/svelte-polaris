@@ -2,6 +2,7 @@
 	import { classNames, variationName } from '$utilities/css.js';
 	import { noop } from '$utilities/noop.js';
 	import Choice from '../choice/choice.svelte';
+	import type {Choice as ChoiceType } from '../choice-list/types.js';
 	import { helpTextID } from '../choice/types.js';
 	import { errorTextID } from '../inline-error/types.js';
 	import styles from './checkbox.module.css';
@@ -16,7 +17,7 @@
 		disabled,
 		id: idProp,
 		name,
-		value,
+		value = $bindable(),
 		error,
 		onChange,
 		onFocus,
@@ -30,14 +31,14 @@
 		bleedInlineEnd,
 		isWithinListbox,
 		tone,
-		checkBoxRef = $bindable(),
+		ref = $bindable(),
 	}: CheckboxProps = $props();
 
 	let inputNode = $state<HTMLInputElement | undefined>(undefined);
 	const uniqId = $props.id();
 	const id = idProp ?? uniqId;
 
-	checkBoxRef = {
+	ref = {
 		focus: () => {
 			inputNode?.focus();
 		}
@@ -52,6 +53,9 @@
 			return;
 		}
 
+		const choice = {
+
+		}
 		onChange(inputNode.checked, id);
 		inputNode.focus();
 	};

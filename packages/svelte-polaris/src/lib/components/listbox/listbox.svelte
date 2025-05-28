@@ -54,7 +54,7 @@
 		onKeyToBottom
 	} = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY) || {}; */
 
-	const comboboxListBoxContext = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY);
+	const comboboxListBoxContext = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY) || {};
 
 	const inCombobox = Boolean(comboboxListBoxContext()?.setActiveOptionId);
 

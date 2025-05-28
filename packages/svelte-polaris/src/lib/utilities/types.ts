@@ -1,10 +1,9 @@
-import type { Popover } from 'bits-ui';
-import type { Component } from 'svelte';
+import type { Component, Snippet } from 'svelte';
 export type Target = '_blank' | '_self' | '_parent' | '_top';
 
 export type IconSource = Component;
 
-export type VueNode = string | number | boolean | Component | Element | Function | null | undefined;
+export type VueNode = string | number | boolean | Snippet | Element | Function | null | undefined;
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
@@ -57,7 +56,7 @@ export interface BaseButton {
   onTouchStart?(): void;
   /** Callback when pointerdown event is being triggered */
   onPointerDown?(event: PointerEvent): void;
-  tiggerProps?: Popover.TriggerProps
+  tiggerProps?: any
 }
 
 export interface Action {
@@ -429,7 +428,7 @@ export interface ComboboxListboxType {
 
 export interface AppliedFilterInterface {
   /** A unique key used to identify the applied filter */
-  name: string;
+  key: string;
   /** A label for the applied filter */
   label: string;
   unsavedChanges?: boolean;
@@ -440,7 +439,7 @@ export interface AppliedFilterInterface {
 
 export interface FilterInterface {
   /** A unique key used to identify the filter */
-  name: string;
+  key: string;
   /** The label for the filter */
   label: string;
   /** The markup for the given filter */

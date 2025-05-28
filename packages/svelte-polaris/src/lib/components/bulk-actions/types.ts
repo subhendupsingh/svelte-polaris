@@ -1,4 +1,4 @@
-import type { Action, ActionListSection, BadgeAction, DisableableAction, MenuGroupDescriptor } from "$utilities/types.js";
+import type { Action, ActionListSection, BadgeAction, CheckboxHandles, DisableableAction, MenuGroupDescriptor } from "$utilities/types.js";
 import type { ButtonProps } from "../button/button.types.js";
 
 export type BulkAction = DisableableAction & BadgeAction;
@@ -32,8 +32,7 @@ export interface BulkActionsProps {
     label?: string;
     /** List is in a selectable state. Will only render the bulk actions when `true` */
     selectMode?: boolean;
-    /** @deprecated Used for forwarding the ref. Use `ref` prop instead */
-    innerRef?: any;
+    ref?: CheckboxHandles | null;
     /** @deprecated Callback when selectable state of list is changed. Unused callback */
     onSelectModeToggle?(selectMode: boolean): void;
     /** @deprecated If the BulkActions is currently sticky in view */

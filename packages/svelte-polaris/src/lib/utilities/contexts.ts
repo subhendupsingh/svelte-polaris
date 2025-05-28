@@ -5,15 +5,14 @@ import { MAPPED_ACTION_CONTEXT_KEY, type MappedActionContextType } from "./listb
 
 export const SCROLLABLE_CONTEXT_KEY = 'scrollable';
 export type ScrollToPositionFn = (scrollY: number) => void;
-export const useContext = <T>(key: string): (() => T) => {
+export const useContext = <T>(key: string): (() => T | undefined) => {
   const context = getContext<T>(key) as any;
   if (!context) {
-    throw new Error(`No context found for key: ${key}`);
+    return () => undefined;
   }
   return context;
 }
 
-export const PORTALS_MANAGER_KEY = 'PortalsManager'; // Unique key for the context
 
 // Define the types for your context value (mirroring your React types)
 export type PortalsContainerElement = HTMLDivElement | null; // Or your actual definition

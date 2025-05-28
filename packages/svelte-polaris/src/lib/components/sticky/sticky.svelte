@@ -6,7 +6,7 @@
 	import type { StickyProps } from './types.js';
 	//const stickyManager = useStickyManager();
 	const stickyManagerContext = useContext<StickyManager>(STICKY_MANAGER_CONTEXT_KEY)
-	let props: StickyProps = $props();
+	let {isSticky = $bindable(), ...props}: StickyProps = $props();
 </script>
 
-<StickyInner {...props} stickyManager={stickyManagerContext} />
+<StickyInner {...props} stickyManager={stickyManagerContext} {isSticky} />

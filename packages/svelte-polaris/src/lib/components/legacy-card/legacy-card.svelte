@@ -6,11 +6,11 @@
 	import styles from './legacy-card.module.css';
 	import LegacyCardHeader from './components/header/legacy-card-header.svelte';
 	import LegacyCardSection from './components/section/legacy-card-section.svelte';
-	import { Button } from '$lib/index.js';
 	import ButtonFrom from '../button/button-from.svelte';
 	import ActionList from '../action-list/action-list.svelte';
 	import InlineStack from '../inline-stack/inline-stack.svelte';
 	import Popover from '../popover/index.js';
+	import Button from '../button/button.svelte';
 
 	interface LegacyCardProps {
 		/** Title content for the card */

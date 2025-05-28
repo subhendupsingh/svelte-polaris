@@ -12,7 +12,7 @@
 		selected,
 		disabled,
 		ariaLive,
-		checkBoxRef
+		ref
 	}: CheckableButtonProps = $props();
 </script>
 
@@ -26,7 +26,7 @@
 			checked={selected}
 			{disabled}
 			onChange={onToggleAll}
-			bind:checkBoxRef
+			bind:ref
 		/>
 
 		{#if label}

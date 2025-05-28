@@ -44,7 +44,7 @@ export const SHORT_TITLE = 20;
 export const REALLY_SHORT_TITLE = 8;
 export const LONG_TITLE = 34;
 
-export function isSvelteConstruct(value: unknown): value is Component | Snippet<any> {
+export function isSvelteConstruct(value: unknown): value is Snippet<any> {
     // Svelte Components and Snippets are functions when passed as props
     return typeof value === 'function';
 }

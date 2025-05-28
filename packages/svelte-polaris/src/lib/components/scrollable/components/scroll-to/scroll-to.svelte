@@ -1,16 +1,17 @@
 <script lang='ts'>
-	import { SCROLLABLE_CONTEXT, useContext, type ScrollToPositionFn } from "$utilities/contexts.js";
+	import { SCROLLABLE_CONTEXT_KEY, useContext, type ScrollToPositionFn } from "$utilities/contexts.js";
 
     let anchorNode = $state<HTMLAnchorElement|undefined>()
     const id = $props.id();
-    const scrollToPosition = useContext<ScrollToPositionFn>(SCROLLABLE_CONTEXT);
+    const scrollToPosition = useContext<ScrollToPositionFn>(SCROLLABLE_CONTEXT_KEY);
+    let scrollToPositionFn = $derived(scrollToPosition())
 
     $effect(() => {
-        if (!scrollToPosition || !anchorNode) {
+        if (!scrollToPositionFn || !anchorNode) {
             return;
         }
         
-        scrollToPosition(anchorNode.offsetTop);
+        scrollToPositionFn?.(anchorNode.offsetTop);
     })
 </script>
 

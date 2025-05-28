@@ -8,6 +8,7 @@ export interface MediaQueryState {
 export const MEDIA_QUERY_CONTEXT_KEY = 'MediaQueryContext';
 export const FILTER_ACTIONS_CONTEXT_KEY = 'FilterActionsContext';
 export const EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY = 'EphemeralPresenceManagerContext';
+export const RESOURCE_LIST_CONTEXT_KEY = 'ResourceListContext';
 
 export type EphemeralPresenceKey = 'tooltip';
 

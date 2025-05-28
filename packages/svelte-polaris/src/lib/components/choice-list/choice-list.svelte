@@ -5,7 +5,6 @@
 	import type { Choice, ChoiceListProps } from './types.js';
 	import Checkbox from '../checkbox/checkbox.svelte';
 	import RadioButton from '../radio-button/radio-button.svelte';
-	import { useId } from 'bits-ui';
 	import Box from '../box/box.svelte';
 	import Text from '../text/text.svelte';
 	import Bleed from '../bleed/bleed.svelte';
@@ -26,7 +25,7 @@
 	}: ChoiceListProps = $props();
 
 	const ControlComponent: any = allowMultiple ? Checkbox : RadioButton;
-	const uniqName = useId();
+	const uniqName = $props.id();
 	const name = nameProp ?? uniqName;
 	const finalName = allowMultiple ? `${name}[]` : name;
 
@@ -40,7 +39,8 @@
 			return allowMultiple ? [...selected, value] : [value];
 		}
 
-		return selected.filter((selectedChoice) => selectedChoice !== value);
+		const s = selected.filter((selectedChoice) => selectedChoice !== value);
+		return s;
 	}
 
 	function handleChange(checked: boolean, choice: Choice) {

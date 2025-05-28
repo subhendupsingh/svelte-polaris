@@ -26,7 +26,7 @@
 		onTextFieldFocus,
 		onTextFieldChange,
 		onTextFieldBlur
-	} = $derived(comboboxTextFieldContext());
+	} = $derived(comboboxTextFieldContext()!);
 	const uniqueId = $props.id();
 	const textFieldId = $derived(idProp || uniqueId);
 	const labelId = $derived(labelID(idProp || uniqueId));

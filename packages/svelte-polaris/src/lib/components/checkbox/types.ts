@@ -39,5 +39,5 @@ export interface CheckboxProps extends ChoiceBleedProps {
     tone?: 'magic';
     /** Whether the checkbox is within a listbox */
     isWithinListbox?: boolean;
-    checkBoxRef?: CheckboxHandles | null;
+    ref?: CheckboxHandles | null;
 }

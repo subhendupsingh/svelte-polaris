@@ -187,7 +187,7 @@
 		}
 	};
 
-	/* $effect(() => {
+	$effect(() => {
 		const { visibleTabs, hiddenTabs } = getVisibleAndHiddenTabIndices(
 			tabs,
 			selected,
@@ -198,7 +198,7 @@
 
 		states.visibleTabs = visibleTabs;
 		states.hiddenTabs = hiddenTabs;
-	}); */
+	});
 
 	const moveToActiveTab = (offsetLeft: number) => {
 		setTimeout(() => {
@@ -218,7 +218,7 @@
 		}
 	};
 
-	/* $effect(() => {
+	$effect(() => {
 		if (breakpoints?.mdDown) {
 			moveToSelectedTab();
 		}
@@ -229,7 +229,7 @@
 			const tabToFocus = selected;
 			states.tabToFocus = tabToFocus;
 		}
-	}); */
+	});
 
 	const handleKeyPress = (event: KeyboardEvent) => {
 		const { showDisclosure, visibleTabs, hiddenTabs, tabToFocus, isNewViewModalActive } = states;

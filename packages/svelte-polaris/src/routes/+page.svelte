@@ -12,112 +12,177 @@
 	import InlineStack from '$lib/components/inline-stack/inline-stack.svelte';
 	import { UseBreakpoints } from '$lib/use/use-breakpoints.svelte.js';
 	import Tabs from '$lib/components/tabs/tabs.svelte';
+	import DescriptionList from '$lib/components/description-list/description-list.svelte';
+	import List from '$lib/components/list/index.js';
+	import Listbox from '$lib/components/listbox/index.js';
+	import OptionList from '$lib/components/option-list/option-list.svelte';
+	import Popover from '$lib/components/popover/index.js';
+	import Button from '$lib/components/button/button.svelte';
+	import ResourceItem from '$lib/components/resource-item/resource-item.svelte';
+	import Avatar from '$lib/components/avatar/avatar.svelte';
+	import ResourceList from '$lib/components/resource-list/index.js';
+	import type { ResourceListItemData } from '$lib/components/resource-list/types.js';
+	import EmptyState from '$lib/components/empty-state/empty-state.svelte';
+	import ChoiceList from '$lib/components/choice-list/choice-list.svelte';
+	import TextField from '$lib/components/text-field/text-field.svelte';
+	import Filters from '$lib/components/filters/filters.svelte';
+	import FormLayout from '$lib/components/form-layout/form-layout.svelte';
+	import Select from '$lib/components/select/select.svelte';
+	import { ActionList } from '$lib/index.js';
 
-	const orders = [
-		{
-			id: '1020',
-			order: '#1020',
-			date: 'Jul 20 at 4:34pm',
-			customer: 'Jaydon Stanton',
-			total: '$969.44',
-			paymentStatus: 'complete',
-			fulfillmentStatus: 'incomplete',
-			disabled: false
-		},
-		{
-			id: '1019',
-			order: '#1019',
-			date: 'Jul 20 at 3:46pm',
-			customer: 'Ruben Westerfelt',
-			total: '$701.19',
-			paymentStatus: 'incomplete',
-			fulfillmentStatus: 'incomplete',
-			disabled: false
-		},
-		{
-			id: '1018',
-			order: '#1018',
-			date: 'Jul 20 at 3.44pm',
-			customer: 'Leo Carder',
-			total: '$798.24',
-			paymentStatus: 'incomplete',
-			fulfillmentStatus: 'incomplete',
-			disabled: false
-		}
-	];
+	let selected = $state<string[]>([]);
+	let accountStatus = $state<string[] | undefined>(undefined);
+	let moneySpent = $state<[number, number] | undefined>(undefined);
+	let taggedWith = $state<string | undefined>();
+	let queryValue = $state<string | undefined>(undefined);
 
-	const resourceName = {
-		singular: 'order',
-		plural: 'orders'
+	const handleAccountStatusChange = (value: string[]) => (accountStatus = value);
+	const handleMoneySpentChange = (value: [number, number] | undefined) => (moneySpent = value);
+	const handleTaggedWithChange = (value: string | undefined) => (taggedWith = value);
+	const handleFiltersQueryChange = (value: string | undefined) => (queryValue = value);
+	const handleAccountStatusRemove = () => (accountStatus = undefined);
+	const handleMoneySpentRemove = () => (moneySpent = undefined);
+	const handleTaggedWithRemove = () => (taggedWith = undefined);
+	const handleQueryValueRemove = () => (queryValue = undefined);
+
+	const handleFiltersClearAll = () => {
+		accountStatus = undefined;
+		moneySpent = undefined;
+		taggedWith = undefined;
+		queryValue = undefined;
 	};
 
-	const selectableOrders = orders.filter((order) => !order.disabled);
-	const indexResourceState = new IndexResourceState(selectableOrders);
-	let isTableCondensed = $state(false);
-
-	const promotedBulkActions = [
+	const filters = [
 		{
-			content: 'Create shipping labels',
-			onAction: () => console.log('Todo: implement bulk edit')
+			id: 'accountStatus',
+			key: 'accountStatus',
+			label: 'Account status',
+			filter: filter1,
+			shortcut: true
+		},
+		{
+			id: 'taggedWith',
+			key: 'taggedWith',
+			label: 'Tagged with',
+			filter: filter2,
+			shortcut: true
+		},
+		{
+			id: 'moneySpent',
+			key: 'moneySpent',
+			label: 'Money spent',
+			filter: filter3
 		}
 	];
 
-	const bulkActions = [
+	const items = [
 		{
-			content: 'Add tags',
-			onAction: () => console.log('Todo: implement bulk add tags')
-		},
-		{
-			content: 'Remove tags',
-			onAction: () => console.log('Todo: implement bulk remove tags')
-		},
-		{
-			icon: DeleteIcon,
-			destructive: true,
-			content: 'Delete orders',
-			onAction: () => console.log('Todo: implement bulk delete')
+			id: '6',
+			url: 'posts/6',
+			title: 'How To Get Value From Wireframes',
+			author: 'Jonathan Mangrove'
 		}
 	];
 
-	const bp = new UseBreakpoints();
-	let smDown = $derived(bp.getCurrentBreakpoints()?.smDown);
-
-	let selected = $state(0);
-
-	const handleTabChange = (selectedTabIndex: number) => (selected = selectedTabIndex);
-
-	const tabs = [
-		{
-			id: 'all-customers-1',
-			content: 'All',
-			accessibilityLabel: 'All customers',
-			panelID: 'all-customers-content-1',
-			badge: "10"
-		},
-		{
-			id: 'accepts-marketing-1',
-			content: 'Accepts marketing',
-			panelID: 'accepts-marketing-content-1'
-		},
-		{
-			id: 'repeat-customers-1',
-			content: 'Repeat customers',
-			panelID: 'repeat-customers-content-1'
-		},
-		{
-			id: 'prospects-1',
-			content: 'Prospects',
-			panelID: 'prospects-content-1'
+	function disambiguateLabel(key: string, value: any) {
+		switch (key) {
+			case 'moneySpent':
+				return `Money spent is between $${value[0]} and $${value[1]}`;
+			case 'taggedWith':
+				return `Tagged with ${value}`;
+			case 'accountStatus':
+				return value.map((val: string) => `Customer ${val}`).join(', ');
+			default:
+				return value;
 		}
-	];
+	}
+
+	function isEmpty(value: string | string[] | [number, number] | undefined): boolean {
+		if (Array.isArray(value)) {
+			return value.length === 0;
+		} else {
+			return value === '' || value == null;
+		}
+	}
+
+	let selectedItems = $state([]);
+	let appliedFilters = $derived.by(() => {
+		const filters = [];
+		if (!isEmpty(accountStatus)) {
+			const key = 'accountStatus';
+			filters.push({
+				key,
+				label: disambiguateLabel(key, accountStatus),
+				onRemove: handleAccountStatusRemove
+			});
+		}
+		if (!isEmpty(taggedWith)) {
+			const key = 'taggedWith';
+			filters.push({
+				key,
+				label: disambiguateLabel(key, taggedWith),
+				onRemove: handleTaggedWithRemove
+			});
+		}
+		if (!isEmpty(moneySpent)) {
+			const key = 'moneySpent';
+			filters.push({
+				key,
+				label: disambiguateLabel(key, moneySpent),
+				onRemove: handleMoneySpentRemove
+			});
+		}
+		return filters;
+	});
+
+	let popoverActive = $state(true);
+
+	const togglePopoverActive = () => {
+		popoverActive = !popoverActive;
+	};
 </script>
 
-{#snippet paymentStatus(progress: BadgeProps['progress'])}
-	<Badge {progress}>Paid</Badge>
+{#snippet activator()}
+	<Button onClick={togglePopoverActive} disclosure>Options</Button>
 {/snippet}
 
-{#snippet fulfillmentStatus(progress: BadgeProps['progress'])}
-	<Badge {progress}>Unfulfilled</Badge>
+{#snippet filter1()}
+	<ChoiceList
+		title="Account status"
+		titleHidden
+		choices={[
+			{ label: 'Enabled', value: 'enabled' },
+			{ label: 'Not invited', value: 'not invited' },
+			{ label: 'Invited', value: 'invited' },
+			{ label: 'Declined', value: 'declined' }
+		]}
+		selected={accountStatus || []}
+		onChange={(val) => handleAccountStatusChange(val)}
+		allowMultiple
+	/>
+{/snippet}
+
+{#snippet filter2()}
+	<TextField
+		label="Tagged with"
+		value={taggedWith}
+		onChange={handleTaggedWithChange}
+		autoComplete="off"
+		labelHidden
+	/>
+{/snippet}
+
+{#snippet filter3()}{/snippet}
+
+{#snippet filterControls()}
+	<Filters
+		{queryValue}
+		{filters}
+		{appliedFilters}
+		onQueryChange={handleFiltersQueryChange}
+		onQueryClear={handleQueryValueRemove}
+		onClearAll={handleFiltersClearAll}
+	/>
 {/snippet}
 
 <Page
@@ -160,77 +225,60 @@
 		hasNext: true
 	}}
 >
-	<Tabs {tabs} {selected} onSelect={handleTabChange}>
-		<LegacyCard.Section title={tabs[selected].content}>
-			<p>Tab {selected} selected</p>
-		</LegacyCard.Section>
-	</Tabs>
-
 	<LegacyCard>
-		<IndexTable
-			condensed={smDown}
-			itemCount={selectableOrders.length}
-			{resourceName}
-			onSelectionChange={indexResourceState.handleSelectionChange}
-			selectedItemsCount={indexResourceState.allResourcesSelected
-				? 'All'
-				: indexResourceState.selectedResources.length}
-			headings={[
-				{ title: 'Order' },
-				{ title: 'Date' },
-				{ title: 'Customer' },
-				{ title: 'Total', alignment: 'end' },
-				{ title: 'Payment status' },
-				{ title: 'Fulfillment status' }
-			]}
-		>
-			<!-- {@render rowMarkup()} -->
+		<ResourceList
+			flushFilters
+			filterControl={filterControls}
+			resourceName={{ singular: 'customer', plural: 'customers' }}
+			items={[
+				{
+					id: '100',
+					url: '#',
+					name: 'Mae Jemison',
+					location: 'Decatur, USA'
+				},
+				{
+					id: '200',
+					url: '#',
+					name: 'Ellen Ochoa',
+					location: 'Los Angeles, USA'
+				}
+			]}>
+			{#snippet renderItem(item: ResourceListItemData)}
+				{@const { id, url, name, location } = item}
 
-			{#each orders as { id, order, date, customer, total, disabled }, index}
-				<IndexTable.Row
-					{id}
-					position={index}
-					{disabled}
-					selected={indexResourceState.selectedResources.includes(id)}
-				>
-					{#if !isTableCondensed}
-						<IndexTable.Cell>
-							<Text variant="bodyMd" fontWeight="bold" as="span">
-								{order}
-							</Text>
-						</IndexTable.Cell>
-						<IndexTable.Cell>{date}</IndexTable.Cell>
-						<IndexTable.Cell>{customer}</IndexTable.Cell>
-						<IndexTable.Cell>
-							<Text as="span" alignment="end" numeric>
-								{total}
-							</Text>
-						</IndexTable.Cell>
-						<IndexTable.Cell>{@render paymentStatus('complete')}</IndexTable.Cell>
-						<IndexTable.Cell>{@render fulfillmentStatus('incomplete')}</IndexTable.Cell>
-					{:else}
-						<div style={applyStyles({ padding: '12px 16px', width: '100%' })}>
-							<BlockStack gap="100">
-								<Text as="span" variant="bodySm" tone="subdued">
-									{order} • {date}
-								</Text>
-								<InlineStack align="space-between">
-									<Text as="span" variant="bodyMd" fontWeight="semibold">
-										{customer}
-									</Text>
-									<Text as="span" variant="bodyMd">
-										{total}
-									</Text>
-								</InlineStack>
-								<InlineStack align="start" gap="100">
-									{@render paymentStatus('complete')}
-									{@render fulfillmentStatus('incomplete')}
-								</InlineStack>
-							</BlockStack>
-						</div>
-					{/if}
-				</IndexTable.Row>
-			{/each}
-		</IndexTable>
+				<ResourceItem {id} {url} accessibilityLabel={`View details for ${name}`}>
+					{#snippet media()}
+						<Avatar customer size="md" {name} />
+					{/snippet}
+					<Text variant="bodyMd" fontWeight="bold" as="h3">
+						{name}
+					</Text>
+					<div>{location}</div>
+				</ResourceItem>
+			{/snippet}
+		</ResourceList>
+
+		<!-- <Popover active={popoverActive} onClose={togglePopoverActive} sectioned>
+			{#snippet trigger()}
+				{@render activator()}
+			{/snippet}
+			<FormLayout>
+				<Select label="Show all customers where:" options={['Tagged with', 'Money spent']} />
+				<TextField label="Tags" value="asdf" onChange={() => {}} autoComplete="off" />
+				<Button size="slim">Add filter</Button>
+			</FormLayout>
+		</Popover> -->
+
+		<ActionList items={[
+			{
+              content: 'Import file',
+              onAction: () => {},
+            },
+            {
+              content: 'Export file',
+              onAction: () => {},
+            },
+		]} />
 	</LegacyCard>
 </Page>

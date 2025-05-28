@@ -49,15 +49,16 @@
 
 		return true;
 	}
+
 	const handleClose = (source: PopoverCloseSource) => {
 		onClose(source);
-        
+
 		if (activatorContainer == null || preventFocusOnClose) {
 			return;
 		}
 
-        activatorNode?.setAttribute("data-state", active===true ? 'open' : 'close')
-        
+		activatorNode?.setAttribute('data-state', active === true ? 'open' : 'close');
+
 		if (source === PopoverCloseSource.FocusOut && activatorNode) {
 			const focusableActivator =
 				findFirstFocusableNodeIncludingDisabled(activatorNode) ||
@@ -101,25 +102,25 @@
 		});
 	};
 
+	function setDisplayState() {
+		/**
+		 * This is a workaround to prevent rendering the Popover when the content is moved into
+		 * a React portal that hasn't been rendered. We don't want to render the Popover in this
+		 * case because the auto-focus logic will break. We wait until the activatorContainer is
+		 * displayed, which is when it has an offsetParent, or if the activatorContainer is the
+		 * body, if it has a clientWidth bigger than 0.
+		 * See: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetParent
+		 */
+
+		isDisplayed = Boolean(
+			activatorContainer &&
+				(activatorContainer.offsetParent !== null ||
+					(activatorContainer === activatorContainer.ownerDocument.body &&
+						activatorContainer.clientWidth > 0))
+		);
+	}
+
 	$effect(() => {
-		function setDisplayState() {
-			/**
-			 * This is a workaround to prevent rendering the Popover when the content is moved into
-			 * a React portal that hasn't been rendered. We don't want to render the Popover in this
-			 * case because the auto-focus logic will break. We wait until the activatorContainer is
-			 * displayed, which is when it has an offsetParent, or if the activatorContainer is the
-			 * body, if it has a clientWidth bigger than 0.
-			 * See: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetParent
-			 */
-
-			isDisplayed = Boolean(
-				activatorContainer &&
-					(activatorContainer.offsetParent !== null ||
-						(activatorContainer === activatorContainer.ownerDocument.body &&
-							activatorContainer.clientWidth > 0))
-			);
-		}
-
 		if (!activatorContainer) {
 			return;
 		}
@@ -150,8 +151,8 @@
 		setAccessibilityAttributes();
 	}); */
 
-    onMount(async () => {
-        await tick();
+	onMount(async () => {
+		await tick();
 		if (!activatorNode && activatorContainer) {
 			activatorNode = activatorContainer.firstElementChild as HTMLElement;
 		} else if (activatorNode && activatorContainer && !activatorContainer.contains(activatorNode)) {
@@ -167,14 +168,14 @@
 		setAccessibilityAttributes();
 	});
 
-    // DONOT REMOVE THIS, HANDLES POSITIONING OF OVERLAY
+	// DONOT REMOVE THIS, HANDLES POSITIONING OF OVERLAY
 	/* const renderActivator = (node: Node) => {
 		forceUpdatePosition?.();
 	}; */
 </script>
 
 {#snippet portalMarkup()}
-	{#if activatorNode && isDisplayed}
+	{#if activatorNode && isDisplayed && active}
 		<Portal idPrefix="popover">
 			<PopoverOverlay
 				bind:overlayRef
@@ -199,5 +200,5 @@
 		{@render trigger?.()}
 	</div>
 
-    {@render portalMarkup()}
+	{@render portalMarkup()}
 </svelte:element>

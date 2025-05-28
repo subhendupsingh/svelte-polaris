@@ -7,5 +7,5 @@ export interface CheckableButtonProps {
     disabled?: boolean;
     onToggleAll?(): void;
     ariaLive?: 'off' | 'polite';
-    checkBoxRef?: CheckboxHandles | null
+    ref?: CheckboxHandles | null
 }
