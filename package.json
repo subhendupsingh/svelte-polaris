@@ -1,6 +1,7 @@
 {
 	"name": "svelte-polaris",
 	"version": "0.0.1",
+	"description": "Svelte Polaris is the port of Shopify Polaris to Svelte.",
 	"scripts": {
 		"dev": "vite dev",
 		"build:lib": "npm run build:css:lib && npm run merge:css",
@@ -90,5 +91,11 @@
 	},
 	"dependencies": {
 		"@shopify/polaris-icons": "^9.3.1"
+	},
+	"author": "Subhendu Singh",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/subhendupsingh/svelte-polaris.git"
 	}
 }
