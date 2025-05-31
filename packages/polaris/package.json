@@ -81,7 +81,13 @@
 		"vite": "^6.2.6"
 	},
 	"keywords": [
-		"svelte"
+		"svelte",
+		"polaris",
+		"shopify polaris",
+		"polaris-svelte",
+		"svelte-polaris",
+		"shopify components",
+		"shopify ui"
 	],
 	"pnpm": {
 		"onlyBuiltDependencies": [
