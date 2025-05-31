@@ -1,7 +1,23 @@
 # Svelte Polaris
 
-Svelte Polaris is the port of [Shopify Polaris](https://polaris-react.shopify.com) to Svelte.
+Svelte Polaris is the port of [Shopify Polaris](https://polaris-react.shopify.com) to Svelte by [spsbuilds](https://x.com/spsbuilds)
 
-This is currenlty WIP, though most of the components have been ported. The components are available in the `src/lib` directory.
+**Note**: This is a WIP, expect and report bugs.
 
-Documentation is pending.
+This port has similar API to the original react components with same attributes, making it easier for you to copy and paste from the Shopify polaris documentation or from other react examples.
+
+## Installation
+```
+npm i svelte-polaris
+```
+
+or
+
+```
+pnpm add svelte-polaris
+```
+
+## Usage
+
+Read [documentation](https://example.com)
+
