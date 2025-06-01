@@ -1,0 +1,232 @@
+---
+title: Text
+description: Text is used to visually style and provide semantic value for a small piece of text content.
+---
+
+```svelte
+import { Text, Card, BlockStack, InlineStack } from 'svelte-polaris';
+```
+
+Text is used to visually style and provide semantic value for a small piece of text content. It provides consistent typography throughout your interface.
+
+## Examples
+
+### Default text
+
+Use for standard body text content.
+
+```svelte
+<Text>This is default body text</Text>
+```
+
+### Text variants
+
+Use different variants to establish hierarchy and meaning.
+
+```svelte
+<BlockStack gap="4">
+  <Text variant="headingXl">Heading XL</Text>
+  <Text variant="headingLg">Heading Large</Text>
+  <Text variant="headingMd">Heading Medium</Text>
+  <Text variant="headingSm">Heading Small</Text>
+  <Text variant="headingXs">Heading XS</Text>
+  <Text variant="bodyLg">Body Large</Text>
+  <Text variant="bodyMd">Body Medium (default)</Text>
+  <Text variant="bodySm">Body Small</Text>
+  <Text variant="caption">Caption text</Text>
+</BlockStack>
+```
+
+### Text with different tones
+
+Use tones to convey different meanings and states.
+
+```svelte
+<BlockStack gap="3">
+  <Text>Default tone</Text>
+  <Text tone="subdued">Subdued tone</Text>
+  <Text tone="success">Success tone</Text>
+  <Text tone="critical">Critical tone</Text>
+  <Text tone="warning">Warning tone</Text>
+  <Text tone="info">Info tone</Text>
+</BlockStack>
+```
+
+### Text alignment
+
+Control text alignment for different layouts.
+
+```svelte
+<BlockStack gap="3">
+  <Text alignment="start">Start aligned text</Text>
+  <Text alignment="center">Center aligned text</Text>
+  <Text alignment="end">End aligned text</Text>
+  <Text alignment="justify">Justified text that spans multiple lines and demonstrates how text can be justified to fill the available width evenly.</Text>
+</BlockStack>
+```
+
+### Text with font weight
+
+Use different font weights to create emphasis.
+
+```svelte
+<BlockStack gap="3">
+  <Text fontWeight="regular">Regular weight</Text>
+  <Text fontWeight="medium">Medium weight</Text>
+  <Text fontWeight="semibold">Semibold weight</Text>
+  <Text fontWeight="bold">Bold weight</Text>
+</BlockStack>
+```
+
+### Text decoration
+
+Add visual emphasis with text decorations.
+
+```svelte
+<BlockStack gap="3">
+  <Text>Normal text</Text>
+  <Text textDecorationLine="line-through">Strikethrough text</Text>
+</BlockStack>
+```
+
+### Text as different elements
+
+Render text as different HTML elements while maintaining visual styling.
+
+```svelte
+<BlockStack gap="3">
+  <Text as="h1" variant="headingLg">Heading as H1</Text>
+  <Text as="h2" variant="headingMd">Heading as H2</Text>
+  <Text as="p" variant="bodyMd">Paragraph text</Text>
+  <Text as="span" variant="bodySm">Inline span text</Text>
+  <Text as="legend" variant="headingSm">Legend text</Text>
+</BlockStack>
+```
+
+### Text in cards
+
+Use text components to create well-structured content in cards.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Product Information</Text>
+    <Text variant="bodyMd">
+      This is the main description of the product. It provides detailed 
+      information about features, benefits, and specifications.
+    </Text>
+    <Text variant="bodySm" tone="subdued">
+      Last updated: March 15, 2024
+    </Text>
+  </BlockStack>
+</Card>
+```
+
+### Text with truncation
+
+Handle long text content that needs to be truncated.
+
+```svelte
+<div style="width: 200px;">
+  <Text truncate>
+    This is a very long piece of text that will be truncated when it exceeds the available width
+  </Text>
+</div>
+```
+
+### Text for data display
+
+Use text components to display structured data.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Order Summary</Text>
+    <div style="display: flex; justify-content: space-between;">
+      <Text>Subtotal:</Text>
+      <Text fontWeight="semibold">$99.99</Text>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <Text>Shipping:</Text>
+      <Text fontWeight="semibold">$9.99</Text>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <Text>Tax:</Text>
+      <Text fontWeight="semibold">$8.00</Text>
+    </div>
+    <div style="display: flex; justify-content: space-between; border-top: 1px solid #e1e3e5; padding-top: 12px;">
+      <Text variant="bodyLg" fontWeight="semibold">Total:</Text>
+      <Text variant="bodyLg" fontWeight="bold">$117.98</Text>
+    </div>
+  </BlockStack>
+</Card>
+```
+
+### Text for status messages
+
+Use text with appropriate tones for status and feedback messages.
+
+```svelte
+<BlockStack gap="3">
+  <Text tone="success">✓ Your changes have been saved successfully</Text>
+  <Text tone="warning">⚠ Some fields require your attention</Text>
+  <Text tone="critical">✗ An error occurred while saving</Text>
+  <Text tone="info">ℹ This action cannot be undone</Text>
+</BlockStack>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'headingXl' \| 'headingLg' \| 'headingMd' \| 'headingSm' \| 'headingXs' \| 'bodyLg' \| 'bodyMd' \| 'bodySm' \| 'caption'` | `'bodyMd'` | Typographic style of the text |
+| `fontWeight` | `'regular' \| 'medium' \| 'semibold' \| 'bold'` | `'regular'` | Font weight of the text |
+| `tone` | `'base' \| 'subdued' \| 'success' \| 'critical' \| 'warning' \| 'info'` | `'base'` | Tone of the text |
+| `alignment` | `'start' \| 'center' \| 'end' \| 'justify'` | `'start'` | Horizontal alignment of text |
+| `textDecorationLine` | `'line-through'` | - | Text decoration to apply |
+| `truncate` | `boolean` | `false` | Truncate text overflow with ellipsis |
+| `as` | `string` | `'span'` | HTML element to render |
+| `id` | `string` | - | Unique identifier |
+
+## Accessibility
+
+- Text components use semantic HTML elements when specified with the `as` prop
+- Proper heading hierarchy should be maintained when using heading variants
+- Color alone is not used to convey meaning - tones are supplemented with context
+- Text maintains sufficient contrast ratios for readability
+
+## Best practices
+
+### Do
+- Use heading variants to establish clear content hierarchy
+- Choose appropriate tones that match the content meaning
+- Use consistent text styling throughout your interface
+- Provide sufficient contrast between text and background
+- Use semantic HTML elements with the `as` prop when appropriate
+
+### Don't
+- Don't skip heading levels (e.g., don't go from h1 to h3)
+- Don't rely solely on color to convey meaning
+- Don't use heading variants for non-heading content
+- Don't use too many different font weights in one interface
+- Don't make text too small to be readable
+
+## Typography scale
+
+The text component follows a consistent typography scale:
+
+- **headingXl**: 32px - Use for page titles and major headings
+- **headingLg**: 24px - Use for section headings
+- **headingMd**: 20px - Use for subsection headings
+- **headingSm**: 16px - Use for minor headings
+- **headingXs**: 14px - Use for small headings and labels
+- **bodyLg**: 16px - Use for emphasized body text
+- **bodyMd**: 14px - Use for standard body text
+- **bodySm**: 12px - Use for secondary text
+- **caption**: 11px - Use for captions and fine print
+
+## Related components
+
+- [Heading](/getting-started/heading): For semantic heading elements
+- [Caption](/getting-started/caption): For image captions and metadata
+- [DisplayText](/getting-started/display-text): For large, prominent text

@@ -1,0 +1,287 @@
+---
+title: Divider
+description: Use dividers to separate content and create visual hierarchy.
+---
+
+```svelte
+import { Divider, Card, BlockStack, InlineStack, Text } from 'svelte-polaris';
+```
+
+Use dividers to separate content and create visual hierarchy. Dividers help organize content into logical sections and improve readability.
+
+## Examples
+
+### Default divider
+
+Use to separate content sections.
+
+```svelte
+<BlockStack gap="4">
+  <Text>Content above the divider</Text>
+  <Divider />
+  <Text>Content below the divider</Text>
+</BlockStack>
+```
+
+### Divider with border color
+
+Use different border colors to match your design or convey meaning.
+
+```svelte
+<BlockStack gap="4">
+  <Text>Default border</Text>
+  <Divider />
+  <Text>Transparent border</Text>
+  <Divider borderColor="transparent" />
+  <Text>Border on background</Text>
+  <Divider borderColor="border-on-bg" />
+</BlockStack>
+```
+
+### Divider with border width
+
+Control the thickness of the divider line.
+
+```svelte
+<BlockStack gap="4">
+  <Text>Thin border (025)</Text>
+  <Divider borderWidth="025" />
+  <Text>Default border (050)</Text>
+  <Divider />
+  <Text>Thick border (100)</Text>
+  <Divider borderWidth="100" />
+</BlockStack>
+```
+
+### Dividers in cards
+
+Use dividers to separate sections within cards.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Product Details</Text>
+    <Text>Basic product information goes here.</Text>
+    
+    <Divider />
+    
+    <Text variant="headingMd">Pricing</Text>
+    <Text>Pricing information goes here.</Text>
+    
+    <Divider />
+    
+    <Text variant="headingMd">Inventory</Text>
+    <Text>Inventory details go here.</Text>
+  </BlockStack>
+</Card>
+```
+
+### Dividers in lists
+
+Use dividers to separate list items.
+
+```svelte
+<Card>
+  <BlockStack gap="0">
+    <div style="padding: 16px;">
+      <Text fontWeight="semibold">Recent Orders</Text>
+    </div>
+    <Divider />
+    <div style="padding: 16px;">
+      <Text>Order #1001 - $99.99</Text>
+    </div>
+    <Divider />
+    <div style="padding: 16px;">
+      <Text>Order #1002 - $149.99</Text>
+    </div>
+    <Divider />
+    <div style="padding: 16px;">
+      <Text>Order #1003 - $79.99</Text>
+    </div>
+  </BlockStack>
+</Card>
+```
+
+### Dividers in navigation
+
+Use dividers to group navigation items.
+
+```svelte
+<Card>
+  <BlockStack gap="0">
+    <div style="padding: 12px 16px;">
+      <Text>Dashboard</Text>
+    </div>
+    <div style="padding: 12px 16px;">
+      <Text>Products</Text>
+    </div>
+    <div style="padding: 12px 16px;">
+      <Text>Orders</Text>
+    </div>
+    
+    <Divider />
+    
+    <div style="padding: 12px 16px;">
+      <Text>Customers</Text>
+    </div>
+    <div style="padding: 12px 16px;">
+      <Text>Analytics</Text>
+    </div>
+    
+    <Divider />
+    
+    <div style="padding: 12px 16px;">
+      <Text>Settings</Text>
+    </div>
+    <div style="padding: 12px 16px;">
+      <Text>Help</Text>
+    </div>
+  </BlockStack>
+</Card>
+```
+
+### Dividers with content sections
+
+Use dividers to separate different types of content.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <BlockStack gap="2">
+      <Text variant="headingMd">Customer Information</Text>
+      <Text>John Smith</Text>
+      <Text tone="subdued">john.smith@email.com</Text>
+    </BlockStack>
+    
+    <Divider />
+    
+    <BlockStack gap="2">
+      <Text variant="headingMd">Shipping Address</Text>
+      <Text>123 Main Street</Text>
+      <Text>New York, NY 10001</Text>
+    </BlockStack>
+    
+    <Divider />
+    
+    <BlockStack gap="2">
+      <Text variant="headingMd">Order Summary</Text>
+      <div style="display: flex; justify-content: space-between;">
+        <Text>Subtotal:</Text>
+        <Text>$99.99</Text>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <Text>Shipping:</Text>
+        <Text>$9.99</Text>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <Text fontWeight="semibold">Total:</Text>
+        <Text fontWeight="semibold">$109.98</Text>
+      </div>
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+
+### Subtle dividers
+
+Use transparent or light dividers for subtle separation.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text>This section has subtle separation</Text>
+    <Divider borderColor="transparent" />
+    <Text tone="subdued">This creates a visual break without a visible line</Text>
+    <Divider borderWidth="025" />
+    <Text>This uses a thin line for minimal separation</Text>
+  </BlockStack>
+</Card>
+```
+
+### Dividers in forms
+
+Use dividers to group related form fields.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Account Settings</Text>
+    
+    <BlockStack gap="3">
+      <Text variant="headingSm">Personal Information</Text>
+      <Text>First name, last name, email fields would go here</Text>
+    </BlockStack>
+    
+    <Divider />
+    
+    <BlockStack gap="3">
+      <Text variant="headingSm">Security</Text>
+      <Text>Password, two-factor authentication fields would go here</Text>
+    </BlockStack>
+    
+    <Divider />
+    
+    <BlockStack gap="3">
+      <Text variant="headingSm">Preferences</Text>
+      <Text>Language, timezone, notification settings would go here</Text>
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `borderColor` | `'border' \| 'border-on-bg' \| 'transparent'` | `'border'` | Color of the divider border |
+| `borderWidth` | `'025' \| '050' \| '100'` | `'050'` | Width of the divider border |
+
+## Accessibility
+
+- Dividers are purely visual and don't affect screen reader navigation
+- Use semantic HTML structure and headings to create logical content hierarchy
+- Don't rely solely on dividers to convey content relationships
+- Ensure sufficient contrast if using custom border colors
+
+## Best practices
+
+### Do
+- Use dividers to create logical content sections
+- Use consistent divider styling throughout your interface
+- Combine dividers with proper spacing for optimal visual hierarchy
+- Use subtle dividers when you need separation without visual weight
+- Group related content together before adding dividers
+
+### Don't
+- Don't overuse dividers - they can create visual clutter
+- Don't use dividers as the only way to organize content
+- Don't use thick dividers unless you need strong visual separation
+- Don't use dividers between every single element
+- Don't rely on dividers alone for accessibility
+
+## When to use dividers
+
+### Use dividers for:
+- Separating distinct content sections
+- Organizing navigation menus
+- Dividing form sections
+- Creating visual breaks in lists
+- Separating header/footer content from main content
+
+### Consider alternatives:
+- **Spacing**: Sometimes increased spacing is sufficient
+- **Cards**: For grouping related content
+- **Headings**: For semantic content hierarchy
+- **Background colors**: For stronger visual grouping
+
+## Border width guidelines
+
+- **025**: Use for subtle separation or when you need minimal visual weight
+- **050**: Use as the default for most dividers
+- **100**: Use when you need strong visual separation or emphasis
+
+## Related components
+
+- [Card](/getting-started/card): For grouping related content
+- [BlockStack](/getting-started/block-stack): For vertical content layout
+- [Text](/getting-started/text): For content hierarchy with headings

@@ -1,0 +1,15 @@
+---
+title: Set up
+description: Set up svelte-polaris
+---
+
+Add `PolarisAppProvider` component to your root layout file `+layout.svelte`. 
+This component adds Polaris styles, fonts and sets up the app context.
+
+```svelte
+import { PolarisAppProvider } from 'svelte-polaris';
+
+<PolarisAppProvider>
+    {@render children?.()}
+</PolarisAppProvider>
+```

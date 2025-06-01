@@ -1,0 +1,665 @@
+---
+title: Select
+description: Select lets users choose one option from a list. It's perfect for settings, forms, and other interfaces where users need to pick from predefined choices.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# Select
+
+Select lets users choose one option from a list. It's perfect for settings, forms, and other interfaces where users need to pick from predefined choices.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `options` | `(SelectOption \| SelectGroup)[]` | `[]` | List of options or option groups |
+| `label` | `string` | - | Label for the select |
+| `value` | `string` | `''` | Currently selected value (bindable) |
+| `placeholder` | `string` | - | Placeholder text when no option is selected |
+| `disabled` | `boolean` | `false` | Disable the select |
+| `error` | `string \| boolean` | `false` | Error message or state |
+| `helpText` | `string \| Snippet` | - | Additional help text |
+| `labelHidden` | `boolean` | `false` | Visually hide the label |
+| `labelInline` | `boolean` | `false` | Show label inline with the control |
+| `labelAction` | `Action` | - | Action to display next to the label |
+| `requiredIndicator` | `boolean` | `false` | Show required indicator |
+| `tone` | `'magic'` | - | Apply tone styling |
+
+## Option Types
+
+### String Options
+
+Simple string array for basic options.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedCountry = '';
+  
+  const countries = [
+    'United States',
+    'Canada',
+    'United Kingdom',
+    'Australia',
+    'Germany'
+  ];
+</script>
+
+<Select 
+  label="Country" 
+  options={countries}
+  bind:value={selectedCountry}
+  placeholder="Select a country"
+/>
+```
+
+### Object Options
+
+Use objects for more control over values and labels.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedStatus = '';
+  
+  const statusOptions = [
+    { label: 'Draft', value: 'draft' },
+    { label: 'Active', value: 'active' },
+    { label: 'Archived', value: 'archived' }
+  ];
+</script>
+
+<Select 
+  label="Status" 
+  options={statusOptions}
+  bind:value={selectedStatus}
+  placeholder="Choose status"
+/>
+```
+
+### Disabled Options
+
+Mark specific options as disabled.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedPlan = '';
+  
+  const planOptions = [
+    { label: 'Basic', value: 'basic' },
+    { label: 'Pro', value: 'pro' },
+    { label: 'Enterprise', value: 'enterprise', disabled: true }
+  ];
+</script>
+
+<Select 
+  label="Subscription plan" 
+  options={planOptions}
+  bind:value={selectedPlan}
+  placeholder="Select a plan"
+/>
+```
+
+## Option Groups
+
+### Grouped Options
+
+Organize options into logical groups.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedLocation = '';
+  
+  const locationOptions = [
+    {
+      title: 'North America',
+      options: [
+        { label: 'United States', value: 'us' },
+        { label: 'Canada', value: 'ca' },
+        { label: 'Mexico', value: 'mx' }
+      ]
+    },
+    {
+      title: 'Europe',
+      options: [
+        { label: 'United Kingdom', value: 'uk' },
+        { label: 'Germany', value: 'de' },
+        { label: 'France', value: 'fr' }
+      ]
+    }
+  ];
+</script>
+
+<Select 
+  label="Shipping location" 
+  options={locationOptions}
+  bind:value={selectedLocation}
+  placeholder="Select location"
+/>
+```
+
+### Mixed Groups and Options
+
+Combine individual options with grouped options.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedCategory = '';
+  
+  const categoryOptions = [
+    { label: 'Featured', value: 'featured' },
+    { label: 'New Arrivals', value: 'new' },
+    {
+      title: 'Categories',
+      options: [
+        { label: 'Clothing', value: 'clothing' },
+        { label: 'Electronics', value: 'electronics' },
+        { label: 'Home & Garden', value: 'home' }
+      ]
+    },
+    {
+      title: 'Special',
+      options: [
+        { label: 'Sale Items', value: 'sale' },
+        { label: 'Clearance', value: 'clearance' }
+      ]
+    }
+  ];
+</script>
+
+<Select 
+  label="Product category" 
+  options={categoryOptions}
+  bind:value={selectedCategory}
+/>
+```
+
+## States and Validation
+
+### Error State
+
+Show validation errors with helpful messages.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedSize = '';
+  let sizeError = '';
+  
+  const sizeOptions = [
+    { label: 'Small', value: 'small' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'Large', value: 'large' },
+    { label: 'Extra Large', value: 'xl' }
+  ];
+  
+  function validateSize() {
+    if (!selectedSize) {
+      sizeError = 'Please select a size';
+    } else {
+      sizeError = '';
+    }
+  }
+</script>
+
+<Select 
+  label="Size" 
+  options={sizeOptions}
+  bind:value={selectedSize}
+  error={sizeError}
+  onblur={validateSize}
+  placeholder="Choose a size"
+/>
+```
+
+### Disabled State
+
+Disable the select when not available.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedOption = 'unavailable';
+  
+  const options = [
+    { label: 'Currently unavailable', value: 'unavailable' }
+  ];
+</script>
+
+<Select 
+  label="Shipping method" 
+  options={options}
+  bind:value={selectedOption}
+  disabled
+  helpText="Shipping options will be available at checkout"
+/>
+```
+
+### Required Field
+
+Mark fields as required with an indicator.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedCurrency = '';
+  
+  const currencyOptions = [
+    { label: 'US Dollar (USD)', value: 'USD' },
+    { label: 'Euro (EUR)', value: 'EUR' },
+    { label: 'British Pound (GBP)', value: 'GBP' },
+    { label: 'Canadian Dollar (CAD)', value: 'CAD' }
+  ];
+</script>
+
+<Select 
+  label="Currency" 
+  options={currencyOptions}
+  bind:value={selectedCurrency}
+  requiredIndicator
+  placeholder="Select currency"
+/>
+```
+
+## Label Variations
+
+### Hidden Label
+
+Hide the label when context makes it obvious.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let sortBy = '';
+  
+  const sortOptions = [
+    { label: 'Name A-Z', value: 'name_asc' },
+    { label: 'Name Z-A', value: 'name_desc' },
+    { label: 'Price Low-High', value: 'price_asc' },
+    { label: 'Price High-Low', value: 'price_desc' }
+  ];
+</script>
+
+<Select 
+  label="Sort products by" 
+  labelHidden
+  options={sortOptions}
+  bind:value={sortBy}
+  placeholder="Sort by..."
+/>
+```
+
+### Inline Label
+
+Show the label inside the control for compact layouts.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let itemsPerPage = '';
+  
+  const pageOptions = [
+    { label: '10', value: '10' },
+    { label: '25', value: '25' },
+    { label: '50', value: '50' },
+    { label: '100', value: '100' }
+  ];
+</script>
+
+<Select 
+  label="Show" 
+  labelInline
+  options={pageOptions}
+  bind:value={itemsPerPage}
+  placeholder="10"
+/>
+```
+
+### Label with Action
+
+Add an action button next to the label.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let selectedTemplate = '';
+  
+  const templateOptions = [
+    { label: 'Default Template', value: 'default' },
+    { label: 'Modern Layout', value: 'modern' },
+    { label: 'Classic Style', value: 'classic' }
+  ];
+  
+  function manageTemplates() {
+    console.log('Manage templates');
+  }
+</script>
+
+<Select 
+  label="Email template" 
+  options={templateOptions}
+  bind:value={selectedTemplate}
+  labelAction={{
+    content: 'Manage',
+    onAction: manageTemplates
+  }}
+  placeholder="Choose template"
+/>
+```
+
+## Help Text
+
+### Descriptive Help Text
+
+Provide additional context with help text.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  
+  let taxRate = '';
+  
+  const taxOptions = [
+    { label: '0% (Tax-exempt)', value: '0' },
+    { label: '5% (Reduced rate)', value: '5' },
+    { label: '10% (Standard rate)', value: '10' },
+    { label: '20% (Higher rate)', value: '20' }
+  ];
+</script>
+
+<Select 
+  label="Tax rate" 
+  options={taxOptions}
+  bind:value={taxRate}
+  helpText="Select the appropriate tax rate for this product category"
+  placeholder="Choose tax rate"
+/>
+```
+
+## Form Integration
+
+### Complete Form Example
+
+Use selects within forms for structured data entry.
+
+```svelte
+<script>
+  import { Select, TextField, Button, FormLayout, Card } from 'svelte-polaris';
+  
+  let formData = {
+    productName: '',
+    category: '',
+    status: '',
+    vendor: '',
+    type: ''
+  };
+  
+  const categoryOptions = [
+    { label: 'Clothing', value: 'clothing' },
+    { label: 'Electronics', value: 'electronics' },
+    { label: 'Home & Garden', value: 'home' },
+    { label: 'Sports', value: 'sports' }
+  ];
+  
+  const statusOptions = [
+    { label: 'Draft', value: 'draft' },
+    { label: 'Active', value: 'active' },
+    { label: 'Archived', value: 'archived' }
+  ];
+  
+  const vendorOptions = [
+    { label: 'Acme Corp', value: 'acme' },
+    { label: 'Best Supplies', value: 'best' },
+    { label: 'Quality Goods', value: 'quality' }
+  ];
+  
+  const typeOptions = [
+    { label: 'Physical', value: 'physical' },
+    { label: 'Digital', value: 'digital' },
+    { label: 'Service', value: 'service' }
+  ];
+  
+  function saveProduct() {
+    console.log('Saving product:', formData);
+  }
+</script>
+
+<Card title="Product Information">
+  <FormLayout>
+    <TextField 
+      label="Product name" 
+      bind:value={formData.productName}
+      placeholder="Enter product name"
+    />
+    
+    <FormLayout.Group>
+      <Select 
+        label="Category" 
+        options={categoryOptions}
+        bind:value={formData.category}
+        placeholder="Select category"
+      />
+      
+      <Select 
+        label="Status" 
+        options={statusOptions}
+        bind:value={formData.status}
+        placeholder="Select status"
+      />
+    </FormLayout.Group>
+    
+    <FormLayout.Group>
+      <Select 
+        label="Vendor" 
+        options={vendorOptions}
+        bind:value={formData.vendor}
+        placeholder="Select vendor"
+      />
+      
+      <Select 
+        label="Product type" 
+        options={typeOptions}
+        bind:value={formData.type}
+        placeholder="Select type"
+      />
+    </FormLayout.Group>
+    
+    <Button variant="primary" onclick={saveProduct}>
+      Save product
+    </Button>
+  </FormLayout>
+</Card>
+```
+
+### Dependent Selects
+
+Create selects that depend on other select values.
+
+```svelte
+<script>
+  import { Select, FormLayout } from 'svelte-polaris';
+  
+  let selectedCountry = '';
+  let selectedState = '';
+  let selectedCity = '';
+  
+  const countries = [
+    { label: 'United States', value: 'us' },
+    { label: 'Canada', value: 'ca' }
+  ];
+  
+  $: stateOptions = selectedCountry === 'us' ? [
+    { label: 'California', value: 'ca' },
+    { label: 'New York', value: 'ny' },
+    { label: 'Texas', value: 'tx' }
+  ] : selectedCountry === 'ca' ? [
+    { label: 'Ontario', value: 'on' },
+    { label: 'Quebec', value: 'qc' },
+    { label: 'British Columbia', value: 'bc' }
+  ] : [];
+  
+  $: cityOptions = selectedState === 'ca' ? [
+    { label: 'Los Angeles', value: 'la' },
+    { label: 'San Francisco', value: 'sf' }
+  ] : selectedState === 'ny' ? [
+    { label: 'New York City', value: 'nyc' },
+    { label: 'Buffalo', value: 'buffalo' }
+  ] : [];
+  
+  // Reset dependent values when parent changes
+  $: if (selectedCountry) {
+    selectedState = '';
+    selectedCity = '';
+  }
+  
+  $: if (selectedState) {
+    selectedCity = '';
+  }
+</script>
+
+<FormLayout>
+  <Select 
+    label="Country" 
+    options={countries}
+    bind:value={selectedCountry}
+    placeholder="Select country"
+  />
+  
+  <Select 
+    label="State/Province" 
+    options={stateOptions}
+    bind:value={selectedState}
+    disabled={!selectedCountry}
+    placeholder="Select state"
+  />
+  
+  <Select 
+    label="City" 
+    options={cityOptions}
+    bind:value={selectedCity}
+    disabled={!selectedState}
+    placeholder="Select city"
+  />
+</FormLayout>
+```
+
+## Advanced Usage
+
+### Dynamic Options
+
+Load options dynamically based on user input or external data.
+
+```svelte
+<script>
+  import { Select } from 'svelte-polaris';
+  import { onMount } from 'svelte';
+  
+  let selectedProduct = '';
+  let productOptions = [];
+  let loading = false;
+  
+  onMount(async () => {
+    loading = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    productOptions = [
+      { label: 'iPhone 15', value: 'iphone15' },
+      { label: 'Samsung Galaxy S24', value: 'galaxy24' },
+      { label: 'Google Pixel 8', value: 'pixel8' }
+    ];
+    loading = false;
+  });
+</script>
+
+<Select 
+  label="Product" 
+  options={productOptions}
+  bind:value={selectedProduct}
+  disabled={loading}
+  placeholder={loading ? 'Loading products...' : 'Select product'}
+/>
+```
+
+### Searchable Select Alternative
+
+For large option lists, consider using Combobox instead.
+
+```svelte
+<script>
+  import { Select, Text } from 'svelte-polaris';
+  
+  let selectedOption = '';
+  
+  // Large option list
+  const manyOptions = Array.from({ length: 100 }, (_, i) => ({
+    label: `Option ${i + 1}`,
+    value: `option${i + 1}`
+  }));
+</script>
+
+<div>
+  <Select 
+    label="Choose from many options" 
+    options={manyOptions}
+    bind:value={selectedOption}
+    placeholder="Select an option"
+    helpText="Consider using Combobox for better UX with large lists"
+  />
+  
+  <Text variant="bodyMd" tone="subdued">
+    💡 For lists with many options, consider using the Combobox component instead for better searchability.
+  </Text>
+</div>
+```
+
+## Accessibility
+
+- Always provide a meaningful `label`
+- Use `helpText` for additional context
+- Set `requiredIndicator` for required fields
+- Provide clear error messages with the `error` prop
+- Consider using `placeholder` text to show expected format
+- Group related options with `SelectGroup` for better navigation
+
+## Best Practices
+
+<CardGrid>
+  <Card title="Use clear, concise labels">
+    Make option labels descriptive and easy to understand at a glance.
+  </Card>
+  
+  <Card title="Group related options">
+    Use option groups to organize large lists into logical categories.
+  </Card>
+  
+  <Card title="Provide helpful defaults">
+    Set sensible default values or use placeholder text to guide users.
+  </Card>
+  
+  <Card title="Consider alternatives for large lists">
+    For lists with many options, consider using Combobox for better searchability.
+  </Card>
+</CardGrid>
+
+## Related Components
+
+- [Combobox](/getting-started/combobox) - For searchable select inputs
+- [TextField](/getting-started/text-field) - For text input
+- [Checkbox](/getting-started/checkbox) - For multiple selections
+- [RadioButton](/getting-started/radio-button) - For single selection from few options

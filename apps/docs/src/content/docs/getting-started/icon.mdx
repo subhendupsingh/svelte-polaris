@@ -1,0 +1,264 @@
+---
+title: Icon
+description: Icons are used to visually communicate core parts of the product and available actions. They can act as wayfinding tools to help merchants more easily understand where they are in the product and common interaction patterns.
+---
+
+```svelte
+import { Icon, Button, Card, InlineStack, BlockStack, Text } from 'svelte-polaris';
+```
+
+Icons are used to visually communicate core parts of the product and available actions. They can act as wayfinding tools to help merchants more easily understand where they are in the product and common interaction patterns.
+
+## Examples
+
+### Default icon
+
+Use icons to provide visual context and improve recognition.
+
+```svelte
+<Icon source="PlusIcon" />
+```
+
+### Icon with tone
+
+Use different tones to convey meaning and state.
+
+```svelte
+<InlineStack gap="4">
+  <Icon source="CheckIcon" tone="success" />
+  <Icon source="AlertTriangleIcon" tone="warning" />
+  <Icon source="XIcon" tone="critical" />
+  <Icon source="InfoIcon" tone="info" />
+  <Icon source="QuestionMarkIcon" tone="subdued" />
+</InlineStack>
+```
+
+### Icon sizes
+
+Use different sizes based on context and hierarchy.
+
+```svelte
+<InlineStack gap="4" align="center">
+  <Icon source="HomeIcon" size="xs" />
+  <Icon source="HomeIcon" size="sm" />
+  <Icon source="HomeIcon" size="md" />
+  <Icon source="HomeIcon" size="lg" />
+  <Icon source="HomeIcon" size="xl" />
+</InlineStack>
+```
+
+### Icons in buttons
+
+Use icons to enhance button meaning and recognition.
+
+```svelte
+<InlineStack gap="4">
+  <Button icon="PlusIcon">Add product</Button>
+  <Button icon="EditIcon" variant="secondary">Edit</Button>
+  <Button icon="DeleteIcon" variant="secondary" tone="critical">Delete</Button>
+  <Button icon="ExportIcon" variant="tertiary">Export</Button>
+</InlineStack>
+```
+
+### Navigation icons
+
+Use icons to improve navigation and wayfinding.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Navigation Menu</Text>
+    <BlockStack gap="3">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="HomeIcon" />
+        <Text>Dashboard</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="ProductIcon" />
+        <Text>Products</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="OrderIcon" />
+        <Text>Orders</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="CustomerIcon" />
+        <Text>Customers</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="AnalyticsIcon" />
+        <Text>Analytics</Text>
+      </div>
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+
+### Status icons
+
+Use icons to communicate status and state information.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Order Status</Text>
+    <BlockStack gap="3">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="CheckIcon" tone="success" />
+        <Text>Order completed</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="ClockIcon" tone="warning" />
+        <Text>Order pending</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="XIcon" tone="critical" />
+        <Text>Order cancelled</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <Icon source="TruckIcon" tone="info" />
+        <Text>Order shipped</Text>
+      </div>
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+
+### Interactive icons
+
+Use icons as interactive elements for actions.
+
+```svelte
+<Card>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <Text variant="headingMd">Product Settings</Text>
+    <InlineStack gap="2">
+      <button style="background: none; border: none; cursor: pointer; padding: 8px;">
+        <Icon source="EditIcon" />
+      </button>
+      <button style="background: none; border: none; cursor: pointer; padding: 8px;">
+        <Icon source="DuplicateIcon" />
+      </button>
+      <button style="background: none; border: none; cursor: pointer; padding: 8px;">
+        <Icon source="DeleteIcon" tone="critical" />
+      </button>
+    </InlineStack>
+  </div>
+</Card>
+```
+
+### Icons with accessibility labels
+
+Always provide accessibility labels for standalone icons.
+
+```svelte
+<InlineStack gap="4">
+  <Icon source="SearchIcon" accessibilityLabel="Search products" />
+  <Icon source="NotificationIcon" accessibilityLabel="View notifications" />
+  <Icon source="SettingsIcon" accessibilityLabel="Open settings" />
+  <Icon source="HelpIcon" accessibilityLabel="Get help" />
+</InlineStack>
+```
+
+### Common icon patterns
+
+Examples of commonly used icon patterns in admin interfaces.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Common Actions</Text>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="PlusIcon" />
+        <Text>Add new</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="EditIcon" />
+        <Text>Edit</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="DeleteIcon" />
+        <Text>Delete</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="DuplicateIcon" />
+        <Text>Duplicate</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="ExportIcon" />
+        <Text>Export</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="ImportIcon" />
+        <Text>Import</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="FilterIcon" />
+        <Text>Filter</Text>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <Icon source="SortIcon" />
+        <Text>Sort</Text>
+      </div>
+    </div>
+  </BlockStack>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `source` | `string \| React.ComponentType` | - | The icon to display (icon name or component) |
+| `tone` | `'base' \| 'subdued' \| 'success' \| 'critical' \| 'warning' \| 'info'` | `'base'` | Color of the icon |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the icon |
+| `accessibilityLabel` | `string` | - | Accessible label for the icon |
+
+## Accessibility
+
+- Always provide `accessibilityLabel` for standalone icons that convey meaning
+- Icons used purely for decoration don't need accessibility labels
+- When icons are used in buttons or links, the parent element should have appropriate labels
+- Ensure sufficient contrast between icon and background colors
+- Don't rely solely on icons to convey important information
+
+## Best practices
+
+### Do
+- Use icons consistently throughout your interface
+- Choose icons that clearly represent their intended meaning
+- Provide accessibility labels for meaningful icons
+- Use appropriate sizes for the context
+- Combine icons with text when possible for clarity
+
+### Don't
+- Don't use icons that are ambiguous or unclear
+- Don't use too many different icon styles in one interface
+- Don't make icons too small to be recognizable
+- Don't rely solely on color to convey meaning
+- Don't use icons without considering cultural differences in interpretation
+
+## Common icons
+
+Here are some commonly used icons in Shopify admin:
+
+- **Navigation**: `HomeIcon`, `ProductIcon`, `OrderIcon`, `CustomerIcon`, `AnalyticsIcon`
+- **Actions**: `PlusIcon`, `EditIcon`, `DeleteIcon`, `DuplicateIcon`, `ExportIcon`, `ImportIcon`
+- **Status**: `CheckIcon`, `XIcon`, `AlertTriangleIcon`, `InfoIcon`, `ClockIcon`
+- **Interface**: `SearchIcon`, `FilterIcon`, `SortIcon`, `SettingsIcon`, `HelpIcon`
+- **Content**: `ImageIcon`, `FileIcon`, `LinkIcon`, `EmailIcon`, `PhoneIcon`
+
+## Size guidelines
+
+- **xs (12px)**: Use for very small contexts like table cells
+- **sm (16px)**: Use in compact layouts and small buttons
+- **md (20px)**: Use as the default size for most contexts
+- **lg (24px)**: Use for prominent actions and navigation
+- **xl (28px)**: Use for large buttons and featured content
+
+## Related components
+
+- [Button](/getting-started/button): For actionable elements with icons
+- [Avatar](/getting-started/avatar): For user and business representations
+- [Badge](/getting-started/badge): For status indicators with text

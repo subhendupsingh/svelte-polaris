@@ -1,0 +1,700 @@
+---
+title: FormLayout
+description: FormLayout is used to arrange fields within a form using standard spacing. Use it to arrange related fields in a row or to group fields together.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# FormLayout
+
+FormLayout is used to arrange fields within a form using standard spacing. Use it to arrange related fields in a row or to group fields together.
+
+## Props
+
+### FormLayout
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `Snippet` | - | The form fields to layout |
+
+### FormLayout.Group
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `Snippet` | - | The form fields to group |
+| `condensed` | `boolean` | `false` | Remove spacing between group items |
+| `title` | `string` | - | Title for the group |
+| `helpText` | `string \| Snippet` | - | Help text for the group |
+
+### FormLayout.Item
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `Snippet` | - | The form field content |
+| `condensed` | `boolean` | `false` | Remove spacing around the item |
+
+## Basic Usage
+
+### Default FormLayout
+
+Arrange form fields vertically with consistent spacing.
+
+```svelte
+<script>
+  import { FormLayout, TextField, Select } from 'svelte-polaris';
+  
+  let firstName = '';
+  let lastName = '';
+  let country = '';
+  
+  const countryOptions = [
+    { label: 'United States', value: 'us' },
+    { label: 'Canada', value: 'ca' },
+    { label: 'United Kingdom', value: 'uk' }
+  ];
+</script>
+
+<FormLayout>
+  <TextField 
+    label="First name" 
+    bind:value={firstName}
+    placeholder="Enter your first name"
+  />
+  
+  <TextField 
+    label="Last name" 
+    bind:value={lastName}
+    placeholder="Enter your last name"
+  />
+  
+  <Select 
+    label="Country" 
+    options={countryOptions}
+    bind:value={country}
+    placeholder="Select your country"
+  />
+</FormLayout>
+```
+
+### FormLayout with Groups
+
+Group related fields together horizontally.
+
+```svelte
+<script>
+  import { FormLayout, TextField, Select } from 'svelte-polaris';
+  
+  let formData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
+    jobTitle: ''
+  };
+  
+  const titleOptions = [
+    { label: 'Developer', value: 'developer' },
+    { label: 'Designer', value: 'designer' },
+    { label: 'Manager', value: 'manager' },
+    { label: 'Other', value: 'other' }
+  ];
+</script>
+
+<FormLayout>
+  <FormLayout.Group>
+    <TextField 
+      label="First name" 
+      bind:value={formData.firstName}
+      placeholder="First name"
+    />
+    <TextField 
+      label="Last name" 
+      bind:value={formData.lastName}
+      placeholder="Last name"
+    />
+  </FormLayout.Group>
+  
+  <FormLayout.Group>
+    <TextField 
+      label="Email" 
+      type="email"
+      bind:value={formData.email}
+      placeholder="email@example.com"
+    />
+    <TextField 
+      label="Phone" 
+      type="tel"
+      bind:value={formData.phone}
+      placeholder="(555) 123-4567"
+    />
+  </FormLayout.Group>
+  
+  <FormLayout.Group>
+    <TextField 
+      label="Company" 
+      bind:value={formData.company}
+      placeholder="Company name"
+    />
+    <Select 
+      label="Job title" 
+      options={titleOptions}
+      bind:value={formData.jobTitle}
+      placeholder="Select title"
+    />
+  </FormLayout.Group>
+</FormLayout>
+```
+
+## Group Features
+
+### Group with Title
+
+Add titles to organize form sections.
+
+```svelte
+<script>
+  import { FormLayout, TextField } from 'svelte-polaris';
+  
+  let personalInfo = {
+    firstName: '',
+    lastName: '',
+    dateOfBirth: ''
+  };
+  
+  let contactInfo = {
+    email: '',
+    phone: '',
+    address: ''
+  };
+</script>
+
+<FormLayout>
+  <FormLayout.Group title="Personal Information">
+    <TextField 
+      label="First name" 
+      bind:value={personalInfo.firstName}
+    />
+    <TextField 
+      label="Last name" 
+      bind:value={personalInfo.lastName}
+    />
+    <TextField 
+      label="Date of birth" 
+      type="date"
+      bind:value={personalInfo.dateOfBirth}
+    />
+  </FormLayout.Group>
+  
+  <FormLayout.Group title="Contact Information">
+    <TextField 
+      label="Email address" 
+      type="email"
+      bind:value={contactInfo.email}
+    />
+    <TextField 
+      label="Phone number" 
+      type="tel"
+      bind:value={contactInfo.phone}
+    />
+    <TextField 
+      label="Address" 
+      bind:value={contactInfo.address}
+    />
+  </FormLayout.Group>
+</FormLayout>
+```
+
+### Group with Help Text
+
+Provide additional context for form sections.
+
+```svelte
+<script>
+  import { FormLayout, TextField, Checkbox } from 'svelte-polaris';
+  
+  let billingAddress = {
+    street: '',
+    city: '',
+    zipCode: ''
+  };
+  
+  let shippingAddress = {
+    street: '',
+    city: '',
+    zipCode: ''
+  };
+  
+  let sameAsBilling = false;
+</script>
+
+<FormLayout>
+  <FormLayout.Group 
+    title="Billing Address"
+    helpText="This address will be used for billing purposes"
+  >
+    <TextField 
+      label="Street address" 
+      bind:value={billingAddress.street}
+    />
+    <FormLayout.Group>
+      <TextField 
+        label="City" 
+        bind:value={billingAddress.city}
+      />
+      <TextField 
+        label="ZIP code" 
+        bind:value={billingAddress.zipCode}
+      />
+    </FormLayout.Group>
+  </FormLayout.Group>
+  
+  <Checkbox 
+    label="Shipping address is the same as billing address"
+    bind:checked={sameAsBilling}
+  />
+  
+  {#if !sameAsBilling}
+    <FormLayout.Group 
+      title="Shipping Address"
+      helpText="Where should we deliver your order?"
+    >
+      <TextField 
+        label="Street address" 
+        bind:value={shippingAddress.street}
+      />
+      <FormLayout.Group>
+        <TextField 
+          label="City" 
+          bind:value={shippingAddress.city}
+        />
+        <TextField 
+          label="ZIP code" 
+          bind:value={shippingAddress.zipCode}
+        />
+      </FormLayout.Group>
+    </FormLayout.Group>
+  {/if}
+</FormLayout>
+```
+
+### Condensed Groups
+
+Remove spacing between items for tighter layouts.
+
+```svelte
+<script>
+  import { FormLayout, TextField } from 'svelte-polaris';
+  
+  let creditCard = {
+    number: '',
+    expiry: '',
+    cvv: ''
+  };
+</script>
+
+<FormLayout>
+  <TextField 
+    label="Card number" 
+    bind:value={creditCard.number}
+    placeholder="1234 5678 9012 3456"
+  />
+  
+  <FormLayout.Group condensed>
+    <TextField 
+      label="Expiry date" 
+      bind:value={creditCard.expiry}
+      placeholder="MM/YY"
+    />
+    <TextField 
+      label="CVV" 
+      bind:value={creditCard.cvv}
+      placeholder="123"
+    />
+  </FormLayout.Group>
+</FormLayout>
+```
+
+## Complex Form Examples
+
+### Product Creation Form
+
+A comprehensive form using multiple layout techniques.
+
+```svelte
+<script>
+  import { 
+    FormLayout, 
+    TextField, 
+    Select, 
+    Checkbox, 
+    Button,
+    Card,
+    ButtonGroup
+  } from 'svelte-polaris';
+  
+  let product = {
+    title: '',
+    description: '',
+    category: '',
+    price: '',
+    comparePrice: '',
+    sku: '',
+    barcode: '',
+    trackQuantity: false,
+    quantity: '',
+    weight: '',
+    requiresShipping: true,
+    taxable: true
+  };
+  
+  const categoryOptions = [
+    { label: 'Clothing', value: 'clothing' },
+    { label: 'Electronics', value: 'electronics' },
+    { label: 'Home & Garden', value: 'home' },
+    { label: 'Sports', value: 'sports' }
+  ];
+  
+  function saveProduct() {
+    console.log('Saving product:', product);
+  }
+  
+  function saveAsDraft() {
+    console.log('Saving as draft:', product);
+  }
+</script>
+
+<Card title="Add Product">
+  <FormLayout>
+    <!-- Basic Information -->
+    <FormLayout.Group title="Basic Information">
+      <TextField 
+        label="Product title" 
+        bind:value={product.title}
+        placeholder="Short sleeve t-shirt"
+        helpText="This will be displayed to customers"
+      />
+      
+      <TextField 
+        label="Description" 
+        multiline={4}
+        bind:value={product.description}
+        placeholder="Describe your product..."
+      />
+      
+      <Select 
+        label="Product category" 
+        options={categoryOptions}
+        bind:value={product.category}
+        placeholder="Select category"
+      />
+    </FormLayout.Group>
+    
+    <!-- Pricing -->
+    <FormLayout.Group title="Pricing">
+      <FormLayout.Group>
+        <TextField 
+          label="Price" 
+          type="number"
+          bind:value={product.price}
+          prefix="$"
+          placeholder="0.00"
+        />
+        <TextField 
+          label="Compare at price" 
+          type="number"
+          bind:value={product.comparePrice}
+          prefix="$"
+          placeholder="0.00"
+          helpText="Optional"
+        />
+      </FormLayout.Group>
+    </FormLayout.Group>
+    
+    <!-- Inventory -->
+    <FormLayout.Group 
+      title="Inventory" 
+      helpText="Track stock levels and product details"
+    >
+      <FormLayout.Group>
+        <TextField 
+          label="SKU" 
+          bind:value={product.sku}
+          placeholder="ABC-123"
+        />
+        <TextField 
+          label="Barcode" 
+          bind:value={product.barcode}
+          placeholder="123456789012"
+        />
+      </FormLayout.Group>
+      
+      <Checkbox 
+        label="Track quantity"
+        bind:checked={product.trackQuantity}
+      />
+      
+      {#if product.trackQuantity}
+        <TextField 
+          label="Quantity" 
+          type="number"
+          bind:value={product.quantity}
+          placeholder="0"
+        />
+      {/if}
+    </FormLayout.Group>
+    
+    <!-- Shipping -->
+    <FormLayout.Group title="Shipping">
+      <TextField 
+        label="Weight" 
+        type="number"
+        bind:value={product.weight}
+        suffix="kg"
+        placeholder="0.0"
+      />
+      
+      <Checkbox 
+        label="This product requires shipping"
+        bind:checked={product.requiresShipping}
+      />
+    </FormLayout.Group>
+    
+    <!-- Tax -->
+    <FormLayout.Group title="Tax">
+      <Checkbox 
+        label="Charge tax on this product"
+        bind:checked={product.taxable}
+      />
+    </FormLayout.Group>
+    
+    <!-- Actions -->
+    <ButtonGroup>
+      <Button onclick={saveAsDraft}>Save as draft</Button>
+      <Button variant="primary" onclick={saveProduct}>Save product</Button>
+    </ButtonGroup>
+  </FormLayout>
+</Card>
+```
+
+### Customer Registration Form
+
+A multi-section customer form with validation.
+
+```svelte
+<script>
+  import { FormLayout, TextField, Select, Checkbox, Button, Card } from 'svelte-polaris';
+  
+  let customer = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
+    address: {
+      street: '',
+      apartment: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: ''
+    },
+    marketing: {
+      emailMarketing: false,
+      smsMarketing: false
+    },
+    notes: ''
+  };
+  
+  let errors = {};
+  
+  const stateOptions = [
+    { label: 'California', value: 'CA' },
+    { label: 'New York', value: 'NY' },
+    { label: 'Texas', value: 'TX' },
+    { label: 'Florida', value: 'FL' }
+  ];
+  
+  const countryOptions = [
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' }
+  ];
+  
+  function validateForm() {
+    errors = {};
+    
+    if (!customer.firstName) {
+      errors.firstName = 'First name is required';
+    }
+    
+    if (!customer.email || !customer.email.includes('@')) {
+      errors.email = 'Valid email is required';
+    }
+    
+    return Object.keys(errors).length === 0;
+  }
+  
+  function saveCustomer() {
+    if (validateForm()) {
+      console.log('Saving customer:', customer);
+    }
+  }
+</script>
+
+<Card title="Customer Information">
+  <FormLayout>
+    <!-- Personal Details -->
+    <FormLayout.Group title="Personal Details">
+      <FormLayout.Group>
+        <TextField 
+          label="First name" 
+          bind:value={customer.firstName}
+          error={errors.firstName}
+          autoComplete="given-name"
+        />
+        <TextField 
+          label="Last name" 
+          bind:value={customer.lastName}
+          autoComplete="family-name"
+        />
+      </FormLayout.Group>
+      
+      <FormLayout.Group>
+        <TextField 
+          label="Email" 
+          type="email"
+          bind:value={customer.email}
+          error={errors.email}
+          autoComplete="email"
+        />
+        <TextField 
+          label="Phone" 
+          type="tel"
+          bind:value={customer.phone}
+          autoComplete="tel"
+        />
+      </FormLayout.Group>
+      
+      <TextField 
+        label="Company" 
+        bind:value={customer.company}
+        autoComplete="organization"
+      />
+    </FormLayout.Group>
+    
+    <!-- Address -->
+    <FormLayout.Group title="Address">
+      <TextField 
+        label="Address" 
+        bind:value={customer.address.street}
+        autoComplete="street-address"
+      />
+      
+      <TextField 
+        label="Apartment, suite, etc." 
+        bind:value={customer.address.apartment}
+        autoComplete="address-line2"
+      />
+      
+      <FormLayout.Group>
+        <TextField 
+          label="City" 
+          bind:value={customer.address.city}
+          autoComplete="address-level2"
+        />
+        <Select 
+          label="State" 
+          options={stateOptions}
+          bind:value={customer.address.state}
+          placeholder="Select state"
+        />
+      </FormLayout.Group>
+      
+      <FormLayout.Group>
+        <TextField 
+          label="ZIP code" 
+          bind:value={customer.address.zipCode}
+          autoComplete="postal-code"
+        />
+        <Select 
+          label="Country" 
+          options={countryOptions}
+          bind:value={customer.address.country}
+          placeholder="Select country"
+        />
+      </FormLayout.Group>
+    </FormLayout.Group>
+    
+    <!-- Marketing Preferences -->
+    <FormLayout.Group 
+      title="Marketing" 
+      helpText="Choose how you'd like to hear from us"
+    >
+      <Checkbox 
+        label="Customer agrees to receive marketing emails"
+        bind:checked={customer.marketing.emailMarketing}
+      />
+      
+      <Checkbox 
+        label="Customer agrees to receive SMS marketing"
+        bind:checked={customer.marketing.smsMarketing}
+      />
+    </FormLayout.Group>
+    
+    <!-- Notes -->
+    <TextField 
+      label="Notes" 
+      multiline={3}
+      bind:value={customer.notes}
+      placeholder="Add any additional notes about this customer..."
+    />
+    
+    <Button variant="primary" onclick={saveCustomer}>
+      Save customer
+    </Button>
+  </FormLayout>
+</Card>
+```
+
+## Responsive Behavior
+
+FormLayout automatically adapts to different screen sizes:
+
+- **Desktop**: Groups display fields side by side
+- **Tablet**: Groups may stack based on available space
+- **Mobile**: All fields stack vertically for optimal touch interaction
+
+## Accessibility
+
+- FormLayout maintains proper form structure and relationships
+- Group titles are properly associated with their fields
+- Help text is linked to form groups for screen readers
+- Keyboard navigation flows naturally through the form
+- Error states are properly announced to assistive technology
+
+## Best Practices
+
+<CardGrid>
+  <Card title="Group related fields">
+    Use FormLayout.Group to visually and semantically group related form fields together.
+  </Card>
+  
+  <Card title="Use descriptive group titles">
+    Add clear titles to form groups to help users understand the purpose of each section.
+  </Card>
+  
+  <Card title="Provide helpful context">
+    Use help text to explain complex form sections or provide additional guidance.
+  </Card>
+  
+  <Card title="Consider mobile experience">
+    Test your forms on mobile devices to ensure they remain usable when fields stack vertically.
+  </Card>
+</CardGrid>
+
+## Related Components
+
+- [TextField](/getting-started/text-field) - For text input fields
+- [Select](/getting-started/select) - For dropdown selections
+- [Checkbox](/getting-started/checkbox) - For boolean inputs
+- [Card](/getting-started/card) - For containing form sections

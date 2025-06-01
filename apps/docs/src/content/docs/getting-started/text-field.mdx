@@ -1,0 +1,598 @@
+---
+title: TextField
+description: Text fields let users enter and edit text. They're used in forms and other interfaces where text input is required.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# TextField
+
+Text fields let users enter and edit text. They're used in forms and other interfaces where text input is required.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | `''` | Text to display in the input (bindable) |
+| `label` | `string` | - | Label for the input |
+| `labelHidden` | `boolean` | `false` | Visually hide the label |
+| `labelAction` | `Action` | - | Action to display next to the label |
+| `placeholder` | `string` | - | Placeholder text |
+| `helpText` | `string \| React.ReactNode` | - | Help text displayed below the input |
+| `prefix` | `React.ReactNode` | - | Content to display before the input |
+| `suffix` | `React.ReactNode` | - | Content to display after the input |
+| `type` | `'text' \| 'email' \| 'number' \| 'password' \| 'search' \| 'tel' \| 'url' \| 'date'` | `'text'` | Input type |
+| `multiline` | `boolean \| number` | `false` | Allow multiple lines of input |
+| `disabled` | `boolean` | `false` | Disable the input |
+| `readOnly` | `boolean` | `false` | Make the input read-only |
+| `autoFocus` | `boolean` | `false` | Automatically focus the input |
+| `error` | `string \| boolean` | `false` | Error message or state |
+| `clearButton` | `boolean` | `false` | Show a clear button |
+| `loading` | `boolean` | `false` | Show loading state |
+| `maxLength` | `number` | - | Maximum number of characters |
+| `showCharacterCount` | `boolean` | `false` | Show character count |
+| `autoComplete` | `string` | - | Autocomplete attribute |
+| `connectedLeft` | `React.ReactNode` | - | Element connected to the left |
+| `connectedRight` | `React.ReactNode` | - | Element connected to the right |
+
+## Basic Usage
+
+### Default TextField
+
+A basic text input with a label.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let productName = '';
+</script>
+
+<TextField 
+  label="Product name" 
+  bind:value={productName}
+  placeholder="Enter product name"
+/>
+```
+
+### TextField with Help Text
+
+Provide additional context with help text.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let sku = '';
+</script>
+
+<TextField 
+  label="SKU" 
+  bind:value={sku}
+  helpText="Stock Keeping Unit for inventory tracking"
+  placeholder="ABC-123"
+/>
+```
+
+### Hidden Label
+
+Use when the context makes the label obvious.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let searchQuery = '';
+</script>
+
+<TextField 
+  label="Search products" 
+  labelHidden
+  bind:value={searchQuery}
+  placeholder="Search products..."
+  type="search"
+/>
+```
+
+## Input Types
+
+### Email Input
+
+Optimized for email addresses with appropriate keyboard and validation.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let email = '';
+</script>
+
+<TextField 
+  label="Email address" 
+  type="email"
+  bind:value={email}
+  placeholder="customer@example.com"
+  autoComplete="email"
+/>
+```
+
+### Password Input
+
+Secure input for passwords.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let password = '';
+</script>
+
+<TextField 
+  label="Password" 
+  type="password"
+  bind:value={password}
+  autoComplete="current-password"
+/>
+```
+
+### Number Input
+
+Optimized for numeric input with step controls.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let price = '';
+</script>
+
+<TextField 
+  label="Price" 
+  type="number"
+  bind:value={price}
+  prefix="$"
+  step="0.01"
+  min="0"
+/>
+```
+
+### Search Input
+
+Optimized for search queries.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let searchTerm = '';
+</script>
+
+<TextField 
+  label="Search" 
+  type="search"
+  bind:value={searchTerm}
+  placeholder="Search products, customers, orders..."
+/>
+```
+
+## Multiline TextField
+
+### Basic Multiline
+
+Allow multiple lines of text input.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let description = '';
+</script>
+
+<TextField 
+  label="Product description" 
+  multiline={4}
+  bind:value={description}
+  placeholder="Describe your product..."
+/>
+```
+
+### Auto-resizing Multiline
+
+Automatically resize based on content.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let notes = '';
+</script>
+
+<TextField 
+  label="Notes" 
+  multiline
+  bind:value={notes}
+  placeholder="Add your notes here..."
+/>
+```
+
+## Prefix and Suffix
+
+### With Prefix
+
+Add content before the input.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let price = '';
+</script>
+
+<TextField 
+  label="Price" 
+  type="number"
+  bind:value={price}
+  prefix="$"
+  placeholder="0.00"
+/>
+```
+
+### With Suffix
+
+Add content after the input.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let weight = '';
+</script>
+
+<TextField 
+  label="Weight" 
+  type="number"
+  bind:value={weight}
+  suffix="kg"
+  placeholder="0"
+/>
+```
+
+### With Icon Prefix
+
+Use icons as prefix or suffix.
+
+```svelte
+<script>
+  import { TextField, Icon } from 'svelte-polaris';
+  import { SearchIcon } from 'svelte-polaris/icons';
+  
+  let search = '';
+</script>
+
+<TextField 
+  label="Search" 
+  labelHidden
+  bind:value={search}
+  placeholder="Search..."
+>
+  <Icon source={SearchIcon} slot="prefix" />
+</TextField>
+```
+
+## States and Validation
+
+### Error State
+
+Show validation errors.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let email = '';
+  let emailError = '';
+  
+  function validateEmail() {
+    if (!email.includes('@')) {
+      emailError = 'Please enter a valid email address';
+    } else {
+      emailError = '';
+    }
+  }
+</script>
+
+<TextField 
+  label="Email" 
+  type="email"
+  bind:value={email}
+  error={emailError}
+  onblur={validateEmail}
+/>
+```
+
+### Disabled State
+
+Disable the input when not available.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let readOnlyValue = 'Cannot be edited';
+</script>
+
+<TextField 
+  label="System generated ID" 
+  bind:value={readOnlyValue}
+  disabled
+/>
+```
+
+### Read-only State
+
+Make the input read-only but still focusable.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let calculatedValue = '42.50';
+</script>
+
+<TextField 
+  label="Calculated total" 
+  bind:value={calculatedValue}
+  readOnly
+  prefix="$"
+/>
+```
+
+### Loading State
+
+Show loading state during async operations.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let productName = '';
+  let isValidating = false;
+  
+  async function validateProductName() {
+    isValidating = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    isValidating = false;
+  }
+</script>
+
+<TextField 
+  label="Product name" 
+  bind:value={productName}
+  loading={isValidating}
+  onblur={validateProductName}
+/>
+```
+
+## Character Count
+
+### With Character Limit
+
+Show character count with a maximum limit.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let title = '';
+</script>
+
+<TextField 
+  label="Product title" 
+  bind:value={title}
+  maxLength={100}
+  showCharacterCount
+  helpText="Keep it concise and descriptive"
+/>
+```
+
+## Clear Button
+
+### With Clear Functionality
+
+Add a button to clear the input.
+
+```svelte
+<script>
+  import { TextField } from 'svelte-polaris';
+  
+  let searchQuery = '';
+</script>
+
+<TextField 
+  label="Search" 
+  bind:value={searchQuery}
+  clearButton
+  placeholder="Search products..."
+/>
+```
+
+## Connected Elements
+
+### Connected Right
+
+Connect elements to the right of the input.
+
+```svelte
+<script>
+  import { TextField, Button } from 'svelte-polaris';
+  
+  let couponCode = '';
+  
+  function applyCoupon() {
+    console.log('Applying coupon:', couponCode);
+  }
+</script>
+
+<TextField 
+  label="Coupon code" 
+  bind:value={couponCode}
+  connectedRight={
+    <Button onclick={applyCoupon}>Apply</Button>
+  }
+/>
+```
+
+### Connected Left
+
+Connect elements to the left of the input.
+
+```svelte
+<script>
+  import { TextField, Select } from 'svelte-polaris';
+  
+  let amount = '';
+  let currency = 'USD';
+  
+  const currencyOptions = [
+    {label: 'USD', value: 'USD'},
+    {label: 'EUR', value: 'EUR'},
+    {label: 'GBP', value: 'GBP'}
+  ];
+</script>
+
+<TextField 
+  label="Price" 
+  type="number"
+  bind:value={amount}
+  connectedLeft={
+    <Select 
+      label="Currency"
+      labelHidden
+      options={currencyOptions}
+      bind:value={currency}
+    />
+  }
+/>
+```
+
+## Form Integration
+
+### Complete Form Example
+
+Combine multiple text fields in a form.
+
+```svelte
+<script>
+  import { TextField, Button, FormLayout, Card } from 'svelte-polaris';
+  
+  let formData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    company: '',
+    phone: ''
+  };
+  
+  let errors = {};
+  
+  function validateForm() {
+    errors = {};
+    
+    if (!formData.firstName) {
+      errors.firstName = 'First name is required';
+    }
+    
+    if (!formData.email || !formData.email.includes('@')) {
+      errors.email = 'Valid email is required';
+    }
+    
+    return Object.keys(errors).length === 0;
+  }
+  
+  function handleSubmit() {
+    if (validateForm()) {
+      console.log('Form submitted:', formData);
+    }
+  }
+</script>
+
+<Card title="Customer Information">
+  <FormLayout>
+    <FormLayout.Group>
+      <TextField 
+        label="First name" 
+        bind:value={formData.firstName}
+        error={errors.firstName}
+        autoComplete="given-name"
+      />
+      <TextField 
+        label="Last name" 
+        bind:value={formData.lastName}
+        autoComplete="family-name"
+      />
+    </FormLayout.Group>
+    
+    <TextField 
+      label="Email" 
+      type="email"
+      bind:value={formData.email}
+      error={errors.email}
+      autoComplete="email"
+    />
+    
+    <TextField 
+      label="Company" 
+      bind:value={formData.company}
+      autoComplete="organization"
+    />
+    
+    <TextField 
+      label="Phone" 
+      type="tel"
+      bind:value={formData.phone}
+      autoComplete="tel"
+    />
+    
+    <Button variant="primary" onclick={handleSubmit}>
+      Save customer
+    </Button>
+  </FormLayout>
+</Card>
+```
+
+## Accessibility
+
+- Always provide a meaningful `label`
+- Use `helpText` to provide additional context
+- Set appropriate `autoComplete` values for better UX
+- Use semantic input `type` for mobile optimization
+- Provide clear error messages with `error` prop
+- Consider `labelHidden` only when context is obvious
+
+## Best Practices
+
+<CardGrid>
+  <Card title="Use appropriate input types">
+    Set the correct `type` prop to optimize mobile keyboards and enable browser validation.
+  </Card>
+  
+  <Card title="Provide helpful placeholder text">
+    Use placeholder text to show examples or expected formats, not as a replacement for labels.
+  </Card>
+  
+  <Card title="Show validation feedback">
+    Provide immediate feedback for validation errors with clear, actionable messages.
+  </Card>
+  
+  <Card title="Consider character limits">
+    Use `maxLength` and `showCharacterCount` for fields with length restrictions.
+  </Card>
+</CardGrid>
+
+## Related Components
+
+- [Select](/getting-started/select) - For choosing from predefined options
+- [Combobox](/getting-started/combobox) - For searchable select inputs
+- [Checkbox](/getting-started/checkbox) - For boolean inputs
+- [FormLayout](/getting-started/form-layout) - For organizing form fields

@@ -1,0 +1,198 @@
+---
+title: Checkbox
+description: Use checkboxes to give merchants a way to make a range of selections (zero, one, or multiple). They may also be used to indicate agreement to terms and services.
+---
+
+```svelte
+import { Checkbox } from 'svelte-polaris';
+```
+
+Checkboxes are most commonly used to give merchants a way to make a range of selections (zero, one, or multiple). They may also be used to indicate agreement to terms and services.
+
+## Examples
+
+### Default checkbox
+
+Use when you need a basic checkbox.
+
+```svelte
+<script>
+  let checked = false;
+</script>
+
+<Checkbox 
+  label="Basic checkbox" 
+  bind:checked 
+/>
+```
+
+### Disabled checkbox
+
+Use for checkboxes that can't be changed by the merchant.
+
+```svelte
+<script>
+  let checked = false;
+</script>
+
+<Checkbox 
+  label="Disabled checkbox" 
+  bind:checked 
+  disabled={true}
+/>
+```
+
+### Checkbox with help text
+
+Use when you need to provide more context about the checkbox option.
+
+```svelte
+<script>
+  let checked = false;
+</script>
+
+<Checkbox 
+  label="Save this information for next time" 
+  helpText="We'll use this information to make checkout faster next time."
+  bind:checked 
+/>
+```
+
+### Checkbox with error
+
+Use when the checkbox selection is invalid.
+
+```svelte
+<script>
+  let checked = false;
+</script>
+
+<Checkbox 
+  label="I agree to the terms and conditions" 
+  error="You must agree to the terms and conditions"
+  bind:checked 
+/>
+```
+
+### Indeterminate checkbox
+
+Use when the checkbox represents a mixed state (some items selected, but not all).
+
+```svelte
+<script>
+  let checked = false;
+  let indeterminate = true;
+</script>
+
+<Checkbox 
+  label="Select all products" 
+  bind:checked 
+  {indeterminate}
+/>
+```
+
+### Checkbox in a form
+
+Use checkboxes within forms for multiple selections.
+
+```svelte
+<script>
+  let notifications = {
+    email: false,
+    sms: false,
+    push: false
+  };
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group title="Notification preferences">
+      <Checkbox 
+        label="Email notifications" 
+        bind:checked={notifications.email}
+      />
+      <Checkbox 
+        label="SMS notifications" 
+        bind:checked={notifications.sms}
+      />
+      <Checkbox 
+        label="Push notifications" 
+        bind:checked={notifications.push}
+      />
+    </FormLayout.Group>
+  </FormLayout>
+</Card>
+```
+
+### Checkbox with custom content
+
+Use when you need more complex content alongside the checkbox.
+
+```svelte
+<script>
+  let acceptTerms = false;
+</script>
+
+<Checkbox 
+  label="I agree to the terms and conditions and privacy policy"
+  bind:checked={acceptTerms}
+>
+  <div slot="label">
+    I agree to the 
+    <a href="/terms" target="_blank">terms and conditions</a> 
+    and 
+    <a href="/privacy" target="_blank">privacy policy</a>
+  </div>
+</Checkbox>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | - | Label for the checkbox |
+| `labelHidden` | `boolean` | `false` | Visually hide the label |
+| `checked` | `boolean` | `false` | Checkbox is selected |
+| `helpText` | `string` | - | Additional text to aid in use |
+| `disabled` | `boolean` | `false` | Disable input |
+| `error` | `string \| boolean` | `false` | Error to display beneath the label |
+| `indeterminate` | `boolean` | `false` | Indeterminate checkbox state |
+| `id` | `string` | - | ID for form input |
+| `name` | `string` | - | Name for form input |
+| `value` | `string` | - | Value for form input |
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `change` | Fired when the checkbox value changes |
+| `focus` | Fired when the checkbox receives focus |
+| `blur` | Fired when the checkbox loses focus |
+
+## Accessibility
+
+- The checkbox has proper ARIA attributes for screen readers
+- Use clear, descriptive labels
+- Group related checkboxes with fieldsets and legends
+- Ensure sufficient color contrast for the checkbox states
+- The checkbox is keyboard accessible
+
+## Best practices
+
+### Do
+- Use checkboxes when merchants can select multiple options
+- Use clear, descriptive labels that make the purpose obvious
+- Group related checkboxes together
+- Use help text to provide additional context when needed
+
+### Don't
+- Don't use checkboxes for mutually exclusive options (use radio buttons instead)
+- Don't use vague or unclear labels
+- Don't make the checkbox label too long
+- Don't use checkboxes for actions (use buttons instead)
+
+## Related components
+
+- [RadioButton](/getting-started/radio-button): For mutually exclusive selections
+- [ChoiceList](/getting-started/choice-list): For a list of selectable options
+- [FormLayout](/getting-started/form-layout): To structure form elements

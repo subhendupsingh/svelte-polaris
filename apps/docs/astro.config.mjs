@@ -11,16 +11,70 @@ export default defineConfig({
         social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
         sidebar: [
             {
-                label: 'Guides',
+                label: 'Getting Started',
                 items: [
-                    // Each item here is one entry in the navigation menu.
-                    { label: 'Example Guide', slug: 'guides/example' },
+                    {
+                        label: 'Installation',
+                        slug: 'getting-started/installation',
+                    },
+                    {
+                        label: 'Set up',
+                        slug: 'getting-started/set-up',
+                    },
+                    {
+                        label: 'Button',
+                        slug: 'getting-started/button',
+                    },
+                    {
+                        label: 'Card',
+                        slug: 'getting-started/card',
+                    },
+                    {
+                        label: 'TextField',
+                        slug: 'getting-started/text-field',
+                    },
+                    {
+                        label: 'Select',
+                        slug: 'getting-started/select',
+                    },
+                    {
+                        label: 'ButtonGroup',
+                        slug: 'getting-started/button-group',
+                    },
+                    {
+                        label: 'FormLayout',
+                        slug: 'getting-started/form-layout',
+                    },
+                    {
+                        label: 'Checkbox',
+                        slug: 'getting-started/checkbox',
+                    },
+                    {
+                        label: 'Badge',
+                        slug: 'getting-started/badge',
+                    },
+                    {
+                        label: 'Avatar',
+                        slug: 'getting-started/avatar',
+                    },
+                    {
+                        label: 'Text',
+                        slug: 'getting-started/text',
+                    },
+                    {
+                        label: 'Icon',
+                        slug: 'getting-started/icon',
+                    },
+                    {
+                        label: 'Spinner',
+                        slug: 'getting-started/spinner',
+                    },
+                    {
+                        label: 'Divider',
+                        slug: 'getting-started/divider',
+                    },
                 ],
-            },
-            {
-                label: 'Reference',
-                autogenerate: { directory: 'reference' },
-            },
+            }
         ],
-		}), svelte()],
+    }), svelte()],
 });

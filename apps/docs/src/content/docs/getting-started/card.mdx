@@ -1,0 +1,477 @@
+---
+title: Card
+description: Cards are used to group related concepts and tasks together to make information easier to scan, read, and act on.
+---
+
+import { Card as StarlightCard, CardGrid } from '@astrojs/starlight/components';
+
+# Card
+
+Cards are used to group related concepts and tasks together to make information easier to scan, read, and act on.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `background` | `ColorBackgroundAlias` | `'bg-surface'` | Background color of the card |
+| `padding` | `SpaceScale \| ResponsiveProp<SpaceScale>` | `{xs: '400'}` | Spacing around the card content |
+| `roundedAbove` | `BreakpointsAlias` | `'sm'` | Breakpoint above which border radius is applied |
+
+## Basic Usage
+
+### Default Card
+
+A basic card with default styling.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Text variant="headingMd" as="h2">
+    Order details
+  </Text>
+  <Text variant="bodyMd" as="p">
+    View and manage your order information, shipping details, and payment status.
+  </Text>
+</Card>
+```
+
+### Card with Custom Padding
+
+Adjust the spacing around card content.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card padding="600">
+  <Text variant="headingLg" as="h2">
+    Large padding card
+  </Text>
+  <Text variant="bodyMd" as="p">
+    This card has more generous padding for a spacious feel.
+  </Text>
+</Card>
+```
+
+### Responsive Padding
+
+Use responsive padding that adapts to screen size.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card padding={{xs: '200', sm: '400', md: '600'}}>
+  <Text variant="headingMd" as="h2">
+    Responsive card
+  </Text>
+  <Text variant="bodyMd" as="p">
+    Padding adjusts based on screen size for optimal spacing.
+  </Text>
+</Card>
+```
+
+## Background Colors
+
+### Surface Background (Default)
+
+The default surface background for standard cards.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card background="bg-surface">
+  <Text variant="headingMd" as="h2">
+    Default surface
+  </Text>
+  <Text variant="bodyMd" as="p">
+    Standard card background for most use cases.
+  </Text>
+</Card>
+```
+
+### Secondary Background
+
+Use secondary background for subtle differentiation.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card background="bg-surface-secondary">
+  <Text variant="headingMd" as="h2">
+    Secondary surface
+  </Text>
+  <Text variant="bodyMd" as="p">
+    Slightly different background for visual hierarchy.
+  </Text>
+</Card>
+```
+
+### Success Background
+
+Use for positive states or successful actions.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card background="bg-surface-success">
+  <Text variant="headingMd" as="h2">
+    Success state
+  </Text>
+  <Text variant="bodyMd" as="p">
+    Use for positive feedback or successful operations.
+  </Text>
+</Card>
+```
+
+### Warning Background
+
+Use for cautionary information.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card background="bg-surface-warning">
+  <Text variant="headingMd" as="h2">
+    Warning state
+  </Text>
+  <Text variant="bodyMd" as="p">
+    Use for important information that needs attention.
+  </Text>
+</Card>
+```
+
+### Critical Background
+
+Use for error states or critical information.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card background="bg-surface-critical">
+  <Text variant="headingMd" as="h2">
+    Critical state
+  </Text>
+  <Text variant="bodyMd" as="p">
+    Use for errors or critical information that requires immediate attention.
+  </Text>
+</Card>
+```
+
+## Border Radius Control
+
+### Rounded Above Small Screens (Default)
+
+Cards are rounded on small screens and above.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card roundedAbove="sm">
+  <Text variant="headingMd" as="h2">
+    Rounded on small+
+  </Text>
+  <Text variant="bodyMd" as="p">
+    This card has rounded corners on small screens and larger.
+  </Text>
+</Card>
+```
+
+### Always Rounded
+
+Cards are rounded on all screen sizes.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card roundedAbove="xs">
+  <Text variant="headingMd" as="h2">
+    Always rounded
+  </Text>
+  <Text variant="bodyMd" as="p">
+    This card has rounded corners on all screen sizes.
+  </Text>
+</Card>
+```
+
+### Rounded Above Medium Screens
+
+Cards are only rounded on medium screens and above.
+
+```svelte
+<script>
+  import { Card, Text } from 'svelte-polaris';
+</script>
+
+<Card roundedAbove="md">
+  <Text variant="headingMd" as="h2">
+    Rounded on medium+
+  </Text>
+  <Text variant="bodyMd" as="p">
+    This card has rounded corners only on medium screens and larger.
+  </Text>
+</Card>
+```
+
+## Complex Card Content
+
+### Card with Form Elements
+
+Combine cards with form elements for data entry.
+
+```svelte
+<script>
+  import { Card, Text, TextField, Button, FormLayout } from 'svelte-polaris';
+  
+  let customerName = '';
+  let customerEmail = '';
+  
+  function saveCustomer() {
+    console.log('Saving customer:', { customerName, customerEmail });
+  }
+</script>
+
+<Card>
+  <Text variant="headingMd" as="h2">
+    Customer Information
+  </Text>
+  
+  <FormLayout>
+    <TextField 
+      label="Customer name" 
+      bind:value={customerName}
+      placeholder="Enter customer name"
+    />
+    
+    <TextField 
+      label="Email address" 
+      type="email"
+      bind:value={customerEmail}
+      placeholder="customer@example.com"
+    />
+    
+    <Button variant="primary" onclick={saveCustomer}>
+      Save customer
+    </Button>
+  </FormLayout>
+</Card>
+```
+
+### Card with Data Display
+
+Use cards to display structured information.
+
+```svelte
+<script>
+  import { Card, Text, Badge, Button, Stack } from 'svelte-polaris';
+  
+  const orderData = {
+    id: '#1001',
+    status: 'fulfilled',
+    total: '$125.50',
+    customer: 'John Doe',
+    date: 'Oct 15, 2023'
+  };
+</script>
+
+<Card>
+  <Stack alignment="space-between">
+    <div>
+      <Text variant="headingMd" as="h2">
+        Order {orderData.id}
+      </Text>
+      <Text variant="bodyMd" as="p" tone="subdued">
+        {orderData.date} • {orderData.customer}
+      </Text>
+    </div>
+    
+    <Badge tone="success">
+      {orderData.status}
+    </Badge>
+  </Stack>
+  
+  <Stack alignment="space-between">
+    <Text variant="headingLg" as="p">
+      {orderData.total}
+    </Text>
+    
+    <Button>
+      View details
+    </Button>
+  </Stack>
+</Card>
+```
+
+### Card with Actions
+
+Include action buttons within cards.
+
+```svelte
+<script>
+  import { Card, Text, Button, ButtonGroup, Stack } from 'svelte-polaris';
+  
+  function editProduct() {
+    console.log('Edit product');
+  }
+  
+  function duplicateProduct() {
+    console.log('Duplicate product');
+  }
+  
+  function deleteProduct() {
+    console.log('Delete product');
+  }
+</script>
+
+<Card>
+  <Stack alignment="space-between">
+    <div>
+      <Text variant="headingMd" as="h2">
+        Product Management
+      </Text>
+      <Text variant="bodyMd" as="p">
+        Manage your product information, pricing, and availability.
+      </Text>
+    </div>
+    
+    <ButtonGroup>
+      <Button onclick={editProduct}>
+        Edit
+      </Button>
+      <Button onclick={duplicateProduct}>
+        Duplicate
+      </Button>
+      <Button tone="critical" onclick={deleteProduct}>
+        Delete
+      </Button>
+    </ButtonGroup>
+  </Stack>
+</Card>
+```
+
+## Card Layouts
+
+### Grid of Cards
+
+Create responsive card grids for dashboard layouts.
+
+```svelte
+<script>
+  import { Card, Text, Grid } from 'svelte-polaris';
+  
+  const stats = [
+    { title: 'Total Sales', value: '$12,345', change: '+12%' },
+    { title: 'Orders', value: '156', change: '+8%' },
+    { title: 'Customers', value: '89', change: '+15%' },
+    { title: 'Conversion', value: '3.2%', change: '-2%' }
+  ];
+</script>
+
+<Grid>
+  {#each stats as stat}
+    <Grid.Cell columnSpan={{xs: 6, sm: 3}}>
+      <Card>
+        <Text variant="bodyMd" as="p" tone="subdued">
+          {stat.title}
+        </Text>
+        <Text variant="headingLg" as="p">
+          {stat.value}
+        </Text>
+        <Text variant="bodyMd" as="p" tone={stat.change.startsWith('+') ? 'success' : 'critical'}>
+          {stat.change}
+        </Text>
+      </Card>
+    </Grid.Cell>
+  {/each}
+</Grid>
+```
+
+### Stacked Cards
+
+Stack cards vertically for content sections.
+
+```svelte
+<script>
+  import { Card, Text, Stack } from 'svelte-polaris';
+</script>
+
+<Stack vertical spacing="400">
+  <Card>
+    <Text variant="headingMd" as="h2">
+      Account Settings
+    </Text>
+    <Text variant="bodyMd" as="p">
+      Manage your account preferences and security settings.
+    </Text>
+  </Card>
+  
+  <Card>
+    <Text variant="headingMd" as="h2">
+      Billing Information
+    </Text>
+    <Text variant="bodyMd" as="p">
+      View and update your billing details and payment methods.
+    </Text>
+  </Card>
+  
+  <Card>
+    <Text variant="headingMd" as="h2">
+      Notifications
+    </Text>
+    <Text variant="bodyMd" as="p">
+      Configure how and when you receive notifications.
+    </Text>
+  </Card>
+</Stack>
+```
+
+## Accessibility
+
+- Cards automatically provide proper semantic structure
+- Use heading elements (`h1`, `h2`, etc.) for card titles
+- Ensure sufficient color contrast for text on colored backgrounds
+- Include descriptive text for screen readers when using icon-only actions
+
+## Best Practices
+
+<StarlightCard title="Group related content">
+  Use cards to group related information and actions together for better scannability.
+</StarlightCard>
+
+<StarlightCard title="Maintain consistent spacing">
+  Use consistent padding values across cards in the same interface for visual harmony.
+</StarlightCard>
+
+<StarlightCard title="Choose appropriate backgrounds">
+  Use background colors purposefully to convey meaning (success, warning, error states).
+</StarlightCard>
+
+<StarlightCard title="Consider mobile experience">
+  Use responsive padding and appropriate `roundedAbove` values for mobile-friendly designs.
+</StarlightCard>
+
+## Related Components
+
+- [Layout](/getting-started/layout) - For page-level structure
+- [Stack](/getting-started/stack) - For arranging content within cards
+- [Grid](/getting-started/grid) - For responsive card layouts
+- [Box](/getting-started/box) - For lower-level layout control

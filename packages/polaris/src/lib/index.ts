@@ -45,7 +45,7 @@ import Filters from "./components/filters/filters.svelte";
 import type { FiltersProps } from "./components/filters/types.js";
 import Form from "./components/form/form.svelte";
 import type { FormProps } from "./components/form/types.js";
-import FormLayout from "./components/form-layout/form-layout.svelte";
+import FormLayout from "./components/form-layout/index.js";
 import type { FormLayoutProps } from "./components/form-layout/types.js";
 import Grid from "./components/grid/index.js";
 import type { GridProps, CellProps } from "./components/grid/types.js";

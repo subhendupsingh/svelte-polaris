@@ -1,0 +1,539 @@
+---
+title: Button
+description: Buttons are used to initialize an action, such as submitting a form, cancelling an action, or performing a page specific operation.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# Button
+
+Buttons are used to initialize an action, such as submitting a form, cancelling an action, or performing a page specific operation. Buttons can also be used for navigation when styled as a link.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'plain' \| 'primary' \| 'secondary' \| 'tertiary' \| 'monochromePlain'` | `'secondary'` | Changes the visual appearance of the button |
+| `tone` | `'critical' \| 'success'` | - | Sets the color treatment of the button |
+| `size` | `'micro' \| 'slim' \| 'medium' \| 'large'` | `'medium'` | Changes the size of the button |
+| `textAlign` | `'left' \| 'right' \| 'center' \| 'start' \| 'end'` | `'start'` | Changes the inner text alignment |
+| `fullWidth` | `boolean` | `false` | Allows the button to grow to the width of its container |
+| `disabled` | `boolean` | `false` | Disables the button |
+| `loading` | `boolean` | `false` | Shows loading state with spinner |
+| `pressed` | `boolean` | `false` | Indicates the pressed state for toggle buttons |
+| `disclosure` | `'down' \| 'up' \| 'select' \| boolean` | `false` | Displays the button with a disclosure icon |
+| `icon` | `IconSource` | - | Icon to display to the left of the button content |
+| `url` | `string` | - | A destination to link to, rendered in the href attribute of a link |
+| `external` | `boolean` | `false` | Forces url to open in a new tab |
+| `download` | `boolean \| string` | `false` | Tells the browser to download the url instead of opening it |
+| `accessibilityLabel` | `string` | - | Visually hidden text for screen readers |
+| `onClick` | `() => void` | - | Callback when button is clicked |
+
+## Basic Usage
+
+### Default Button
+
+The default button for most actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+
+  function handleClick() {
+    console.log('Button clicked');
+  }
+</script>
+
+<Button onclick={handleClick}>
+  Default button
+</Button>
+```
+
+### Primary Button
+
+Primary buttons are used for the most important actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="primary">
+  Save changes
+</Button>
+```
+
+### Secondary Button
+
+Secondary buttons are used for secondary actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="secondary">
+  Cancel
+</Button>
+```
+
+## Button Variants
+
+### Tertiary Button
+
+Tertiary buttons are used for less important actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="tertiary">
+  Learn more
+</Button>
+```
+
+### Plain Button
+
+Plain buttons are used for actions that need to blend into the background.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="plain">
+  Edit
+</Button>
+```
+
+### Monochrome Plain Button
+
+Monochrome plain buttons work on various backgrounds.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="monochromePlain">
+  Settings
+</Button>
+```
+
+## Button Tones
+
+### Critical Tone
+
+Use critical tone for destructive actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="primary" tone="critical">
+  Delete account
+</Button>
+
+<Button variant="plain" tone="critical">
+  Remove item
+</Button>
+```
+
+### Success Tone
+
+Use success tone for positive actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button variant="primary" tone="success">
+  Complete order
+</Button>
+```
+
+## Button Sizes
+
+### Micro Button
+
+Use micro buttons in tight spaces.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button size="micro">
+  Edit
+</Button>
+```
+
+### Slim Button
+
+Slim buttons are useful in compact layouts.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button size="slim">
+  Apply
+</Button>
+```
+
+### Medium Button (Default)
+
+Medium is the default size for most use cases.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button size="medium">
+  Default size
+</Button>
+```
+
+### Large Button
+
+Large buttons are prominent and should be used for important actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button size="large" variant="primary">
+  Get started
+</Button>
+```
+
+## Button States
+
+### Disabled State
+
+Disabled buttons indicate that an action is not currently available.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button disabled>
+  Unavailable action
+</Button>
+
+<Button variant="primary" disabled>
+  Submit (disabled)
+</Button>
+```
+
+### Loading State
+
+Loading buttons show progress for asynchronous actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button loading>
+  Processing...
+</Button>
+
+<Button variant="primary" loading>
+  Saving changes
+</Button>
+```
+
+### Pressed State
+
+Pressed state indicates that a toggle button is currently active.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button pressed>
+  Active filter
+</Button>
+
+<Button variant="tertiary" pressed>
+  Bold text
+</Button>
+```
+
+## Buttons with Icons
+
+### Icon Only Button
+
+Use icon-only buttons when space is limited and the icon meaning is clear.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+  import { SearchIcon, DeleteIcon, EditIcon } from 'svelte-polaris/icons';
+</script>
+
+<Button accessibilityLabel="Search" icon={SearchIcon} />
+<Button accessibilityLabel="Delete" icon={DeleteIcon} tone="critical" />
+<Button accessibilityLabel="Edit" icon={EditIcon} variant="plain" />
+```
+
+### Button with Icon and Text
+
+Combine icons with text to provide both visual and textual context.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+  import { PlusIcon, SaveIcon, ExportIcon } from 'svelte-polaris/icons';
+</script>
+
+<Button icon={PlusIcon}>
+  Add product
+</Button>
+
+<Button icon={SaveIcon} variant="primary">
+  Save changes
+</Button>
+
+<Button icon={ExportIcon} variant="tertiary">
+  Export data
+</Button>
+```
+
+## Button with Disclosure
+
+Disclosure buttons indicate that clicking will reveal additional options.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<!-- Default down disclosure -->
+<Button disclosure>
+  More actions
+</Button>
+
+<!-- Up disclosure -->
+<Button disclosure="up">
+  Show less
+</Button>
+
+<!-- Select disclosure -->
+<Button disclosure="select">
+  Choose option
+</Button>
+```
+
+## Layout Options
+
+### Full Width Button
+
+Full width buttons span the entire width of their container.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button fullWidth>
+  Full width button
+</Button>
+
+<Button fullWidth variant="primary">
+  Primary full width
+</Button>
+```
+
+### Text Alignment
+
+Control how text is aligned within the button.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<Button fullWidth textAlign="left">
+  Left aligned
+</Button>
+
+<Button fullWidth textAlign="center">
+  Center aligned
+</Button>
+
+<Button fullWidth textAlign="right">
+  Right aligned
+</Button>
+```
+
+## Link Buttons
+
+Buttons can also function as links when a URL is provided.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+</script>
+
+<!-- Internal link -->
+<Button url="/products">
+  View products
+</Button>
+
+<!-- External link -->
+<Button url="https://shopify.com" external>
+  Visit Shopify
+</Button>
+
+<!-- Download link -->
+<Button url="/report.pdf" download>
+  Download report
+</Button>
+```
+
+## Complex Examples
+
+### Form Actions
+
+Common pattern for form submission and cancellation.
+
+```svelte
+<script>
+  import { Button, ButtonGroup } from 'svelte-polaris';
+  
+  let isSubmitting = false;
+  
+  async function handleSubmit() {
+    isSubmitting = true;
+    try {
+      // Submit form logic
+      await submitForm();
+    } finally {
+      isSubmitting = false;
+    }
+  }
+  
+  function handleCancel() {
+    // Cancel logic
+  }
+</script>
+
+<ButtonGroup>
+  <Button onclick={handleCancel}>
+    Cancel
+  </Button>
+  <Button variant="primary" loading={isSubmitting} onclick={handleSubmit}>
+    Save product
+  </Button>
+</ButtonGroup>
+```
+
+### Action with Success State
+
+Example showing state management for async actions.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+  
+  let loading = false;
+  let success = false;
+  
+  async function handleAction() {
+    loading = true;
+    try {
+      await performAction();
+      success = true;
+      setTimeout(() => success = false, 2000);
+    } finally {
+      loading = false;
+    }
+  }
+</script>
+
+{#if success}
+  <Button variant="primary" tone="success" disabled>
+    ✓ Saved successfully
+  </Button>
+{:else}
+  <Button variant="primary" {loading} onclick={handleAction}>
+    Save changes
+  </Button>
+{/if}
+```
+
+### Destructive Action with Confirmation
+
+Pattern for dangerous actions that require user confirmation.
+
+```svelte
+<script>
+  import { Button } from 'svelte-polaris';
+  
+  let showConfirmation = false;
+  
+  function handleDelete() {
+    if (showConfirmation) {
+      // Perform delete action
+      console.log('Item deleted');
+      showConfirmation = false;
+    } else {
+      showConfirmation = true;
+      // Auto-hide confirmation after 3 seconds
+      setTimeout(() => showConfirmation = false, 3000);
+    }
+  }
+</script>
+
+<Button 
+  tone="critical" 
+  variant={showConfirmation ? "primary" : "secondary"}
+  onclick={handleDelete}
+>
+  {showConfirmation ? "Confirm delete" : "Delete product"}
+</Button>
+```
+
+## Accessibility
+
+- Always provide descriptive text or `accessibilityLabel` for screen readers
+- Use semantic `tone` props to convey meaning (critical for destructive actions)
+- Ensure sufficient color contrast for all button variants
+- Consider focus states and keyboard navigation
+- For icon-only buttons, always include `accessibilityLabel`
+
+## Best Practices
+
+<CardGrid>
+  <Card title="Use primary buttons sparingly">
+    Only one primary button per page section to maintain clear hierarchy.
+  </Card>
+  
+  <Card title="Choose appropriate variants">
+    Match the visual weight to the action importance.
+  </Card>
+  
+  <Card title="Provide clear labels">
+    Button text should clearly describe the action that will occur.
+  </Card>
+  
+  <Card title="Consider loading states">
+    Always show progress for async actions to provide user feedback.
+  </Card>
+</CardGrid>
+
+## Related Components
+
+- [ButtonGroup](/getting-started/button-group) - For grouping related buttons
+- [Link](/getting-started/link) - For navigation that doesn't trigger actions
+- [ActionList](/getting-started/action-list) - For lists of actions in menus

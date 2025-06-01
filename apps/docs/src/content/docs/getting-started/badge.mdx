@@ -1,0 +1,186 @@
+---
+title: Badge
+description: Badges are used to inform merchants of the status of an object or of an action that's been taken.
+---
+
+```svelte
+import { Badge, Card, InlineStack, BlockStack, Text } from 'svelte-polaris';
+```
+
+Badges are used to inform merchants of the status of an object or of an action that's been taken. They provide quick recognition of important information.
+
+## Examples
+
+### Default badge
+
+Use to give a non-critical status update on a piece of information or action.
+
+```svelte
+<Badge>Default</Badge>
+```
+
+### Badge with tone
+
+Use different tones to convey the urgency or importance of the information.
+
+```svelte
+<InlineStack gap="4">
+  <Badge>Default</Badge>
+  <Badge tone="info">Info</Badge>
+  <Badge tone="success">Success</Badge>
+  <Badge tone="warning">Warning</Badge>
+  <Badge tone="critical">Critical</Badge>
+  <Badge tone="attention">Attention</Badge>
+  <Badge tone="new">New</Badge>
+</InlineStack>
+```
+
+### Badge with size
+
+Use different sizes to match the context and hierarchy of your interface.
+
+```svelte
+<InlineStack gap="4" align="center">
+  <Badge size="small">Small</Badge>
+  <Badge>Medium</Badge>
+  <Badge size="large">Large</Badge>
+</InlineStack>
+```
+
+### Badge with progress
+
+Use to show incomplete or in-progress states.
+
+```svelte
+<InlineStack gap="4">
+  <Badge progress="incomplete">Incomplete</Badge>
+  <Badge progress="partiallyComplete">Partially complete</Badge>
+  <Badge progress="complete">Complete</Badge>
+</InlineStack>
+```
+
+### Status badges for orders
+
+Use badges to show order status information.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Order Status Examples</Text>
+    <InlineStack gap="4">
+      <Badge tone="info">Draft</Badge>
+      <Badge tone="attention">Pending</Badge>
+      <Badge tone="warning">Partially fulfilled</Badge>
+      <Badge tone="success">Fulfilled</Badge>
+      <Badge tone="critical">Cancelled</Badge>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+
+### Product status badges
+
+Use badges to show product availability and status.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Product Status Examples</Text>
+    <InlineStack gap="4">
+      <Badge tone="success">Active</Badge>
+      <Badge>Draft</Badge>
+      <Badge tone="critical">Archived</Badge>
+      <Badge tone="warning">Low stock</Badge>
+      <Badge tone="critical">Out of stock</Badge>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+
+### Payment status badges
+
+Use badges to show payment and financial status.
+
+```svelte
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Payment Status Examples</Text>
+    <InlineStack gap="4">
+      <Badge tone="success">Paid</Badge>
+      <Badge tone="warning">Partially paid</Badge>
+      <Badge tone="attention">Pending</Badge>
+      <Badge tone="critical">Overdue</Badge>
+      <Badge tone="critical">Refunded</Badge>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+
+### Small badges in lists
+
+Use small badges in compact layouts like tables or lists.
+
+```svelte
+<Card>
+  <BlockStack gap="3">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <Text>Order #1001</Text>
+      <Badge size="small" tone="success">Fulfilled</Badge>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <Text>Order #1002</Text>
+      <Badge size="small" tone="warning">Partially fulfilled</Badge>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <Text>Order #1003</Text>
+      <Badge size="small" tone="attention">Pending</Badge>
+    </div>
+  </BlockStack>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `string` | - | The content to display inside the badge |
+| `tone` | `'success' \| 'info' \| 'warning' \| 'critical' \| 'attention' \| 'new'` | - | Sets the color of the badge for the given tone |
+| `progress` | `'incomplete' \| 'partiallyComplete' \| 'complete'` | - | Sets the progress state of the badge |
+| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Sets the size of the badge |
+
+## Accessibility
+
+- Badges use appropriate color contrast ratios
+- When using color alone to convey meaning, ensure the text content also provides context
+- Screen readers will announce the badge content along with any tone information
+
+## Best practices
+
+### Do
+- Use badges to highlight important status information
+- Choose appropriate tones that match the meaning (success for positive states, critical for errors)
+- Keep badge text short and descriptive
+- Use consistent badge patterns across your interface
+- Consider the context when choosing badge size
+
+### Don't
+- Don't use badges for actions (use buttons instead)
+- Don't use too many different badge tones in one interface
+- Don't rely solely on color to convey meaning
+- Don't use badges for decorative purposes
+- Don't make badge text too long
+
+## Tone guidelines
+
+- **Success**: Use for positive states like "Active", "Completed", "Paid"
+- **Info**: Use for neutral informational states like "Draft", "Pending review"
+- **Warning**: Use for states that need attention like "Low stock", "Partially fulfilled"
+- **Critical**: Use for negative states like "Error", "Cancelled", "Out of stock"
+- **Attention**: Use for states requiring action like "Pending", "Requires attention"
+- **New**: Use to highlight new features or recently added items
+
+## Related components
+
+- [Text](/getting-started/text): For regular text content
+- [Tag](/getting-started/tag): For removable labels and filters
+- [Indicator](/getting-started/indicator): For simple status indicators

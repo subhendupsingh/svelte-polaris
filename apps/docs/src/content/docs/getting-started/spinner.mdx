@@ -1,0 +1,265 @@
+---
+title: Spinner
+description: Spinners are used to notify merchants that their action is being processed. For loading states, spinners should only be used for content that can't be represented with skeleton loading components, like for data lists or content in modals.
+---
+
+```svelte
+import { Spinner, Button, Card, InlineStack, BlockStack, Text } from 'svelte-polaris';
+```
+
+Spinners are used to notify merchants that their action is being processed. For loading states, spinners should only be used for content that can't be represented with skeleton loading components.
+
+## Examples
+
+### Default spinner
+
+Use to indicate that content is loading.
+
+```svelte
+<Spinner accessibilityLabel="Loading" />
+```
+
+### Small spinner
+
+Use in compact spaces or alongside other content.
+
+```svelte
+<Spinner size="small" accessibilityLabel="Loading content" />
+```
+
+### Large spinner
+
+Use for prominent loading states or when loading major content.
+
+```svelte
+<Spinner size="large" accessibilityLabel="Loading page" />
+```
+
+### Spinner with different colors
+
+Use different colors to match your interface or convey meaning.
+
+```svelte
+<InlineStack gap="4">
+  <Spinner accessibilityLabel="Loading" />
+  <Spinner color="highlight" accessibilityLabel="Processing" />
+  <Spinner color="inherit" accessibilityLabel="Inheriting color" />
+</InlineStack>
+```
+
+### Spinner in buttons
+
+Use spinners in buttons to show loading states for actions.
+
+```svelte
+<script>
+  let loading = false;
+  
+  function handleClick() {
+    loading = true;
+    setTimeout(() => {
+      loading = false;
+    }, 2000);
+  }
+</script>
+
+<InlineStack gap="4">
+  <Button {loading} on:click={handleClick}>
+    Save changes
+  </Button>
+  <Button variant="secondary" {loading} on:click={handleClick}>
+    Export data
+  </Button>
+</InlineStack>
+```
+
+### Spinner in cards
+
+Use spinners to indicate loading content within cards.
+
+```svelte
+<Card>
+  <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+    <BlockStack gap="4" align="center">
+      <Spinner size="large" accessibilityLabel="Loading dashboard data" />
+      <Text tone="subdued">Loading your dashboard...</Text>
+    </BlockStack>
+  </div>
+</Card>
+```
+
+### Inline spinner with text
+
+Use spinners alongside text to provide context about what's loading.
+
+```svelte
+<InlineStack gap="2" align="center">
+  <Spinner size="small" accessibilityLabel="Saving" />
+  <Text>Saving changes...</Text>
+</InlineStack>
+```
+
+### Spinner for form submission
+
+Use spinners to indicate form processing states.
+
+```svelte
+<script>
+  let submitting = false;
+  
+  function handleSubmit() {
+    submitting = true;
+    // Simulate form submission
+    setTimeout(() => {
+      submitting = false;
+    }, 3000);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="4">
+    <Text variant="headingMd">Contact Form</Text>
+    {#if submitting}
+      <div style="display: flex; justify-content: center; align-items: center; padding: 40px;">
+        <BlockStack gap="3" align="center">
+          <Spinner accessibilityLabel="Submitting form" />
+          <Text>Submitting your message...</Text>
+        </BlockStack>
+      </div>
+    {:else}
+      <BlockStack gap="4">
+        <Text>Form content would go here...</Text>
+        <Button variant="primary" on:click={handleSubmit}>
+          Submit
+        </Button>
+      </BlockStack>
+    {/if}
+  </BlockStack>
+</Card>
+```
+
+### Spinner overlay
+
+Use spinners as overlays for loading states that cover content.
+
+```svelte
+<script>
+  let loading = false;
+  
+  function toggleLoading() {
+    loading = !loading;
+  }
+</script>
+
+<Card>
+  <div style="position: relative; min-height: 200px;">
+    <BlockStack gap="4">
+      <Text variant="headingMd">Product Information</Text>
+      <Text>This is some content that might be loading...</Text>
+      <Button on:click={toggleLoading}>
+        {loading ? 'Stop Loading' : 'Start Loading'}
+      </Button>
+    </BlockStack>
+    
+    {#if loading}
+      <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      ">
+        <Spinner accessibilityLabel="Loading product information" />
+      </div>
+    {/if}
+  </div>
+</Card>
+```
+
+### Spinner states for different operations
+
+Use spinners with appropriate labels for different types of operations.
+
+```svelte
+<BlockStack gap="4">
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <Spinner size="small" accessibilityLabel="Saving" />
+    <Text>Saving product...</Text>
+  </div>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <Spinner size="small" accessibilityLabel="Uploading" />
+    <Text>Uploading images...</Text>
+  </div>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <Spinner size="small" accessibilityLabel="Processing" />
+    <Text>Processing payment...</Text>
+  </div>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <Spinner size="small" accessibilityLabel="Syncing" />
+    <Text>Syncing inventory...</Text>
+  </div>
+</BlockStack>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Size of the spinner |
+| `color` | `'teal' \| 'highlight' \| 'inherit'` | `'teal'` | Color of the spinner |
+| `accessibilityLabel` | `string` | - | Accessible label describing what is loading |
+
+## Accessibility
+
+- Always provide an `accessibilityLabel` that describes what is loading
+- Spinners should be announced by screen readers when they appear
+- Consider providing additional context about loading progress when possible
+- Ensure spinners have sufficient contrast against their background
+- Don't rely solely on spinners to communicate loading states - provide text context
+
+## Best practices
+
+### Do
+- Use spinners for short loading states (under 10 seconds)
+- Provide clear, descriptive accessibility labels
+- Use appropriate sizes for the context
+- Combine spinners with descriptive text when possible
+- Use consistent spinner styling throughout your interface
+
+### Don't
+- Don't use spinners for very long loading processes (use progress indicators instead)
+- Don't use spinners without accessibility labels
+- Don't use too many spinners simultaneously
+- Don't use spinners for decorative purposes
+- Don't make spinners too small to be noticeable
+
+## When to use spinners
+
+### Use spinners for:
+- Form submissions and data saving
+- Content loading in modals or overlays
+- Button loading states
+- Quick data fetching operations
+- File uploads and processing
+
+### Don't use spinners for:
+- Initial page loads (use skeleton loading instead)
+- Large data tables (use skeleton rows instead)
+- Image loading (use placeholder images instead)
+- Very long operations (use progress bars instead)
+
+## Size guidelines
+
+- **small**: Use in compact spaces, inline with text, or in small buttons
+- **medium**: Use as the default size for most loading states
+- **large**: Use for prominent loading states or when loading major content sections
+
+## Related components
+
+- [Button](/getting-started/button): For button loading states
+- [ProgressBar](/getting-started/progress-bar): For longer operations with measurable progress
+- [SkeletonPage](/getting-started/skeleton-page): For initial page loading states
