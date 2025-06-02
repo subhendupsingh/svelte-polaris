@@ -1,0 +1,480 @@
+---
+title: InlineStack
+description: InlineStack is a layout component that arranges child elements horizontally with consistent spacing and alignment options.
+---
+
+```svelte
+<script>
+  import { InlineStack } from 'svelte-polaris';
+</script>
+```
+
+InlineStack is a fundamental layout component that arranges child elements horizontally (in a row) with consistent spacing. It provides control over alignment, gap spacing, wrapping behavior, and direction, making it perfect for creating horizontal layouts with proper spacing relationships.
+
+## Basic usage
+
+Use InlineStack to arrange elements horizontally with consistent spacing:
+
+```svelte
+<script>
+  import { InlineStack, Button, Badge } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="300">
+  <Button variant="primary">Primary Action</Button>
+  <Button>Secondary Action</Button>
+  <Badge>Status</Badge>
+</InlineStack>
+```
+
+## Gap spacing
+
+Control the spacing between child elements using spacing tokens:
+
+```svelte
+<script>
+  import { InlineStack, Button, Box } from 'svelte-polaris';
+</script>
+
+<!-- Tight spacing -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack gap="100">
+    <Button size="small">Tight</Button>
+    <Button size="small">Spacing</Button>
+    <Button size="small">Example</Button>
+  </InlineStack>
+</Box>
+
+<!-- Medium spacing -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack gap="300">
+    <Button>Medium</Button>
+    <Button>Spacing</Button>
+    <Button>Example</Button>
+  </InlineStack>
+</Box>
+
+<!-- Large spacing -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack gap="600">
+    <Button>Large</Button>
+    <Button>Spacing</Button>
+    <Button>Example</Button>
+  </InlineStack>
+</Box>
+```
+
+## Responsive spacing
+
+Use responsive gap values that adapt to different screen sizes:
+
+```svelte
+<script>
+  import { InlineStack, Button, Text } from 'svelte-polaris';
+</script>
+
+<InlineStack gap={{ xs: '200', sm: '300', md: '400', lg: '500', xl: '600' }}>
+  <Button variant="primary">Responsive</Button>
+  <Button>Layout</Button>
+  <Text>The spacing changes with screen size</Text>
+</InlineStack>
+```
+
+## Horizontal alignment
+
+Control how child elements are aligned horizontally within the container:
+
+```svelte
+<script>
+  import { InlineStack, Button, Box } from 'svelte-polaris';
+</script>
+
+<!-- Start alignment (default) -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack align="start" gap="300">
+    <Button>Start</Button>
+    <Button>Aligned</Button>
+  </InlineStack>
+</Box>
+
+<!-- Center alignment -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack align="center" gap="300">
+    <Button>Center</Button>
+    <Button>Aligned</Button>
+  </InlineStack>
+</Box>
+
+<!-- End alignment -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack align="end" gap="300">
+    <Button>End</Button>
+    <Button>Aligned</Button>
+  </InlineStack>
+</Box>
+
+<!-- Space distribution -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack align="space-between" gap="300">
+    <Button>Space</Button>
+    <Button>Between</Button>
+    <Button>Items</Button>
+  </InlineStack>
+</Box>
+
+<Box background="surface-secondary" padding="400">
+  <InlineStack align="space-around" gap="300">
+    <Button>Space</Button>
+    <Button>Around</Button>
+    <Button>Items</Button>
+  </InlineStack>
+</Box>
+
+<Box background="surface-secondary" padding="400">
+  <InlineStack align="space-evenly" gap="300">
+    <Button>Space</Button>
+    <Button>Evenly</Button>
+    <Button>Items</Button>
+  </InlineStack>
+</Box>
+```
+
+## Vertical alignment
+
+Control how child elements are aligned vertically:
+
+```svelte
+<script>
+  import { InlineStack, Button, Text, Box } from 'svelte-polaris';
+</script>
+
+<!-- Start alignment -->
+<Box background="surface-secondary" padding="400" minHeight="100px">
+  <InlineStack blockAlign="start" gap="300">
+    <Button size="large">Large Button</Button>
+    <Text>Start aligned text</Text>
+  </InlineStack>
+</Box>
+
+<!-- Center alignment -->
+<Box background="surface-secondary" padding="400" minHeight="100px">
+  <InlineStack blockAlign="center" gap="300">
+    <Button size="large">Large Button</Button>
+    <Text>Center aligned text</Text>
+  </InlineStack>
+</Box>
+
+<!-- End alignment -->
+<Box background="surface-secondary" padding="400" minHeight="100px">
+  <InlineStack blockAlign="end" gap="300">
+    <Button size="large">Large Button</Button>
+    <Text>End aligned text</Text>
+  </InlineStack>
+</Box>
+
+<!-- Baseline alignment -->
+<Box background="surface-secondary" padding="400">
+  <InlineStack blockAlign="baseline" gap="300">
+    <Text variant="headingLg">Large Text</Text>
+    <Text>Regular text</Text>
+    <Text variant="caption">Small text</Text>
+  </InlineStack>
+</Box>
+
+<!-- Stretch alignment -->
+<Box background="surface-secondary" padding="400" minHeight="100px">
+  <InlineStack blockAlign="stretch" gap="300">
+    <Button>Stretched</Button>
+    <Button>Buttons</Button>
+  </InlineStack>
+</Box>
+```
+
+## Direction control
+
+Control the direction of the horizontal layout:
+
+```svelte
+<script>
+  import { InlineStack, Button, Text } from 'svelte-polaris';
+</script>
+
+<!-- Default row direction -->
+<InlineStack direction="row" gap="300">
+  <Button>First</Button>
+  <Button>Second</Button>
+  <Button>Third</Button>
+</InlineStack>
+
+<!-- Reverse row direction -->
+<InlineStack direction="row-reverse" gap="300">
+  <Button>First</Button>
+  <Button>Second</Button>
+  <Button>Third</Button>
+</InlineStack>
+
+<!-- Responsive direction -->
+<InlineStack direction={{ xs: 'row', md: 'row-reverse' }} gap="300">
+  <Button>Responsive</Button>
+  <Button>Direction</Button>
+  <Button>Example</Button>
+</InlineStack>
+```
+
+## Wrapping behavior
+
+Control whether items wrap to new lines:
+
+```svelte
+<script>
+  import { InlineStack, Button, Box } from 'svelte-polaris';
+</script>
+
+<!-- Wrapping enabled (default) -->
+<Box maxWidth="300px" background="surface-secondary" padding="400">
+  <InlineStack wrap gap="200">
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+    <Button>Button 4</Button>
+    <Button>Button 5</Button>
+  </InlineStack>
+</Box>
+
+<!-- Wrapping disabled -->
+<Box maxWidth="300px" background="surface-secondary" padding="400" overflowX="scroll">
+  <InlineStack wrap={false} gap="200">
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+    <Button>Button 4</Button>
+    <Button>Button 5</Button>
+  </InlineStack>
+</Box>
+```
+
+## Semantic HTML elements
+
+InlineStack can render as different HTML elements for better semantics:
+
+```svelte
+<script>
+  import { InlineStack, Text } from 'svelte-polaris';
+</script>
+
+<!-- As an unordered list -->
+<InlineStack as="ul" gap="300">
+  <InlineStack as="li">
+    <Text>Item 1</Text>
+  </InlineStack>
+  <InlineStack as="li">
+    <Text>Item 2</Text>
+  </InlineStack>
+  <InlineStack as="li">
+    <Text>Item 3</Text>
+  </InlineStack>
+</InlineStack>
+
+<!-- As a span for inline content -->
+<Text>
+  This is a paragraph with 
+  <InlineStack as="span" gap="100">
+    <Text>inline</Text>
+    <Text>elements</Text>
+  </InlineStack>
+  in the middle.
+</Text>
+```
+
+## Navigation layouts
+
+Create horizontal navigation menus:
+
+```svelte
+<script>
+  import { InlineStack, Button, Text, Box } from 'svelte-polaris';
+</script>
+
+<!-- Primary navigation -->
+<Box background="surface" padding="400" borderBlockEnd="025" borderColor="border">
+  <InlineStack align="space-between" blockAlign="center">
+    <Text variant="headingMd">Brand Name</Text>
+    
+    <InlineStack gap="400">
+      <Button variant="plain">Home</Button>
+      <Button variant="plain">Products</Button>
+      <Button variant="plain">About</Button>
+      <Button variant="plain">Contact</Button>
+    </InlineStack>
+    
+    <InlineStack gap="200">
+      <Button>Sign In</Button>
+      <Button variant="primary">Sign Up</Button>
+    </InlineStack>
+  </InlineStack>
+</Box>
+
+<!-- Breadcrumb navigation -->
+<InlineStack gap="200" blockAlign="center">
+  <Text>Home</Text>
+  <Text color="text-secondary">/</Text>
+  <Text>Products</Text>
+  <Text color="text-secondary">/</Text>
+  <Text>Laptops</Text>
+</InlineStack>
+```
+
+## Action groups
+
+Group related actions together:
+
+```svelte
+<script>
+  import { InlineStack, Button, Card, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <InlineStack align="space-between" blockAlign="center">
+    <Text variant="headingMd">Product Settings</Text>
+    
+    <InlineStack gap="200">
+      <Button>Cancel</Button>
+      <Button variant="primary">Save</Button>
+    </InlineStack>
+  </InlineStack>
+</Card>
+
+<!-- Toolbar actions -->
+<Box background="surface-secondary" padding="300">
+  <InlineStack gap="200">
+    <Button size="small" icon="EditIcon">Edit</Button>
+    <Button size="small" icon="DuplicateIcon">Duplicate</Button>
+    <Button size="small" icon="DeleteIcon" tone="critical">Delete</Button>
+  </InlineStack>
+</Box>
+```
+
+## Status indicators
+
+Display status information horizontally:
+
+```svelte
+<script>
+  import { InlineStack, Badge, Text, Icon } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="300" blockAlign="center">
+  <Badge tone="success">Active</Badge>
+  <Text color="text-secondary">•</Text>
+  <Text>Last updated 2 hours ago</Text>
+  <Text color="text-secondary">•</Text>
+  <InlineStack gap="100" blockAlign="center">
+    <Icon source="ViewIcon" />
+    <Text>125 views</Text>
+  </InlineStack>
+</InlineStack>
+```
+
+## Form controls
+
+Arrange form elements horizontally:
+
+```svelte
+<script>
+  import { InlineStack, TextField, Button, Select } from 'svelte-polaris';
+</script>
+
+<!-- Search form -->
+<InlineStack gap="200" blockAlign="end">
+  <TextField
+    label="Search products"
+    autoComplete="off"
+    placeholder="Enter search term"
+  />
+  <Select
+    label="Category"
+    options={[
+      { label: 'All categories', value: 'all' },
+      { label: 'Electronics', value: 'electronics' },
+      { label: 'Clothing', value: 'clothing' }
+    ]}
+  />
+  <Button variant="primary">Search</Button>
+</InlineStack>
+
+<!-- Filter controls -->
+<InlineStack gap="300" wrap>
+  <Select
+    label="Sort by"
+    options={[
+      { label: 'Name', value: 'name' },
+      { label: 'Price', value: 'price' },
+      { label: 'Date', value: 'date' }
+    ]}
+  />
+  <Select
+    label="Order"
+    options={[
+      { label: 'Ascending', value: 'asc' },
+      { label: 'Descending', value: 'desc' }
+    ]}
+  />
+  <Button>Apply Filters</Button>
+</InlineStack>
+```
+
+## Card layouts
+
+Create horizontal card layouts:
+
+```svelte
+<script>
+  import { InlineStack, Card, Text, Button, Badge, Box } from 'svelte-polaris';
+</script>
+
+<Card>
+  <InlineStack align="space-between" blockAlign="start" gap="400">
+    <!-- Content section -->
+    <Box>
+      <InlineStack gap="200" blockAlign="center">
+        <Text variant="headingMd">Product Name</Text>
+        <Badge tone="success">In Stock</Badge>
+      </InlineStack>
+      <Text color="text-secondary">Product description goes here</Text>
+    </Box>
+    
+    <!-- Action section -->
+    <InlineStack gap="200">
+      <Button>Edit</Button>
+      <Button variant="primary">View</Button>
+    </InlineStack>
+  </InlineStack>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `'div' \| 'span' \| 'li' \| 'ol' \| 'ul'` | `'div'` | HTML element type to render |
+| `align` | `'start' \| 'center' \| 'end' \| 'space-around' \| 'space-between' \| 'space-evenly'` | - | Horizontal alignment of children |
+| `direction` | `ResponsiveProp<'row' \| 'row-reverse'>` | `'row'` | Horizontal direction in which children are laid out |
+| `blockAlign` | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | - | Vertical alignment of children |
+| `gap` | `ResponsiveProp<SpaceScale>` | - | Spacing between child elements |
+| `wrap` | `boolean` | `true` | Whether stack elements wrap to additional rows on small screens |
+
+## Best practices
+
+- **Consistent spacing**: Use spacing tokens from the design system for consistent visual rhythm
+- **Responsive design**: Use responsive gap values and consider wrapping behavior for mobile devices
+- **Semantic HTML**: Choose appropriate `as` values for better accessibility and SEO
+- **Alignment**: Use appropriate alignment values to create visual balance
+- **Wrapping**: Enable wrapping for better mobile experience, disable for toolbars that should scroll
+- **Content hierarchy**: Use different gap sizes to create visual groupings
+- **Performance**: Prefer InlineStack over custom flexbox CSS for consistency
+
+## Related components
+
+- [BlockStack](/getting-started/block-stack) - For vertical layouts with consistent spacing
+- [Box](/getting-started/box) - For custom spacing and styling around content
+- [ButtonGroup](/getting-started/button-group) - For specialized button groupings with connected styling

@@ -1,0 +1,317 @@
+---
+title: CalloutCard
+description: Callout cards are used to encourage merchants to take an action around a specific feature or opportunity.
+---
+
+```svelte
+import { CalloutCard } from 'svelte-polaris';
+```
+
+Callout cards are used to encourage merchants to take an action around a specific feature or opportunity. They're more prominent than banners and are typically used for important announcements or feature promotions.
+
+## Examples
+
+### Basic callout card
+
+Use to highlight important features or opportunities.
+
+```svelte
+<script>
+  import { CalloutCard } from 'svelte-polaris';
+  
+  function handleAction() {
+    console.log('Customize your checkout clicked');
+  }
+</script>
+
+<CalloutCard
+  title="Customize the style of your checkout"
+  illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa6.svg"
+  primaryAction={{
+    content: 'Customize checkout',
+    onAction: handleAction
+  }}
+>
+  <p>Upload your brand colors and add your logo to create a seamless brand experience throughout your customer's journey.</p>
+</CalloutCard>
+```
+
+### Callout card with secondary action
+
+Use when there are multiple ways for merchants to engage with the feature.
+
+```svelte
+<script>
+  import { CalloutCard } from 'svelte-polaris';
+  
+  function handlePrimaryAction() {
+    console.log('Set up Shopify Payments clicked');
+  }
+  
+  function handleSecondaryAction() {
+    console.log('Learn more clicked');
+  }
+</script>
+
+<CalloutCard
+  title="Accept payments instantly"
+  illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa6.svg"
+  primaryAction={{
+    content: 'Set up Shopify Payments',
+    onAction: handlePrimaryAction
+  }}
+  secondaryAction={{
+    content: 'Learn more',
+    onAction: handleSecondaryAction
+  }}
+>
+  <p>Start accepting payments right away. Shopify Payments is already integrated with your store, so setup is quick and easy.</p>
+</CalloutCard>
+```
+
+### Callout card without illustration
+
+Use when you want to focus attention on the text and actions.
+
+```svelte
+<script>
+  import { CalloutCard } from 'svelte-polaris';
+  
+  function handleAction() {
+    console.log('Add domain clicked');
+  }
+</script>
+
+<CalloutCard
+  title="Add a custom domain"
+  primaryAction={{
+    content: 'Add domain',
+    onAction: handleAction
+  }}
+>
+  <p>Your current domain is mystore.myshopify.com. Add a custom domain to help customers find your online store.</p>
+</CalloutCard>
+```
+
+### Dismissible callout card
+
+Use when merchants should be able to dismiss the callout permanently.
+
+```svelte
+<script>
+  import { CalloutCard } from 'svelte-polaris';
+  
+  let showCallout = true;
+  
+  function handleAction() {
+    console.log('Install app clicked');
+  }
+  
+  function handleDismiss() {
+    showCallout = false;
+  }
+</script>
+
+{#if showCallout}
+  <CalloutCard
+    title="Increase your average order value"
+    illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa6.svg"
+    primaryAction={{
+      content: 'Install app',
+      onAction: handleAction
+    }}
+    onDismiss={handleDismiss}
+  >
+    <p>Use the Product Upsell app to suggest complementary products and increase sales.</p>
+  </CalloutCard>
+{/if}
+```
+
+### Feature announcement callout
+
+Use to announce new features or important updates.
+
+```svelte
+<script>
+  import { CalloutCard } from 'svelte-polaris';
+  
+  function handleTryFeature() {
+    console.log('Try new feature clicked');
+  }
+  
+  function handleLearnMore() {
+    console.log('Learn more clicked');
+  }
+</script>
+
+<CalloutCard
+  title="New: Advanced analytics dashboard"
+  illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa6.svg"
+  primaryAction={{
+    content: 'Try it now',
+    onAction: handleTryFeature
+  }}
+  secondaryAction={{
+    content: 'Learn more',
+    onAction: handleLearnMore
+  }}
+>
+  <p>Get deeper insights into your store's performance with our new analytics dashboard. Track sales trends, customer behavior, and more.</p>
+</CalloutCard>
+```
+
+### Promotional callout card
+
+Use to promote special offers or limited-time opportunities.
+
+```svelte
+<script>
+  import { CalloutCard, Badge, InlineStack } from 'svelte-polaris';
+  
+  function handleUpgrade() {
+    console.log('Upgrade plan clicked');
+  }
+</script>
+
+<CalloutCard
+  title="Upgrade to unlock advanced features"
+  illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa6.svg"
+  primaryAction={{
+    content: 'Upgrade now',
+    onAction: handleUpgrade
+  }}
+>
+  <InlineStack gap="200">
+    <Badge tone="success">Limited time</Badge>
+    <Badge>50% off first month</Badge>
+  </InlineStack>
+  <p>Get access to advanced reporting, automation tools, and priority support. Upgrade your plan and save 50% on your first month.</p>
+</CalloutCard>
+```
+
+### Educational callout card
+
+Use to provide helpful tips or educational content.
+
+```svelte
+<script>
+  import { CalloutCard } from 'svelte-polaris';
+  
+  function handleReadGuide() {
+    console.log('Read guide clicked');
+  }
+  
+  function handleWatchVideo() {
+    console.log('Watch video clicked');
+  }
+</script>
+
+<CalloutCard
+  title="Learn how to optimize your product pages"
+  illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa6.svg"
+  primaryAction={{
+    content: 'Read our guide',
+    onAction: handleReadGuide
+  }}
+  secondaryAction={{
+    content: 'Watch video',
+    onAction: handleWatchVideo
+  }}
+>
+  <p>Discover best practices for writing compelling product descriptions, choosing the right images, and setting up your product pages for success.</p>
+</CalloutCard>
+```
+
+### Multiple callout cards
+
+Use multiple callout cards to present different opportunities or features.
+
+```svelte
+<script>
+  import { CalloutCard, InlineStack } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <CalloutCard
+    title="Set up your shipping"
+    primaryAction={{
+      content: 'Configure shipping',
+      onAction: () => console.log('Configure shipping')
+    }}
+  >
+    <p>Set up shipping zones and rates to start delivering to your customers.</p>
+  </CalloutCard>
+  
+  <CalloutCard
+    title="Add your tax settings"
+    primaryAction={{
+      content: 'Set up taxes',
+      onAction: () => console.log('Set up taxes')
+    }}
+  >
+    <p>Configure tax rates for different regions to ensure compliance.</p>
+  </CalloutCard>
+  
+  <CalloutCard
+    title="Connect social media"
+    primaryAction={{
+      content: 'Connect accounts',
+      onAction: () => console.log('Connect social media')
+    }}
+  >
+    <p>Link your social media accounts to promote your products.</p>
+  </CalloutCard>
+</InlineStack>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `title` | `string` | The main heading for the callout card | Required |
+| `children` | `Snippet` | Content to display in the card body | |
+| `illustration` | `string` | URL for an illustration or image | |
+| `primaryAction` | `{ content: string, onAction: () => void, url?: string }` | Primary action for the callout | |
+| `secondaryAction` | `{ content: string, onAction: () => void, url?: string }` | Secondary action for the callout | |
+| `onDismiss` | `() => void` | Callback when the dismiss button is clicked | |
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `on:primaryAction` | Fired when the primary action is triggered |
+| `on:secondaryAction` | Fired when the secondary action is triggered |
+| `on:dismiss` | Fired when the callout is dismissed |
+
+## Best practices
+
+Callout cards should:
+
+- Be used sparingly to maintain their impact and importance
+- Focus on a single, clear call-to-action
+- Use compelling, benefit-focused headlines
+- Include relevant illustrations that support the message
+- Be dismissible when they're not critical to the user's workflow
+
+Callout cards shouldn't:
+
+- Be used for error messages or critical alerts (use banners instead)
+- Overwhelm users with too many simultaneous callouts
+- Include complex or lengthy content
+- Be used for navigation (use navigation components instead)
+- Block essential functionality or workflow
+
+## Accessibility
+
+- Callout card headings are properly structured for screen readers
+- Action buttons are keyboard accessible and have clear labels
+- Dismiss functionality is accessible via keyboard
+- Images include appropriate alt text
+- Focus management is handled when callouts are dismissed
+
+## Related components
+
+- [Banner](/getting-started/banner): For important messages and alerts
+- [Card](/getting-started/card): For general content grouping
+- [EmptyState](/getting-started/empty-state): For encouraging action when sections are empty
+- [Button](/getting-started/button): For standalone call-to-action elements

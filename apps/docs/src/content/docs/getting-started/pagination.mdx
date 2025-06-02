@@ -1,0 +1,410 @@
+---
+title: Pagination
+description: Pagination is used to navigate between pages of content when the content is split across multiple pages.
+---
+
+```svelte
+import { Pagination } from 'svelte-polaris';
+```
+
+Pagination is used to navigate between pages of content when the content is split across multiple pages.
+
+## Examples
+
+### Basic pagination
+
+Use when you have multiple pages of content to navigate through.
+
+```svelte
+<script>
+  import { Pagination } from 'svelte-polaris';
+  
+  let currentPage = 1;
+  const totalPages = 10;
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      currentPage -= 1;
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+    }
+  }
+</script>
+
+<Pagination
+  hasPrevious={currentPage > 1}
+  onPrevious={handlePrevious}
+  hasNext={currentPage < totalPages}
+  onNext={handleNext}
+/>
+```
+
+### Pagination with labels
+
+Use custom labels to provide more context about navigation.
+
+```svelte
+<script>
+  import { Pagination } from 'svelte-polaris';
+  
+  let currentPage = 1;
+  const totalPages = 5;
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      currentPage -= 1;
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+    }
+  }
+</script>
+
+<Pagination
+  hasPrevious={currentPage > 1}
+  previousLabel="Previous products"
+  onPrevious={handlePrevious}
+  hasNext={currentPage < totalPages}
+  nextLabel="Next products"
+  onNext={handleNext}
+/>
+```
+
+### Pagination with page info
+
+Use to show current page information and allow direct navigation.
+
+```svelte
+<script>
+  import { Pagination, Text, InlineStack } from 'svelte-polaris';
+  
+  let currentPage = 3;
+  const totalPages = 10;
+  const itemsPerPage = 20;
+  const totalItems = 200;
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      currentPage -= 1;
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+    }
+  }
+  
+  $: startItem = (currentPage - 1) * itemsPerPage + 1;
+  $: endItem = Math.min(currentPage * itemsPerPage, totalItems);
+</script>
+
+<InlineStack gap="400" align="center">
+  <Pagination
+    hasPrevious={currentPage > 1}
+    onPrevious={handlePrevious}
+    hasNext={currentPage < totalPages}
+    onNext={handleNext}
+  />
+  
+  <Text as="span" tone="subdued">
+    Showing {startItem}-{endItem} of {totalItems} items
+  </Text>
+</InlineStack>
+```
+
+### Pagination in data table
+
+Use pagination with data tables to navigate through large datasets.
+
+```svelte
+<script>
+  import { Pagination, Card, Text, List } from 'svelte-polaris';
+  
+  let currentPage = 1;
+  const itemsPerPage = 5;
+  
+  const allProducts = [
+    'Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5',
+    'Product 6', 'Product 7', 'Product 8', 'Product 9', 'Product 10',
+    'Product 11', 'Product 12', 'Product 13', 'Product 14', 'Product 15'
+  ];
+  
+  $: totalPages = Math.ceil(allProducts.length / itemsPerPage);
+  $: startIndex = (currentPage - 1) * itemsPerPage;
+  $: endIndex = startIndex + itemsPerPage;
+  $: currentProducts = allProducts.slice(startIndex, endIndex);
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      currentPage -= 1;
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+    }
+  }
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Products (Page {currentPage} of {totalPages})</Text>
+  
+  <List>
+    {#each currentProducts as product}
+      <List.Item>{product}</List.Item>
+    {/each}
+  </List>
+  
+  <Pagination
+    hasPrevious={currentPage > 1}
+    onPrevious={handlePrevious}
+    hasNext={currentPage < totalPages}
+    onNext={handleNext}
+  />
+</Card>
+```
+
+### Pagination with keyboard navigation
+
+Use keyboard-accessible pagination for better user experience.
+
+```svelte
+<script>
+  import { Pagination, Text } from 'svelte-polaris';
+  
+  let currentPage = 1;
+  const totalPages = 8;
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      currentPage -= 1;
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+    }
+  }
+  
+  function handleKeyDown(event) {
+    if (event.key === 'ArrowLeft' && currentPage > 1) {
+      handlePrevious();
+    } else if (event.key === 'ArrowRight' && currentPage < totalPages) {
+      handleNext();
+    }
+  }
+</script>
+
+<div on:keydown={handleKeyDown} tabindex="0">
+  <Text as="p" tone="subdued">Use arrow keys to navigate</Text>
+  <Pagination
+    hasPrevious={currentPage > 1}
+    onPrevious={handlePrevious}
+    hasNext={currentPage < totalPages}
+    onNext={handleNext}
+  />
+  <Text as="p" alignment="center">Page {currentPage} of {totalPages}</Text>
+</div>
+```
+
+### Pagination with URL synchronization
+
+Use when pagination state should be reflected in the URL for bookmarking and sharing.
+
+```svelte
+<script>
+  import { Pagination, Card, Text } from 'svelte-polaris';
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  
+  // Get current page from URL params
+  $: currentPage = parseInt($page.url.searchParams.get('page') || '1');
+  const totalPages = 15;
+  
+  function updatePage(newPage) {
+    const url = new URL($page.url);
+    url.searchParams.set('page', newPage.toString());
+    goto(url.toString(), { replaceState: true });
+  }
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      updatePage(currentPage - 1);
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      updatePage(currentPage + 1);
+    }
+  }
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Search Results</Text>
+  <Text as="p">Page {currentPage} of {totalPages}</Text>
+  
+  <Pagination
+    hasPrevious={currentPage > 1}
+    onPrevious={handlePrevious}
+    hasNext={currentPage < totalPages}
+    onNext={handleNext}
+  />
+</Card>
+```
+
+### Compact pagination
+
+Use when space is limited but pagination is still needed.
+
+```svelte
+<script>
+  import { Pagination, Text, InlineStack } from 'svelte-polaris';
+  
+  let currentPage = 5;
+  const totalPages = 20;
+  
+  function handlePrevious() {
+    if (currentPage > 1) {
+      currentPage -= 1;
+    }
+  }
+  
+  function handleNext() {
+    if (currentPage < totalPages) {
+      currentPage += 1;
+    }
+  }
+</script>
+
+<InlineStack gap="200" align="center">
+  <Text as="span" variant="bodySm" tone="subdued">
+    {currentPage} / {totalPages}
+  </Text>
+  
+  <Pagination
+    hasPrevious={currentPage > 1}
+    previousLabel="‹"
+    onPrevious={handlePrevious}
+    hasNext={currentPage < totalPages}
+    nextLabel="›"
+    onNext={handleNext}
+  />
+</InlineStack>
+```
+
+### Pagination with loading state
+
+Use when navigation might take time to load new content.
+
+```svelte
+<script>
+  import { Pagination, Card, Text, Spinner } from 'svelte-polaris';
+  
+  let currentPage = 1;
+  let isLoading = false;
+  const totalPages = 12;
+  
+  async function handlePrevious() {
+    if (currentPage > 1 && !isLoading) {
+      isLoading = true;
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      currentPage -= 1;
+      isLoading = false;
+    }
+  }
+  
+  async function handleNext() {
+    if (currentPage < totalPages && !isLoading) {
+      isLoading = true;
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      currentPage += 1;
+      isLoading = false;
+    }
+  }
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Products</Text>
+  
+  {#if isLoading}
+    <div style="text-align: center; padding: 2rem;">
+      <Spinner size="small" />
+      <Text as="p" tone="subdued">Loading...</Text>
+    </div>
+  {:else}
+    <Text as="p">Content for page {currentPage}</Text>
+  {/if}
+  
+  <Pagination
+    hasPrevious={currentPage > 1}
+    onPrevious={handlePrevious}
+    hasNext={currentPage < totalPages}
+    onNext={handleNext}
+    disabled={isLoading}
+  />
+</Card>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `hasPrevious` | `boolean` | Whether there is a previous page | `false` |
+| `hasNext` | `boolean` | Whether there is a next page | `false` |
+| `onPrevious` | `() => void` | Callback for previous page navigation | |
+| `onNext` | `() => void` | Callback for next page navigation | |
+| `previousLabel` | `string` | Label for the previous button | `'Previous'` |
+| `nextLabel` | `string` | Label for the next button | `'Next'` |
+| `disabled` | `boolean` | Whether pagination is disabled | `false` |
+| `accessibilityLabel` | `string` | Accessible label for the pagination | |
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `on:previous` | Fired when previous button is clicked |
+| `on:next` | Fired when next button is clicked |
+
+## Best practices
+
+Pagination should:
+
+- Be used when content is too long to display on a single page
+- Show clear indicators of current position and total pages when possible
+- Provide keyboard navigation support
+- Be placed at the bottom of content, and optionally at the top for long lists
+- Use consistent navigation patterns throughout the application
+
+Pagination shouldn't:
+
+- Be used when all content can comfortably fit on one page
+- Hide important information behind multiple pages unnecessarily
+- Use confusing or unclear navigation labels
+- Be the only way to access content (consider search and filtering)
+
+## Accessibility
+
+- Pagination controls are keyboard accessible
+- Screen readers announce the current page and navigation options
+- Use clear, descriptive labels for navigation buttons
+- Ensure sufficient color contrast for pagination controls
+- Consider providing skip links for users navigating large datasets
+
+## Related components
+
+- [Button](/getting-started/button): For individual navigation actions
+- [Select](/getting-started/select): For direct page selection in large datasets
+- [TextField](/getting-started/text-field): For page number input in advanced pagination

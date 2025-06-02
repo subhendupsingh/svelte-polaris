@@ -1,0 +1,322 @@
+---
+title: EmptyState
+description: Empty states are used when a list, table, or chart has no items or data to show. This is an opportunity to provide explanation or guidance to help merchants progress.
+---
+
+```svelte
+import { EmptyState } from 'svelte-polaris';
+```
+
+Empty states are used when a list, table, or chart has no items or data to show. This is an opportunity to provide explanation or guidance to help merchants progress.
+
+## Examples
+
+### Basic empty state
+
+Use to explain why a section is empty and what merchants can do next.
+
+```svelte
+<script>
+  import { EmptyState, Button } from 'svelte-polaris';
+  
+  function handleAction() {
+    console.log('Create product clicked');
+  }
+</script>
+
+<EmptyState
+  heading="Manage your inventory transfers"
+  action={{
+    content: 'Create transfer',
+    onAction: handleAction
+  }}
+  image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+>
+  <p>Track and receive your incoming inventory from suppliers.</p>
+</EmptyState>
+```
+
+### Empty state with secondary action
+
+Use when there are multiple ways for merchants to proceed.
+
+```svelte
+<script>
+  import { EmptyState, Button } from 'svelte-polaris';
+  
+  function handlePrimaryAction() {
+    console.log('Add product clicked');
+  }
+  
+  function handleSecondaryAction() {
+    console.log('Import products clicked');
+  }
+</script>
+
+<EmptyState
+  heading="Add products to your store"
+  action={{
+    content: 'Add product',
+    onAction: handlePrimaryAction
+  }}
+  secondaryAction={{
+    content: 'Import products',
+    onAction: handleSecondaryAction
+  }}
+  image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+>
+  <p>Start by adding products to your store. You can add them manually or import them from a file.</p>
+</EmptyState>
+```
+
+### Empty state without image
+
+Use when you want to keep the focus on the text and actions.
+
+```svelte
+<script>
+  import { EmptyState } from 'svelte-polaris';
+  
+  function handleAction() {
+    console.log('Create customer clicked');
+  }
+</script>
+
+<EmptyState
+  heading="You don't have any customers yet"
+  action={{
+    content: 'Add customer',
+    onAction: handleAction
+  }}
+>
+  <p>When you have customers, you'll see them listed here. You can add customers manually or they'll be added automatically when they place an order.</p>
+</EmptyState>
+```
+
+### Empty state with custom content
+
+Use when you need more complex content or layout.
+
+```svelte
+<script>
+  import { EmptyState, Button, Text, InlineStack } from 'svelte-polaris';
+  
+  function handleCreateOrder() {
+    console.log('Create order clicked');
+  }
+  
+  function handleImportOrders() {
+    console.log('Import orders clicked');
+  }
+</script>
+
+<EmptyState
+  heading="Start taking orders"
+  image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+>
+  <Text as="p">Orders will appear here when customers make purchases from your store.</Text>
+  <Text as="p">You can also create orders manually for phone or in-person sales.</Text>
+  
+  <InlineStack gap="300">
+    <Button variant="primary" onClick={handleCreateOrder}>
+      Create order
+    </Button>
+    <Button onClick={handleImportOrders}>
+      Import orders
+    </Button>
+  </InlineStack>
+</EmptyState>
+```
+
+### Empty search results
+
+Use when search or filter results return no items.
+
+```svelte
+<script>
+  import { EmptyState, Button } from 'svelte-polaris';
+  
+  let searchTerm = 'vintage shoes';
+  
+  function handleClearSearch() {
+    searchTerm = '';
+    console.log('Search cleared');
+  }
+</script>
+
+<EmptyState
+  heading="No products found"
+  action={{
+    content: 'Clear search',
+    onAction: handleClearSearch
+  }}
+>
+  <p>Try changing or removing some of your search filters.</p>
+  <p>Search term: "{searchTerm}"</p>
+</EmptyState>
+```
+
+### Empty state in card
+
+Use when the empty state is contained within a specific section or card.
+
+```svelte
+<script>
+  import { EmptyState, Card, Button } from 'svelte-polaris';
+  
+  function handleAddDiscount() {
+    console.log('Add discount clicked');
+  }
+</script>
+
+<Card>
+  <EmptyState
+    heading="Create discount codes"
+    action={{
+      content: 'Create discount',
+      onAction: handleAddDiscount
+    }}
+    image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+  >
+    <p>Discount codes help you attract new customers and reward loyal ones.</p>
+  </EmptyState>
+</Card>
+```
+
+### Empty state with loading
+
+Use when content is being loaded and might result in an empty state.
+
+```svelte
+<script>
+  import { EmptyState, Spinner, Card } from 'svelte-polaris';
+  
+  let isLoading = true;
+  let hasData = false;
+  
+  // Simulate loading
+  setTimeout(() => {
+    isLoading = false;
+  }, 2000);
+  
+  function handleRefresh() {
+    isLoading = true;
+    setTimeout(() => {
+      isLoading = false;
+    }, 1000);
+  }
+</script>
+
+<Card>
+  {#if isLoading}
+    <div style="text-align: center; padding: 3rem;">
+      <Spinner size="large" />
+      <p>Loading analytics data...</p>
+    </div>
+  {:else if !hasData}
+    <EmptyState
+      heading="No analytics data available"
+      action={{
+        content: 'Refresh data',
+        onAction: handleRefresh
+      }}
+    >
+      <p>We couldn't find any analytics data for the selected period.</p>
+      <p>Try selecting a different date range or check back later.</p>
+    </EmptyState>
+  {/if}
+</Card>
+```
+
+### Empty state variations
+
+Use different approaches based on the context and user needs.
+
+```svelte
+<script>
+  import { EmptyState, Card, Text, InlineStack } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <!-- Encouraging empty state -->
+  <Card>
+    <EmptyState
+      heading="Ready to sell?"
+      action={{
+        content: 'Add your first product',
+        onAction: () => console.log('Add product')
+      }}
+      image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+    >
+      <p>Start building your catalog by adding products to your store.</p>
+    </EmptyState>
+  </Card>
+  
+  <!-- Informational empty state -->
+  <Card>
+    <EmptyState
+      heading="No recent activity"
+    >
+      <p>When customers interact with your store, you'll see their activity here.</p>
+    </EmptyState>
+  </Card>
+  
+  <!-- Error empty state -->
+  <Card>
+    <EmptyState
+      heading="Unable to load data"
+      action={{
+        content: 'Try again',
+        onAction: () => console.log('Retry')
+      }}
+    >
+      <p>There was a problem loading your data. Please check your connection and try again.</p>
+    </EmptyState>
+  </Card>
+</InlineStack>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `heading` | `string` | The main heading for the empty state | Required |
+| `children` | `Snippet` | Content to display below the heading | |
+| `image` | `string` | URL for an illustration or image | |
+| `imageContained` | `boolean` | Whether to constrain the image size | `false` |
+| `action` | `{ content: string, onAction: () => void }` | Primary action for the empty state | |
+| `secondaryAction` | `{ content: string, onAction: () => void }` | Secondary action for the empty state | |
+| `fullWidth` | `boolean` | Whether the empty state should take full width | `false` |
+
+## Best practices
+
+Empty states should:
+
+- Provide clear, helpful guidance on what to do next
+- Use encouraging, positive language that motivates action
+- Include relevant illustrations when they add value
+- Offer primary actions that help users progress
+- Be specific about what's missing and why
+
+Empty states shouldn't:
+
+- Blame users for the empty state
+- Use technical jargon or confusing language
+- Include too many action options that might overwhelm
+- Show irrelevant or generic imagery
+- Leave users without any guidance on next steps
+
+## Accessibility
+
+- Empty state headings are properly structured for screen readers
+- Action buttons are keyboard accessible
+- Images include appropriate alt text
+- Content is announced by screen readers when the empty state appears
+- Focus management is handled appropriately when actions are triggered
+
+## Related components
+
+- [Card](/getting-started/card): For containing empty states within sections
+- [Button](/getting-started/button): For primary and secondary actions
+- [Spinner](/getting-started/spinner): For loading states before showing empty states
+- [Banner](/getting-started/banner): For temporary messages about empty states

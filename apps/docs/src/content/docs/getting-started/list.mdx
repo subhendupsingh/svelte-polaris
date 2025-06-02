@@ -1,0 +1,255 @@
+---
+title: List
+description: Lists display a set of related text-only content. Each list item usually begins with a bullet or a number.
+---
+
+```svelte
+import { List } from 'svelte-polaris';
+```
+
+Lists display a set of related text-only content. Each list item usually begins with a bullet or a number.
+
+## Examples
+
+### Basic list
+
+Use for a text-only list of related items.
+
+```svelte
+<script>
+  import { List } from 'svelte-polaris';
+</script>
+
+<List>
+  <List.Item>Yellow shirt</List.Item>
+  <List.Item>Red shirt</List.Item>
+  <List.Item>Green shirt</List.Item>
+</List>
+```
+
+### Bulleted list
+
+Use bulleted lists for items where the order doesn't matter.
+
+```svelte
+<script>
+  import { List } from 'svelte-polaris';
+</script>
+
+<List type="bullet">
+  <List.Item>Bold text indicates a new or updated feature</List.Item>
+  <List.Item>Use the search box to find what you're looking for</List.Item>
+  <List.Item>Click on any section to expand it and see more details</List.Item>
+</List>
+```
+
+### Numbered list
+
+Use numbered lists for items where the order matters, such as steps in a process.
+
+```svelte
+<script>
+  import { List } from 'svelte-polaris';
+</script>
+
+<List type="number">
+  <List.Item>Go to your Shopify admin</List.Item>
+  <List.Item>Navigate to Settings > Shipping and delivery</List.Item>
+  <List.Item>Click on "Manage rates" next to the shipping zone</List.Item>
+  <List.Item>Add or edit shipping rates as needed</List.Item>
+</List>
+```
+
+### List with spacing
+
+Use different spacing options to control the visual density of your list.
+
+```svelte
+<script>
+  import { List, Card, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Text as="h2" variant="headingMd">Loose spacing</Text>
+  <List spacing="loose">
+    <List.Item>First item with more breathing room</List.Item>
+    <List.Item>Second item with more breathing room</List.Item>
+    <List.Item>Third item with more breathing room</List.Item>
+  </List>
+</Card>
+
+<Card>
+  <Text as="h2" variant="headingMd">Tight spacing</Text>
+  <List spacing="tight">
+    <List.Item>First item with less space</List.Item>
+    <List.Item>Second item with less space</List.Item>
+    <List.Item>Third item with less space</List.Item>
+  </List>
+</Card>
+```
+
+### List in card
+
+Use lists within cards to group related information.
+
+```svelte
+<script>
+  import { List, Card, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Text as="h2" variant="headingMd">Order requirements</Text>
+  <List type="bullet">
+    <List.Item>Minimum order value of $50</List.Item>
+    <List.Item>Valid shipping address required</List.Item>
+    <List.Item>Payment method must be verified</List.Item>
+    <List.Item>Items must be in stock</List.Item>
+  </List>
+</Card>
+```
+
+### Complex list content
+
+Use lists with more complex content including multiple lines and formatting.
+
+```svelte
+<script>
+  import { List, Text, InlineStack, Badge } from 'svelte-polaris';
+</script>
+
+<List>
+  <List.Item>
+    <Text as="p" variant="bodyMd" fontWeight="semibold">Product updates</Text>
+    <Text as="p" tone="subdued">New features and improvements to existing products</Text>
+    <InlineStack gap="200">
+      <Badge tone="info">Weekly</Badge>
+      <Badge>Email</Badge>
+    </InlineStack>
+  </List.Item>
+  
+  <List.Item>
+    <Text as="p" variant="bodyMd" fontWeight="semibold">Security alerts</Text>
+    <Text as="p" tone="subdued">Important security updates and notifications</Text>
+    <InlineStack gap="200">
+      <Badge tone="critical">Immediate</Badge>
+      <Badge>SMS</Badge>
+    </InlineStack>
+  </List.Item>
+  
+  <List.Item>
+    <Text as="p" variant="bodyMd" fontWeight="semibold">Marketing tips</Text>
+    <Text as="p" tone="subdued">Best practices and strategies for growing your business</Text>
+    <InlineStack gap="200">
+      <Badge tone="success">Monthly</Badge>
+      <Badge>Email</Badge>
+    </InlineStack>
+  </List.Item>
+</List>
+```
+
+### Nested lists
+
+Use nested lists to show hierarchical relationships.
+
+```svelte
+<script>
+  import { List } from 'svelte-polaris';
+</script>
+
+<List type="number">
+  <List.Item>
+    Set up your store
+    <List type="bullet">
+      <List.Item>Choose a theme</List.Item>
+      <List.Item>Add your logo</List.Item>
+      <List.Item>Configure payment settings</List.Item>
+    </List>
+  </List.Item>
+  
+  <List.Item>
+    Add products
+    <List type="bullet">
+      <List.Item>Upload product images</List.Item>
+      <List.Item>Write product descriptions</List.Item>
+      <List.Item>Set pricing and inventory</List.Item>
+    </List>
+  </List.Item>
+  
+  <List.Item>
+    Launch your store
+    <List type="bullet">
+      <List.Item>Test the checkout process</List.Item>
+      <List.Item>Set up shipping zones</List.Item>
+      <List.Item>Remove password protection</List.Item>
+    </List>
+  </List.Item>
+</List>
+```
+
+### List with custom styling
+
+Use lists with custom styling for specific design requirements.
+
+```svelte
+<script>
+  import { List, Text, Box } from 'svelte-polaris';
+</script>
+
+<Box padding="400" background="bg-surface-secondary">
+  <Text as="h3" variant="headingMd">Features included</Text>
+  <List type="bullet">
+    <List.Item>Unlimited products</List.Item>
+    <List.Item>24/7 customer support</List.Item>
+    <List.Item>Advanced analytics</List.Item>
+    <List.Item>Custom domain</List.Item>
+    <List.Item>SSL certificate</List.Item>
+  </List>
+</Box>
+```
+
+## Props
+
+### List
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `type` | `'bullet' \| 'number'` | Type of list to display | `'bullet'` |
+| `spacing` | `'tight' \| 'loose'` | Adjust spacing between list items | |
+
+### List.Item
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `children` | `Snippet` | The content to display in the list item | Required |
+
+## Best practices
+
+Lists should:
+
+- Start with a capital letter and use sentence case
+- Not use terminal punctuation unless the list item is a complete sentence
+- Use parallel structure and consistent formatting
+- Be introduced with a clear heading or introductory text
+- Use numbered lists when the order matters
+- Use bulleted lists when the order doesn't matter
+
+Lists shouldn't:
+
+- Mix numbered and bulleted items in the same list
+- Be used for navigation (use navigation components instead)
+- Include interactive elements like buttons or links as primary content
+- Have only one item (consider using regular text instead)
+
+## Accessibility
+
+- Lists are automatically announced by screen readers as lists
+- The number of items in the list is announced
+- Use clear, descriptive text for each list item
+- Ensure proper heading structure when introducing lists
+- Nested lists maintain proper hierarchy for assistive technologies
+
+## Related components
+
+- [Text](/getting-started/text): For single lines of text content
+- [DescriptionList](/getting-started/description-list): For key-value pairs of information
+- [Card](/getting-started/card): For grouping related content including lists

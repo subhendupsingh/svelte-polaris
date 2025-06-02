@@ -1,0 +1,299 @@
+---
+title: Tag
+description: Tags represent a set of interactive, merchant-supplied keywords that help label, organize, and categorize objects.
+---
+
+```svelte
+import { Tag } from 'svelte-polaris';
+```
+
+Tags represent a set of interactive, merchant-supplied keywords that help label, organize, and categorize objects. Tags are frequently used for filtering and searching.
+
+
+## Examples
+
+### Basic tag
+
+Use to signify the attributes of an object.
+
+```svelte
+<script>
+  import { Tag } from 'svelte-polaris';
+</script>
+
+<Tag>Wholesale</Tag>
+```
+
+### Removable tag
+
+Use when merchants need to remove tags.
+
+```svelte
+<script>
+  import { Tag } from 'svelte-polaris';
+  
+  let showTag = true;
+  
+  function handleRemove() {
+    showTag = false;
+  }
+</script>
+
+{#if showTag}
+  <Tag onRemove={handleRemove}>Wholesale</Tag>
+{/if}
+```
+
+### Clickable tag
+
+Use when merchants need to interact with tags for actions like filtering.
+
+```svelte
+<script>
+  import { Tag } from 'svelte-polaris';
+  
+  function handleClick() {
+    console.log('Tag clicked');
+  }
+</script>
+
+<Tag onClick={handleClick}>Seasonal</Tag>
+```
+
+### Tag with URL
+
+Use when tags need to link to other pages or sections.
+
+```svelte
+<script>
+  import { Tag } from 'svelte-polaris';
+</script>
+
+<Tag url="/products?tag=electronics">Electronics</Tag>
+```
+
+### Disabled tag
+
+Use when tags are not currently interactive.
+
+```svelte
+<script>
+  import { Tag } from 'svelte-polaris';
+</script>
+
+<Tag disabled>Archived</Tag>
+```
+
+### Multiple tags
+
+Use to display a collection of related tags.
+
+```svelte
+<script>
+  import { Tag, InlineStack } from 'svelte-polaris';
+  
+  let tags = ['Electronics', 'Computers', 'Laptops', 'Gaming'];
+  
+  function removeTag(tagToRemove) {
+    tags = tags.filter(tag => tag !== tagToRemove);
+  }
+</script>
+
+<InlineStack gap="200">
+  {#each tags as tag}
+    <Tag onRemove={() => removeTag(tag)}>{tag}</Tag>
+  {/each}
+</InlineStack>
+```
+
+### Tags in product context
+
+Use tags to categorize and filter products.
+
+```svelte
+<script>
+  import { Tag, Card, Text, InlineStack } from 'svelte-polaris';
+  
+  let productTags = ['Summer', 'Sale', 'Featured', 'New Arrival'];
+  let selectedTags = [];
+  
+  function toggleTag(tag) {
+    if (selectedTags.includes(tag)) {
+      selectedTags = selectedTags.filter(t => t !== tag);
+    } else {
+      selectedTags = [...selectedTags, tag];
+    }
+  }
+  
+  function removeProductTag(tagToRemove) {
+    productTags = productTags.filter(tag => tag !== tagToRemove);
+  }
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Product Tags</Text>
+  <InlineStack gap="200">
+    {#each productTags as tag}
+      <Tag onRemove={() => removeProductTag(tag)}>{tag}</Tag>
+    {/each}
+  </InlineStack>
+</Card>
+
+<Card>
+  <Text as="h3" variant="headingMd">Filter by Tags</Text>
+  <InlineStack gap="200">
+    {#each ['Electronics', 'Clothing', 'Home', 'Sports', 'Books'] as tag}
+      <Tag 
+        onClick={() => toggleTag(tag)}
+        pressed={selectedTags.includes(tag)}
+      >
+        {tag}
+      </Tag>
+    {/each}
+  </InlineStack>
+  
+  {#if selectedTags.length > 0}
+    <Text as="p" tone="subdued">
+      Selected: {selectedTags.join(', ')}
+    </Text>
+  {/if}
+</Card>
+```
+
+### Tag input field
+
+Use to allow merchants to add new tags.
+
+```svelte
+<script>
+  import { Tag, TextField, InlineStack, Card, Text } from 'svelte-polaris';
+  
+  let tags = ['Existing Tag'];
+  let newTagValue = '';
+  
+  function addTag() {
+    if (newTagValue.trim() && !tags.includes(newTagValue.trim())) {
+      tags = [...tags, newTagValue.trim()];
+      newTagValue = '';
+    }
+  }
+  
+  function removeTag(tagToRemove) {
+    tags = tags.filter(tag => tag !== tagToRemove);
+  }
+  
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      addTag();
+    }
+  }
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Manage Tags</Text>
+  
+  <TextField
+    label="Add new tag"
+    value={newTagValue}
+    on:change={(e) => newTagValue = e.detail}
+    on:keydown={handleKeyPress}
+    autoComplete="off"
+    connectedRight={{
+      content: 'Add',
+      onAction: addTag
+    }}
+  />
+  
+  {#if tags.length > 0}
+    <InlineStack gap="200">
+      {#each tags as tag}
+        <Tag onRemove={() => removeTag(tag)}>{tag}</Tag>
+      {/each}
+    </InlineStack>
+  {/if}
+</Card>
+```
+
+### Tag states and variations
+
+Use different tag states to convey status and interaction.
+
+```svelte
+<script>
+  import { Tag, InlineStack, Text, Card } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Tag States</Text>
+  
+  <Text as="h4" variant="headingSm">Default</Text>
+  <InlineStack gap="200">
+    <Tag>Default Tag</Tag>
+    <Tag onRemove={() => {}}>Removable</Tag>
+    <Tag onClick={() => {}}>Clickable</Tag>
+  </InlineStack>
+  
+  <Text as="h4" variant="headingSm">Disabled</Text>
+  <InlineStack gap="200">
+    <Tag disabled>Disabled</Tag>
+    <Tag disabled onRemove={() => {}}>Disabled Removable</Tag>
+  </InlineStack>
+  
+  <Text as="h4" variant="headingSm">With URL</Text>
+  <InlineStack gap="200">
+    <Tag url="/products">Link Tag</Tag>
+    <Tag url="/categories" onRemove={() => {}}>Link with Remove</Tag>
+  </InlineStack>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `children` | `string` | Content to display in the tag | Required |
+| `disabled` | `boolean` | Disables the tag, making it non-interactive | `false` |
+| `onClick` | `() => void` | Callback when tag is clicked | |
+| `onRemove` | `() => void` | Callback when remove button is clicked | |
+| `pressed` | `boolean` | Whether the tag is pressed (for toggle behavior) | `false` |
+| `url` | `string` | URL to navigate to when tag is clicked | |
+| `accessibilityLabel` | `string` | Accessible label for the tag | |
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `on:click` | Fired when the tag is clicked |
+| `on:remove` | Fired when the remove button is clicked |
+
+## Best practices
+
+Tags should:
+
+- Be used for filtering, organizing, and finding content
+- Use clear, descriptive text that helps users understand what they represent
+- Be removable when merchants need to modify selections
+- Be clickable when they trigger actions like filtering
+- Use consistent terminology across similar contexts
+
+Tags shouldn't:
+
+- Be used for navigation to major sections (use navigation components instead)
+- Replace buttons for primary actions
+- Be used when only one option can be selected (use radio buttons instead)
+- Include very long text that might wrap to multiple lines
+
+## Accessibility
+
+- Tags are announced by screen readers with their text content
+- Removable tags include accessible remove buttons
+- Clickable tags are keyboard accessible
+- Use `accessibilityLabel` to provide additional context when needed
+- Ensure sufficient color contrast for tag text and backgrounds
+
+## Related components
+
+- [Badge](/getting-started/badge): For displaying status or count information
+- [Button](/getting-started/button): For primary actions and navigation
+- [Checkbox](/getting-started/checkbox): For multiple selections in forms
+- [ChoiceList](/getting-started/choice-list): For structured multiple choice selections

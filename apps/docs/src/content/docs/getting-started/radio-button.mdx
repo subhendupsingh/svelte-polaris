@@ -1,0 +1,274 @@
+---
+title: RadioButton
+description: Radio buttons are used when you have a list of two or more mutually exclusive options and the user must select exactly one choice.
+---
+
+```svelte
+import { RadioButton } from 'svelte-polaris';
+```
+
+Radio buttons are used when you have a list of two or more mutually exclusive options and the user must select exactly one choice. A single radio button should never be used alone.
+
+## Examples
+
+### Basic radio button
+
+Use radio buttons to present each item in a list of options where merchants must make a single selection.
+
+```svelte
+<script>
+  import { RadioButton } from 'svelte-polaris';
+  
+  let selectedValue = 'disabled';
+</script>
+
+<RadioButton
+  label="Accounts are disabled"
+  helpText="Customers will only be able to check out as guests."
+  checked={selectedValue === 'disabled'}
+  id="disabled"
+  name="accounts"
+  on:change={() => selectedValue = 'disabled'}
+/>
+
+<RadioButton
+  label="Accounts are optional"
+  helpText="Customers will be able to check out with a customer account or as a guest."
+  checked={selectedValue === 'optional'}
+  id="optional"
+  name="accounts"
+  on:change={() => selectedValue = 'optional'}
+/>
+```
+
+### Disabled radio button
+
+Use disabled radio buttons for options that aren't currently available. The surrounding interface should make it clear why the option is unavailable and whether it will become available.
+
+```svelte
+<script>
+  import { RadioButton } from 'svelte-polaris';
+  
+  let selectedValue = 'shipping';
+</script>
+
+<RadioButton
+  label="Shipping address"
+  checked={selectedValue === 'shipping'}
+  id="shipping"
+  name="address"
+  on:change={() => selectedValue = 'shipping'}
+/>
+
+<RadioButton
+  label="Billing address"
+  checked={selectedValue === 'billing'}
+  id="billing"
+  name="address"
+  disabled
+  on:change={() => selectedValue = 'billing'}
+/>
+```
+
+### Radio button with error
+
+Use error state to indicate when a selection is required or invalid.
+
+```svelte
+<script>
+  import { RadioButton, Text } from 'svelte-polaris';
+  
+  let selectedValue = '';
+  let hasError = true;
+</script>
+
+<Text as="legend" variant="headingMd">Shipping method</Text>
+
+<RadioButton
+  label="Standard shipping"
+  helpText="5-7 business days"
+  checked={selectedValue === 'standard'}
+  id="standard"
+  name="shipping"
+  error={hasError && selectedValue === ''}
+  on:change={() => {
+    selectedValue = 'standard';
+    hasError = false;
+  }}
+/>
+
+<RadioButton
+  label="Express shipping"
+  helpText="2-3 business days"
+  checked={selectedValue === 'express'}
+  id="express"
+  name="shipping"
+  error={hasError && selectedValue === ''}
+  on:change={() => {
+    selectedValue = 'express';
+    hasError = false;
+  }}
+/>
+
+{#if hasError && selectedValue === ''}
+  <Text as="p" tone="critical">Please select a shipping method</Text>
+{/if}
+```
+
+### Radio button group with custom content
+
+Use custom content to provide additional context or visual elements.
+
+```svelte
+<script>
+  import { RadioButton, Text, Box, InlineStack } from 'svelte-polaris';
+  
+  let selectedPlan = 'basic';
+</script>
+
+<Text as="legend" variant="headingMd">Choose your plan</Text>
+
+<Box paddingBlockStart="400">
+  <RadioButton
+    label="Basic Plan"
+    checked={selectedPlan === 'basic'}
+    id="basic"
+    name="plan"
+    on:change={() => selectedPlan = 'basic'}
+  >
+    <Box paddingInlineStart="600">
+      <Text as="p" variant="bodyMd">$9/month</Text>
+      <Text as="p" tone="subdued">Up to 1,000 products</Text>
+    </Box>
+  </RadioButton>
+</Box>
+
+<Box paddingBlockStart="400">
+  <RadioButton
+    label="Pro Plan"
+    checked={selectedPlan === 'pro'}
+    id="pro"
+    name="plan"
+    on:change={() => selectedPlan = 'pro'}
+  >
+    <Box paddingInlineStart="600">
+      <Text as="p" variant="bodyMd">$29/month</Text>
+      <Text as="p" tone="subdued">Up to 10,000 products</Text>
+    </Box>
+  </RadioButton>
+</Box>
+```
+
+### Radio button in form layout
+
+Use radio buttons within form layouts for structured data collection.
+
+```svelte
+<script>
+  import { RadioButton, FormLayout, Card, Text } from 'svelte-polaris';
+  
+  let paymentMethod = 'credit';
+  let shippingSpeed = 'standard';
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group title="Payment method">
+      <RadioButton
+        label="Credit card"
+        checked={paymentMethod === 'credit'}
+        id="credit"
+        name="payment"
+        on:change={() => paymentMethod = 'credit'}
+      />
+      
+      <RadioButton
+        label="PayPal"
+        checked={paymentMethod === 'paypal'}
+        id="paypal"
+        name="payment"
+        on:change={() => paymentMethod = 'paypal'}
+      />
+      
+      <RadioButton
+        label="Bank transfer"
+        checked={paymentMethod === 'bank'}
+        id="bank"
+        name="payment"
+        on:change={() => paymentMethod = 'bank'}
+      />
+    </FormLayout.Group>
+    
+    <FormLayout.Group title="Shipping speed">
+      <RadioButton
+        label="Standard (5-7 days)"
+        checked={shippingSpeed === 'standard'}
+        id="standard-ship"
+        name="shipping"
+        on:change={() => shippingSpeed = 'standard'}
+      />
+      
+      <RadioButton
+        label="Express (2-3 days)"
+        checked={shippingSpeed === 'express'}
+        id="express-ship"
+        name="shipping"
+        on:change={() => shippingSpeed = 'express'}
+      />
+    </FormLayout.Group>
+  </FormLayout>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `id` | `string` | A unique identifier for the radio button | Required |
+| `label` | `string` | Label for the radio button | Required |
+| `labelHidden` | `boolean` | Visually hide the label | `false` |
+| `helpText` | `string` | Additional text to aid in use | |
+| `checked` | `boolean` | Radio button is selected | `false` |
+| `disabled` | `boolean` | Disable input | `false` |
+| `error` | `boolean \| string` | Display an error state | `false` |
+| `name` | `string` | Name for the input | |
+| `value` | `string` | Value for the input | |
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `on:change` | Callback when radio button is toggled |
+| `on:focus` | Callback when radio button is focused |
+| `on:blur` | Callback when focus is removed |
+
+## Best practices
+
+Radio buttons should:
+
+- Always be used in groups of two or more
+- Include a label that clearly describes the option
+- Use the same `name` attribute for all options in a group
+- Have one option selected by default when possible
+- Be listed in a logical order (alphabetical, numerical, or by importance)
+
+Radio buttons shouldn't:
+
+- Be used for binary choices (use a checkbox instead)
+- Be used when multiple selections are allowed (use checkboxes instead)
+- Have all options unselected in a group
+- Be used for actions (use buttons instead)
+
+## Accessibility
+
+- Radio buttons are automatically grouped when they share the same `name` attribute
+- Use clear, descriptive labels for each option
+- Provide help text when additional context is needed
+- Ensure proper keyboard navigation between radio button groups
+- Use fieldset and legend elements to group related radio buttons when appropriate
+
+## Related components
+
+- [Checkbox](/getting-started/checkbox): For binary choices or multiple selections
+- [ChoiceList](/getting-started/choice-list): For a more structured list of radio button or checkbox options
+- [Select](/getting-started/select): For choosing one option from a long list

@@ -1,0 +1,235 @@
+---
+title: Bleed
+description: Use Bleed to allow content to extend beyond the normal container boundaries by applying negative margins.
+---
+
+```svelte
+import { Bleed } from 'svelte-polaris';
+```
+
+The Bleed component applies negative margins to allow content to extend beyond its container boundaries. This is useful for creating full-width content within constrained layouts.
+
+## Examples
+
+### Basic bleed
+
+Use Bleed to extend content beyond its container with negative margins.
+
+```svelte
+<script>
+  import { Bleed, Card, Box, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="p">This content is contained within the card padding.</Text>
+    <Bleed marginInline="400">
+      <Box background="bg-surface-secondary" padding="400">
+        <Text as="p">This content bleeds beyond the card padding horizontally.</Text>
+      </Box>
+    </Bleed>
+    <Text as="p">This content is back within the normal padding.</Text>
+  </Box>
+</Card>
+```
+
+### Horizontal bleed
+
+Apply negative horizontal margins to extend content to the edges.
+
+```svelte
+<script>
+  import { Bleed, Card, Box, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="h2" variant="headingMd">Product Details</Text>
+    <Bleed marginInline="400">
+      <Box background="bg-surface-secondary" padding="400">
+        <Text as="p">Full-width content section</Text>
+      </Box>
+    </Bleed>
+    <Text as="p">Regular content continues here.</Text>
+  </Box>
+</Card>
+```
+
+### Vertical bleed
+
+Apply negative vertical margins to extend content vertically.
+
+```svelte
+<script>
+  import { Bleed, Card, Box, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <Box padding="400">
+      <Text as="p">First card content</Text>
+    </Box>
+  </Card>
+  
+  <Bleed marginBlock="200">
+    <Card>
+      <Box padding="400" background="bg-surface-secondary">
+        <Text as="p">This card bleeds vertically, reducing spacing between cards</Text>
+      </Box>
+    </Card>
+  </Bleed>
+  
+  <Card>
+    <Box padding="400">
+      <Text as="p">Third card content</Text>
+    </Box>
+  </Card>
+</BlockStack>
+```
+
+### Directional bleed
+
+Apply negative margins to specific directions.
+
+```svelte
+<script>
+  import { Bleed, Card, Box, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="h2" variant="headingMd">Settings</Text>
+    
+    <Bleed marginInlineStart="400">
+      <Box background="bg-surface-secondary" padding="400">
+        <Text as="p">This content bleeds to the left edge only</Text>
+      </Box>
+    </Bleed>
+    
+    <Bleed marginInlineEnd="400">
+      <Box background="bg-surface-warning" padding="400">
+        <Text as="p">This content bleeds to the right edge only</Text>
+      </Box>
+    </Bleed>
+    
+    <Bleed marginBlockEnd="400">
+      <Box background="bg-surface-success" padding="400">
+        <Text as="p">This content bleeds to the bottom edge</Text>
+      </Box>
+    </Bleed>
+  </Box>
+</Card>
+```
+
+### Responsive bleed
+
+Use responsive values to apply different bleed amounts at different screen sizes.
+
+```svelte
+<script>
+  import { Bleed, Card, Box, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="h2" variant="headingMd">Responsive Content</Text>
+    <Bleed marginInline={{xs: '200', md: '400', lg: '600'}}>
+      <Box background="bg-surface-secondary" padding="400">
+        <Text as="p">This content has different bleed amounts on different screen sizes</Text>
+      </Box>
+    </Bleed>
+  </Box>
+</Card>
+```
+
+### Full bleed layout
+
+Create a full-width section within a constrained layout.
+
+```svelte
+<script>
+  import { Bleed, Card, Box, Text, Button, BlockStack, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">Product Information</Text>
+      <Text as="p">Standard product details go here with normal padding.</Text>
+      
+      <Bleed marginInline="400" marginBlockEnd="400">
+        <Box background="bg-surface-critical" padding="400">
+          <InlineStack align="space-between" blockAlign="center">
+            <Text as="p" tone="critical">Important: This product is discontinued</Text>
+            <Button variant="primary" tone="critical">Learn more</Button>
+          </InlineStack>
+        </Box>
+      </Bleed>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `marginInline` | `Spacing` | Negative horizontal space around children | - |
+| `marginBlock` | `Spacing` | Negative vertical space around children | - |
+| `marginBlockStart` | `Spacing` | Negative top space around children | - |
+| `marginBlockEnd` | `Spacing` | Negative bottom space around children | - |
+| `marginInlineStart` | `Spacing` | Negative left space around children | - |
+| `marginInlineEnd` | `Spacing` | Negative right space around children | - |
+| `children` | `Snippet` | Content to render with negative margins | - |
+
+## Spacing scale
+
+The `Spacing` type accepts the following values:
+- `"0"` - No spacing
+- `"025"` - 1px
+- `"050"` - 2px
+- `"100"` - 4px
+- `"150"` - 6px
+- `"200"` - 8px
+- `"300"` - 12px
+- `"400"` - 16px
+- `"500"` - 20px
+- `"600"` - 24px
+- `"800"` - 32px
+- `"1000"` - 40px
+- `"1200"` - 48px
+- `"1600"` - 64px
+- `"2000"` - 80px
+- `"2400"` - 96px
+- `"2800"` - 112px
+- `"3200"` - 128px
+
+Values can also be responsive objects with breakpoint keys: `{xs: "200", md: "400", lg: "600"}`
+
+## Best practices
+
+### Do
+- Use Bleed to create visual emphasis by extending content beyond normal boundaries
+- Apply Bleed to create full-width sections within constrained layouts
+- Use responsive values to maintain appropriate spacing across screen sizes
+- Combine with background colors to create clear visual separation
+
+### Don't
+- Overuse Bleed as it can break visual hierarchy
+- Apply excessive negative margins that cause content overlap
+- Use Bleed without considering the impact on surrounding content
+- Forget to test responsive behavior when using responsive values
+
+## Accessibility
+
+- Bleed doesn't affect the accessibility tree, but ensure content remains readable
+- Maintain sufficient color contrast when using background colors with Bleed
+- Test with screen readers to ensure content flow remains logical
+- Consider focus management when Bleed affects interactive elements
+
+## Related components
+
+- [Box](/getting-started/box) - For applying positive spacing and layout properties
+- [Card](/getting-started/card) - Often used as a container with Bleed
+- [BlockStack](/getting-started/block-stack) - For vertical layout with consistent spacing
+- [InlineStack](/getting-started/inline-stack) - For horizontal layout with consistent spacing

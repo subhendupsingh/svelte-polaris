@@ -1,0 +1,320 @@
+---
+title: Thumbnail
+description: Thumbnails are a visual anchor and identifier for an object. They should be used along with text to provide context.
+---
+
+```svelte
+import { Thumbnail } from 'svelte-polaris';
+```
+
+Thumbnails are a visual anchor and identifier for an object. They should be used along with text to provide context.
+
+## Examples
+
+### Basic thumbnail
+
+Use to present an image in a small format.
+
+```svelte
+<script>
+  import { Thumbnail } from 'svelte-polaris';
+</script>
+
+<Thumbnail
+  source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+  alt="Black leather choker necklace"
+/>
+```
+
+### Small thumbnail
+
+Use when space is limited or when the thumbnail is less important.
+
+```svelte
+<script>
+  import { Thumbnail } from 'svelte-polaris';
+</script>
+
+<Thumbnail
+  source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+  alt="Black leather choker necklace"
+  size="small"
+/>
+```
+
+### Large thumbnail
+
+Use when the thumbnail is a focal point or needs more prominence.
+
+```svelte
+<script>
+  import { Thumbnail } from 'svelte-polaris';
+</script>
+
+<Thumbnail
+  source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+  alt="Black leather choker necklace"
+  size="large"
+/>
+```
+
+### Thumbnail with transparent background
+
+Use when the image has a transparent background and needs a visible border.
+
+```svelte
+<script>
+  import { Thumbnail } from 'svelte-polaris';
+</script>
+
+<Thumbnail
+  source="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+  alt="Empty state illustration"
+  transparent
+/>
+```
+
+### Product thumbnails in list
+
+Use thumbnails to help merchants identify products in lists.
+
+```svelte
+<script>
+  import { Thumbnail, Card, Text, InlineStack, List } from 'svelte-polaris';
+  
+  const products = [
+    {
+      id: 1,
+      name: 'Black Leather Choker',
+      sku: 'BLC-001',
+      image: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg'
+    },
+    {
+      id: 2,
+      name: 'Silver Ring',
+      sku: 'SR-002',
+      image: 'https://burst.shopifycdn.com/photos/silver-ring_373x@2x.jpg'
+    },
+    {
+      id: 3,
+      name: 'Gold Bracelet',
+      sku: 'GB-003',
+      image: 'https://burst.shopifycdn.com/photos/gold-bracelet_373x@2x.jpg'
+    }
+  ];
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Recent Products</Text>
+  <List>
+    {#each products as product}
+      <List.Item>
+        <InlineStack gap="400" align="center">
+          <Thumbnail
+            source={product.image}
+            alt={product.name}
+            size="small"
+          />
+          <div>
+            <Text as="p" variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+            <Text as="p" tone="subdued">SKU: {product.sku}</Text>
+          </div>
+        </InlineStack>
+      </List.Item>
+    {/each}
+  </List>
+</Card>
+```
+
+### Thumbnail sizes comparison
+
+Use different sizes based on the context and importance of the image.
+
+```svelte
+<script>
+  import { Thumbnail, InlineStack, Text, Card } from 'svelte-polaris';
+  
+  const imageUrl = 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg';
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Thumbnail Sizes</Text>
+  <InlineStack gap="400" align="center">
+    <div>
+      <Thumbnail
+        source={imageUrl}
+        alt="Small thumbnail"
+        size="small"
+      />
+      <Text as="p" alignment="center">Small</Text>
+    </div>
+    
+    <div>
+      <Thumbnail
+        source={imageUrl}
+        alt="Medium thumbnail"
+        size="medium"
+      />
+      <Text as="p" alignment="center">Medium</Text>
+    </div>
+    
+    <div>
+      <Thumbnail
+        source={imageUrl}
+        alt="Large thumbnail"
+        size="large"
+      />
+      <Text as="p" alignment="center">Large</Text>
+    </div>
+  </InlineStack>
+</Card>
+```
+
+### Thumbnail with fallback
+
+Use when images might not load or are unavailable.
+
+```svelte
+<script>
+  import { Thumbnail, InlineStack, Text } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <div>
+    <Thumbnail
+      source="https://invalid-url.jpg"
+      alt="Product with missing image"
+    />
+    <Text as="p" alignment="center">Missing Image</Text>
+  </div>
+  
+  <div>
+    <Thumbnail
+      source=""
+      alt="Product without image"
+    />
+    <Text as="p" alignment="center">No Image</Text>
+  </div>
+</InlineStack>
+```
+
+### Thumbnail in data table context
+
+Use thumbnails in tables to help identify items quickly.
+
+```svelte
+<script>
+  import { Thumbnail, Card, Text, InlineStack } from 'svelte-polaris';
+  
+  const orders = [
+    {
+      id: '#1001',
+      product: 'Black Leather Choker',
+      image: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
+      quantity: 2,
+      total: '$49.98'
+    },
+    {
+      id: '#1002',
+      product: 'Silver Ring',
+      image: 'https://burst.shopifycdn.com/photos/silver-ring_373x@2x.jpg',
+      quantity: 1,
+      total: '$29.99'
+    }
+  ];
+</script>
+
+<Card>
+  <Text as="h3" variant="headingMd">Recent Orders</Text>
+  {#each orders as order}
+    <InlineStack gap="400" align="center">
+      <Thumbnail
+        source={order.image}
+        alt={order.product}
+        size="small"
+      />
+      <div style="flex: 1;">
+        <Text as="p" variant="bodyMd" fontWeight="semibold">{order.id}</Text>
+        <Text as="p" tone="subdued">{order.product}</Text>
+      </div>
+      <div>
+        <Text as="p" variant="bodyMd">Qty: {order.quantity}</Text>
+        <Text as="p" variant="bodyMd" fontWeight="semibold">{order.total}</Text>
+      </div>
+    </InlineStack>
+  {/each}
+</Card>
+```
+
+### Clickable thumbnail
+
+Use when thumbnails should trigger actions like opening a larger view.
+
+```svelte
+<script>
+  import { Thumbnail, Text } from 'svelte-polaris';
+  
+  function handleThumbnailClick() {
+    console.log('Thumbnail clicked - could open lightbox or detail view');
+  }
+</script>
+
+<div>
+  <Thumbnail
+    source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+    alt="Click to view larger image"
+    onClick={handleThumbnailClick}
+  />
+  <Text as="p" tone="subdued">Click to enlarge</Text>
+</div>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `source` | `string` | URL for the image | Required |
+| `alt` | `string` | Alt text for the image | Required |
+| `size` | `'small' \| 'medium' \| 'large'` | Size of the thumbnail | `'medium'` |
+| `transparent` | `boolean` | Whether the image has a transparent background | `false` |
+| `onClick` | `() => void` | Callback when thumbnail is clicked | |
+
+## Events
+
+| Event | Description |
+|-------|-------------|
+| `on:click` | Fired when the thumbnail is clicked |
+| `on:load` | Fired when the image loads successfully |
+| `on:error` | Fired when the image fails to load |
+
+## Best practices
+
+Thumbnails should:
+
+- Always include descriptive alt text for accessibility
+- Use appropriate sizes based on context and importance
+- Maintain consistent aspect ratios when used in groups
+- Be used alongside text to provide context
+- Use the transparent prop when images have transparent backgrounds
+
+Thumbnails shouldn't:
+
+- Be used as the primary way to convey important information
+- Replace proper image optimization and loading strategies
+- Be used for decorative purposes (use Image component instead)
+- Be too small to be useful for identification
+
+## Accessibility
+
+- Always provide meaningful alt text that describes the image content
+- Ensure thumbnails are large enough to be useful for users with visual impairments
+- Use proper contrast for any overlaid text or controls
+- Consider providing alternative text descriptions for complex images
+- Ensure clickable thumbnails are keyboard accessible
+
+## Related components
+
+- [Avatar](/getting-started/avatar): For representing people or entities
+- [Image](/getting-started/image): For larger, more prominent images
+- [Card](/getting-started/card): For grouping thumbnail content
+- [Badge](/getting-started/badge): For adding status indicators to thumbnails

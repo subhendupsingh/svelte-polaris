@@ -1,0 +1,496 @@
+---
+title: Page
+description: Page is a top-level layout component that provides a consistent structure for application pages with headers, actions, and content areas.
+---
+
+```svelte
+<script>
+  import { Page } from 'svelte-polaris';
+</script>
+```
+
+Page is a foundational layout component that provides the structure for application pages. It includes support for page titles, subtitles, primary and secondary actions, breadcrumbs, and pagination. The Page component ensures consistent spacing and layout patterns across your application.
+
+## Basic usage
+
+Use Page to create a basic page structure with a title:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page title="Products">
+  <Card>
+    <Text>Your page content goes here</Text>
+  </Card>
+</Page>
+```
+
+## Page with subtitle
+
+Add a subtitle to provide additional context:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Product Inventory" 
+  subtitle="Manage your product catalog and stock levels"
+>
+  <Card>
+    <Text>Inventory management interface would go here</Text>
+  </Card>
+</Page>
+```
+
+## Primary action
+
+Add a primary action button to the page header:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Products" 
+  primaryAction={{
+    content: 'Add product',
+    onAction: () => console.log('Add product clicked')
+  }}
+>
+  <Card>
+    <Text>Product list would be displayed here</Text>
+  </Card>
+</Page>
+```
+
+## Secondary actions
+
+Add secondary actions to the page header:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Orders" 
+  primaryAction={{
+    content: 'Create order',
+    onAction: () => console.log('Create order')
+  }}
+  secondaryActions={[
+    {
+      content: 'Export',
+      onAction: () => console.log('Export orders')
+    },
+    {
+      content: 'Import',
+      onAction: () => console.log('Import orders')
+    }
+  ]}
+>
+  <Card>
+    <Text>Orders list would be displayed here</Text>
+  </Card>
+</Page>
+```
+
+## Action groups
+
+Organize secondary actions into logical groups:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Customer Details" 
+  primaryAction={{
+    content: 'Save customer',
+    onAction: () => console.log('Save customer')
+  }}
+  actionGroups={[
+    {
+      title: 'Customer actions',
+      actions: [
+        {
+          content: 'Send email',
+          onAction: () => console.log('Send email')
+        },
+        {
+          content: 'View orders',
+          onAction: () => console.log('View orders')
+        }
+      ]
+    },
+    {
+      title: 'Account actions',
+      actions: [
+        {
+          content: 'Reset password',
+          onAction: () => console.log('Reset password')
+        },
+        {
+          content: 'Deactivate account',
+          destructive: true,
+          onAction: () => console.log('Deactivate account')
+        }
+      ]
+    }
+  ]}
+>
+  <Card>
+    <Text>Customer details form would go here</Text>
+  </Card>
+</Page>
+```
+
+## Back action (deprecated)
+
+Add a back navigation action (use breadcrumbs instead):
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Edit Product" 
+  backAction={{
+    content: 'Products',
+    onAction: () => console.log('Navigate back to products')
+  }}
+>
+  <Card>
+    <Text>Product edit form would go here</Text>
+  </Card>
+</Page>
+```
+
+## Breadcrumbs navigation
+
+Use breadcrumbs for better navigation hierarchy:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="MacBook Pro 16-inch" 
+  breadcrumbs={[
+    { content: 'Products', onAction: () => console.log('Navigate to products') },
+    { content: 'Laptops', onAction: () => console.log('Navigate to laptops') }
+  ]}
+>
+  <Card>
+    <Text>Product details would be displayed here</Text>
+  </Card>
+</Page>
+```
+
+## Pagination
+
+Add pagination controls to the page header:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Order #1001" 
+  pagination={{
+    hasPrevious: true,
+    hasNext: true,
+    onPrevious: () => console.log('Previous order'),
+    onNext: () => console.log('Next order')
+  }}
+>
+  <Card>
+    <Text>Order details would be displayed here</Text>
+  </Card>
+</Page>
+```
+
+## Full width layout
+
+Remove the default max-width constraint for full-width layouts:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page title="Analytics Dashboard" fullWidth>
+  <Card>
+    <Text>Full-width dashboard content with charts and metrics</Text>
+  </Card>
+</Page>
+```
+
+## Narrow width layout
+
+Use a narrower layout for single-column content:
+
+```svelte
+<script>
+  import { Page, Text, Card, BlockStack, TextField, Button } from 'svelte-polaris';
+</script>
+
+<Page title="Account Settings" narrowWidth>
+  <Card>
+    <BlockStack gap="400">
+      <TextField 
+        label="Full Name" 
+        autoComplete="name"
+        value="John Doe" 
+      />
+      <TextField 
+        label="Email" 
+        type="email"
+        autoComplete="email"
+        value="john@example.com" 
+      />
+      <Button variant="primary">Save Changes</Button>
+    </BlockStack>
+  </Card>
+</Page>
+```
+
+## Complex page layout
+
+Combine multiple Page features for complex layouts:
+
+```svelte
+<script>
+  import { Page, Text, Card, BlockStack, InlineStack, Badge, Button } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Order #1234"
+  subtitle="Placed on March 15, 2024"
+  breadcrumbs={[
+    { content: 'Orders', onAction: () => console.log('Navigate to orders') }
+  ]}
+  primaryAction={{
+    content: 'Fulfill order',
+    onAction: () => console.log('Fulfill order')
+  }}
+  secondaryActions={[
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate order')
+    },
+    {
+      content: 'Print',
+      onAction: () => console.log('Print order')
+    }
+  ]}
+  actionGroups={[
+    {
+      title: 'More actions',
+      actions: [
+        {
+          content: 'Cancel order',
+          destructive: true,
+          onAction: () => console.log('Cancel order')
+        },
+        {
+          content: 'Archive',
+          onAction: () => console.log('Archive order')
+        }
+      ]
+    }
+  ]}
+  pagination={{
+    hasPrevious: true,
+    hasNext: true,
+    onPrevious: () => console.log('Previous order'),
+    onNext: () => console.log('Next order')
+  }}
+>
+  <BlockStack gap="500">
+    <!-- Order status -->
+    <Card>
+      <InlineStack align="space-between" blockAlign="center">
+        <Text variant="headingMd">Order Status</Text>
+        <Badge tone="success">Paid</Badge>
+      </InlineStack>
+    </Card>
+    
+    <!-- Order items -->
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Items</Text>
+        <Text>2x MacBook Pro 16-inch - $2,999.00 each</Text>
+        <Text>1x Magic Mouse - $79.00</Text>
+      </BlockStack>
+    </Card>
+    
+    <!-- Customer information -->
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Customer</Text>
+        <Text>John Doe</Text>
+        <Text>john.doe@example.com</Text>
+      </BlockStack>
+    </Card>
+  </BlockStack>
+</Page>
+```
+
+## Loading states
+
+Handle loading states in page actions:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+  
+  let isLoading = false;
+  
+  const handleSave = async () => {
+    isLoading = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    isLoading = false;
+  };
+</script>
+
+<Page 
+  title="Product Settings"
+  primaryAction={{
+    content: 'Save changes',
+    loading: isLoading,
+    onAction: handleSave
+  }}
+>
+  <Card>
+    <Text>Product configuration form would go here</Text>
+  </Card>
+</Page>
+```
+
+## Disabled actions
+
+Disable actions based on conditions:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+  
+  let hasChanges = false;
+</script>
+
+<Page 
+  title="Settings"
+  primaryAction={{
+    content: 'Save changes',
+    disabled: !hasChanges,
+    onAction: () => console.log('Save changes')
+  }}
+  secondaryActions={[
+    {
+      content: 'Reset to defaults',
+      disabled: !hasChanges,
+      onAction: () => console.log('Reset to defaults')
+    }
+  ]}
+>
+  <Card>
+    <Text>Settings form would go here</Text>
+    <Button onAction={() => hasChanges = !hasChanges}>
+      Toggle changes state
+    </Button>
+  </Card>
+</Page>
+```
+
+## Accessibility features
+
+Page automatically handles accessibility for page structure:
+
+```svelte
+<script>
+  import { Page, Text, Card } from 'svelte-polaris';
+</script>
+
+<Page 
+  title="Accessible Page"
+  pageReadyAccessibilityLabel="Product inventory page is ready"
+  titleHidden={false}
+>
+  <Card>
+    <Text>The page title is announced to screen readers when the page loads</Text>
+  </Card>
+</Page>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | - | Page title displayed in the header |
+| `subtitle` | `string` | - | Page subtitle for additional context |
+| `titleHidden` | `boolean` | `false` | Visually hide the title (still available to screen readers) |
+| `pageReadyAccessibilityLabel` | `string` | - | Label announced when page is ready, overrides title |
+| `primaryAction` | `PrimaryAction \| Snippet` | - | Primary page-level action |
+| `secondaryActions` | `MenuActionDescriptor[] \| Snippet` | - | Collection of secondary page-level actions |
+| `actionGroups` | `MenuGroupDescriptor[]` | - | Collection of page-level groups of secondary actions |
+| `backAction` | `BreadcrumbsProps['backAction']` | - | **Deprecated:** Back action link (use breadcrumbs instead) |
+| `breadcrumbs` | `BreadcrumbsProps['breadcrumbs']` | - | Breadcrumb navigation |
+| `pagination` | `PaginationProps` | - | Page-level pagination controls |
+| `fullWidth` | `boolean` | `false` | Remove the normal max-width constraint |
+| `narrowWidth` | `boolean` | `false` | Decrease maximum layout width for single-column layouts |
+| `additionalMetadata` | `Snippet \| string` | - | Additional metadata content |
+| `filterActions` | `boolean` | `false` | Enable filtering of action list items |
+
+### PrimaryAction Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `content` | `string` | Button text content |
+| `onAction` | `() => void` | Callback when action is triggered |
+| `primary` | `boolean` | Provides extra visual weight |
+| `disabled` | `boolean` | Disable the action |
+| `loading` | `boolean` | Show loading state |
+| `destructive` | `boolean` | Indicate destructive action |
+| `icon` | `IconSource` | Icon to display |
+| `accessibilityLabel` | `string` | Accessibility label |
+| `helpText` | `string` | Help text for tooltip |
+
+### MenuActionDescriptor Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `content` | `string` | Action text content |
+| `onAction` | `() => void` | Callback when action is triggered |
+| `disabled` | `boolean` | Disable the action |
+| `destructive` | `boolean` | Indicate destructive action |
+| `icon` | `IconSource` | Icon to display |
+| `accessibilityLabel` | `string` | Accessibility label |
+| `helpText` | `string` | Help text for tooltip |
+
+## Best practices
+
+- **Clear hierarchy**: Use titles and subtitles to establish clear page hierarchy
+- **Action priority**: Place the most important action as the primary action
+- **Action grouping**: Group related secondary actions for better organization
+- **Breadcrumbs over back**: Use breadcrumbs instead of back actions for better navigation
+- **Loading states**: Always handle loading states for async actions
+- **Accessibility**: Provide meaningful accessibility labels for actions
+- **Layout width**: Choose appropriate width constraints based on content type
+- **Consistent patterns**: Use consistent page structures across your application
+
+## Related components
+
+- [Card](/getting-started/card) - For organizing page content into sections
+- [BlockStack](/getting-started/block-stack) - For vertical content layouts within pages
+- [Button](/getting-started/button) - For standalone actions outside the page header

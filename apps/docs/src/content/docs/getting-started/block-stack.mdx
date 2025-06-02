@@ -1,0 +1,384 @@
+---
+title: BlockStack
+description: BlockStack is a layout component that arranges child elements vertically with consistent spacing and alignment options.
+---
+
+```svelte
+<script>
+  import { BlockStack } from 'svelte-polaris';
+</script>
+```
+
+
+BlockStack is a fundamental layout component that arranges child elements vertically (in a column) with consistent spacing. It provides control over alignment, gap spacing, and element ordering, making it perfect for creating vertical layouts with proper spacing relationships.
+
+## Basic usage
+
+Use BlockStack to arrange elements vertically with consistent spacing:
+
+```svelte
+<script>
+  import { BlockStack, Text, Button } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="400">
+  <Text variant="headingMd">Welcome to our store</Text>
+  <Text>Discover amazing products and great deals.</Text>
+  <Button variant="primary">Shop Now</Button>
+</BlockStack>
+```
+
+## Gap spacing
+
+Control the spacing between child elements using spacing tokens:
+
+```svelte
+<script>
+  import { BlockStack, Text, Card } from 'svelte-polaris';
+</script>
+
+<!-- Tight spacing -->
+<Card>
+  <BlockStack gap="200">
+    <Text variant="headingMd">Tight spacing</Text>
+    <Text>Item 1</Text>
+    <Text>Item 2</Text>
+    <Text>Item 3</Text>
+  </BlockStack>
+</Card>
+
+<!-- Medium spacing -->
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Medium spacing</Text>
+    <Text>Item 1</Text>
+    <Text>Item 2</Text>
+    <Text>Item 3</Text>
+  </BlockStack>
+</Card>
+
+<!-- Large spacing -->
+<Card>
+  <BlockStack gap="800">
+    <Text variant="headingMd">Large spacing</Text>
+    <Text>Item 1</Text>
+    <Text>Item 2</Text>
+    <Text>Item 3</Text>
+  </BlockStack>
+</Card>
+```
+
+## Responsive spacing
+
+Use responsive gap values that adapt to different screen sizes:
+
+```svelte
+<script>
+  import { BlockStack, Text, Button } from 'svelte-polaris';
+</script>
+
+<BlockStack gap={{ xs: '200', sm: '300', md: '400', lg: '500', xl: '600' }}>
+  <Text variant="headingLg">Responsive Layout</Text>
+  <Text>The spacing between these elements changes based on screen size.</Text>
+  <Button variant="primary">Responsive Button</Button>
+</BlockStack>
+```
+
+## Vertical alignment
+
+Control how child elements are aligned vertically within the container:
+
+```svelte
+<script>
+  import { BlockStack, Text, Box } from 'svelte-polaris';
+</script>
+
+<!-- Start alignment (default) -->
+<Box background="surface-secondary" padding="400" minHeight="200px">
+  <BlockStack align="start" gap="200">
+    <Text>Start aligned</Text>
+    <Text>Content aligns to the start</Text>
+  </BlockStack>
+</Box>
+
+<!-- Center alignment -->
+<Box background="surface-secondary" padding="400" minHeight="200px">
+  <BlockStack align="center" gap="200">
+    <Text>Center aligned</Text>
+    <Text>Content is centered</Text>
+  </BlockStack>
+</Box>
+
+<!-- End alignment -->
+<Box background="surface-secondary" padding="400" minHeight="200px">
+  <BlockStack align="end" gap="200">
+    <Text>End aligned</Text>
+    <Text>Content aligns to the end</Text>
+  </BlockStack>
+</Box>
+
+<!-- Space distribution -->
+<Box background="surface-secondary" padding="400" minHeight="200px">
+  <BlockStack align="space-between" gap="200">
+    <Text>Space between</Text>
+    <Text>Equal space between items</Text>
+    <Text>Last item</Text>
+  </BlockStack>
+</Box>
+```
+
+## Horizontal alignment
+
+Control how child elements are aligned horizontally:
+
+```svelte
+<script>
+  import { BlockStack, Text, Button, Box } from 'svelte-polaris';
+</script>
+
+<!-- Start alignment (default) -->
+<Box background="surface-secondary" padding="400">
+  <BlockStack inlineAlign="start" gap="300">
+    <Text>Left aligned</Text>
+    <Button>Start Button</Button>
+  </BlockStack>
+</Box>
+
+<!-- Center alignment -->
+<Box background="surface-secondary" padding="400">
+  <BlockStack inlineAlign="center" gap="300">
+    <Text>Center aligned</Text>
+    <Button>Center Button</Button>
+  </BlockStack>
+</Box>
+
+<!-- End alignment -->
+<Box background="surface-secondary" padding="400">
+  <BlockStack inlineAlign="end" gap="300">
+    <Text>Right aligned</Text>
+    <Button>End Button</Button>
+  </BlockStack>
+</Box>
+
+<!-- Stretch alignment -->
+<Box background="surface-secondary" padding="400">
+  <BlockStack inlineAlign="stretch" gap="300">
+    <Text>Stretched elements</Text>
+    <Button>Full Width Button</Button>
+  </BlockStack>
+</Box>
+```
+
+## Reverse order
+
+Reverse the display order of child elements:
+
+```svelte
+<script>
+  import { BlockStack, Text, Button } from 'svelte-polaris';
+</script>
+
+<BlockStack reverseOrder gap="300">
+  <Text>This appears third</Text>
+  <Text>This appears second</Text>
+  <Text>This appears first</Text>
+</BlockStack>
+```
+
+## Semantic HTML elements
+
+BlockStack can render as different HTML elements for better semantics:
+
+```svelte
+<script>
+  import { BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<!-- As an unordered list -->
+<BlockStack as="ul" gap="200">
+  <BlockStack as="li">
+    <Text>First list item</Text>
+  </BlockStack>
+  <BlockStack as="li">
+    <Text>Second list item</Text>
+  </BlockStack>
+  <BlockStack as="li">
+    <Text>Third list item</Text>
+  </BlockStack>
+</BlockStack>
+
+<!-- As a fieldset for form sections -->
+<BlockStack as="fieldset" gap="400">
+  <Text variant="headingMd">User Information</Text>
+  <Text>Form fields would go here</Text>
+</BlockStack>
+
+<!-- As a section -->
+<BlockStack as="section" gap="500">
+  <Text variant="headingLg">Article Section</Text>
+  <Text>Article content goes here</Text>
+</BlockStack>
+```
+
+## Form layouts
+
+BlockStack is perfect for creating form layouts:
+
+```svelte
+<script>
+  import { BlockStack, Text, TextField, Button, Card } from 'svelte-polaris';
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Contact Form</Text>
+    
+    <TextField
+      label="Full Name"
+      autoComplete="name"
+      placeholder="Enter your full name"
+    />
+    
+    <TextField
+      label="Email"
+      type="email"
+      autoComplete="email"
+      placeholder="Enter your email address"
+    />
+    
+    <TextField
+      label="Message"
+      multiline={4}
+      autoComplete="off"
+      placeholder="Enter your message"
+    />
+    
+    <Button variant="primary">Send Message</Button>
+  </BlockStack>
+</Card>
+```
+
+## Content sections
+
+Create well-structured content sections:
+
+```svelte
+<script>
+  import { BlockStack, Text, Button, Badge, Box } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="600">
+  <!-- Header section -->
+  <BlockStack gap="200">
+    <Text variant="headingXl">Product Overview</Text>
+    <Text color="text-secondary">Everything you need to know about our latest product</Text>
+  </BlockStack>
+  
+  <!-- Status section -->
+  <BlockStack gap="300" inlineAlign="start">
+    <Badge tone="success">Available</Badge>
+    <Text variant="bodyMd">In stock and ready to ship</Text>
+  </BlockStack>
+  
+  <!-- Description section -->
+  <BlockStack gap="400">
+    <Text variant="headingMd">Features</Text>
+    <Text>This product includes amazing features that will help you achieve your goals more efficiently.</Text>
+    <Text>Built with modern technology and designed for performance.</Text>
+  </BlockStack>
+  
+  <!-- Action section -->
+  <BlockStack gap="300" inlineAlign="start">
+    <Button variant="primary">Add to Cart</Button>
+    <Button>Learn More</Button>
+  </BlockStack>
+</BlockStack>
+```
+
+## Nested layouts
+
+Combine BlockStack with other layout components:
+
+```svelte
+<script>
+  import { BlockStack, InlineStack, Text, Button, Card, Badge } from 'svelte-polaris';
+</script>
+
+<Card>
+  <BlockStack gap="500">
+    <!-- Header with inline elements -->
+    <InlineStack align="space-between" blockAlign="center">
+      <Text variant="headingMd">Order #1234</Text>
+      <Badge tone="success">Completed</Badge>
+    </InlineStack>
+    
+    <!-- Order details -->
+    <BlockStack gap="300">
+      <Text variant="bodyMd" color="text-secondary">Order placed on March 15, 2024</Text>
+      <Text>Total: $99.99</Text>
+    </BlockStack>
+    
+    <!-- Actions -->
+    <InlineStack gap="300">
+      <Button>View Details</Button>
+      <Button variant="primary">Reorder</Button>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+
+## Accessibility features
+
+BlockStack supports accessibility attributes:
+
+```svelte
+<script>
+  import { BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<!-- Status region -->
+<BlockStack role="status" gap="200">
+  <Text variant="headingMd">System Status</Text>
+  <Text>All systems are operational</Text>
+</BlockStack>
+
+<!-- Navigation menu -->
+<BlockStack as="ul" role="menu" gap="100">
+  <BlockStack as="li" role="menuitem">
+    <Text>Home</Text>
+  </BlockStack>
+  <BlockStack as="li" role="menuitem">
+    <Text>Products</Text>
+  </BlockStack>
+  <BlockStack as="li" role="menuitem">
+    <Text>Contact</Text>
+  </BlockStack>
+</BlockStack>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `'div' \| 'span' \| 'ul' \| 'ol' \| 'li' \| 'fieldset'` | `'div'` | HTML element type to render |
+| `align` | `'start' \| 'center' \| 'end' \| 'space-around' \| 'space-between' \| 'space-evenly'` | - | Vertical alignment of children |
+| `inlineAlign` | `'start' \| 'center' \| 'end' \| 'baseline' \| 'stretch'` | - | Horizontal alignment of children |
+| `gap` | `ResponsiveProp<SpaceScale>` | - | Spacing between child elements |
+| `reverseOrder` | `boolean` | `false` | Reverse the render order of child items |
+| `role` | `'status' \| 'presentation' \| 'menu' \| 'listbox' \| 'combobox' \| 'group'` | - | ARIA role |
+| `id` | `string` | - | HTML id attribute |
+
+## Best practices
+
+- **Consistent spacing**: Use spacing tokens from the design system for consistent visual rhythm
+- **Semantic HTML**: Choose appropriate `as` values for better accessibility and SEO
+- **Responsive design**: Use responsive gap values for optimal spacing across devices
+- **Content hierarchy**: Use different gap sizes to create visual hierarchy between content sections
+- **Combine with other layouts**: Use with InlineStack and Box for complex layouts
+- **Form structure**: Ideal for creating well-structured forms with consistent field spacing
+
+## Related components
+
+- [InlineStack](/getting-started/inline-stack) - For horizontal layouts with consistent spacing
+- [Box](/getting-started/box) - For custom spacing and styling around content
+- [FormLayout](/getting-started/form-layout) - For specialized form layouts with built-in patterns

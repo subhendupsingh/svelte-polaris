@@ -1,0 +1,505 @@
+---
+title: Tabs
+description: Tabs are used to organize content into different views that users can navigate between. They provide a way to present related information in a compact, organized manner.
+---
+
+```svelte
+<script>
+  import { Tabs } from 'svelte-polaris';
+</script>
+```
+
+Tabs let merchants navigate between different views of related content. They're useful for organizing information that doesn't need to be displayed simultaneously, helping to reduce cognitive load and save space.
+
+## Basic usage
+
+Create simple tabs with content panels:
+
+```svelte
+<script>
+  import { Tabs, Card, Text } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { id: 'all-customers', content: 'All customers' },
+    { id: 'new-customers', content: 'New customers' },
+    { id: 'returning-customers', content: 'Returning customers' }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  {#if selected === 0}
+    <Card>
+      <Text>All customers content goes here</Text>
+    </Card>
+  {:else if selected === 1}
+    <Card>
+      <Text>New customers content goes here</Text>
+    </Card>
+  {:else if selected === 2}
+    <Card>
+      <Text>Returning customers content goes here</Text>
+    </Card>
+  {/if}
+</Tabs>
+```
+
+## Tabs with badges
+
+Add badges to tabs to show counts or status:
+
+```svelte
+<script>
+  import { Tabs, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { id: 'orders', content: 'Orders', badge: '12' },
+    { id: 'drafts', content: 'Drafts', badge: '3' },
+    { id: 'shipped', content: 'Shipped', badge: '156' },
+    { id: 'cancelled', content: 'Cancelled', badge: '2' }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">
+        {tabs[selected].content}
+      </Text>
+      <Text>
+        Content for {tabs[selected].content.toLowerCase()} tab with {tabs[selected].badge} items
+      </Text>
+    </BlockStack>
+  </Card>
+</Tabs>
+```
+
+## Fitted tabs
+
+Use fitted tabs to make them span the full width of their container:
+
+```svelte
+<script>
+  import { Tabs, Card, Text, InlineStack } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'reports', content: 'Reports' }
+  ];
+</script>
+
+<Tabs {tabs} {selected} fitted onSelect={(index) => selected = index}>
+  <Card>
+    <InlineStack align="center">
+      <Text>Content for {tabs[selected].content} tab</Text>
+    </InlineStack>
+  </Card>
+</Tabs>
+```
+
+## Disabled tabs
+
+Disable specific tabs when they're not available:
+
+```svelte
+<script>
+  import { Tabs, Card, Text } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { id: 'products', content: 'Products' },
+    { id: 'inventory', content: 'Inventory', disabled: true },
+    { id: 'shipping', content: 'Shipping' },
+    { id: 'taxes', content: 'Taxes', disabled: true }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  <Card>
+    <Text>
+      {tabs[selected].disabled ? 'This tab is disabled' : `Content for ${tabs[selected].content}`}
+    </Text>
+  </Card>
+</Tabs>
+```
+
+## Tabs with icons
+
+Add icons to tabs for better visual identification:
+
+```svelte
+<script>
+  import { Tabs, Card, Text, Icon } from 'svelte-polaris';
+  import HomeIcon from '@shopify/polaris-icons/dist/svg/HomeIcon.svg?component';
+  import ProductIcon from '@shopify/polaris-icons/dist/svg/ProductIcon.svg?component';
+  import OrderIcon from '@shopify/polaris-icons/dist/svg/OrderIcon.svg?component';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { 
+      id: 'dashboard', 
+      content: 'Dashboard',
+      icon: HomeIcon
+    },
+    { 
+      id: 'products', 
+      content: 'Products',
+      icon: ProductIcon
+    },
+    { 
+      id: 'orders', 
+      content: 'Orders',
+      icon: OrderIcon
+    }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  <Card>
+    <Text>Content for {tabs[selected].content} tab</Text>
+  </Card>
+</Tabs>
+```
+
+## Complex tab content
+
+Create tabs with complex content including forms and actions:
+
+```svelte
+<script>
+  import { Tabs, Card, Text, TextField, Button, BlockStack, InlineStack } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { id: 'general', content: 'General' },
+    { id: 'shipping', content: 'Shipping' },
+    { id: 'seo', content: 'SEO' }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  {#if selected === 0}
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">General Settings</Text>
+        <TextField 
+          label="Store name" 
+          autoComplete="organization"
+          placeholder="Enter store name"
+        />
+        <TextField 
+          label="Store description" 
+          multiline={3}
+          autoComplete="off"
+          placeholder="Describe your store"
+        />
+        <InlineStack gap="200">
+          <Button>Cancel</Button>
+          <Button variant="primary">Save changes</Button>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  {:else if selected === 1}
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Shipping Settings</Text>
+        <TextField 
+          label="Default shipping zone" 
+          autoComplete="off"
+          placeholder="Enter shipping zone"
+        />
+        <TextField 
+          label="Free shipping threshold" 
+          type="number"
+          autoComplete="off"
+          prefix="$"
+          placeholder="0.00"
+        />
+        <InlineStack gap="200">
+          <Button>Cancel</Button>
+          <Button variant="primary">Save shipping</Button>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  {:else if selected === 2}
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">SEO Settings</Text>
+        <TextField 
+          label="Meta title" 
+          autoComplete="off"
+          placeholder="Enter meta title"
+        />
+        <TextField 
+          label="Meta description" 
+          multiline={2}
+          autoComplete="off"
+          placeholder="Enter meta description"
+        />
+        <InlineStack gap="200">
+          <Button>Cancel</Button>
+          <Button variant="primary">Save SEO</Button>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  {/if}
+</Tabs>
+```
+
+## Tab actions and creation
+
+Enable tab creation and management:
+
+```svelte
+<script>
+  import { Tabs, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selected = 0;
+  let tabCounter = 3;
+  
+  let tabs = [
+    { 
+      id: 'view-1', 
+      content: 'All customers',
+      actions: [
+        { type: 'rename', content: 'Rename view' },
+        { type: 'duplicate', content: 'Duplicate view' },
+        { type: 'delete', content: 'Delete view' }
+      ]
+    },
+    { 
+      id: 'view-2', 
+      content: 'VIP customers',
+      actions: [
+        { type: 'rename', content: 'Rename view' },
+        { type: 'duplicate', content: 'Duplicate view' },
+        { type: 'delete', content: 'Delete view' }
+      ]
+    }
+  ];
+  
+  function handleCreateNewView(name) {
+    tabCounter++;
+    const newTab = {
+      id: `view-${tabCounter}`,
+      content: name,
+      actions: [
+        { type: 'rename', content: 'Rename view' },
+        { type: 'duplicate', content: 'Duplicate view' },
+        { type: 'delete', content: 'Delete view' }
+      ]
+    };
+    tabs = [...tabs, newTab];
+    selected = tabs.length - 1;
+    return Promise.resolve(true);
+  }
+</script>
+
+<Tabs 
+  {tabs} 
+  {selected} 
+  canCreateNewView
+  newViewAccessibilityLabel="Create new customer view"
+  onSelect={(index) => selected = index}
+  onCreateNewView={handleCreateNewView}
+>
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">{tabs[selected]?.content || 'No tab selected'}</Text>
+      <Text>
+        This is the content for the "{tabs[selected]?.content}" view.
+        You can rename, duplicate, or delete this view using the tab actions.
+      </Text>
+    </BlockStack>
+  </Card>
+</Tabs>
+```
+
+## Tabs with disclosure
+
+When there are many tabs, they automatically collapse into a disclosure:
+
+```svelte
+<script>
+  import { Tabs, Card, Text } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { id: 'tab1', content: 'Dashboard' },
+    { id: 'tab2', content: 'Products' },
+    { id: 'tab3', content: 'Orders' },
+    { id: 'tab4', content: 'Customers' },
+    { id: 'tab5', content: 'Analytics' },
+    { id: 'tab6', content: 'Marketing' },
+    { id: 'tab7', content: 'Discounts' },
+    { id: 'tab8', content: 'Apps' },
+    { id: 'tab9', content: 'Settings' },
+    { id: 'tab10', content: 'Reports' }
+  ];
+</script>
+
+<Tabs 
+  {tabs} 
+  {selected} 
+  disclosureText="More tabs"
+  onSelect={(index) => selected = index}
+>
+  <Card>
+    <Text>Content for {tabs[selected].content} tab</Text>
+  </Card>
+</Tabs>
+```
+
+## Navigation tabs
+
+Use tabs for navigation with URL support:
+
+```svelte
+<script>
+  import { Tabs, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { 
+      id: 'home', 
+      content: 'Home',
+      url: '/dashboard'
+    },
+    { 
+      id: 'products', 
+      content: 'Products',
+      url: '/products'
+    },
+    { 
+      id: 'orders', 
+      content: 'Orders',
+      url: '/orders'
+    }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Navigation Example</Text>
+      <Text>
+        Selected tab: {tabs[selected].content}
+      </Text>
+      <Text color="text-secondary">
+        URL: {tabs[selected].url}
+      </Text>
+    </BlockStack>
+  </Card>
+</Tabs>
+```
+
+## Accessibility features
+
+Tabs with proper accessibility labels and panel IDs:
+
+```svelte
+<script>
+  import { Tabs, Card, Text } from 'svelte-polaris';
+  
+  let selected = 0;
+  
+  const tabs = [
+    { 
+      id: 'customers-all',
+      content: 'All customers',
+      accessibilityLabel: 'View all customers in the store',
+      panelID: 'customers-all-panel'
+    },
+    { 
+      id: 'customers-new',
+      content: 'New customers',
+      accessibilityLabel: 'View customers who joined recently',
+      panelID: 'customers-new-panel'
+    },
+    { 
+      id: 'customers-returning',
+      content: 'Returning customers',
+      accessibilityLabel: 'View customers who have made multiple purchases',
+      panelID: 'customers-returning-panel'
+    }
+  ];
+</script>
+
+<Tabs {tabs} {selected} onSelect={(index) => selected = index}>
+  <Card>
+    <div 
+      id={tabs[selected].panelID}
+      role="tabpanel"
+      aria-labelledby={tabs[selected].id}
+    >
+      <Text>
+        Accessible content for {tabs[selected].content}
+      </Text>
+    </div>
+  </Card>
+</Tabs>
+```
+
+## Props
+
+### Tabs Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `tabs` | `TabProps[]` | - | **Required.** Array of tab objects |
+| `selected` | `number` | `0` | Index of the currently selected tab |
+| `children` | `Snippet` | - | Content to display in the tab panels |
+| `disabled` | `boolean` | `false` | Whether all tabs are disabled |
+| `fitted` | `boolean` | `false` | Whether tabs should fit the container width |
+| `canCreateNewView` | `boolean` | `false` | Whether to show the "create new view" tab |
+| `newViewAccessibilityLabel` | `string` | `"Create new view"` | Accessibility label for the new view tab |
+| `disclosureText` | `string` | - | Text to replace disclosure dots |
+| `disclosureZIndexOverride` | `number` | - | Override z-index of disclosure popover |
+| `onSelect` | `(selectedTabIndex: number) => void` | - | Callback when a tab is selected |
+| `onCreateNewView` | `(value: string) => Promise<boolean>` | - | Callback when creating a new view |
+
+### Tab Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | - | **Required.** Unique identifier for the tab |
+| `content` | `string` | - | **Required.** Text content of the tab |
+| `badge` | `string` | - | Badge text to display next to the tab name |
+| `icon` | `Snippet` | - | Icon to display in the tab |
+| `url` | `string` | - | URL if the tab is a navigation link |
+| `disabled` | `boolean` | `false` | Whether the tab is disabled |
+| `accessibilityLabel` | `string` | - | Accessibility label for screen readers |
+| `panelID` | `string` | - | ID of the associated panel element |
+| `actions` | `TabActionDescriptor[]` | - | Actions available for this tab |
+| `isLocked` | `boolean` | `false` | Whether the tab can be edited/deleted |
+| `onAction` | `() => void` | - | Callback when the tab is clicked |
+
+## Best practices
+
+- **Content organization**: Use tabs to organize related content that doesn't need to be viewed simultaneously
+- **Tab labels**: Keep tab labels short and descriptive
+- **Badge usage**: Use badges to show counts or status information
+- **Accessibility**: Always provide proper accessibility labels and panel IDs
+- **Tab limits**: Consider using disclosure when you have many tabs (typically more than 6-8)
+- **Navigation**: Use URL support for tabs that represent different pages or views
+- **Actions**: Provide tab actions (rename, duplicate, delete) for user-created views
+- **Responsive design**: Tabs automatically handle responsive behavior and disclosure
+- **State management**: Properly manage selected state and tab content
+
+## Related components
+
+- [Page](/getting-started/page) - For top-level page structure that may contain tabs
+- [Card](/getting-started/card) - For organizing content within tab panels
+- [Button](/components/button) - For actions within tab content
+- [Badge](/getting-started/badge) - For displaying counts or status in tabs

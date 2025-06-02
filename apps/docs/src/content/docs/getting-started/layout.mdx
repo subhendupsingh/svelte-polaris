@@ -1,0 +1,532 @@
+---
+title: Layout
+description: Layout is a component that provides structure for organizing content into sections with consistent spacing and responsive behavior.
+---
+
+```svelte
+<script>
+  import { Layout } from 'svelte-polaris';
+</script>
+```
+
+Layout is a foundational component that helps organize page content into structured sections. It provides consistent spacing and responsive behavior, making it easy to create well-organized interfaces with proper content hierarchy.
+
+## Basic usage
+
+Use Layout to create structured content areas:
+
+```svelte
+<script>
+  import { Layout, Card, Text } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <Card>
+    <Text>This content is automatically wrapped in a layout section</Text>
+  </Card>
+</Layout>
+```
+
+## Sectioned layout
+
+Enable automatic sectioning for consistent spacing:
+
+```svelte
+<script>
+  import { Layout, Card, Text } from 'svelte-polaris';
+</script>
+
+<Layout sectioned>
+  <Card>
+    <Text>First section with automatic spacing</Text>
+  </Card>
+  
+  <Card>
+    <Text>Second section with consistent spacing</Text>
+  </Card>
+  
+  <Card>
+    <Text>Third section maintains the same spacing pattern</Text>
+  </Card>
+</Layout>
+```
+
+## Manual sections
+
+Use Layout.Section for more control over individual sections:
+
+```svelte
+<script>
+  import { Layout, Card, Text } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <Layout.Section>
+    <Card>
+      <Text>First manual section</Text>
+    </Card>
+  </Layout.Section>
+  
+  <Layout.Section>
+    <Card>
+      <Text>Second manual section</Text>
+    </Card>
+  </Layout.Section>
+</Layout>
+```
+
+## Section variants
+
+Control section width using variant props:
+
+```svelte
+<script>
+  import { Layout, Card, Text } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <!-- Full width section (default) -->
+  <Layout.Section>
+    <Card>
+      <Text>Full width section spans the entire container</Text>
+    </Card>
+  </Layout.Section>
+  
+  <!-- One half width section -->
+  <Layout.Section variant="oneHalf">
+    <Card>
+      <Text>This section takes up half the width</Text>
+    </Card>
+  </Layout.Section>
+  
+  <!-- One third width section -->
+  <Layout.Section variant="oneThird">
+    <Card>
+      <Text>This section takes up one third of the width</Text>
+    </Card>
+  </Layout.Section>
+  
+  <!-- Another one third to demonstrate layout -->
+  <Layout.Section variant="oneThird">
+    <Card>
+      <Text>Another one third section</Text>
+    </Card>
+  </Layout.Section>
+</Layout>
+```
+
+## Annotated sections
+
+Use Layout.AnnotatedSection for content with titles and descriptions:
+
+```svelte
+<script>
+  import { Layout, Card, Text, TextField, Button, BlockStack } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <Layout.AnnotatedSection
+    title="Store details"
+    description="Shopify and your customers will use this information to contact you."
+  >
+    <Card>
+      <BlockStack gap="400">
+        <TextField 
+          label="Store name" 
+          autoComplete="organization"
+          placeholder="Enter your store name"
+        />
+        <TextField 
+          label="Account email" 
+          type="email"
+          autoComplete="email"
+          placeholder="Enter your email"
+        />
+        <Button variant="primary">Save</Button>
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <Layout.AnnotatedSection
+    title="Store address"
+    description="This address will appear on your invoices and will be used to calculate shipping rates."
+  >
+    <Card>
+      <BlockStack gap="400">
+        <TextField 
+          label="Address" 
+          autoComplete="address-line1"
+          placeholder="Enter your address"
+        />
+        <TextField 
+          label="City" 
+          autoComplete="address-level2"
+          placeholder="Enter your city"
+        />
+        <Button variant="primary">Save address</Button>
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+</Layout>
+```
+
+## Mixed section types
+
+Combine different section types in a single layout:
+
+```svelte
+<script>
+  import { Layout, Card, Text, Button, BlockStack, InlineStack } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <!-- Full width header section -->
+  <Layout.Section>
+    <Card>
+      <InlineStack align="space-between" blockAlign="center">
+        <Text variant="headingLg">Dashboard Overview</Text>
+        <Button variant="primary">Create new</Button>
+      </InlineStack>
+    </Card>
+  </Layout.Section>
+  
+  <!-- Annotated settings section -->
+  <Layout.AnnotatedSection
+    title="Notification settings"
+    description="Choose how you want to be notified about important events."
+  >
+    <Card>
+      <BlockStack gap="300">
+        <Text>Email notifications: Enabled</Text>
+        <Text>SMS notifications: Disabled</Text>
+        <Button>Update preferences</Button>
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <!-- Two column layout -->
+  <Layout.Section variant="oneHalf">
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd">Recent Activity</Text>
+        <Text>5 new orders today</Text>
+        <Text>12 products updated</Text>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+  
+  <Layout.Section variant="oneHalf">
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd">Quick Stats</Text>
+        <Text>Revenue: $2,450</Text>
+        <Text>Visitors: 1,234</Text>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+</Layout>
+```
+
+## Form layouts
+
+Create structured forms with annotated sections:
+
+```svelte
+<script>
+  import { Layout, Card, TextField, Select, Button, BlockStack } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <Layout.AnnotatedSection
+    title="Product information"
+    description="Add basic details about your product including name, description, and category."
+  >
+    <Card>
+      <BlockStack gap="400">
+        <TextField 
+          label="Product title" 
+          autoComplete="off"
+          placeholder="Enter product title"
+        />
+        <TextField 
+          label="Description" 
+          multiline={4}
+          autoComplete="off"
+          placeholder="Describe your product"
+        />
+        <Select
+          label="Product category"
+          options={[
+            { label: 'Electronics', value: 'electronics' },
+            { label: 'Clothing', value: 'clothing' },
+            { label: 'Home & Garden', value: 'home' }
+          ]}
+        />
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <Layout.AnnotatedSection
+    title="Pricing"
+    description="Set the price and compare at price for your product."
+  >
+    <Card>
+      <BlockStack gap="400">
+        <TextField 
+          label="Price" 
+          type="number"
+          autoComplete="off"
+          prefix="$"
+          placeholder="0.00"
+        />
+        <TextField 
+          label="Compare at price" 
+          type="number"
+          autoComplete="off"
+          prefix="$"
+          placeholder="0.00"
+        />
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <Layout.AnnotatedSection
+    title="Inventory"
+    description="Track quantity and manage inventory for this product."
+  >
+    <Card>
+      <BlockStack gap="400">
+        <TextField 
+          label="Quantity" 
+          type="number"
+          autoComplete="off"
+          placeholder="0"
+        />
+        <Select
+          label="Inventory policy"
+          options={[
+            { label: 'Shopify tracks quantity', value: 'shopify' },
+            { label: 'Don\'t track quantity', value: 'none' }
+          ]}
+        />
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <!-- Action section -->
+  <Layout.Section>
+    <Card>
+      <InlineStack gap="300">
+        <Button>Save as draft</Button>
+        <Button variant="primary">Save product</Button>
+      </InlineStack>
+    </Card>
+  </Layout.Section>
+</Layout>
+```
+
+## Settings pages
+
+Perfect for creating settings and configuration pages:
+
+```svelte
+<script>
+  import { Layout, Card, TextField, Checkbox, Button, BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <Layout.AnnotatedSection
+    title="Account settings"
+    description="Update your account information and preferences."
+  >
+    <Card>
+      <BlockStack gap="400">
+        <TextField 
+          label="Display name" 
+          autoComplete="name"
+          value="John Doe"
+        />
+        <TextField 
+          label="Email address" 
+          type="email"
+          autoComplete="email"
+          value="john@example.com"
+        />
+        <Button variant="primary">Update account</Button>
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <Layout.AnnotatedSection
+    title="Notification preferences"
+    description="Choose which notifications you want to receive."
+  >
+    <Card>
+      <BlockStack gap="300">
+        <Checkbox label="Email notifications" checked />
+        <Checkbox label="SMS notifications" />
+        <Checkbox label="Push notifications" checked />
+        <Button variant="primary">Save preferences</Button>
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+  
+  <Layout.AnnotatedSection
+    title="Privacy settings"
+    description="Control your privacy and data sharing preferences."
+  >
+    <Card>
+      <BlockStack gap="300">
+        <Checkbox label="Make profile public" />
+        <Checkbox label="Allow data analytics" checked />
+        <Text variant="caption" color="text-secondary">
+          These settings help us improve our service
+        </Text>
+        <Button variant="primary">Update privacy</Button>
+      </BlockStack>
+    </Card>
+  </Layout.AnnotatedSection>
+</Layout>
+```
+
+## Dashboard layouts
+
+Create dashboard-style layouts with mixed content:
+
+```svelte
+<script>
+  import { Layout, Card, Text, BlockStack, InlineStack, Badge, Button } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <!-- Header with actions -->
+  <Layout.Section>
+    <Card>
+      <InlineStack align="space-between" blockAlign="center">
+        <BlockStack gap="100">
+          <Text variant="headingLg">Store Dashboard</Text>
+          <Text color="text-secondary">Overview of your store performance</Text>
+        </BlockStack>
+        <InlineStack gap="200">
+          <Button>Export data</Button>
+          <Button variant="primary">View reports</Button>
+        </InlineStack>
+      </InlineStack>
+    </Card>
+  </Layout.Section>
+  
+  <!-- Key metrics in thirds -->
+  <Layout.Section variant="oneThird">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Total Sales</Text>
+        <Text variant="heading2xl">$12,450</Text>
+        <Badge tone="success">+12% from last month</Badge>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+  
+  <Layout.Section variant="oneThird">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Orders</Text>
+        <Text variant="heading2xl">156</Text>
+        <Badge tone="info">+8% from last month</Badge>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+  
+  <Layout.Section variant="oneThird">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Customers</Text>
+        <Text variant="heading2xl">1,234</Text>
+        <Badge tone="attention">-2% from last month</Badge>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+  
+  <!-- Full width chart section -->
+  <Layout.Section>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Sales Chart</Text>
+        <Text color="text-secondary">Chart visualization would go here</Text>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+</Layout>
+```
+
+## Responsive behavior
+
+Layout automatically adapts to different screen sizes:
+
+```svelte
+<script>
+  import { Layout, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Layout>
+  <!-- These sections will stack on mobile -->
+  <Layout.Section variant="oneHalf">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Left Column</Text>
+        <Text>This content appears side-by-side on desktop and stacks on mobile</Text>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+  
+  <Layout.Section variant="oneHalf">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Right Column</Text>
+        <Text>Responsive behavior is handled automatically</Text>
+      </BlockStack>
+    </Card>
+  </Layout.Section>
+</Layout>
+```
+
+## Props
+
+### Layout Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `sectioned` | `boolean` | `false` | Automatically adds sections to layout |
+| `children` | `Snippet` | - | The content to display inside the layout |
+
+### Layout.Section Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `'oneHalf' \| 'oneThird' \| 'fullWidth'` | `'fullWidth'` | Width variant for the section |
+| `children` | `Snippet` | - | Content to display in the section |
+
+### Layout.AnnotatedSection Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `Snippet \| string` | - | Section title |
+| `description` | `Snippet \| string` | - | Section description |
+| `id` | `string` | - | HTML id attribute |
+| `children` | `Snippet` | - | Content to display in the section |
+
+## Best practices
+
+- **Content organization**: Use Layout to create clear content hierarchy and structure
+- **Annotated sections**: Use AnnotatedSection for forms and settings where context is important
+- **Responsive design**: Layout automatically handles responsive behavior for different screen sizes
+- **Section variants**: Use appropriate section widths based on content type and importance
+- **Consistent spacing**: Layout provides consistent spacing between sections automatically
+- **Form structure**: Ideal for creating structured forms with clear sections and descriptions
+- **Settings pages**: Perfect for organizing settings and configuration interfaces
+
+## Related components
+
+- [Page](/getting-started/page) - For top-level page structure with headers and actions
+- [Card](/getting-started/card) - For grouping content within layout sections
+- [BlockStack](/getting-started/block-stack) - For vertical content organization within sections
+- [FormLayout](/getting-started/form-layout) - For specialized form layouts with built-in patterns

@@ -30,7 +30,7 @@
 		placeholder,
 		id: idProp,
 		name,
-		value = PLACEHOLDER_VALUE,
+		value = $bindable(PLACEHOLDER_VALUE),
 		error,
 		onChange,
 		onFocus,

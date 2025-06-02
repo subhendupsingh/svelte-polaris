@@ -78,7 +78,7 @@ import type { LegacyCardSectionProps } from "./components/legacy-card/components
 import type { LegacyCardSubsectionProps } from "./components/legacy-card/components/sub-section/types.ts";
 import Link from "./components/link/link.svelte";
 import type { LinkProps } from "./components/link/types.js";
-import List from "./components/list/list.svelte";
+import List from "./components/list/index.js";
 import type { ListProps } from "./components/list/types.js";
 import Listbox from "./components/listbox/index.js";
 import type { ListboxProps } from "./components/listbox/types.js";

@@ -1,0 +1,274 @@
+---
+title: Tooltip
+description: Tooltips are floating labels that briefly explain the function of a user interface element. They can be triggered when merchants hover, focus, tap, or click.
+---
+
+```svelte
+import { Tooltip } from 'svelte-polaris';
+```
+
+Tooltips are floating labels that briefly explain the function of a user interface element. They can be triggered when merchants hover, focus, tap, or click.
+
+## Examples
+
+### Basic tooltip
+
+Use to provide additional context or explanation for interface elements.
+
+```svelte
+<script>
+  import { Tooltip, Button } from 'svelte-polaris';
+</script>
+
+<Tooltip content="This will save your current progress">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+### Tooltip with icon
+
+Use tooltips with icons to explain their purpose or provide additional context.
+
+```svelte
+<script>
+  import { Tooltip, Icon, InlineStack, Text } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="200" align="center">
+  <Text as="span">Order status</Text>
+  <Tooltip content="This shows the current status of your order and when it was last updated">
+    <Icon source="QuestionMarkCircleIcon" />
+  </Tooltip>
+</InlineStack>
+```
+
+### Tooltip positioning
+
+Use different positions to ensure tooltips don't get cut off by viewport edges.
+
+```svelte
+<script>
+  import { Tooltip, Button, InlineStack } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <Tooltip content="Tooltip above" preferredPosition="above">
+    <Button>Above</Button>
+  </Tooltip>
+  
+  <Tooltip content="Tooltip below" preferredPosition="below">
+    <Button>Below</Button>
+  </Tooltip>
+  
+  <Tooltip content="Tooltip on left" preferredPosition="left">
+    <Button>Left</Button>
+  </Tooltip>
+  
+  <Tooltip content="Tooltip on right" preferredPosition="right">
+    <Button>Right</Button>
+  </Tooltip>
+</InlineStack>
+```
+
+### Tooltip with rich content
+
+Use for more detailed explanations that might include formatting.
+
+```svelte
+<script>
+  import { Tooltip, Button, Text } from 'svelte-polaris';
+</script>
+
+<Tooltip>
+  <Button>Shipping rates</Button>
+  <svelte:fragment slot="content">
+    <Text as="p" variant="bodyMd" fontWeight="semibold">Shipping calculation</Text>
+    <Text as="p">Rates are calculated based on weight, dimensions, and destination.</Text>
+  </svelte:fragment>
+</Tooltip>
+```
+
+### Tooltip with form fields
+
+Use to provide helpful information about form fields without cluttering the interface.
+
+```svelte
+<script>
+  import { Tooltip, TextField, Icon, InlineStack } from 'svelte-polaris';
+  
+  let email = '';
+</script>
+
+<TextField
+  label="Email address"
+  type="email"
+  value={email}
+  on:change={(e) => email = e.detail}
+  autoComplete="email"
+  labelAction={{
+    content: (
+      <Tooltip content="We'll use this email to send order confirmations and shipping updates">
+        <Icon source="QuestionMarkCircleIcon" />
+      </Tooltip>
+    )
+  }}
+/>
+```
+
+### Tooltip activation methods
+
+Use different activation methods based on the context and user needs.
+
+```svelte
+<script>
+  import { Tooltip, Button, InlineStack } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <Tooltip content="Hover to see this tooltip" activator="hover">
+    <Button>Hover me</Button>
+  </Tooltip>
+  
+  <Tooltip content="Click to see this tooltip" activator="click">
+    <Button>Click me</Button>
+  </Tooltip>
+  
+  <Tooltip content="Focus to see this tooltip" activator="focus">
+    <Button>Focus me</Button>
+  </Tooltip>
+</InlineStack>
+```
+
+### Tooltip in data context
+
+Use tooltips to provide additional context for data points or metrics.
+
+```svelte
+<script>
+  import { Tooltip, Card, Text, InlineStack, Icon } from 'svelte-polaris';
+</script>
+
+<Card>
+  <InlineStack gap="400" align="center">
+    <div>
+      <Text as="p" variant="headingLg">$12,345</Text>
+      <InlineStack gap="200" align="center">
+        <Text as="p" tone="subdued">Total revenue</Text>
+        <Tooltip content="This includes all sales from the past 30 days, including taxes and shipping">
+          <Icon source="QuestionMarkCircleIcon" />
+        </Tooltip>
+      </InlineStack>
+    </div>
+    
+    <div>
+      <Text as="p" variant="headingLg">1,234</Text>
+      <InlineStack gap="200" align="center">
+        <Text as="p" tone="subdued">Orders</Text>
+        <Tooltip content="Total number of completed orders in the selected time period">
+          <Icon source="QuestionMarkCircleIcon" />
+        </Tooltip>
+      </InlineStack>
+    </div>
+  </InlineStack>
+</Card>
+```
+
+### Tooltip with delay
+
+Use delays to prevent tooltips from appearing too quickly during normal interaction.
+
+```svelte
+<script>
+  import { Tooltip, Button, InlineStack } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <Tooltip content="No delay" hoverDelay={0}>
+    <Button>Immediate</Button>
+  </Tooltip>
+  
+  <Tooltip content="Short delay" hoverDelay={500}>
+    <Button>500ms delay</Button>
+  </Tooltip>
+  
+  <Tooltip content="Long delay" hoverDelay={1000}>
+    <Button>1s delay</Button>
+  </Tooltip>
+</InlineStack>
+```
+
+### Disabled tooltip
+
+Use when tooltips should be temporarily unavailable.
+
+```svelte
+<script>
+  import { Tooltip, Button, InlineStack } from 'svelte-polaris';
+  
+  let tooltipEnabled = true;
+</script>
+
+<InlineStack gap="400">
+  <Button onClick={() => tooltipEnabled = !tooltipEnabled}>
+    {tooltipEnabled ? 'Disable' : 'Enable'} tooltip
+  </Button>
+  
+  <Tooltip 
+    content="This tooltip can be toggled" 
+    disabled={!tooltipEnabled}
+  >
+    <Button>Hover for tooltip</Button>
+  </Tooltip>
+</InlineStack>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `content` | `string` | The text content to display in the tooltip | Required |
+| `children` | `Snippet` | The element that triggers the tooltip | Required |
+| `preferredPosition` | `'above' \| 'below' \| 'left' \| 'right'` | Preferred position for the tooltip | `'below'` |
+| `activator` | `'hover' \| 'click' \| 'focus'` | How the tooltip is activated | `'hover'` |
+| `hoverDelay` | `number` | Delay in milliseconds before showing on hover | `400` |
+| `dismissOnMouseOut` | `boolean` | Whether to hide when mouse leaves | `true` |
+| `disabled` | `boolean` | Whether the tooltip is disabled | `false` |
+| `width` | `'default' \| 'wide'` | Width of the tooltip | `'default'` |
+
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `content` | Rich content for the tooltip (alternative to content prop) |
+
+## Best practices
+
+Tooltips should:
+
+- Be used sparingly and only when additional context is truly helpful
+- Contain brief, scannable text that adds value
+- Be positioned so they don't cover important interface elements
+- Be accessible via keyboard navigation
+- Disappear when the user moves away from the trigger element
+
+Tooltips shouldn't:
+
+- Contain essential information that users need to complete tasks
+- Be used for complex interactions (use popovers instead)
+- Repeat information that's already visible on screen
+- Be used on mobile devices as the primary way to access information
+- Contain interactive elements like links or buttons
+
+## Accessibility
+
+- Tooltips are announced by screen readers when activated
+- Keyboard users can access tooltips by focusing on the trigger element
+- Use `aria-describedby` to associate tooltips with their trigger elements
+- Ensure tooltip content is concise and meaningful
+- Consider providing alternative ways to access tooltip information for mobile users
+
+## Related components
+
+- [Popover](/getting-started/popover): For more complex overlay content with interactions
+- [Banner](/getting-started/banner): For important messages that need to be prominently displayed
+- [Icon](/getting-started/icon): Often used as tooltip triggers for help information

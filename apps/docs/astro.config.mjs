@@ -73,6 +73,74 @@ export default defineConfig({
                         label: 'Divider',
                         slug: 'getting-started/divider',
                     },
+                    {
+                        label: 'Box',
+                        slug: 'getting-started/box',
+                    },
+                    {
+                        label: 'BlockStack',
+                        slug: 'getting-started/block-stack',
+                    },
+                    {
+                        label: 'InlineStack',
+                        slug: 'getting-started/inline-stack',
+                    },
+                    {
+                        label: 'Layout',
+                        slug: 'getting-started/layout',
+                    },
+                    {
+                        label: 'Tabs',
+                        slug: 'getting-started/tabs',
+                    },
+                    {
+                        label: 'Bleed',
+                        slug: 'getting-started/bleed',
+                    },
+                    {
+                        label: 'ChoiceList',
+                        slug: 'getting-started/choice-list',
+                    },
+                    {
+                        label: 'Link',
+                        slug: 'getting-started/link',
+                    },
+                    {
+                        label: 'Page',
+                        slug: 'getting-started/page',
+                    },
+                    {
+                        label: 'RadioButton',
+                        slug: 'getting-started/radio-button',
+                    },
+                    {
+                        label: 'List',
+                        slug: 'getting-started/list',
+                    },
+                    {
+                        label: 'Tag',
+                        slug: 'getting-started/tag',
+                    },
+                    {
+                        label: 'Thumbnail',
+                        slug: 'getting-started/thumbnail',
+                    },
+                    {
+                        label: 'Tooltip',
+                        slug: 'getting-started/tooltip',
+                    },
+                    {
+                        label: 'Pagination',
+                        slug: 'getting-started/pagination',
+                    },
+                    {
+                        label: 'EmptyState',
+                        slug: 'getting-started/empty-state',
+                    },
+                    {
+                        label: 'CalloutCard',
+                        slug: 'getting-started/callout-card',
+                    }
                 ],
             }
         ],

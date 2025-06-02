@@ -1,0 +1,374 @@
+---
+title: Box
+description: Box is a fundamental layout component that provides a consistent way to apply spacing, colors, borders, and other visual properties to content.
+---
+
+```svelte
+<script>
+  import { Box } from 'svelte-polaris';
+</script>
+```
+
+Box is a foundational layout component that serves as a building block for creating consistent spacing, styling, and positioning throughout your interface. It provides a comprehensive set of props for controlling visual properties like padding, borders, colors, and shadows.
+
+## Basic usage
+
+Use Box to wrap content and apply consistent styling:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<Box padding="400" background="surface-secondary">
+  <Text>Content inside a styled box</Text>
+</Box>
+```
+
+## Padding and spacing
+
+Box supports responsive padding properties that accept spacing tokens:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<!-- Basic padding -->
+<Box padding="400">
+  <Text>Uniform padding</Text>
+</Box>
+
+<!-- Directional padding -->
+<Box paddingBlock="300" paddingInline="500">
+  <Text>Different vertical and horizontal padding</Text>
+</Box>
+
+<!-- Individual sides -->
+<Box paddingBlockStart="200" paddingBlockEnd="400" paddingInlineStart="300" paddingInlineEnd="500">
+  <Text>Individual padding control</Text>
+</Box>
+
+<!-- Responsive padding -->
+<Box padding={{ xs: '200', sm: '300', md: '400', lg: '500' }}>
+  <Text>Responsive padding that changes with screen size</Text>
+</Box>
+```
+
+## Background colors
+
+Apply background colors using design system tokens:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<Box background="surface" padding="400">
+  <Text>Default surface background</Text>
+</Box>
+
+<Box background="surface-secondary" padding="400">
+  <Text>Secondary surface background</Text>
+</Box>
+
+<Box background="surface-success" padding="400">
+  <Text>Success background</Text>
+</Box>
+
+<Box background="surface-warning" padding="400">
+  <Text>Warning background</Text>
+</Box>
+
+<Box background="surface-critical" padding="400">
+  <Text>Critical background</Text>
+</Box>
+```
+
+## Borders and border radius
+
+Control borders and corner radius:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<!-- Basic border -->
+<Box borderColor="border" borderWidth="025" padding="400">
+  <Text>Box with border</Text>
+</Box>
+
+<!-- Border radius -->
+<Box background="surface-secondary" borderRadius="200" padding="400">
+  <Text>Rounded corners</Text>
+</Box>
+
+<!-- Individual corner radius -->
+<Box 
+  background="surface-secondary" 
+  borderStartStartRadius="400"
+  borderStartEndRadius="100"
+  borderEndStartRadius="100"
+  borderEndEndRadius="400"
+  padding="400"
+>
+  <Text>Custom corner radius</Text>
+</Box>
+
+<!-- Dashed border -->
+<Box borderColor="border" borderWidth="025" borderStyle="dashed" padding="400">
+  <Text>Dashed border</Text>
+</Box>
+```
+
+## Shadows
+
+Add depth with shadow tokens:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<Box shadow="100" padding="400" background="surface">
+  <Text>Subtle shadow</Text>
+</Box>
+
+<Box shadow="200" padding="400" background="surface">
+  <Text>Medium shadow</Text>
+</Box>
+
+<Box shadow="300" padding="400" background="surface">
+  <Text>Strong shadow</Text>
+</Box>
+```
+
+## Text color
+
+Control text color of child content:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<Box color="text" padding="400">
+  <Text>Default text color</Text>
+</Box>
+
+<Box color="text-secondary" padding="400">
+  <Text>Secondary text color</Text>
+</Box>
+
+<Box color="text-success" padding="400">
+  <Text>Success text color</Text>
+</Box>
+
+<Box color="text-critical" padding="400">
+  <Text>Critical text color</Text>
+</Box>
+```
+
+## Positioning
+
+Use Box for absolute and relative positioning:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<!-- Relative positioning container -->
+<Box position="relative" minHeight="200px" background="surface-secondary" padding="400">
+  <Text>Relative container</Text>
+  
+  <!-- Absolutely positioned child -->
+  <Box 
+    position="absolute" 
+    insetBlockStart="100" 
+    insetInlineEnd="100"
+    background="surface-critical"
+    padding="200"
+    borderRadius="100"
+  >
+    <Text color="text-on-color">Positioned</Text>
+  </Box>
+</Box>
+```
+
+## Overflow control
+
+Control content overflow:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<Box maxWidth="200px" overflowX="scroll" padding="400" background="surface-secondary">
+  <Text>This is a very long text that will overflow horizontally and create a scroll bar</Text>
+</Box>
+
+<Box maxHeight="100px" overflowY="scroll" padding="400" background="surface-secondary">
+  <Text>This is content that will overflow vertically. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+</Box>
+```
+
+## Semantic HTML elements
+
+Box can render as different HTML elements:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<Box as="section" padding="400" background="surface-secondary">
+  <Text>Rendered as a section element</Text>
+</Box>
+
+<Box as="ul" padding="400">
+  <Box as="li" padding="200">
+    <Text>List item 1</Text>
+  </Box>
+  <Box as="li" padding="200">
+    <Text>List item 2</Text>
+  </Box>
+</Box>
+
+<Box as="fieldset" padding="400" borderColor="border" borderWidth="025">
+  <Box as="legend" padding="200">
+    <Text>Form section</Text>
+  </Box>
+  <Text>Form content goes here</Text>
+</Box>
+```
+
+## Complex layouts
+
+Combine Box properties for sophisticated layouts:
+
+```svelte
+<script>
+  import { Box, Text, Button, Badge } from 'svelte-polaris';
+</script>
+
+<!-- Card-like component -->
+<Box 
+  background="surface"
+  borderColor="border"
+  borderWidth="025"
+  borderRadius="300"
+  shadow="100"
+  padding="500"
+>
+  <Box paddingBlockEnd="300">
+    <Text variant="headingMd">Product Card</Text>
+  </Box>
+  
+  <Box paddingBlockEnd="400">
+    <Text color="text-secondary">A beautiful product description that explains the key features and benefits.</Text>
+  </Box>
+  
+  <Box paddingBlockEnd="400">
+    <Badge>In Stock</Badge>
+  </Box>
+  
+  <Button variant="primary">Add to Cart</Button>
+</Box>
+```
+
+## Accessibility features
+
+Box supports accessibility attributes:
+
+```svelte
+<script>
+  import { Box, Text } from 'svelte-polaris';
+</script>
+
+<!-- Status region -->
+<Box role="status" padding="400" background="surface-success">
+  <Text>Operation completed successfully</Text>
+</Box>
+
+<!-- Focusable container -->
+<Box tabIndex={0} padding="400" background="surface-secondary" borderRadius="200">
+  <Text>Focusable content area</Text>
+</Box>
+
+<!-- Visually hidden content -->
+<Box visuallyHidden>
+  <Text>This content is hidden visually but available to screen readers</Text>
+</Box>
+
+<!-- Print hidden content -->
+<Box printHidden padding="400" background="surface-secondary">
+  <Text>This content won't appear when printing</Text>
+</Box>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `as` | `'div' \| 'span' \| 'section' \| 'legend' \| 'ul' \| 'li'` | `'div'` | HTML element type to render |
+| `background` | `ColorBackgroundAlias` | - | Background color using design tokens |
+| `borderColor` | `ColorBorderAlias \| 'transparent'` | - | Border color |
+| `borderStyle` | `'solid' \| 'dashed'` | - | Border style |
+| `borderWidth` | `BorderWidthScale` | - | Border width |
+| `borderRadius` | `BorderRadiusAliasOrScale` | - | Border radius |
+| `borderEndStartRadius` | `BorderRadiusAliasOrScale` | - | Bottom-left border radius |
+| `borderEndEndRadius` | `BorderRadiusAliasOrScale` | - | Bottom-right border radius |
+| `borderStartStartRadius` | `BorderRadiusAliasOrScale` | - | Top-left border radius |
+| `borderStartEndRadius` | `BorderRadiusAliasOrScale` | - | Top-right border radius |
+| `borderBlockStartWidth` | `BorderWidthScale` | - | Top border width |
+| `borderBlockEndWidth` | `BorderWidthScale` | - | Bottom border width |
+| `borderInlineStartWidth` | `BorderWidthScale` | - | Left border width |
+| `borderInlineEndWidth` | `BorderWidthScale` | - | Right border width |
+| `color` | `ColorTextAlias` | - | Text color for child content |
+| `padding` | `ResponsiveProp<SpaceScale>` | - | Padding on all sides |
+| `paddingBlock` | `ResponsiveProp<SpaceScale>` | - | Vertical padding |
+| `paddingBlockStart` | `ResponsiveProp<SpaceScale>` | - | Top padding |
+| `paddingBlockEnd` | `ResponsiveProp<SpaceScale>` | - | Bottom padding |
+| `paddingInline` | `ResponsiveProp<SpaceScale>` | - | Horizontal padding |
+| `paddingInlineStart` | `ResponsiveProp<SpaceScale>` | - | Left padding |
+| `paddingInlineEnd` | `ResponsiveProp<SpaceScale>` | - | Right padding |
+| `shadow` | `ShadowAliasOrScale` | - | Box shadow |
+| `position` | `'relative' \| 'absolute' \| 'fixed' \| 'sticky'` | - | CSS position |
+| `insetBlockStart` | `ResponsiveProp<SpaceScale>` | - | Top position offset |
+| `insetBlockEnd` | `ResponsiveProp<SpaceScale>` | - | Bottom position offset |
+| `insetInlineStart` | `ResponsiveProp<SpaceScale>` | - | Left position offset |
+| `insetInlineEnd` | `ResponsiveProp<SpaceScale>` | - | Right position offset |
+| `minHeight` | `string` | - | Minimum height |
+| `minWidth` | `string` | - | Minimum width |
+| `maxWidth` | `string` | - | Maximum width |
+| `width` | `string` | - | Width |
+| `overflowX` | `'hidden' \| 'scroll' \| 'clip'` | - | Horizontal overflow behavior |
+| `overflowY` | `'hidden' \| 'scroll' \| 'clip'` | - | Vertical overflow behavior |
+| `opacity` | `string` | - | Opacity value |
+| `zIndex` | `string` | - | Z-index for stacking |
+| `outlineColor` | `ColorBorderAlias` | - | Outline color |
+| `outlineStyle` | `'solid' \| 'dashed'` | - | Outline style |
+| `outlineWidth` | `BorderWidthScale` | - | Outline width |
+| `role` | `'status' \| 'presentation' \| 'menu' \| 'listbox' \| 'combobox' \| 'group'` | - | ARIA role |
+| `tabIndex` | `number` | - | Tab order |
+| `id` | `string` | - | HTML id attribute |
+| `visuallyHidden` | `boolean` | `false` | Hide visually but keep accessible to screen readers |
+| `printHidden` | `boolean` | `false` | Hide when printing |
+
+## Best practices
+
+- **Use consistent spacing**: Leverage the spacing scale tokens for consistent visual rhythm
+- **Combine with layout components**: Use Box with BlockStack and InlineStack for complex layouts
+- **Semantic HTML**: Choose appropriate `as` values for better accessibility
+- **Responsive design**: Use responsive props for padding and other properties
+- **Performance**: Avoid deeply nested Box components when simpler solutions exist
+- **Color contrast**: Ensure sufficient contrast when combining background and text colors
+
+## Related components
+
+- [BlockStack](/getting-started/block-stack) - For vertical layouts with consistent spacing
+- [InlineStack](/getting-started/inline-stack) - For horizontal layouts with consistent spacing
+- [Card](/getting-started/card) - For grouped content with built-in styling

@@ -1,0 +1,316 @@
+---
+title: Link
+description: Use Link to navigate between pages or to external resources, providing consistent styling and behavior.
+---
+
+```svelte
+import { Link } from 'svelte-polaris';
+```
+
+Links are used to navigate between pages or to external resources. They provide consistent styling and behavior for navigation elements.
+
+## Examples
+
+### Basic link
+
+Use Link for navigation with a URL.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="p">
+      Visit our <Link url="/help">help center</Link> for more information.
+    </Text>
+  </Box>
+</Card>
+```
+
+### External link
+
+Link to external resources by setting the target to open in a new tab.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="p">
+      Read more about this on 
+      <Link url="https://shopify.dev" target="_blank">
+        Shopify's developer documentation
+      </Link>.
+    </Text>
+  </Box>
+</Card>
+```
+
+### Monochrome link
+
+Use monochrome links when you want the link to inherit the current text color.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">
+        <Link url="/products" monochrome>Product Management</Link>
+      </Text>
+      <Text as="p" tone="subdued">
+        Manage your products and inventory. 
+        <Link url="/products/new" monochrome>Add a new product</Link> to get started.
+      </Text>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+### Link without underline
+
+Remove the underline for cleaner appearance when needed.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <InlineStack gap="400">
+      <Link url="/dashboard" removeUnderline>Dashboard</Link>
+      <Link url="/orders" removeUnderline>Orders</Link>
+      <Link url="/products" removeUnderline>Products</Link>
+      <Link url="/customers" removeUnderline>Customers</Link>
+    </InlineStack>
+  </Box>
+</Card>
+```
+
+### Link as button
+
+Use Link without a URL to create button-like behavior.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, BlockStack } from 'svelte-polaris';
+  
+  function handleClick() {
+    alert('Link clicked!');
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <Text as="p">
+        Click <Link onClick={handleClick}>here</Link> to perform an action.
+      </Text>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+### Links in lists
+
+Use links within list items for navigation menus.
+
+```svelte
+<script>
+  import { Link, Card, Box, List, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <Text as="h2" variant="headingMd">Quick Links</Text>
+    <List>
+      <List.Item>
+        <Link url="/orders">View all orders</Link>
+      </List.Item>
+      <List.Item>
+        <Link url="/products/new">Add a new product</Link>
+      </List.Item>
+      <List.Item>
+        <Link url="/customers">Manage customers</Link>
+      </List.Item>
+      <List.Item>
+        <Link url="/analytics">View analytics</Link>
+      </List.Item>
+    </List>
+  </Box>
+</Card>
+```
+
+### Accessible links
+
+Provide accessibility labels for links that need additional context.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, BlockStack, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">Order #1234</Text>
+      <Text as="p">Customer: John Doe</Text>
+      <Text as="p">Total: $99.99</Text>
+      <InlineStack gap="300">
+        <Link url="/orders/1234" accessibilityLabel="View details for order 1234">
+          View
+        </Link>
+        <Link url="/orders/1234/edit" accessibilityLabel="Edit order 1234">
+          Edit
+        </Link>
+      </InlineStack>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+### Links with different targets
+
+Control where links open using the target prop.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="300">
+      <Text as="p">
+        <Link url="/same-window">Open in same window</Link>
+      </Text>
+      <Text as="p">
+        <Link url="https://example.com" target="_blank">
+          Open in new tab
+        </Link>
+      </Text>
+      <Text as="p">
+        <Link url="https://example.com" target="_parent">
+          Open in parent frame
+        </Link>
+      </Text>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+### Navigation breadcrumbs
+
+Use links for breadcrumb navigation.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <InlineStack gap="200" blockAlign="center">
+      <Link url="/" monochrome>Home</Link>
+      <Text as="span" tone="subdued">/</Text>
+      <Link url="/products" monochrome>Products</Link>
+      <Text as="span" tone="subdued">/</Text>
+      <Link url="/products/electronics" monochrome>Electronics</Link>
+      <Text as="span" tone="subdued">/</Text>
+      <Text as="span">Laptop</Text>
+    </InlineStack>
+  </Box>
+</Card>
+```
+
+### Mixed content with links
+
+Combine links with other content for rich text experiences.
+
+```svelte
+<script>
+  import { Link, Card, Box, Text, BlockStack, Button } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">Getting Started</Text>
+      <Text as="p">
+        Welcome to your Shopify admin! To get started, you can 
+        <Link url="/products/new">add your first product</Link>, 
+        <Link url="/settings/payments">set up payments</Link>, or 
+        <Link url="/settings/shipping">configure shipping</Link>.
+      </Text>
+      <Text as="p">
+        Need help? Check out our 
+        <Link url="https://help.shopify.com" target="_blank">help documentation</Link> 
+        or <Link url="/support">contact support</Link>.
+      </Text>
+      <Button variant="primary">Continue setup</Button>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `url` | `string` | The URL to link to | - |
+| `children` | `Snippet` | The content to display inside the link | - |
+| `onClick` | `() => void` | Callback when link is clicked (used without URL) | - |
+| `external` | `boolean` | Makes the link open in a new tab (deprecated, use `target`) | `false` |
+| `target` | `Target` | Where to display the URL | - |
+| `monochrome` | `boolean` | Makes link color match current text color | `false` |
+| `removeUnderline` | `boolean` | Removes text decoration underline | `false` |
+| `accessibilityLabel` | `string` | Descriptive text for screen readers | - |
+| `dataPrimaryLink` | `boolean` | Indicates primary navigation link in IndexTable.Row | `false` |
+| `id` | `string` | ID for the link element | - |
+
+## Target values
+
+The `target` prop accepts standard HTML target values:
+- `"_self"` - Opens in the same frame (default)
+- `"_blank"` - Opens in a new tab or window
+- `"_parent"` - Opens in the parent frame
+- `"_top"` - Opens in the full body of the window
+
+## Best practices
+
+### Do
+- Use descriptive link text that makes sense out of context
+- Provide accessibility labels for links that need additional context
+- Use monochrome links when you want them to blend with surrounding text
+- Open external links in new tabs to keep users on your site
+- Use consistent link styling throughout your application
+
+### Don't
+- Use generic text like "click here" or "read more" without context
+- Open internal links in new tabs unless necessary
+- Overuse removeUnderline as it can hurt accessibility
+- Use links for actions that don't navigate (use Button instead)
+- Make link text too long or complex
+
+## Accessibility
+
+- Links are automatically focusable and keyboard accessible
+- Screen readers announce links with their purpose and destination
+- Use `accessibilityLabel` to provide additional context when needed
+- Ensure sufficient color contrast for link text
+- External links should indicate they open in a new tab
+
+## Related components
+
+- [Button](/getting-started/button) - For actions that don't navigate
+- [UnstyledLink](/getting-started/unstyled-link) - For custom link styling
+- [Text](/getting-started/text) - For text content that may contain links
+- [List](/getting-started/list) - For organizing multiple links

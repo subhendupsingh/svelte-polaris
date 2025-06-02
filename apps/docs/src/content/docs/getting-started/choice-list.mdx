@@ -1,0 +1,407 @@
+---
+title: ChoiceList
+description: Use ChoiceList to present a list of choices where merchants can select one or multiple options.
+---
+
+```svelte
+import { ChoiceList } from 'svelte-polaris';
+```
+
+ChoiceList allows merchants to select one or more options from a list of choices. It automatically renders as checkboxes for multiple selection or radio buttons for single selection.
+
+## Examples
+
+### Single choice
+
+Use ChoiceList for single selection when you need radio button behavior.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box } from 'svelte-polaris';
+  
+  let selected = ['hidden'];
+  
+  const choices = [
+    { label: 'Hidden', value: 'hidden' },
+    { label: 'Optional', value: 'optional' },
+    { label: 'Required', value: 'required' }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <ChoiceList
+      title="Company name"
+      choices={choices}
+      selected={selected}
+      onChange={handleChange}
+    />
+  </Box>
+</Card>
+```
+
+### Multiple choice
+
+Allow multiple selections by setting `allowMultiple` to true.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box } from 'svelte-polaris';
+  
+  let selected = ['email', 'phone'];
+  
+  const choices = [
+    { label: 'Email', value: 'email' },
+    { label: 'Phone', value: 'phone' },
+    { label: 'SMS', value: 'sms' },
+    { label: 'Mail', value: 'mail' }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <ChoiceList
+      title="Contact methods"
+      choices={choices}
+      selected={selected}
+      allowMultiple
+      onChange={handleChange}
+    />
+  </Box>
+</Card>
+```
+
+### With help text
+
+Provide additional context with help text for individual choices.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box } from 'svelte-polaris';
+  
+  let selected = ['basic'];
+  
+  const choices = [
+    {
+      label: 'Basic plan',
+      value: 'basic',
+      helpText: 'Perfect for small businesses with basic needs'
+    },
+    {
+      label: 'Professional plan',
+      value: 'professional',
+      helpText: 'Advanced features for growing businesses'
+    },
+    {
+      label: 'Enterprise plan',
+      value: 'enterprise',
+      helpText: 'Full-featured solution for large organizations'
+    }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <ChoiceList
+      title="Select a plan"
+      choices={choices}
+      selected={selected}
+      onChange={handleChange}
+    />
+  </Box>
+</Card>
+```
+
+### With disabled choices
+
+Disable specific choices when they're not available.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box } from 'svelte-polaris';
+  
+  let selected = ['standard'];
+  
+  const choices = [
+    { label: 'Standard shipping', value: 'standard' },
+    { label: 'Express shipping', value: 'express' },
+    { 
+      label: 'Overnight shipping', 
+      value: 'overnight', 
+      disabled: true,
+      helpText: 'Not available for this location'
+    }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <ChoiceList
+      title="Shipping method"
+      choices={choices}
+      selected={selected}
+      onChange={handleChange}
+    />
+  </Box>
+</Card>
+```
+
+### With error state
+
+Display validation errors with the error prop.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box, Button, BlockStack } from 'svelte-polaris';
+  
+  let selected = [];
+  let error = null;
+  
+  const choices = [
+    { label: 'Email notifications', value: 'email' },
+    { label: 'SMS notifications', value: 'sms' },
+    { label: 'Push notifications', value: 'push' }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+    if (newSelected.length > 0) {
+      error = null;
+    }
+  }
+  
+  function handleSubmit() {
+    if (selected.length === 0) {
+      error = new Error('Please select at least one notification method');
+    }
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <ChoiceList
+        title="Notification preferences"
+        choices={choices}
+        selected={selected}
+        allowMultiple
+        onChange={handleChange}
+        error={error}
+      />
+      <Button onClick={handleSubmit}>Save preferences</Button>
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+### Hidden title
+
+Hide the title while maintaining accessibility with `titleHidden`.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box, Text, BlockStack } from 'svelte-polaris';
+  
+  let selected = ['public'];
+  
+  const choices = [
+    { label: 'Public', value: 'public' },
+    { label: 'Private', value: 'private' },
+    { label: 'Draft', value: 'draft' }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">Product visibility</Text>
+      <ChoiceList
+        title="Product visibility"
+        titleHidden
+        choices={choices}
+        selected={selected}
+        onChange={handleChange}
+      />
+    </BlockStack>
+  </Box>
+</Card>
+```
+
+### Disabled choice list
+
+Disable the entire choice list when interaction should be prevented.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box } from 'svelte-polaris';
+  
+  let selected = ['processing'];
+  
+  const choices = [
+    { label: 'Processing', value: 'processing' },
+    { label: 'Shipped', value: 'shipped' },
+    { label: 'Delivered', value: 'delivered' }
+  ];
+  
+  function handleChange(newSelected) {
+    selected = newSelected;
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <ChoiceList
+      title="Order status"
+      choices={choices}
+      selected={selected}
+      onChange={handleChange}
+      disabled
+    />
+  </Box>
+</Card>
+```
+
+### Form integration
+
+Use ChoiceList in forms with proper naming for form submission.
+
+```svelte
+<script>
+  import { ChoiceList, Card, Box, Button, BlockStack, Text } from 'svelte-polaris';
+  
+  let preferences = ['email'];
+  let frequency = ['weekly'];
+  
+  const preferenceChoices = [
+    { label: 'Email updates', value: 'email' },
+    { label: 'Newsletter', value: 'newsletter' },
+    { label: 'Product announcements', value: 'announcements' }
+  ];
+  
+  const frequencyChoices = [
+    { label: 'Daily', value: 'daily' },
+    { label: 'Weekly', value: 'weekly' },
+    { label: 'Monthly', value: 'monthly' }
+  ];
+  
+  function handlePreferencesChange(newSelected) {
+    preferences = newSelected;
+  }
+  
+  function handleFrequencyChange(newSelected) {
+    frequency = newSelected;
+  }
+  
+  function handleSubmit() {
+    console.log('Preferences:', preferences);
+    console.log('Frequency:', frequency);
+  }
+</script>
+
+<Card>
+  <Box padding="400">
+    <form on:submit|preventDefault={handleSubmit}>
+      <BlockStack gap="400">
+        <Text as="h2" variant="headingMd">Communication Settings</Text>
+        
+        <ChoiceList
+          title="What would you like to receive?"
+          name="preferences"
+          choices={preferenceChoices}
+          selected={preferences}
+          allowMultiple
+          onChange={handlePreferencesChange}
+        />
+        
+        <ChoiceList
+          title="How often?"
+          name="frequency"
+          choices={frequencyChoices}
+          selected={frequency}
+          onChange={handleFrequencyChange}
+        />
+        
+        <Button submit variant="primary">Save settings</Button>
+      </BlockStack>
+    </form>
+  </Box>
+</Card>
+```
+
+## Props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `title` | `string` | Label for list of choices | - |
+| `choices` | `Choice[]` | Collection of choices | - |
+| `selected` | `string[]` | Collection of selected choices | - |
+| `allowMultiple` | `boolean` | Allow multiple selections | `false` |
+| `titleHidden` | `boolean` | Hide the title visually | `false` |
+| `error` | `Error` | Display an error message | - |
+| `disabled` | `boolean` | Disable all choices | `false` |
+| `name` | `string` | Name for form input | - |
+| `tone` | `'magic'` | Indicates the tone of the choice list | - |
+| `onChange` | `(selected: string[], name: string) => void` | Callback when selection changes | - |
+
+## Choice object
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `value` | `string` | Value of the choice | - |
+| `label` | `string` | Label for the choice | - |
+| `id` | `string` | Unique identifier for the choice | - |
+| `disabled` | `boolean` | Disable this choice | `false` |
+| `helpText` | `string` | Additional text to help with the choice | - |
+| `describedByError` | `boolean` | Indicates choice is described by error | `false` |
+| `renderChildren` | `(isSelected: boolean) => string \| false` | Method to render children | - |
+
+## Best practices
+
+### Do
+- Use clear, descriptive labels for each choice
+- Provide help text when choices need additional explanation
+- Use single selection for mutually exclusive options
+- Use multiple selection when users can choose several options
+- Group related choices together logically
+
+### Don't
+- Use too many choices in a single list (consider grouping or filtering)
+- Make choice labels too long or complex
+- Use ChoiceList for simple yes/no questions (use Checkbox instead)
+- Forget to handle the onChange callback
+- Mix unrelated choices in the same list
+
+## Accessibility
+
+- Choice lists are automatically labeled with the title prop
+- Individual choices are properly associated with their labels
+- Error messages are announced to screen readers
+- Keyboard navigation works as expected for radio buttons and checkboxes
+- Use `titleHidden` when you have a visible heading that serves the same purpose
+
+## Related components
+
+- [Checkbox](/getting-started/checkbox) - For single boolean choices
+- [RadioButton](/getting-started/radio-button) - For single choice from a group
+- [Select](/getting-started/select) - For dropdown choice selection
+- [ButtonGroup](/getting-started/button-group) - For button-based choices
