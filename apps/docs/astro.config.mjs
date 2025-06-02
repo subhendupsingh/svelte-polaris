@@ -8,7 +8,11 @@ import svelte from '@astrojs/svelte';
 export default defineConfig({
     integrations: [starlight({
         title: 'My Docs',
-        social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
+        social: [
+            { icon: 'twitter', label: 'X', href: 'https://x.com/spsbuilds' },
+            { icon: 'github', label: 'GitHub', href: 'https://github.com/subhendupsingh/svelte-polaris' },
+            { icon: 'npm', label: 'NPM', href: 'https://npmjs.com/package/svelte-polaris' }
+        ],
         sidebar: [
             {
                 label: 'Getting Started',
@@ -166,8 +170,16 @@ export default defineConfig({
                         slug: 'getting-started/set-up',
                     },
                     {
+                        label: 'SettingAction',
+                        slug: 'getting-started/setting-action',
+                    },
+                    {
                         label: 'Spinner',
                         slug: 'getting-started/spinner',
+                    },
+                    {
+                        label: 'Sticky',
+                        slug: 'getting-started/sticky',
                     },
                     {
                         label: 'Tabs',
@@ -182,6 +194,10 @@ export default defineConfig({
                         slug: 'getting-started/text',
                     },
                     {
+                        label: 'TextContainer',
+                        slug: 'getting-started/text-container',
+                    },
+                    {
                         label: 'TextField',
                         slug: 'getting-started/text-field',
                     },
@@ -192,6 +208,14 @@ export default defineConfig({
                     {
                         label: 'Tooltip',
                         slug: 'getting-started/tooltip',
+                    },
+                    {
+                        label: 'UnstyledButton',
+                        slug: 'getting-started/unstyled-button',
+                    },
+                    {
+                        label: 'UnstyledLink',
+                        slug: 'getting-started/unstyled-link',
                     },
                 ],
             },

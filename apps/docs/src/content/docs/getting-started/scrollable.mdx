@@ -1,0 +1,557 @@
+---
+title: Scrollable
+description: Scrollable provides a consistent scrolling experience with customizable behavior and accessibility features.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Scrollable provides a consistent scrolling experience with customizable behavior and accessibility features. It's useful for creating scrollable regions within layouts, modals, and other constrained containers.
+
+## Examples
+
+### Basic scrollable container
+
+Use Scrollable to create a scrollable region with consistent styling.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Scrollable, Card, Text, List } from 'svelte-polaris';
+  
+  const items = [
+    'First item with some content',
+    'Second item with more detailed information',
+    'Third item that has even longer content to demonstrate scrolling',
+    'Fourth item in the list',
+    'Fifth item with additional details',
+    'Sixth item continuing the pattern',
+    'Seventh item with more content',
+    'Eighth item in the scrollable list',
+    'Ninth item with extended information',
+    'Tenth item to show scrolling behavior',
+    'Eleventh item with more content',
+    'Twelfth item in the list',
+    'Thirteenth item with details',
+    'Fourteenth item continuing',
+    'Fifteenth and final item'
+  ];
+</script>
+
+<Card>
+  <div style="padding: 16px;">
+    <Text variant="headingMd" as="h3">Scrollable Content</Text>
+    <div style="margin-top: 16px;">
+      <Scrollable shadow style="height: 200px;">
+        <div style="padding: 16px;">
+          <List>
+            {#each items as item}
+              <List.Item>{item}</List.Item>
+            {/each}
+          </List>
+        </div>
+      </Scrollable>
+    </div>
+  </div>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Scrollable, Card, Text, List } from 'svelte-polaris';
+  
+  const items = [
+    'First item with some content',
+    'Second item with more detailed information',
+    'Third item that has even longer content to demonstrate scrolling',
+    'Fourth item in the list',
+    'Fifth item with additional details',
+    'Sixth item continuing the pattern',
+    'Seventh item with more content',
+    'Eighth item in the scrollable list',
+    'Ninth item with extended information',
+    'Tenth item to show scrolling behavior',
+    'Eleventh item with more content',
+    'Twelfth item in the list',
+    'Thirteenth item with details',
+    'Fourteenth item continuing',
+    'Fifteenth and final item'
+  ];
+</script>
+
+<Card>
+  <div style="padding: 16px;">
+    <Text variant="headingMd" as="h3">Scrollable Content</Text>
+    <div style="margin-top: 16px;">
+      <Scrollable shadow style="height: 200px;">
+        <div style="padding: 16px;">
+          <List>
+            {#each items as item}
+              <List.Item>{item}</List.Item>
+            {/each}
+          </List>
+        </div>
+      </Scrollable>
+    </div>
+  </div>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Horizontal scrollable content
+
+Create horizontally scrollable content for wide layouts.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Scrollable, Card, Text, Badge, InlineStack } from 'svelte-polaris';
+  
+  const categories = [
+    'Electronics', 'Clothing', 'Home & Garden', 'Sports & Outdoors',
+    'Books & Media', 'Health & Beauty', 'Automotive', 'Toys & Games',
+    'Food & Beverages', 'Office Supplies', 'Pet Supplies', 'Travel',
+    'Art & Crafts', 'Musical Instruments', 'Jewelry', 'Baby Products'
+  ];
+</script>
+
+<Card>
+  <div style="padding: 16px;">
+    <Text variant="headingMd" as="h3">Product Categories</Text>
+    <div style="margin-top: 16px;">
+      <Scrollable horizontal shadow>
+        <div style="padding: 16px; width: max-content;">
+          <InlineStack gap="200">
+            {#each categories as category}
+              <Badge>{category}</Badge>
+            {/each}
+          </InlineStack>
+        </div>
+      </Scrollable>
+    </div>
+  </div>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Scrollable, Card, Text, Badge, InlineStack } from 'svelte-polaris';
+  
+  const categories = [
+    'Electronics', 'Clothing', 'Home & Garden', 'Sports & Outdoors',
+    'Books & Media', 'Health & Beauty', 'Automotive', 'Toys & Games',
+    'Food & Beverages', 'Office Supplies', 'Pet Supplies', 'Travel',
+    'Art & Crafts', 'Musical Instruments', 'Jewelry', 'Baby Products'
+  ];
+</script>
+
+<Card>
+  <div style="padding: 16px;">
+    <Text variant="headingMd" as="h3">Product Categories</Text>
+    <div style="margin-top: 16px;">
+      <Scrollable horizontal shadow>
+        <div style="padding: 16px; width: max-content;">
+          <InlineStack gap="200">
+            {#each categories as category}
+              <Badge>{category}</Badge>
+            {/each}
+          </InlineStack>
+        </div>
+      </Scrollable>
+    </div>
+  </div>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Scrollable with scroll events
+
+Handle scroll events to implement features like infinite loading or sticky headers.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Scrollable, Card, Text, List, Button, InlineStack } from 'svelte-polaris';
+  
+  let items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
+  let scrollPosition = 0;
+  let isNearBottom = false;
+  let loading = false;
+  
+  function handleScroll(event) {
+    const { scrollTop, scrollHeight, clientHeight } = event.target;
+    scrollPosition = scrollTop;
+    isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+  }
+  
+  async function loadMoreItems() {
+    if (loading) return;
+    
+    loading = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const newItems = Array.from({ length: 10 }, (_, i) => 
+      `Item ${items.length + i + 1}`
+    );
+    items = [...items, ...newItems];
+    loading = false;
+  }
+  
+  function scrollToTop() {
+    // This would scroll the scrollable container to top
+    console.log('Scroll to top');
+  }
+  
+  $: if (isNearBottom && !loading) {
+    loadMoreItems();
+  }
+</script>
+
+<Card>
+  <div style="padding: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <Text variant="headingMd" as="h3">Infinite Scroll List</Text>
+      <InlineStack gap="200">
+        <Text variant="bodySm" color="subdued">
+          Scroll position: {Math.round(scrollPosition)}px
+        </Text>
+        <Button size="slim" onClick={scrollToTop}>Scroll to top</Button>
+      </InlineStack>
+    </div>
+    
+    <Scrollable shadow style="height: 300px;" onScroll={handleScroll}>
+      <div style="padding: 16px;">
+        <List>
+          {#each items as item}
+            <List.Item>{item}</List.Item>
+          {/each}
+          {#if loading}
+            <List.Item>
+              <Text color="subdued">Loading more items...</Text>
+            </List.Item>
+          {/if}
+        </List>
+      </div>
+    </Scrollable>
+  </div>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Scrollable, Card, Text, List, Button, InlineStack } from 'svelte-polaris';
+  
+  let items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
+  let scrollPosition = 0;
+  let isNearBottom = false;
+  let loading = false;
+  
+  function handleScroll(event) {
+    const { scrollTop, scrollHeight, clientHeight } = event.target;
+    scrollPosition = scrollTop;
+    isNearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+  }
+  
+  async function loadMoreItems() {
+    if (loading) return;
+    
+    loading = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const newItems = Array.from({ length: 10 }, (_, i) => 
+      `Item ${items.length + i + 1}`
+    );
+    items = [...items, ...newItems];
+    loading = false;
+  }
+  
+  function scrollToTop() {
+    // This would scroll the scrollable container to top
+    console.log('Scroll to top');
+  }
+  
+  $: if (isNearBottom && !loading) {
+    loadMoreItems();
+  }
+</script>
+
+<Card>
+  <div style="padding: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <Text variant="headingMd" as="h3">Infinite Scroll List</Text>
+      <InlineStack gap="200">
+        <Text variant="bodySm" color="subdued">
+          Scroll position: {Math.round(scrollPosition)}px
+        </Text>
+        <Button size="slim" onClick={scrollToTop}>Scroll to top</Button>
+      </InlineStack>
+    </div>
+    
+    <Scrollable shadow style="height: 300px;" onScroll={handleScroll}>
+      <div style="padding: 16px;">
+        <List>
+          {#each items as item}
+            <List.Item>{item}</List.Item>
+          {/each}
+          {#if loading}
+            <List.Item>
+              <Text color="subdued">Loading more items...</Text>
+            </List.Item>
+          {/if}
+        </List>
+      </div>
+    </Scrollable>
+  </div>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Scrollable in modal
+
+Use Scrollable within modals to handle overflow content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Scrollable, Modal, Card, Text, List, Button, TextField } from 'svelte-polaris';
+  
+  let modalOpen = false;
+  
+  const longContent = [
+    'This is a modal with scrollable content to demonstrate how Scrollable works within constrained containers.',
+    'The content here is longer than what can fit in the modal viewport.',
+    'Users can scroll through this content while the modal header and footer remain fixed.',
+    'This pattern is useful for forms, lists, or any content that might exceed the modal size.',
+    'The scrollable area has consistent styling and behavior across different browsers.',
+    'It also maintains proper accessibility features for keyboard and screen reader users.',
+    'You can customize the scroll behavior and appearance as needed.',
+    'The shadow prop adds visual depth to indicate scrollable content.',
+    'This helps users understand that there is more content available.',
+    'Scroll indicators and shadows provide important visual cues.',
+    'The scrollable container handles both mouse and touch interactions.',
+    'It works well on desktop, tablet, and mobile devices.',
+    'Performance is optimized for smooth scrolling experiences.',
+    'The component integrates seamlessly with other Polaris components.',
+    'This creates a consistent user experience throughout your application.'
+  ];
+  
+  function openModal() {
+    modalOpen = true;
+  }
+  
+  function closeModal() {
+    modalOpen = false;
+  }
+</script>
+
+<div>
+  <Button onClick={openModal}>Open Modal with Scrollable Content</Button>
+  
+  <Modal
+    open={modalOpen}
+    onClose={closeModal}
+    title="Scrollable Modal Content"
+    primaryAction={{
+      content: 'Save',
+      onAction: closeModal
+    }}
+    secondaryActions={[
+      {
+        content: 'Cancel',
+        onAction: closeModal
+      }
+    ]}
+  >
+    <Modal.Section>
+      <Scrollable shadow style="height: 300px;">
+        <div style="padding: 16px;">
+          <Text variant="headingMd" as="h3">Long Form Content</Text>
+          <div style="margin-top: 16px;">
+            <TextField
+              label="Name"
+              value=""
+              onChange={() => {}}
+              autoComplete="name"
+            />
+          </div>
+          <div style="margin-top: 16px;">
+            <Text variant="headingSm" as="h4">Description</Text>
+            <List>
+              {#each longContent as paragraph}
+                <List.Item>{paragraph}</List.Item>
+              {/each}
+            </List>
+          </div>
+        </div>
+      </Scrollable>
+    </Modal.Section>
+  </Modal>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Scrollable, Modal, Card, Text, List, Button, TextField } from 'svelte-polaris';
+  
+  let modalOpen = false;
+  
+  const longContent = [
+    'This is a modal with scrollable content to demonstrate how Scrollable works within constrained containers.',
+    'The content here is longer than what can fit in the modal viewport.',
+    'Users can scroll through this content while the modal header and footer remain fixed.',
+    'This pattern is useful for forms, lists, or any content that might exceed the modal size.',
+    'The scrollable area has consistent styling and behavior across different browsers.',
+    'It also maintains proper accessibility features for keyboard and screen reader users.',
+    'You can customize the scroll behavior and appearance as needed.',
+    'The shadow prop adds visual depth to indicate scrollable content.',
+    'This helps users understand that there is more content available.',
+    'Scroll indicators and shadows provide important visual cues.',
+    'The scrollable container handles both mouse and touch interactions.',
+    'It works well on desktop, tablet, and mobile devices.',
+    'Performance is optimized for smooth scrolling experiences.',
+    'The component integrates seamlessly with other Polaris components.',
+    'This creates a consistent user experience throughout your application.'
+  ];
+  
+  function openModal() {
+    modalOpen = true;
+  }
+  
+  function closeModal() {
+    modalOpen = false;
+  }
+</script>
+
+<div>
+  <Button onClick={openModal}>Open Modal with Scrollable Content</Button>
+  
+  <Modal
+    open={modalOpen}
+    onClose={closeModal}
+    title="Scrollable Modal Content"
+    primaryAction={{
+      content: 'Save',
+      onAction: closeModal
+    }}
+    secondaryActions={[
+      {
+        content: 'Cancel',
+        onAction: closeModal
+      }
+    ]}
+  >
+    <Modal.Section>
+      <Scrollable shadow style="height: 300px;">
+        <div style="padding: 16px;">
+          <Text variant="headingMd" as="h3">Long Form Content</Text>
+          <div style="margin-top: 16px;">
+            <TextField
+              label="Name"
+              value=""
+              onChange={() => {}}
+              autoComplete="name"
+            />
+          </div>
+          <div style="margin-top: 16px;">
+            <Text variant="headingSm" as="h4">Description</Text>
+            <List>
+              {#each longContent as paragraph}
+                <List.Item>{paragraph}</List.Item>
+              {/each}
+            </List>
+          </div>
+        </div>
+      </Scrollable>
+    </Modal.Section>
+  </Modal>
+</div>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Scrollable props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `horizontal` | `boolean` | `false` | Enable horizontal scrolling |
+| `vertical` | `boolean` | `true` | Enable vertical scrolling |
+| `shadow` | `boolean` | `false` | Add shadow to indicate scrollable content |
+| `hint` | `boolean` | `false` | Show scroll hint indicators |
+| `onScrolledToBottom` | `() => void` | | Callback when scrolled to bottom |
+| `onScroll` | `(event: Event) => void` | | Callback on scroll events |
+| `style` | `string` | | Custom CSS styles |
+| `className` | `string` | | Additional CSS classes |
+
+## Best practices
+
+- Set explicit height or max-height for vertical scrolling
+- Use shadow prop to indicate scrollable content
+- Provide adequate padding within scrollable content
+- Handle scroll events efficiently to avoid performance issues
+- Use horizontal scrolling sparingly and only when necessary
+- Ensure scrollable areas are keyboard accessible
+- Test scrolling behavior on different devices and browsers
+- Consider using intersection observers for infinite loading
+- Provide clear visual indicators when content is scrollable
+- Maintain consistent scrolling behavior across your application
+
+## Accessibility
+
+- Scrollable areas are keyboard accessible with arrow keys
+- Screen readers can navigate scrollable content properly
+- Focus management works correctly within scrollable regions
+- Scroll position is preserved during navigation
+- High contrast mode displays scroll indicators clearly
+- Touch scrolling works on mobile devices
+- Scroll events don't interfere with assistive technologies
+- Content within scrollable areas remains accessible
+- Proper ARIA attributes are applied when needed
+- Scroll hints are announced to screen readers
+
+## Performance considerations
+
+- Use passive event listeners for scroll events
+- Debounce scroll event handlers to improve performance
+- Consider virtual scrolling for large datasets
+- Optimize content rendering within scrollable areas
+- Use CSS containment for better performance
+- Minimize reflows and repaints during scrolling
+- Cache scroll positions when appropriate
+- Use requestAnimationFrame for smooth animations
+- Avoid heavy computations in scroll handlers
+- Test performance with large amounts of content
+
+## Keyboard shortcuts
+
+| Key | Action |
+|-----|--------|
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Scroll vertically |
+| <kbd>←</kbd> / <kbd>→</kbd> | Scroll horizontally |
+| <kbd>Page Up</kbd> / <kbd>Page Down</kbd> | Scroll by page |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Scroll to beginning/end |
+| <kbd>Space</kbd> | Scroll down by page |
+| <kbd>Shift</kbd> + <kbd>Space</kbd> | Scroll up by page |
+
+## Related components
+
+- Use [Card](/getting-started/card) as a container for scrollable content
+- Use [Modal](/getting-started/modal) with scrollable sections
+- Use [List](/getting-started/list) for scrollable list content
+- Use [ResourceList](/getting-started/resource-list) for scrollable data lists
+- Use [Layout](/getting-started/layout) to structure scrollable areas
+- Use [Button](/getting-started/button) for scroll-to-top functionality
+- Use [Pagination](/getting-started/pagination) as an alternative to infinite scroll

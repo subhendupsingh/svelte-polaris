@@ -1,0 +1,442 @@
+---
+title: TextContainer
+description: TextContainer provides optimal line length and spacing for readable text content.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+TextContainer provides optimal line length and spacing for readable text content. It ensures text remains readable by constraining line length and providing appropriate spacing for different types of content.
+
+## Examples
+
+### Basic text container
+
+Use TextContainer to improve text readability with optimal line length.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { TextContainer, Card, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <TextContainer>
+    <Text variant="headingLg" as="h2">Welcome to our platform</Text>
+    <Text>
+      This is a longer paragraph of text that demonstrates how TextContainer 
+      helps maintain optimal line length for better readability. The container 
+      automatically constrains the width to ensure text doesn't become too wide 
+      to read comfortably, especially on larger screens.
+    </Text>
+    <Text>
+      Multiple paragraphs work well within TextContainer, maintaining consistent 
+      spacing and readability throughout the content. This makes it perfect for 
+      articles, descriptions, and other text-heavy content.
+    </Text>
+  </TextContainer>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { TextContainer, Card, Text } from 'svelte-polaris';
+</script>
+
+<Card>
+  <TextContainer>
+    <Text variant="headingLg" as="h2">Welcome to our platform</Text>
+    <Text>
+      This is a longer paragraph of text that demonstrates how TextContainer 
+      helps maintain optimal line length for better readability. The container 
+      automatically constrains the width to ensure text doesn't become too wide 
+      to read comfortably, especially on larger screens.
+    </Text>
+    <Text>
+      Multiple paragraphs work well within TextContainer, maintaining consistent 
+      spacing and readability throughout the content. This makes it perfect for 
+      articles, descriptions, and other text-heavy content.
+    </Text>
+  </TextContainer>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Text container with spacing
+
+Use spacing prop to control the vertical spacing between text elements.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { TextContainer, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <Text variant="headingMd" as="h3">Tight spacing</Text>
+    <TextContainer spacing="tight">
+      <Text variant="headingLg" as="h2">Product Features</Text>
+      <Text>Advanced analytics and reporting tools.</Text>
+      <Text>Real-time collaboration features.</Text>
+      <Text>Enterprise-grade security and compliance.</Text>
+    </TextContainer>
+  </Card>
+  
+  <Card>
+    <Text variant="headingMd" as="h3">Loose spacing</Text>
+    <TextContainer spacing="loose">
+      <Text variant="headingLg" as="h2">Getting Started</Text>
+      <Text>
+        Follow these steps to set up your account and start using our platform 
+        effectively. Each step is designed to be simple and straightforward.
+      </Text>
+      <Text>
+        Once you've completed the setup, you'll have access to all the features 
+        and tools needed to manage your business efficiently.
+      </Text>
+    </TextContainer>
+  </Card>
+</BlockStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { TextContainer, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <Text variant="headingMd" as="h3">Tight spacing</Text>
+    <TextContainer spacing="tight">
+      <Text variant="headingLg" as="h2">Product Features</Text>
+      <Text>Advanced analytics and reporting tools.</Text>
+      <Text>Real-time collaboration features.</Text>
+      <Text>Enterprise-grade security and compliance.</Text>
+    </TextContainer>
+  </Card>
+  
+  <Card>
+    <Text variant="headingMd" as="h3">Loose spacing</Text>
+    <TextContainer spacing="loose">
+      <Text variant="headingLg" as="h2">Getting Started</Text>
+      <Text>
+        Follow these steps to set up your account and start using our platform 
+        effectively. Each step is designed to be simple and straightforward.
+      </Text>
+      <Text>
+        Once you've completed the setup, you'll have access to all the features 
+        and tools needed to manage your business efficiently.
+      </Text>
+    </TextContainer>
+  </Card>
+</BlockStack>
+```
+</TabItem>
+</Tabs>
+
+### Article layout
+
+Use TextContainer for article-style content with headings and paragraphs.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { TextContainer, Card, Text, Divider } from 'svelte-polaris';
+</script>
+
+<Card>
+  <TextContainer>
+    <Text variant="headingXl" as="h1">Understanding E-commerce Analytics</Text>
+    
+    <Text>
+      E-commerce analytics provide valuable insights into customer behavior, 
+      sales performance, and business growth opportunities. By understanding 
+      these metrics, businesses can make data-driven decisions that improve 
+      their bottom line.
+    </Text>
+    
+    <Text variant="headingLg" as="h2">Key Metrics to Track</Text>
+    
+    <Text>
+      The most important metrics for e-commerce businesses include conversion 
+      rate, average order value, customer lifetime value, and cart abandonment 
+      rate. Each of these provides unique insights into different aspects of 
+      your business performance.
+    </Text>
+    
+    <Text variant="headingMd" as="h3">Conversion Rate</Text>
+    
+    <Text>
+      Conversion rate measures the percentage of visitors who complete a desired 
+      action, such as making a purchase. A higher conversion rate indicates that 
+      your website effectively persuades visitors to become customers.
+    </Text>
+    
+    <Divider />
+    
+    <Text variant="headingMd" as="h3">Average Order Value</Text>
+    
+    <Text>
+      Average order value (AOV) represents the average amount spent per order. 
+      Increasing AOV through upselling, cross-selling, and bundling strategies 
+      can significantly impact revenue without requiring more customers.
+    </Text>
+  </TextContainer>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { TextContainer, Card, Text, Divider } from 'svelte-polaris';
+</script>
+
+<Card>
+  <TextContainer>
+    <Text variant="headingXl" as="h1">Understanding E-commerce Analytics</Text>
+    
+    <Text>
+      E-commerce analytics provide valuable insights into customer behavior, 
+      sales performance, and business growth opportunities. By understanding 
+      these metrics, businesses can make data-driven decisions that improve 
+      their bottom line.
+    </Text>
+    
+    <Text variant="headingLg" as="h2">Key Metrics to Track</Text>
+    
+    <Text>
+      The most important metrics for e-commerce businesses include conversion 
+      rate, average order value, customer lifetime value, and cart abandonment 
+      rate. Each of these provides unique insights into different aspects of 
+      your business performance.
+    </Text>
+    
+    <Text variant="headingMd" as="h3">Conversion Rate</Text>
+    
+    <Text>
+      Conversion rate measures the percentage of visitors who complete a desired 
+      action, such as making a purchase. A higher conversion rate indicates that 
+      your website effectively persuades visitors to become customers.
+    </Text>
+    
+    <Divider />
+    
+    <Text variant="headingMd" as="h3">Average Order Value</Text>
+    
+    <Text>
+      Average order value (AOV) represents the average amount spent per order. 
+      Increasing AOV through upselling, cross-selling, and bundling strategies 
+      can significantly impact revenue without requiring more customers.
+    </Text>
+  </TextContainer>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Mixed content layout
+
+Use TextContainer with various content types while maintaining readability.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { TextContainer, Card, Text, List, Button, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <TextContainer>
+    <Text variant="headingLg" as="h2">Store Setup Checklist</Text>
+    
+    <Text>
+      Complete these essential steps to get your store ready for customers. 
+      Each step is important for creating a professional and trustworthy 
+      shopping experience.
+    </Text>
+    
+    <List type="number">
+      <List.Item>Add your store information and contact details</List.Item>
+      <List.Item>Upload your logo and customize your theme</List.Item>
+      <List.Item>Set up payment providers and shipping methods</List.Item>
+      <List.Item>Add your first products with high-quality images</List.Item>
+      <List.Item>Configure taxes and legal pages</List.Item>
+      <List.Item>Test your checkout process</List.Item>
+    </List>
+    
+    <Text>
+      Need help with any of these steps? Our support team is available 24/7 
+      to assist you with store setup and configuration. You can also browse 
+      our comprehensive help documentation for detailed guides.
+    </Text>
+    
+    <InlineStack gap="200">
+      <Button variant="primary">Contact Support</Button>
+      <Button>View Documentation</Button>
+    </InlineStack>
+  </TextContainer>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { TextContainer, Card, Text, List, Button, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <TextContainer>
+    <Text variant="headingLg" as="h2">Store Setup Checklist</Text>
+    
+    <Text>
+      Complete these essential steps to get your store ready for customers. 
+      Each step is important for creating a professional and trustworthy 
+      shopping experience.
+    </Text>
+    
+    <List type="number">
+      <List.Item>Add your store information and contact details</List.Item>
+      <List.Item>Upload your logo and customize your theme</List.Item>
+      <List.Item>Set up payment providers and shipping methods</List.Item>
+      <List.Item>Add your first products with high-quality images</List.Item>
+      <List.Item>Configure taxes and legal pages</List.Item>
+      <List.Item>Test your checkout process</List.Item>
+    </List>
+    
+    <Text>
+      Need help with any of these steps? Our support team is available 24/7 
+      to assist you with store setup and configuration. You can also browse 
+      our comprehensive help documentation for detailed guides.
+    </Text>
+    
+    <InlineStack gap="200">
+      <Button variant="primary">Contact Support</Button>
+      <Button>View Documentation</Button>
+    </InlineStack>
+  </TextContainer>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Responsive text container
+
+TextContainer automatically adapts to different screen sizes for optimal readability.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { TextContainer, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <TextContainer>
+      <Text variant="headingLg" as="h2">Responsive Design</Text>
+      <Text>
+        TextContainer automatically adjusts its maximum width based on the 
+        screen size to ensure optimal readability across all devices. On 
+        larger screens, it prevents text from becoming too wide, while on 
+        smaller screens, it uses the available space efficiently.
+      </Text>
+      <Text>
+        This responsive behavior ensures that your content remains readable 
+        and engaging regardless of how users access your application, whether 
+        on desktop, tablet, or mobile devices.
+      </Text>
+    </TextContainer>
+  </Card>
+  
+  <Card>
+    <Text variant="headingMd" as="h3">Without TextContainer</Text>
+    <Text>
+      This text doesn't use TextContainer, so it can become very wide on larger 
+      screens, making it harder to read. Long lines of text can strain the eyes 
+      and reduce reading comprehension, especially when the line length exceeds 
+      the optimal range of 45-75 characters per line.
+    </Text>
+  </Card>
+</BlockStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { TextContainer, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <TextContainer>
+      <Text variant="headingLg" as="h2">Responsive Design</Text>
+      <Text>
+        TextContainer automatically adjusts its maximum width based on the 
+        screen size to ensure optimal readability across all devices. On 
+        larger screens, it prevents text from becoming too wide, while on 
+        smaller screens, it uses the available space efficiently.
+      </Text>
+      <Text>
+        This responsive behavior ensures that your content remains readable 
+        and engaging regardless of how users access your application, whether 
+        on desktop, tablet, or mobile devices.
+      </Text>
+    </TextContainer>
+  </Card>
+  
+  <Card>
+    <Text variant="headingMd" as="h3">Without TextContainer</Text>
+    <Text>
+      This text doesn't use TextContainer, so it can become very wide on larger 
+      screens, making it harder to read. Long lines of text can strain the eyes 
+      and reduce reading comprehension, especially when the line length exceeds 
+      the optimal range of 45-75 characters per line.
+    </Text>
+  </Card>
+</BlockStack>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| spacing | `'tight' \| 'loose'` | - | Controls vertical spacing between child elements |
+
+## Best practices
+
+- Use TextContainer for any text-heavy content to improve readability
+- Combine with appropriate Text variants to create clear content hierarchy
+- Don't nest TextContainer components - use one per content section
+- Consider the context - not all text needs to be in a TextContainer
+- Use consistent spacing throughout your application
+- Test readability across different screen sizes and devices
+
+## Typography guidelines
+
+- Aim for 45-75 characters per line for optimal readability
+- Use appropriate line height (1.4-1.6) for body text
+- Ensure sufficient contrast between text and background colors
+- Choose fonts that are legible at various sizes
+- Maintain consistent vertical rhythm throughout your content
+
+## Accessibility
+
+- TextContainer maintains proper semantic structure for screen readers
+- Ensures adequate line length for users with reading difficulties
+- Supports proper focus management for keyboard navigation
+- Works well with browser zoom and text scaling features
+
+## Related components
+
+- [Text](/getting-started/text) for typography and text styling
+- [Card](/getting-started/card) for containing text content
+- [BlockStack](/getting-started/block-stack) for organizing content sections
+- [List](/getting-started/list) for structured content within text containers

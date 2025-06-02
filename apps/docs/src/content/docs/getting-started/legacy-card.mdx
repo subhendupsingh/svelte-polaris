@@ -1,0 +1,398 @@
+---
+title: LegacyCard
+description: LegacyCard provides the previous version of Card with additional features like titles, sections, and actions.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+LegacyCard provides the previous version of Card with additional built-in features like titles, sections, and actions. While the newer Card component is recommended for most use cases, LegacyCard is still available for backward compatibility and specific use cases that require its additional features.
+
+## Examples
+
+### Basic legacy card
+
+Use LegacyCard for content that needs built-in title and action support.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { LegacyCard, Text } from 'svelte-polaris';
+</script>
+
+<LegacyCard title="Order details" sectioned>
+  <Text>
+    This order was placed on March 15, 2024, and contains 3 items totaling $124.99. 
+    The order is currently being processed and will ship within 2-3 business days.
+  </Text>
+</LegacyCard>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { LegacyCard, Text } from 'svelte-polaris';
+</script>
+
+<LegacyCard title="Order details" sectioned>
+  <Text>
+    This order was placed on March 15, 2024, and contains 3 items totaling $124.99. 
+    The order is currently being processed and will ship within 2-3 business days.
+  </Text>
+</LegacyCard>
+```
+</TabItem>
+</Tabs>
+
+### Card with actions
+
+Add primary and secondary actions to the card header.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { LegacyCard, Text, BlockStack } from 'svelte-polaris';
+  
+  function handleEdit() {
+    console.log('Edit product');
+  }
+  
+  function handleDuplicate() {
+    console.log('Duplicate product');
+  }
+  
+  function handleDelete() {
+    console.log('Delete product');
+  }
+  
+  const primaryAction = {
+    content: 'Edit product',
+    onAction: handleEdit
+  };
+  
+  const secondaryActions = [
+    {
+      content: 'Duplicate',
+      onAction: handleDuplicate
+    },
+    {
+      content: 'Delete',
+      onAction: handleDelete,
+      destructive: true
+    }
+  ];
+</script>
+
+<LegacyCard 
+  title="Wireless Headphones" 
+  primaryAction={primaryAction}
+  secondaryActions={secondaryActions}
+  sectioned
+>
+  <BlockStack gap="200">
+    <Text variant="headingMd">Product Information</Text>
+    <Text>High-quality wireless headphones with noise cancellation and 30-hour battery life.</Text>
+    <Text>Price: $199.99</Text>
+    <Text>SKU: WH-2024-001</Text>
+  </BlockStack>
+</LegacyCard>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { LegacyCard, Text, BlockStack } from 'svelte-polaris';
+  
+  function handleEdit() {
+    console.log('Edit product');
+  }
+  
+  function handleDuplicate() {
+    console.log('Duplicate product');
+  }
+  
+  function handleDelete() {
+    console.log('Delete product');
+  }
+  
+  const primaryAction = {
+    content: 'Edit product',
+    onAction: handleEdit
+  };
+  
+  const secondaryActions = [
+    {
+      content: 'Duplicate',
+      onAction: handleDuplicate
+    },
+    {
+      content: 'Delete',
+      onAction: handleDelete,
+      destructive: true
+    }
+  ];
+</script>
+
+<LegacyCard 
+  title="Wireless Headphones" 
+  primaryAction={primaryAction}
+  secondaryActions={secondaryActions}
+  sectioned
+>
+  <BlockStack gap="200">
+    <Text variant="headingMd">Product Information</Text>
+    <Text>High-quality wireless headphones with noise cancellation and 30-hour battery life.</Text>
+    <Text>Price: $199.99</Text>
+    <Text>SKU: WH-2024-001</Text>
+  </BlockStack>
+</LegacyCard>
+```
+</TabItem>
+</Tabs>
+
+### Multiple sections
+
+Create cards with multiple distinct sections.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { LegacyCard, Text, BlockStack, InlineStack, Badge } from 'svelte-polaris';
+</script>
+
+<LegacyCard title="Customer Profile">
+  <LegacyCard.Section>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Contact Information</Text>
+      <Text>John Smith</Text>
+      <Text>john.smith@example.com</Text>
+      <Text>+1 (555) 123-4567</Text>
+    </BlockStack>
+  </LegacyCard.Section>
+  
+  <LegacyCard.Section>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Account Status</Text>
+      <InlineStack gap="200">
+        <Badge tone="success">Active</Badge>
+        <Badge tone="info">Premium</Badge>
+      </InlineStack>
+      <Text>Member since: January 2023</Text>
+    </BlockStack>
+  </LegacyCard.Section>
+  
+  <LegacyCard.Section>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Order History</Text>
+      <Text>Total orders: 24</Text>
+      <Text>Total spent: $1,247.89</Text>
+      <Text>Last order: March 10, 2024</Text>
+    </BlockStack>
+  </LegacyCard.Section>
+</LegacyCard>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { LegacyCard, Text, BlockStack, InlineStack, Badge } from 'svelte-polaris';
+</script>
+
+<LegacyCard title="Customer Profile">
+  <LegacyCard.Section>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Contact Information</Text>
+      <Text>John Smith</Text>
+      <Text>john.smith@example.com</Text>
+      <Text>+1 (555) 123-4567</Text>
+    </BlockStack>
+  </LegacyCard.Section>
+  
+  <LegacyCard.Section>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Account Status</Text>
+      <InlineStack gap="200">
+        <Badge tone="success">Active</Badge>
+        <Badge tone="info">Premium</Badge>
+      </InlineStack>
+      <Text>Member since: January 2023</Text>
+    </BlockStack>
+  </LegacyCard.Section>
+  
+  <LegacyCard.Section>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Order History</Text>
+      <Text>Total orders: 24</Text>
+      <Text>Total spent: $1,247.89</Text>
+      <Text>Last order: March 10, 2024</Text>
+    </BlockStack>
+  </LegacyCard.Section>
+</LegacyCard>
+```
+</TabItem>
+</Tabs>
+
+### Subdued card
+
+Use subdued styling for less prominent content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { LegacyCard, Text, BlockStack, Button } from 'svelte-polaris';
+  
+  function handleUpgrade() {
+    console.log('Upgrade plan');
+  }
+</script>
+
+<BlockStack gap="400">
+  <LegacyCard title="Current Plan" sectioned>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Basic Plan</Text>
+      <Text>Up to 1,000 products</Text>
+      <Text>Basic analytics</Text>
+      <Text>Email support</Text>
+      <Text variant="headingLg">$29/month</Text>
+    </BlockStack>
+  </LegacyCard>
+  
+  <LegacyCard title="Recommended Upgrade" subdued sectioned>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Pro Plan</Text>
+      <Text>Up to 10,000 products</Text>
+      <Text>Advanced analytics</Text>
+      <Text>Priority support</Text>
+      <Text>API access</Text>
+      <Text variant="headingLg">$79/month</Text>
+      <Button onClick={handleUpgrade}>Upgrade Now</Button>
+    </BlockStack>
+  </LegacyCard>
+</BlockStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { LegacyCard, Text, BlockStack, Button } from 'svelte-polaris';
+  
+  function handleUpgrade() {
+    console.log('Upgrade plan');
+  }
+</script>
+
+<BlockStack gap="400">
+  <LegacyCard title="Current Plan" sectioned>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Basic Plan</Text>
+      <Text>Up to 1,000 products</Text>
+      <Text>Basic analytics</Text>
+      <Text>Email support</Text>
+      <Text variant="headingLg">$29/month</Text>
+    </BlockStack>
+  </LegacyCard>
+  
+  <LegacyCard title="Recommended Upgrade" subdued sectioned>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Pro Plan</Text>
+      <Text>Up to 10,000 products</Text>
+      <Text>Advanced analytics</Text>
+      <Text>Priority support</Text>
+      <Text>API access</Text>
+      <Text variant="headingLg">$79/month</Text>
+      <Button onClick={handleUpgrade}>Upgrade Now</Button>
+    </BlockStack>
+  </LegacyCard>
+</BlockStack>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### LegacyCard props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Title displayed in the card header |
+| `sectioned` | `boolean` | `false` | Automatically wrap content in a section |
+| `subdued` | `boolean` | `false` | Use subdued styling |
+| `primaryAction` | `Action` | | Primary action button in the header |
+| `secondaryActions` | `Action[]` | | Secondary actions in the header |
+
+### LegacyCard.Section props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Optional title for the section |
+| `subdued` | `boolean` | `false` | Use subdued styling for the section |
+| `fullWidth` | `boolean` | `false` | Remove section padding |
+
+### Action type
+
+```typescript
+type Action = {
+  content: string;
+  onAction: () => void;
+  disabled?: boolean;
+  destructive?: boolean;
+  external?: boolean;
+  url?: string;
+}
+```
+
+## Best practices
+
+- Use the newer [Card](/getting-started/card) component for most use cases
+- Use LegacyCard when you need built-in title and action functionality
+- Keep card titles concise and descriptive
+- Use sections to organize related content within a card
+- Limit the number of secondary actions to avoid overwhelming users
+- Use subdued styling for less important content
+- Ensure actions are clearly labeled and have obvious purposes
+- Test card layouts with varying content lengths
+- Consider the visual hierarchy when using multiple cards
+- Use consistent action patterns across your application
+
+## Accessibility
+
+- Card titles are properly structured as headings
+- Actions are keyboard accessible and have clear labels
+- Focus management works correctly with card actions
+- Screen readers can navigate card structure effectively
+- Color is not the only way to convey information
+- Interactive elements have sufficient touch targets
+- Card content maintains proper reading order
+- High contrast mode displays cards clearly
+- Section titles provide proper content structure
+- Destructive actions are clearly identified
+
+## Migration
+
+Consider migrating to the newer [Card](/getting-started/card) component:
+
+```svelte
+<!-- LegacyCard -->
+<LegacyCard title="Product" sectioned>
+  <Text>Content</Text>
+</LegacyCard>
+
+<!-- New Card -->
+<Card>
+  <BlockStack gap="200">
+    <Text variant="headingMd">Product</Text>
+    <Text>Content</Text>
+  </BlockStack>
+</Card>
+```
+
+## Related components
+
+- Use [Card](/getting-started/card) for the modern card component
+- Use [BlockStack](/getting-started/block-stack) for vertical content layout
+- Use [InlineStack](/getting-started/inline-stack) for horizontal content layout
+- Use [Button](/getting-started/button) for card actions
+- Use [Text](/getting-started/text) for card content and titles

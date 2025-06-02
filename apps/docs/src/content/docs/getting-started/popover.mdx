@@ -1,0 +1,688 @@
+---
+title: Popover
+description: Popover displays additional content in a floating container that appears above other page elements when triggered.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Popover displays additional content in a floating container that appears above other page elements when triggered. It's commonly used for menus, additional information, forms, and other contextual content that doesn't warrant a full modal.
+
+## Examples
+
+### Basic popover
+
+Use Popover to display additional content when a trigger element is activated.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Popover, Button, ActionList, Card } from 'svelte-polaris';
+  
+  let popoverActive = false;
+  
+  function togglePopover() {
+    popoverActive = !popoverActive;
+  }
+  
+  function handleAction(action) {
+    console.log('Action selected:', action);
+    popoverActive = false;
+  }
+  
+  const actions = [
+    {
+      content: 'Edit',
+      onAction: () => handleAction('edit')
+    },
+    {
+      content: 'Duplicate',
+      onAction: () => handleAction('duplicate')
+    },
+    {
+      content: 'Delete',
+      onAction: () => handleAction('delete'),
+      destructive: true
+    }
+  ];
+</script>
+
+<Card>
+  <Popover
+    active={popoverActive}
+    activator={Button}
+    activatorProps={{
+      content: 'More actions',
+      onClick: togglePopover
+    }}
+    onClose={togglePopover}
+  >
+    <ActionList items={actions} />
+  </Popover>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Popover, Button, ActionList, Card } from 'svelte-polaris';
+  
+  let popoverActive = false;
+  
+  function togglePopover() {
+    popoverActive = !popoverActive;
+  }
+  
+  function handleAction(action) {
+    console.log('Action selected:', action);
+    popoverActive = false;
+  }
+  
+  const actions = [
+    {
+      content: 'Edit',
+      onAction: () => handleAction('edit')
+    },
+    {
+      content: 'Duplicate',
+      onAction: () => handleAction('duplicate')
+    },
+    {
+      content: 'Delete',
+      onAction: () => handleAction('delete'),
+      destructive: true
+    }
+  ];
+</script>
+
+<Card>
+  <Popover
+    active={popoverActive}
+    activator={Button}
+    activatorProps={{
+      content: 'More actions',
+      onClick: togglePopover
+    }}
+    onClose={togglePopover}
+  >
+    <ActionList items={actions} />
+  </Popover>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Popover with form content
+
+Use Popover to display forms and interactive content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Popover, Button, FormLayout, TextField, Select, Card, BlockStack } from 'svelte-polaris';
+  
+  let popoverActive = false;
+  let filterValue = '';
+  let statusFilter = 'all';
+  
+  const statusOptions = [
+    { label: 'All statuses', value: 'all' },
+    { label: 'Active', value: 'active' },
+    { label: 'Draft', value: 'draft' },
+    { label: 'Archived', value: 'archived' }
+  ];
+  
+  function togglePopover() {
+    popoverActive = !popoverActive;
+  }
+  
+  function applyFilters() {
+    console.log('Applying filters:', { filterValue, statusFilter });
+    popoverActive = false;
+  }
+  
+  function clearFilters() {
+    filterValue = '';
+    statusFilter = 'all';
+    console.log('Filters cleared');
+  }
+</script>
+
+<Card>
+  <Popover
+    active={popoverActive}
+    activator={Button}
+    activatorProps={{
+      content: 'Filter products',
+      onClick: togglePopover
+    }}
+    onClose={togglePopover}
+  >
+    <div style="padding: 16px; width: 300px;">
+      <BlockStack gap="300">
+        <FormLayout>
+          <TextField
+            label="Search products"
+            bind:value={filterValue}
+            placeholder="Enter product name..."
+            autoComplete="off"
+          />
+          <Select
+            label="Status"
+            options={statusOptions}
+            bind:value={statusFilter}
+          />
+        </FormLayout>
+        
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          <Button onClick={clearFilters}>Clear</Button>
+          <Button variant="primary" onClick={applyFilters}>Apply filters</Button>
+        </div>
+      </BlockStack>
+    </div>
+  </Popover>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Popover, Button, FormLayout, TextField, Select, Card, BlockStack } from 'svelte-polaris';
+  
+  let popoverActive = false;
+  let filterValue = '';
+  let statusFilter = 'all';
+  
+  const statusOptions = [
+    { label: 'All statuses', value: 'all' },
+    { label: 'Active', value: 'active' },
+    { label: 'Draft', value: 'draft' },
+    { label: 'Archived', value: 'archived' }
+  ];
+  
+  function togglePopover() {
+    popoverActive = !popoverActive;
+  }
+  
+  function applyFilters() {
+    console.log('Applying filters:', { filterValue, statusFilter });
+    popoverActive = false;
+  }
+  
+  function clearFilters() {
+    filterValue = '';
+    statusFilter = 'all';
+    console.log('Filters cleared');
+  }
+</script>
+
+<Card>
+  <Popover
+    active={popoverActive}
+    activator={Button}
+    activatorProps={{
+      content: 'Filter products',
+      onClick: togglePopover
+    }}
+    onClose={togglePopover}
+  >
+    <div style="padding: 16px; width: 300px;">
+      <BlockStack gap="300">
+        <FormLayout>
+          <TextField
+            label="Search products"
+            bind:value={filterValue}
+            placeholder="Enter product name..."
+            autoComplete="off"
+          />
+          <Select
+            label="Status"
+            options={statusOptions}
+            bind:value={statusFilter}
+          />
+        </FormLayout>
+        
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          <Button onClick={clearFilters}>Clear</Button>
+          <Button variant="primary" onClick={applyFilters}>Apply filters</Button>
+        </div>
+      </BlockStack>
+    </div>
+  </Popover>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Popover positioning
+
+Control where the popover appears relative to its activator.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Popover, Button, Text, Card, InlineGrid, BlockStack } from 'svelte-polaris';
+  
+  let topPopover = false;
+  let bottomPopover = false;
+  let leftPopover = false;
+  let rightPopover = false;
+  
+  function togglePopover(position) {
+    switch(position) {
+      case 'top':
+        topPopover = !topPopover;
+        break;
+      case 'bottom':
+        bottomPopover = !bottomPopover;
+        break;
+      case 'left':
+        leftPopover = !leftPopover;
+        break;
+      case 'right':
+        rightPopover = !rightPopover;
+        break;
+    }
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Popover Positioning</Text>
+    
+    <InlineGrid columns={2} gap="400">
+      <Popover
+        active={topPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Top popover',
+          onClick: () => togglePopover('top')
+        }}
+        onClose={() => togglePopover('top')}
+        preferredPosition="above"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover appears above the button</Text>
+        </div>
+      </Popover>
+      
+      <Popover
+        active={bottomPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Bottom popover',
+          onClick: () => togglePopover('bottom')
+        }}
+        onClose={() => togglePopover('bottom')}
+        preferredPosition="below"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover appears below the button</Text>
+        </div>
+      </Popover>
+      
+      <Popover
+        active={leftPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Left popover',
+          onClick: () => togglePopover('left')
+        }}
+        onClose={() => togglePopover('left')}
+        preferredPosition="mostSpace"
+        preferredAlignment="left"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover aligns to the left</Text>
+        </div>
+      </Popover>
+      
+      <Popover
+        active={rightPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Right popover',
+          onClick: () => togglePopover('right')
+        }}
+        onClose={() => togglePopover('right')}
+        preferredPosition="mostSpace"
+        preferredAlignment="right"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover aligns to the right</Text>
+        </div>
+      </Popover>
+    </InlineGrid>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Popover, Button, Text, Card, InlineGrid, BlockStack } from 'svelte-polaris';
+  
+  let topPopover = false;
+  let bottomPopover = false;
+  let leftPopover = false;
+  let rightPopover = false;
+  
+  function togglePopover(position) {
+    switch(position) {
+      case 'top':
+        topPopover = !topPopover;
+        break;
+      case 'bottom':
+        bottomPopover = !bottomPopover;
+        break;
+      case 'left':
+        leftPopover = !leftPopover;
+        break;
+      case 'right':
+        rightPopover = !rightPopover;
+        break;
+    }
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Popover Positioning</Text>
+    
+    <InlineGrid columns={2} gap="400">
+      <Popover
+        active={topPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Top popover',
+          onClick: () => togglePopover('top')
+        }}
+        onClose={() => togglePopover('top')}
+        preferredPosition="above"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover appears above the button</Text>
+        </div>
+      </Popover>
+      
+      <Popover
+        active={bottomPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Bottom popover',
+          onClick: () => togglePopover('bottom')
+        }}
+        onClose={() => togglePopover('bottom')}
+        preferredPosition="below"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover appears below the button</Text>
+        </div>
+      </Popover>
+      
+      <Popover
+        active={leftPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Left popover',
+          onClick: () => togglePopover('left')
+        }}
+        onClose={() => togglePopover('left')}
+        preferredPosition="mostSpace"
+        preferredAlignment="left"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover aligns to the left</Text>
+        </div>
+      </Popover>
+      
+      <Popover
+        active={rightPopover}
+        activator={Button}
+        activatorProps={{
+          content: 'Right popover',
+          onClick: () => togglePopover('right')
+        }}
+        onClose={() => togglePopover('right')}
+        preferredPosition="mostSpace"
+        preferredAlignment="right"
+      >
+        <div style="padding: 16px;">
+          <Text>This popover aligns to the right</Text>
+        </div>
+      </Popover>
+    </InlineGrid>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Popover with custom activator
+
+Use any element as a popover activator, not just buttons.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Popover, Text, Card, BlockStack, Avatar, InlineStack } from 'svelte-polaris';
+  
+  let profilePopover = false;
+  let helpPopover = false;
+  
+  function toggleProfilePopover() {
+    profilePopover = !profilePopover;
+  }
+  
+  function toggleHelpPopover() {
+    helpPopover = !helpPopover;
+  }
+  
+  function handleLogout() {
+    console.log('Logging out');
+    profilePopover = false;
+  }
+  
+  function handleSettings() {
+    console.log('Opening settings');
+    profilePopover = false;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <InlineStack align="space-between">
+      <Text variant="headingMd">Dashboard</Text>
+      
+      <InlineStack gap="200">
+        <Popover
+          active={helpPopover}
+          onClose={toggleHelpPopover}
+        >
+          <div slot="activator" on:click={toggleHelpPopover} style="cursor: pointer;">
+            <Text>Need help?</Text>
+          </div>
+          
+          <div style="padding: 16px; width: 200px;">
+            <BlockStack gap="200">
+              <Text variant="bodyMd">Get help with:</Text>
+              <Text>• Setting up products</Text>
+              <Text>• Managing orders</Text>
+              <Text>• Customer support</Text>
+              <Text>• Payment settings</Text>
+            </BlockStack>
+          </div>
+        </Popover>
+        
+        <Popover
+          active={profilePopover}
+          onClose={toggleProfilePopover}
+        >
+          <div slot="activator" on:click={toggleProfilePopover} style="cursor: pointer;">
+            <InlineStack gap="200" align="center">
+              <Avatar customer={{ firstName: 'John', lastName: 'Doe' }} size="sm" />
+              <Text>John Doe</Text>
+            </InlineStack>
+          </div>
+          
+          <div style="padding: 16px; width: 200px;">
+            <BlockStack gap="200">
+              <button on:click={handleSettings} style="all: unset; cursor: pointer; padding: 8px; display: block; width: 100%;">
+                <Text>Account settings</Text>
+              </button>
+              <button on:click={handleLogout} style="all: unset; cursor: pointer; padding: 8px; display: block; width: 100%;">
+                <Text>Sign out</Text>
+              </button>
+            </BlockStack>
+          </div>
+        </Popover>
+      </InlineStack>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Popover, Text, Card, BlockStack, Avatar, InlineStack } from 'svelte-polaris';
+  
+  let profilePopover = false;
+  let helpPopover = false;
+  
+  function toggleProfilePopover() {
+    profilePopover = !profilePopover;
+  }
+  
+  function toggleHelpPopover() {
+    helpPopover = !helpPopover;
+  }
+  
+  function handleLogout() {
+    console.log('Logging out');
+    profilePopover = false;
+  }
+  
+  function handleSettings() {
+    console.log('Opening settings');
+    profilePopover = false;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <InlineStack align="space-between">
+      <Text variant="headingMd">Dashboard</Text>
+      
+      <InlineStack gap="200">
+        <Popover
+          active={helpPopover}
+          onClose={toggleHelpPopover}
+        >
+          <div slot="activator" on:click={toggleHelpPopover} style="cursor: pointer;">
+            <Text>Need help?</Text>
+          </div>
+          
+          <div style="padding: 16px; width: 200px;">
+            <BlockStack gap="200">
+              <Text variant="bodyMd">Get help with:</Text>
+              <Text>• Setting up products</Text>
+              <Text>• Managing orders</Text>
+              <Text>• Customer support</Text>
+              <Text>• Payment settings</Text>
+            </BlockStack>
+          </div>
+        </Popover>
+        
+        <Popover
+          active={profilePopover}
+          onClose={toggleProfilePopover}
+        >
+          <div slot="activator" on:click={toggleProfilePopover} style="cursor: pointer;">
+            <InlineStack gap="200" align="center">
+              <Avatar customer={{ firstName: 'John', lastName: 'Doe' }} size="sm" />
+              <Text>John Doe</Text>
+            </InlineStack>
+          </div>
+          
+          <div style="padding: 16px; width: 200px;">
+            <BlockStack gap="200">
+              <button on:click={handleSettings} style="all: unset; cursor: pointer; padding: 8px; display: block; width: 100%;">
+                <Text>Account settings</Text>
+              </button>
+              <button on:click={handleLogout} style="all: unset; cursor: pointer; padding: 8px; display: block; width: 100%;">
+                <Text>Sign out</Text>
+              </button>
+            </BlockStack>
+          </div>
+        </Popover>
+      </InlineStack>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Popover props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `active` | `boolean` | `false` | Whether the popover is currently open |
+| `activator` | `Component` | | Component to use as the activator |
+| `activatorProps` | `object` | | Props to pass to the activator component |
+| `onClose` | `() => void` | | Callback when popover should close |
+| `preferredPosition` | `'above' \| 'below' \| 'mostSpace'` | `'below'` | Preferred position relative to activator |
+| `preferredAlignment` | `'left' \| 'center' \| 'right'` | `'center'` | Preferred alignment relative to activator |
+| `fullWidth` | `boolean` | `false` | Make popover full width of its container |
+| `fullHeight` | `boolean` | `false` | Make popover full height of viewport |
+| `fluidContent` | `boolean` | `false` | Allow content to determine popover width |
+| `sectioned` | `boolean` | `false` | Add default padding to popover content |
+| `hideOnPrint` | `boolean` | `true` | Hide popover when printing |
+
+## Best practices
+
+- Use popovers for contextual actions and information
+- Keep popover content concise and focused
+- Position popovers to avoid covering important content
+- Provide clear ways to close the popover (click outside, escape key)
+- Use appropriate activator elements (buttons, clickable text)
+- Avoid nesting popovers inside other popovers
+- Test popover positioning on different screen sizes
+- Ensure popover content is accessible via keyboard
+- Use consistent popover styling throughout your application
+- Consider using modals for complex or critical interactions
+
+## Accessibility
+
+- Popover content is accessible via keyboard navigation
+- Focus is managed properly when opening and closing
+- Escape key closes the popover
+- Clicking outside the popover closes it
+- Screen readers can access popover content
+- Activator elements have appropriate ARIA attributes
+- Focus returns to activator when popover closes
+- Popover content has proper heading structure
+- Interactive elements within popover are keyboard accessible
+- High contrast mode displays popover clearly
+
+## Keyboard shortcuts
+
+- **Escape**: Close the popover
+- **Tab**: Navigate through interactive elements in popover
+- **Enter/Space**: Activate the popover trigger (when focused)
+- **Arrow keys**: Navigate through action lists or menus
+
+## Related components
+
+- Use [Modal](/getting-started/modal) for more complex interactions
+- Use [Tooltip](/getting-started/tooltip) for simple informational content
+- Use [ActionList](/getting-started/action-list) for popover menu content
+- Use [Button](/getting-started/button) as common popover activators
+- Use [OptionList](/getting-started/option-list) for selection popovers
+- Use [Card](/getting-started/card) to structure popover content

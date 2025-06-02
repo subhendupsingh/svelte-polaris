@@ -1,0 +1,480 @@
+---
+title: Listbox
+description: Listbox provides an accessible list of options that users can select from, with keyboard navigation support.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Listbox provides an accessible list of options that users can select from, with full keyboard navigation support. It's commonly used in dropdowns, autocomplete components, and custom select controls.
+
+## Examples
+
+### Basic listbox
+
+Use Listbox to create accessible option lists with keyboard navigation.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOption = '';
+  
+  const options = [
+    { value: 'draft', label: 'Draft' },
+    { value: 'active', label: 'Active' },
+    { value: 'archived', label: 'Archived' }
+  ];
+  
+  function handleSelection(value) {
+    selectedOption = value;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Product Status</Text>
+    <Listbox onSelect={handleSelection}>
+      {#each options as option}
+        <Listbox.Option 
+          value={option.value} 
+          selected={selectedOption === option.value}
+        >
+          {option.label}
+        </Listbox.Option>
+      {/each}
+    </Listbox>
+    {#if selectedOption}
+      <Text>Selected: {selectedOption}</Text>
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOption = '';
+  
+  const options = [
+    { value: 'draft', label: 'Draft' },
+    { value: 'active', label: 'Active' },
+    { value: 'archived', label: 'Archived' }
+  ];
+  
+  function handleSelection(value) {
+    selectedOption = value;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Product Status</Text>
+    <Listbox onSelect={handleSelection}>
+      {#each options as option}
+        <Listbox.Option 
+          value={option.value} 
+          selected={selectedOption === option.value}
+        >
+          {option.label}
+        </Listbox.Option>
+      {/each}
+    </Listbox>
+    {#if selectedOption}
+      <Text>Selected: {selectedOption}</Text>
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Multi-select listbox
+
+Allow users to select multiple options from the list.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack, InlineStack, Tag } from 'svelte-polaris';
+  
+  let selectedOptions = [];
+  
+  const categories = [
+    { value: 'electronics', label: 'Electronics' },
+    { value: 'clothing', label: 'Clothing' },
+    { value: 'books', label: 'Books' },
+    { value: 'home', label: 'Home & Garden' },
+    { value: 'sports', label: 'Sports & Outdoors' },
+    { value: 'toys', label: 'Toys & Games' }
+  ];
+  
+  function handleSelection(value) {
+    if (selectedOptions.includes(value)) {
+      selectedOptions = selectedOptions.filter(option => option !== value);
+    } else {
+      selectedOptions = [...selectedOptions, value];
+    }
+  }
+  
+  function removeOption(value) {
+    selectedOptions = selectedOptions.filter(option => option !== value);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Product Categories</Text>
+    
+    {#if selectedOptions.length > 0}
+      <div>
+        <Text variant="bodyMd">Selected categories:</Text>
+        <InlineStack gap="100">
+          {#each selectedOptions as option}
+            <Tag onRemove={() => removeOption(option)}>
+              {categories.find(cat => cat.value === option)?.label}
+            </Tag>
+          {/each}
+        </InlineStack>
+      </div>
+    {/if}
+    
+    <Listbox onSelect={handleSelection} allowMultiple>
+      {#each categories as category}
+        <Listbox.Option 
+          value={category.value} 
+          selected={selectedOptions.includes(category.value)}
+        >
+          {category.label}
+        </Listbox.Option>
+      {/each}
+    </Listbox>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack, InlineStack, Tag } from 'svelte-polaris';
+  
+  let selectedOptions = [];
+  
+  const categories = [
+    { value: 'electronics', label: 'Electronics' },
+    { value: 'clothing', label: 'Clothing' },
+    { value: 'books', label: 'Books' },
+    { value: 'home', label: 'Home & Garden' },
+    { value: 'sports', label: 'Sports & Outdoors' },
+    { value: 'toys', label: 'Toys & Games' }
+  ];
+  
+  function handleSelection(value) {
+    if (selectedOptions.includes(value)) {
+      selectedOptions = selectedOptions.filter(option => option !== value);
+    } else {
+      selectedOptions = [...selectedOptions, value];
+    }
+  }
+  
+  function removeOption(value) {
+    selectedOptions = selectedOptions.filter(option => option !== value);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Product Categories</Text>
+    
+    {#if selectedOptions.length > 0}
+      <div>
+        <Text variant="bodyMd">Selected categories:</Text>
+        <InlineStack gap="100">
+          {#each selectedOptions as option}
+            <Tag onRemove={() => removeOption(option)}>
+              {categories.find(cat => cat.value === option)?.label}
+            </Tag>
+          {/each}
+        </InlineStack>
+      </div>
+    {/if}
+    
+    <Listbox onSelect={handleSelection} allowMultiple>
+      {#each categories as category}
+        <Listbox.Option 
+          value={category.value} 
+          selected={selectedOptions.includes(category.value)}
+        >
+          {category.label}
+        </Listbox.Option>
+      {/each}
+    </Listbox>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Listbox with sections
+
+Organize options into logical groups with section headers.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedAction = '';
+  
+  function handleSelection(value) {
+    selectedAction = value;
+    console.log('Selected action:', value);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Quick Actions</Text>
+    <Listbox onSelect={handleSelection}>
+      <Listbox.Section title="Product Actions">
+        <Listbox.Option value="create-product" selected={selectedAction === 'create-product'}>
+          Create new product
+        </Listbox.Option>
+        <Listbox.Option value="import-products" selected={selectedAction === 'import-products'}>
+          Import products
+        </Listbox.Option>
+        <Listbox.Option value="export-products" selected={selectedAction === 'export-products'}>
+          Export products
+        </Listbox.Option>
+      </Listbox.Section>
+      
+      <Listbox.Section title="Order Actions">
+        <Listbox.Option value="view-orders" selected={selectedAction === 'view-orders'}>
+          View all orders
+        </Listbox.Option>
+        <Listbox.Option value="create-order" selected={selectedAction === 'create-order'}>
+          Create manual order
+        </Listbox.Option>
+        <Listbox.Option value="export-orders" selected={selectedAction === 'export-orders'}>
+          Export orders
+        </Listbox.Option>
+      </Listbox.Section>
+      
+      <Listbox.Section title="Customer Actions">
+        <Listbox.Option value="view-customers" selected={selectedAction === 'view-customers'}>
+          View all customers
+        </Listbox.Option>
+        <Listbox.Option value="import-customers" selected={selectedAction === 'import-customers'}>
+          Import customers
+        </Listbox.Option>
+      </Listbox.Section>
+    </Listbox>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedAction = '';
+  
+  function handleSelection(value) {
+    selectedAction = value;
+    console.log('Selected action:', value);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Quick Actions</Text>
+    <Listbox onSelect={handleSelection}>
+      <Listbox.Section title="Product Actions">
+        <Listbox.Option value="create-product" selected={selectedAction === 'create-product'}>
+          Create new product
+        </Listbox.Option>
+        <Listbox.Option value="import-products" selected={selectedAction === 'import-products'}>
+          Import products
+        </Listbox.Option>
+        <Listbox.Option value="export-products" selected={selectedAction === 'export-products'}>
+          Export products
+        </Listbox.Option>
+      </Listbox.Section>
+      
+      <Listbox.Section title="Order Actions">
+        <Listbox.Option value="view-orders" selected={selectedAction === 'view-orders'}>
+          View all orders
+        </Listbox.Option>
+        <Listbox.Option value="create-order" selected={selectedAction === 'create-order'}>
+          Create manual order
+        </Listbox.Option>
+        <Listbox.Option value="export-orders" selected={selectedAction === 'export-orders'}>
+          Export orders
+        </Listbox.Option>
+      </Listbox.Section>
+      
+      <Listbox.Section title="Customer Actions">
+        <Listbox.Option value="view-customers" selected={selectedAction === 'view-customers'}>
+          View all customers
+        </Listbox.Option>
+        <Listbox.Option value="import-customers" selected={selectedAction === 'import-customers'}>
+          Import customers
+        </Listbox.Option>
+      </Listbox.Section>
+    </Listbox>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Disabled options
+
+Show options that are temporarily unavailable or restricted.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedPlan = 'basic';
+  
+  function handleSelection(value) {
+    selectedPlan = value;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Subscription Plans</Text>
+    <Listbox onSelect={handleSelection}>
+      <Listbox.Option value="basic" selected={selectedPlan === 'basic'}>
+        Basic Plan - $29/month
+      </Listbox.Option>
+      <Listbox.Option value="pro" selected={selectedPlan === 'pro'}>
+        Pro Plan - $79/month
+      </Listbox.Option>
+      <Listbox.Option value="enterprise" disabled>
+        Enterprise Plan - Contact sales
+      </Listbox.Option>
+      <Listbox.Option value="custom" disabled>
+        Custom Plan - Coming soon
+      </Listbox.Option>
+    </Listbox>
+    <Text>Selected plan: {selectedPlan}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Listbox, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedPlan = 'basic';
+  
+  function handleSelection(value) {
+    selectedPlan = value;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Subscription Plans</Text>
+    <Listbox onSelect={handleSelection}>
+      <Listbox.Option value="basic" selected={selectedPlan === 'basic'}>
+        Basic Plan - $29/month
+      </Listbox.Option>
+      <Listbox.Option value="pro" selected={selectedPlan === 'pro'}>
+        Pro Plan - $79/month
+      </Listbox.Option>
+      <Listbox.Option value="enterprise" disabled>
+        Enterprise Plan - Contact sales
+      </Listbox.Option>
+      <Listbox.Option value="custom" disabled>
+        Custom Plan - Coming soon
+      </Listbox.Option>
+    </Listbox>
+    <Text>Selected plan: {selectedPlan}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Listbox props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onSelect` | `(value: string) => void` | | Callback when an option is selected |
+| `allowMultiple` | `boolean` | `false` | Allow multiple selections |
+| `accessibilityLabel` | `string` | | Label for screen readers |
+
+### Listbox.Option props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | | Unique value for the option |
+| `selected` | `boolean` | `false` | Whether the option is selected |
+| `disabled` | `boolean` | `false` | Whether the option is disabled |
+| `divider` | `boolean` | `false` | Add a divider after this option |
+
+### Listbox.Section props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Title for the section |
+| `divider` | `boolean` | `false` | Add a divider after this section |
+
+## Best practices
+
+- Use clear, descriptive labels for options
+- Group related options into sections when you have many choices
+- Indicate disabled options clearly and explain why they're unavailable
+- Provide immediate feedback when selections are made
+- Use consistent selection patterns throughout your application
+- Consider the order of options (alphabetical, by importance, etc.)
+- Limit the number of options to avoid overwhelming users
+- Use multi-select sparingly and only when truly needed
+- Test keyboard navigation thoroughly
+- Provide clear visual feedback for selected states
+
+## Accessibility
+
+- Full keyboard navigation support (arrow keys, Enter, Space)
+- Screen reader announcements for selections and state changes
+- Proper ARIA attributes for listbox semantics
+- Focus management handles disabled options correctly
+- Selected state is announced to assistive technologies
+- Section headers provide proper content structure
+- High contrast mode displays options clearly
+- Focus indicators are visible and clear
+- Multi-select state is properly communicated
+- Disabled options are announced as unavailable
+
+## Keyboard shortcuts
+
+- **Arrow Up/Down**: Navigate between options
+- **Enter/Space**: Select the focused option
+- **Home**: Move to first option
+- **End**: Move to last option
+- **Escape**: Close listbox (when used in dropdowns)
+- **Tab**: Move focus out of listbox
+
+## Related components
+
+- Use [Select](/getting-started/select) for simple dropdown selection
+- Use [Combobox](/getting-started/combobox) for searchable option lists
+- Use [AutoComplete](/getting-started/autocomplete) for filtered suggestions
+- Use [OptionList](/getting-started/option-list) for simpler option displays
+- Use [ChoiceList](/getting-started/choice-list) for radio/checkbox style selections
+- Use [ActionList](/getting-started/action-list) for action-oriented lists

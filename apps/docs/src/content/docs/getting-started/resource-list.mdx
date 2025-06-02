@@ -1,0 +1,852 @@
+---
+title: ResourceList
+description: ResourceList displays a collection of objects with consistent layout, filtering, sorting, and bulk actions.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+ResourceList displays a collection of objects with consistent layout, filtering, sorting, and bulk actions. It's commonly used for displaying products, customers, orders, and other data collections with standardized formatting and interaction patterns.
+
+## Examples
+
+### Basic resource list
+
+Use ResourceList to display collections of data with consistent formatting.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceList, ResourceItem, Avatar, Text, Badge, Card } from 'svelte-polaris';
+  
+  const customers = [
+    {
+      id: '1',
+      name: 'John Smith',
+      email: 'john.smith@example.com',
+      location: 'New York, NY',
+      orders: 12,
+      totalSpent: '$2,400.00',
+      status: 'active'
+    },
+    {
+      id: '2',
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@example.com',
+      location: 'Los Angeles, CA', 
+      orders: 8,
+      totalSpent: '$1,850.00',
+      status: 'active'
+    },
+    {
+      id: '3',
+      name: 'Mike Davis',
+      email: 'mike.davis@example.com',
+      location: 'Chicago, IL',
+      orders: 3,
+      totalSpent: '$450.00',
+      status: 'inactive'
+    }
+  ];
+  
+  function handleCustomerClick(customerId) {
+    console.log('View customer:', customerId);
+  }
+</script>
+
+<Card>
+  <ResourceList>
+    {#each customers as customer}
+      <ResourceItem
+        id={customer.id}
+        onClick={() => handleCustomerClick(customer.id)}
+        media={<Avatar customer={{ firstName: customer.name.split(' ')[0], lastName: customer.name.split(' ')[1] }} />}
+      >
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <Text variant="bodyMd" fontWeight="semibold">{customer.name}</Text>
+            <Text variant="bodySm" color="subdued">{customer.email}</Text>
+            <Text variant="bodySm" color="subdued">{customer.location}</Text>
+          </div>
+          <div style="text-align: right;">
+            <Text variant="bodySm">{customer.orders} orders</Text>
+            <Text variant="bodySm" fontWeight="semibold">{customer.totalSpent}</Text>
+            <Badge tone={customer.status === 'active' ? 'success' : 'critical'}>
+              {customer.status}
+            </Badge>
+          </div>
+        </div>
+      </ResourceItem>
+    {/each}
+  </ResourceList>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceList, ResourceItem, Avatar, Text, Badge, Card } from 'svelte-polaris';
+  
+  const customers = [
+    {
+      id: '1',
+      name: 'John Smith',
+      email: 'john.smith@example.com',
+      location: 'New York, NY',
+      orders: 12,
+      totalSpent: '$2,400.00',
+      status: 'active'
+    },
+    {
+      id: '2',
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@example.com',
+      location: 'Los Angeles, CA', 
+      orders: 8,
+      totalSpent: '$1,850.00',
+      status: 'active'
+    },
+    {
+      id: '3',
+      name: 'Mike Davis',
+      email: 'mike.davis@example.com',
+      location: 'Chicago, IL',
+      orders: 3,
+      totalSpent: '$450.00',
+      status: 'inactive'
+    }
+  ];
+  
+  function handleCustomerClick(customerId) {
+    console.log('View customer:', customerId);
+  }
+</script>
+
+<Card>
+  <ResourceList>
+    {#each customers as customer}
+      <ResourceItem
+        id={customer.id}
+        onClick={() => handleCustomerClick(customer.id)}
+        media={<Avatar customer={{ firstName: customer.name.split(' ')[0], lastName: customer.name.split(' ')[1] }} />}
+      >
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <Text variant="bodyMd" fontWeight="semibold">{customer.name}</Text>
+            <Text variant="bodySm" color="subdued">{customer.email}</Text>
+            <Text variant="bodySm" color="subdued">{customer.location}</Text>
+          </div>
+          <div style="text-align: right;">
+            <Text variant="bodySm">{customer.orders} orders</Text>
+            <Text variant="bodySm" fontWeight="semibold">{customer.totalSpent}</Text>
+            <Badge tone={customer.status === 'active' ? 'success' : 'critical'}>
+              {customer.status}
+            </Badge>
+          </div>
+        </div>
+      </ResourceItem>
+    {/each}
+  </ResourceList>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Resource list with filtering and sorting
+
+Add filtering and sorting capabilities to help users find specific items.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceList, ResourceItem, Thumbnail, Text, Badge, Card, Filters, Button, InlineStack } from 'svelte-polaris';
+  
+  let selectedItems = [];
+  let sortValue = 'name';
+  let queryValue = '';
+  let statusFilter = [];
+  
+  const allProducts = [
+    {
+      id: '1',
+      name: 'Wireless Headphones',
+      sku: 'WH-001',
+      price: 199.99,
+      inventory: 45,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop'
+    },
+    {
+      id: '2',
+      name: 'Bluetooth Speaker',
+      sku: 'BS-002',
+      price: 89.99,
+      inventory: 23,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=100&h=100&fit=crop'
+    },
+    {
+      id: '3',
+      name: 'USB Cable',
+      sku: 'UC-003',
+      price: 12.99,
+      inventory: 0,
+      status: 'out_of_stock',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&h=100&fit=crop'
+    },
+    {
+      id: '4',
+      name: 'Phone Case',
+      sku: 'PC-004',
+      price: 24.99,
+      inventory: 12,
+      status: 'draft',
+      image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=100&h=100&fit=crop'
+    }
+  ];
+  
+  $: filteredProducts = allProducts.filter(product => {
+    const matchesQuery = product.name.toLowerCase().includes(queryValue.toLowerCase()) ||
+                        product.sku.toLowerCase().includes(queryValue.toLowerCase());
+    const matchesStatus = statusFilter.length === 0 || statusFilter.includes(product.status);
+    return matchesQuery && matchesStatus;
+  }).sort((a, b) => {
+    switch(sortValue) {
+      case 'name':
+        return a.name.localeCompare(b.name);
+      case 'price':
+        return a.price - b.price;
+      case 'inventory':
+        return a.inventory - b.inventory;
+      default:
+        return 0;
+    }
+  });
+  
+  const sortOptions = [
+    { label: 'Product name', value: 'name' },
+    { label: 'Price', value: 'price' },
+    { label: 'Inventory', value: 'inventory' }
+  ];
+  
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <ChoiceList
+          title="Status"
+          titleHidden
+          choices={[
+            { label: 'Active', value: 'active' },
+            { label: 'Draft', value: 'draft' },
+            { label: 'Out of stock', value: 'out_of_stock' }
+          ]}
+          selected={statusFilter}
+          onChange={handleStatusChange}
+          allowMultiple
+        />
+      ),
+      shortcut: true
+    }
+  ];
+  
+  function handleSelectionChange(selected) {
+    selectedItems = selected;
+  }
+  
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+  
+  function handleStatusChange(value) {
+    statusFilter = value;
+  }
+  
+  function handleSortChange(value) {
+    sortValue = value;
+  }
+  
+  function handleProductClick(productId) {
+    console.log('View product:', productId);
+  }
+  
+  function handleBulkEdit() {
+    console.log('Bulk edit products:', selectedItems);
+  }
+  
+  function handleBulkDelete() {
+    console.log('Bulk delete products:', selectedItems);
+  }
+</script>
+
+<Card>
+  <ResourceList
+    resourceName={{ singular: 'product', plural: 'products' }}
+    items={filteredProducts}
+    selectedItems={selectedItems}
+    onSelectionChange={handleSelectionChange}
+    selectable
+    sortOptions={sortOptions}
+    sortValue={sortValue}
+    onSortChange={handleSortChange}
+    filterControl={
+      <Filters
+        queryValue={queryValue}
+        filters={filters}
+        onQueryChange={handleQueryChange}
+        onQueryClear={() => handleQueryChange('')}
+        onClearAll={() => {
+          handleQueryChange('');
+          handleStatusChange([]);
+        }}
+      />
+    }
+    promotedBulkActions={[
+      {
+        content: 'Edit products',
+        onAction: handleBulkEdit
+      }
+    ]}
+    bulkActions={[
+      {
+        content: 'Delete products',
+        onAction: handleBulkDelete,
+        destructive: true
+      }
+    ]}
+  >
+    {#each filteredProducts as product}
+      <ResourceItem
+        id={product.id}
+        onClick={() => handleProductClick(product.id)}
+        media={<Thumbnail source={product.image} alt={product.name} />}
+      >
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <Text variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+            <Text variant="bodySm" color="subdued">SKU: {product.sku}</Text>
+            <Text variant="bodySm" color="subdued">Inventory: {product.inventory} units</Text>
+          </div>
+          <div style="text-align: right;">
+            <Text variant="bodyMd" fontWeight="semibold">${product.price}</Text>
+            <Badge tone={
+              product.status === 'active' ? 'success' : 
+              product.status === 'draft' ? 'warning' : 'critical'
+            }>
+              {product.status === 'out_of_stock' ? 'Out of stock' : product.status}
+            </Badge>
+          </div>
+        </div>
+      </ResourceItem>
+    {/each}
+  </ResourceList>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceList, ResourceItem, Thumbnail, Text, Badge, Card, Filters, Button, InlineStack } from 'svelte-polaris';
+  
+  let selectedItems = [];
+  let sortValue = 'name';
+  let queryValue = '';
+  let statusFilter = [];
+  
+  const allProducts = [
+    {
+      id: '1',
+      name: 'Wireless Headphones',
+      sku: 'WH-001',
+      price: 199.99,
+      inventory: 45,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop'
+    },
+    {
+      id: '2',
+      name: 'Bluetooth Speaker',
+      sku: 'BS-002',
+      price: 89.99,
+      inventory: 23,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=100&h=100&fit=crop'
+    },
+    {
+      id: '3',
+      name: 'USB Cable',
+      sku: 'UC-003',
+      price: 12.99,
+      inventory: 0,
+      status: 'out_of_stock',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&h=100&fit=crop'
+    },
+    {
+      id: '4',
+      name: 'Phone Case',
+      sku: 'PC-004',
+      price: 24.99,
+      inventory: 12,
+      status: 'draft',
+      image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?w=100&h=100&fit=crop'
+    }
+  ];
+  
+  $: filteredProducts = allProducts.filter(product => {
+    const matchesQuery = product.name.toLowerCase().includes(queryValue.toLowerCase()) ||
+                        product.sku.toLowerCase().includes(queryValue.toLowerCase());
+    const matchesStatus = statusFilter.length === 0 || statusFilter.includes(product.status);
+    return matchesQuery && matchesStatus;
+  }).sort((a, b) => {
+    switch(sortValue) {
+      case 'name':
+        return a.name.localeCompare(b.name);
+      case 'price':
+        return a.price - b.price;
+      case 'inventory':
+        return a.inventory - b.inventory;
+      default:
+        return 0;
+    }
+  });
+  
+  const sortOptions = [
+    { label: 'Product name', value: 'name' },
+    { label: 'Price', value: 'price' },
+    { label: 'Inventory', value: 'inventory' }
+  ];
+  
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <ChoiceList
+          title="Status"
+          titleHidden
+          choices={[
+            { label: 'Active', value: 'active' },
+            { label: 'Draft', value: 'draft' },
+            { label: 'Out of stock', value: 'out_of_stock' }
+          ]}
+          selected={statusFilter}
+          onChange={handleStatusChange}
+          allowMultiple
+        />
+      ),
+      shortcut: true
+    }
+  ];
+  
+  function handleSelectionChange(selected) {
+    selectedItems = selected;
+  }
+  
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+  
+  function handleStatusChange(value) {
+    statusFilter = value;
+  }
+  
+  function handleSortChange(value) {
+    sortValue = value;
+  }
+  
+  function handleProductClick(productId) {
+    console.log('View product:', productId);
+  }
+  
+  function handleBulkEdit() {
+    console.log('Bulk edit products:', selectedItems);
+  }
+  
+  function handleBulkDelete() {
+    console.log('Bulk delete products:', selectedItems);
+  }
+</script>
+
+<Card>
+  <ResourceList
+    resourceName={{ singular: 'product', plural: 'products' }}
+    items={filteredProducts}
+    selectedItems={selectedItems}
+    onSelectionChange={handleSelectionChange}
+    selectable
+    sortOptions={sortOptions}
+    sortValue={sortValue}
+    onSortChange={handleSortChange}
+    filterControl={
+      <Filters
+        queryValue={queryValue}
+        filters={filters}
+        onQueryChange={handleQueryChange}
+        onQueryClear={() => handleQueryChange('')}
+        onClearAll={() => {
+          handleQueryChange('');
+          handleStatusChange([]);
+        }}
+      />
+    }
+    promotedBulkActions={[
+      {
+        content: 'Edit products',
+        onAction: handleBulkEdit
+      }
+    ]}
+    bulkActions={[
+      {
+        content: 'Delete products',
+        onAction: handleBulkDelete,
+        destructive: true
+      }
+    ]}
+  >
+    {#each filteredProducts as product}
+      <ResourceItem
+        id={product.id}
+        onClick={() => handleProductClick(product.id)}
+        media={<Thumbnail source={product.image} alt={product.name} />}
+      >
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <Text variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+            <Text variant="bodySm" color="subdued">SKU: {product.sku}</Text>
+            <Text variant="bodySm" color="subdued">Inventory: {product.inventory} units</Text>
+          </div>
+          <div style="text-align: right;">
+            <Text variant="bodyMd" fontWeight="semibold">${product.price}</Text>
+            <Badge tone={
+              product.status === 'active' ? 'success' : 
+              product.status === 'draft' ? 'warning' : 'critical'
+            }>
+              {product.status === 'out_of_stock' ? 'Out of stock' : product.status}
+            </Badge>
+          </div>
+        </div>
+      </ResourceItem>
+    {/each}
+  </ResourceList>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Empty resource list
+
+Show appropriate empty states when no items are available.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceList, EmptyState, Card, Button } from 'svelte-polaris';
+  
+  const products = [];
+  
+  function handleCreateProduct() {
+    console.log('Create new product');
+  }
+  
+  function handleImportProducts() {
+    console.log('Import products');
+  }
+</script>
+
+<Card>
+  <ResourceList
+    resourceName={{ singular: 'product', plural: 'products' }}
+    items={products}
+    emptyState={
+      <EmptyState
+        heading="Add your first product"
+        action={{
+          content: 'Add product',
+          onAction: handleCreateProduct
+        }}
+        secondaryAction={{
+          content: 'Import products',
+          onAction: handleImportProducts
+        }}
+        image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      >
+        <p>Start by adding a product to your store. You can add details like images, pricing, and inventory tracking.</p>
+      </EmptyState>
+    }
+  />
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceList, EmptyState, Card, Button } from 'svelte-polaris';
+  
+  const products = [];
+  
+  function handleCreateProduct() {
+    console.log('Create new product');
+  }
+  
+  function handleImportProducts() {
+    console.log('Import products');
+  }
+</script>
+
+<Card>
+  <ResourceList
+    resourceName={{ singular: 'product', plural: 'products' }}
+    items={products}
+    emptyState={
+      <EmptyState
+        heading="Add your first product"
+        action={{
+          content: 'Add product',
+          onAction: handleCreateProduct
+        }}
+        secondaryAction={{
+          content: 'Import products',
+          onAction: handleImportProducts
+        }}
+        image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      >
+        <p>Start by adding a product to your store. You can add details like images, pricing, and inventory tracking.</p>
+      </EmptyState>
+    }
+  />
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Loading resource list
+
+Show loading states while data is being fetched.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceList, ResourceItem, SkeletonBodyText, SkeletonDisplayText, Card } from 'svelte-polaris';
+  
+  let loading = true;
+  let products = [];
+  
+  // Simulate loading
+  setTimeout(() => {
+    loading = false;
+    products = [
+      {
+        id: '1',
+        name: 'Wireless Headphones',
+        sku: 'WH-001',
+        price: '$199.99'
+      },
+      {
+        id: '2',
+        name: 'Bluetooth Speaker', 
+        sku: 'BS-002',
+        price: '$89.99'
+      }
+    ];
+  }, 3000);
+</script>
+
+<Card>
+  <ResourceList
+    resourceName={{ singular: 'product', plural: 'products' }}
+    items={products}
+    loading={loading}
+  >
+    {#if loading}
+      {#each Array(3) as _, i}
+        <ResourceItem id={`loading-${i}`}>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="flex: 1;">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </div>
+            <div style="width: 80px;">
+              <SkeletonBodyText lines={1} />
+            </div>
+          </div>
+        </ResourceItem>
+      {/each}
+    {:else}
+      {#each products as product}
+        <ResourceItem id={product.id}>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <Text variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+              <Text variant="bodySm" color="subdued">SKU: {product.sku}</Text>
+            </div>
+            <Text variant="bodyMd" fontWeight="semibold">{product.price}</Text>
+          </div>
+        </ResourceItem>
+      {/each}
+    {/if}
+  </ResourceList>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceList, ResourceItem, SkeletonBodyText, SkeletonDisplayText, Card } from 'svelte-polaris';
+  
+  let loading = true;
+  let products = [];
+  
+  // Simulate loading
+  setTimeout(() => {
+    loading = false;
+    products = [
+      {
+        id: '1',
+        name: 'Wireless Headphones',
+        sku: 'WH-001',
+        price: '$199.99'
+      },
+      {
+        id: '2',
+        name: 'Bluetooth Speaker', 
+        sku: 'BS-002',
+        price: '$89.99'
+      }
+    ];
+  }, 3000);
+</script>
+
+<Card>
+  <ResourceList
+    resourceName={{ singular: 'product', plural: 'products' }}
+    items={products}
+    loading={loading}
+  >
+    {#if loading}
+      {#each Array(3) as _, i}
+        <ResourceItem id={`loading-${i}`}>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="flex: 1;">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </div>
+            <div style="width: 80px;">
+              <SkeletonBodyText lines={1} />
+            </div>
+          </div>
+        </ResourceItem>
+      {/each}
+    {:else}
+      {#each products as product}
+        <ResourceItem id={product.id}>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <Text variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+              <Text variant="bodySm" color="subdued">SKU: {product.sku}</Text>
+            </div>
+            <Text variant="bodyMd" fontWeight="semibold">{product.price}</Text>
+          </div>
+        </ResourceItem>
+      {/each}
+    {/if}
+  </ResourceList>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### ResourceList props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `resourceName` | `{ singular: string, plural: string }` | | Names for the resource type |
+| `items` | `any[]` | `[]` | Array of items to display |
+| `selectedItems` | `string[]` | `[]` | Array of selected item IDs |
+| `onSelectionChange` | `(selected: string[]) => void` | | Callback when selection changes |
+| `selectable` | `boolean` | `false` | Enable item selection |
+| `loading` | `boolean` | `false` | Show loading state |
+| `emptyState` | `ReactNode` | | Component to show when no items |
+| `filterControl` | `ReactNode` | | Filters component |
+| `sortOptions` | `SortOption[]` | | Available sort options |
+| `sortValue` | `string` | | Current sort value |
+| `onSortChange` | `(value: string) => void` | | Callback when sort changes |
+| `promotedBulkActions` | `Action[]` | | Primary bulk actions |
+| `bulkActions` | `Action[]` | | Secondary bulk actions |
+| `hasMoreItems` | `boolean` | `false` | Whether more items can be loaded |
+| `onLoadMore` | `() => void` | | Callback to load more items |
+
+### SortOption type
+
+```typescript
+type SortOption = {
+  label: string;
+  value: string;
+  disabled?: boolean;
+}
+```
+
+### Action type
+
+```typescript
+type Action = {
+  content: string;
+  onAction: () => void;
+  disabled?: boolean;
+  destructive?: boolean;
+  icon?: string;
+  accessibilityLabel?: string;
+}
+```
+
+## Best practices
+
+- Provide meaningful resource names for accessibility
+- Use consistent item layouts throughout the list
+- Implement appropriate loading states for better UX
+- Show helpful empty states with clear next steps
+- Limit bulk actions to prevent overwhelming users
+- Use filtering and sorting to help users find items
+- Provide clear visual feedback for selection states
+- Test with different data volumes and screen sizes
+- Use skeleton loading for better perceived performance
+- Handle error states gracefully with retry options
+
+## Accessibility
+
+- Resource list has proper ARIA labels and roles
+- Selection state is announced to screen readers
+- Keyboard navigation works for all interactive elements
+- Bulk actions are accessible via keyboard
+- Sort and filter controls have proper labels
+- Loading states are communicated to assistive technologies
+- Empty states provide clear guidance
+- Focus management works correctly during interactions
+- High contrast mode displays list clearly
+- Touch targets meet minimum size requirements
+
+## Performance considerations
+
+- Implement virtual scrolling for large datasets
+- Use pagination or infinite scroll for better performance
+- Optimize item rendering with proper keys
+- Debounce search and filter operations
+- Cache filtered and sorted results when possible
+- Use skeleton loading instead of spinners
+- Minimize re-renders with proper state management
+- Consider server-side filtering and sorting for large datasets
+
+## Related components
+
+- Use [ResourceItem](/getting-started/resource-item) for individual list items
+- Use [Filters](/getting-started/filters) for list filtering capabilities
+- Use [EmptyState](/getting-started/empty-state) for empty list states
+- Use [Pagination](/getting-started/pagination) for paginated lists
+- Use [Card](/getting-started/card) as a container for the list
+- Use [Button](/getting-started/button) for bulk actions
+- Use [Checkbox](/getting-started/checkbox) for item selection (handled internally)

@@ -1,0 +1,722 @@
+---
+title: PageActions
+description: PageActions displays primary and secondary actions at the bottom of a page, providing consistent action placement and layout.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+PageActions displays primary and secondary actions at the bottom of a page, providing consistent action placement and layout. It's commonly used in forms, settings pages, and other interfaces where users need to save or cancel their changes.
+
+## Examples
+
+### Basic page actions
+
+Use PageActions to provide primary and secondary actions at the bottom of a page.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { PageActions, Card, FormLayout, TextField, Select, Page } from 'svelte-polaris';
+  
+  let productTitle = '';
+  let productDescription = '';
+  let productStatus = 'draft';
+  
+  const statusOptions = [
+    { label: 'Draft', value: 'draft' },
+    { label: 'Active', value: 'active' },
+    { label: 'Archived', value: 'archived' }
+  ];
+  
+  function handleSave() {
+    console.log('Saving product:', { productTitle, productDescription, productStatus });
+  }
+  
+  function handleDiscard() {
+    console.log('Discarding changes');
+    productTitle = '';
+    productDescription = '';
+    productStatus = 'draft';
+  }
+</script>
+
+<Page title="Create Product">
+  <Card>
+    <FormLayout>
+      <TextField
+        label="Product title"
+        bind:value={productTitle}
+        autoComplete="off"
+      />
+      <TextField
+        label="Description"
+        bind:value={productDescription}
+        multiline={4}
+        autoComplete="off"
+      />
+      <Select
+        label="Status"
+        options={statusOptions}
+        bind:value={productStatus}
+      />
+    </FormLayout>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Save product',
+      onAction: handleSave,
+      disabled: !productTitle
+    }}
+    secondaryActions={[
+      {
+        content: 'Discard',
+        onAction: handleDiscard
+      }
+    ]}
+  />
+</Page>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { PageActions, Card, FormLayout, TextField, Select, Page } from 'svelte-polaris';
+  
+  let productTitle = '';
+  let productDescription = '';
+  let productStatus = 'draft';
+  
+  const statusOptions = [
+    { label: 'Draft', value: 'draft' },
+    { label: 'Active', value: 'active' },
+    { label: 'Archived', value: 'archived' }
+  ];
+  
+  function handleSave() {
+    console.log('Saving product:', { productTitle, productDescription, productStatus });
+  }
+  
+  function handleDiscard() {
+    console.log('Discarding changes');
+    productTitle = '';
+    productDescription = '';
+    productStatus = 'draft';
+  }
+</script>
+
+<Page title="Create Product">
+  <Card>
+    <FormLayout>
+      <TextField
+        label="Product title"
+        bind:value={productTitle}
+        autoComplete="off"
+      />
+      <TextField
+        label="Description"
+        bind:value={productDescription}
+        multiline={4}
+        autoComplete="off"
+      />
+      <Select
+        label="Status"
+        options={statusOptions}
+        bind:value={productStatus}
+      />
+    </FormLayout>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Save product',
+      onAction: handleSave,
+      disabled: !productTitle
+    }}
+    secondaryActions={[
+      {
+        content: 'Discard',
+        onAction: handleDiscard
+      }
+    ]}
+  />
+</Page>
+```
+</TabItem>
+</Tabs>
+
+### Page actions with loading state
+
+Show loading state while actions are being processed.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { PageActions, Card, FormLayout, TextField, Page, Toast } from 'svelte-polaris';
+  
+  let customerName = '';
+  let customerEmail = '';
+  let isLoading = false;
+  let showToast = false;
+  let toastMessage = '';
+  
+  async function handleSave() {
+    isLoading = true;
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    isLoading = false;
+    toastMessage = 'Customer saved successfully';
+    showToast = true;
+    
+    console.log('Saving customer:', { customerName, customerEmail });
+  }
+  
+  function handleCancel() {
+    console.log('Cancelling changes');
+    customerName = '';
+    customerEmail = '';
+  }
+  
+  function dismissToast() {
+    showToast = false;
+  }
+</script>
+
+<Page title="Create Customer">
+  <Card>
+    <FormLayout>
+      <TextField
+        label="Customer name"
+        bind:value={customerName}
+        autoComplete="name"
+      />
+      <TextField
+        label="Email"
+        type="email"
+        bind:value={customerEmail}
+        autoComplete="email"
+      />
+    </FormLayout>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Save customer',
+      onAction: handleSave,
+      loading: isLoading,
+      disabled: !customerName || !customerEmail
+    }}
+    secondaryActions={[
+      {
+        content: 'Cancel',
+        onAction: handleCancel,
+        disabled: isLoading
+      }
+    ]}
+  />
+  
+  {#if showToast}
+    <Toast content={toastMessage} onDismiss={dismissToast} />
+  {/if}
+</Page>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { PageActions, Card, FormLayout, TextField, Page, Toast } from 'svelte-polaris';
+  
+  let customerName = '';
+  let customerEmail = '';
+  let isLoading = false;
+  let showToast = false;
+  let toastMessage = '';
+  
+  async function handleSave() {
+    isLoading = true;
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    isLoading = false;
+    toastMessage = 'Customer saved successfully';
+    showToast = true;
+    
+    console.log('Saving customer:', { customerName, customerEmail });
+  }
+  
+  function handleCancel() {
+    console.log('Cancelling changes');
+    customerName = '';
+    customerEmail = '';
+  }
+  
+  function dismissToast() {
+    showToast = false;
+  }
+</script>
+
+<Page title="Create Customer">
+  <Card>
+    <FormLayout>
+      <TextField
+        label="Customer name"
+        bind:value={customerName}
+        autoComplete="name"
+      />
+      <TextField
+        label="Email"
+        type="email"
+        bind:value={customerEmail}
+        autoComplete="email"
+      />
+    </FormLayout>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Save customer',
+      onAction: handleSave,
+      loading: isLoading,
+      disabled: !customerName || !customerEmail
+    }}
+    secondaryActions={[
+      {
+        content: 'Cancel',
+        onAction: handleCancel,
+        disabled: isLoading
+      }
+    ]}
+  />
+  
+  {#if showToast}
+    <Toast content={toastMessage} onDismiss={dismissToast} />
+  {/if}
+</Page>
+```
+</TabItem>
+</Tabs>
+
+### Destructive page actions
+
+Use destructive actions for operations that cannot be undone.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { PageActions, Card, Text, BlockStack, Page, Modal } from 'svelte-polaris';
+  
+  let showDeleteModal = false;
+  
+  function handleEdit() {
+    console.log('Edit product');
+  }
+  
+  function handleDuplicate() {
+    console.log('Duplicate product');
+  }
+  
+  function handleDelete() {
+    showDeleteModal = true;
+  }
+  
+  function confirmDelete() {
+    console.log('Deleting product');
+    showDeleteModal = false;
+  }
+  
+  function cancelDelete() {
+    showDeleteModal = false;
+  }
+</script>
+
+<Page title="Product Details">
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Wireless Bluetooth Headphones</Text>
+      <Text>Premium wireless headphones with active noise cancellation and 30-hour battery life.</Text>
+      <Text>Price: $199.99</Text>
+      <Text>Status: Active</Text>
+    </BlockStack>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Edit product',
+      onAction: handleEdit
+    }}
+    secondaryActions={[
+      {
+        content: 'Duplicate',
+        onAction: handleDuplicate
+      },
+      {
+        content: 'Delete product',
+        onAction: handleDelete,
+        destructive: true
+      }
+    ]}
+  />
+  
+  <Modal
+    open={showDeleteModal}
+    onClose={cancelDelete}
+    title="Delete product"
+    primaryAction={{
+      content: 'Delete',
+      onAction: confirmDelete,
+      destructive: true
+    }}
+    secondaryActions={[
+      {
+        content: 'Cancel',
+        onAction: cancelDelete
+      }
+    ]}
+  >
+    <Modal.Section>
+      <Text>Are you sure you want to delete this product? This action cannot be undone.</Text>
+    </Modal.Section>
+  </Modal>
+</Page>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { PageActions, Card, Text, BlockStack, Page, Modal } from 'svelte-polaris';
+  
+  let showDeleteModal = false;
+  
+  function handleEdit() {
+    console.log('Edit product');
+  }
+  
+  function handleDuplicate() {
+    console.log('Duplicate product');
+  }
+  
+  function handleDelete() {
+    showDeleteModal = true;
+  }
+  
+  function confirmDelete() {
+    console.log('Deleting product');
+    showDeleteModal = false;
+  }
+  
+  function cancelDelete() {
+    showDeleteModal = false;
+  }
+</script>
+
+<Page title="Product Details">
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Wireless Bluetooth Headphones</Text>
+      <Text>Premium wireless headphones with active noise cancellation and 30-hour battery life.</Text>
+      <Text>Price: $199.99</Text>
+      <Text>Status: Active</Text>
+    </BlockStack>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Edit product',
+      onAction: handleEdit
+    }}
+    secondaryActions={[
+      {
+        content: 'Duplicate',
+        onAction: handleDuplicate
+      },
+      {
+        content: 'Delete product',
+        onAction: handleDelete,
+        destructive: true
+      }
+    ]}
+  />
+  
+  <Modal
+    open={showDeleteModal}
+    onClose={cancelDelete}
+    title="Delete product"
+    primaryAction={{
+      content: 'Delete',
+      onAction: confirmDelete,
+      destructive: true
+    }}
+    secondaryActions={[
+      {
+        content: 'Cancel',
+        onAction: cancelDelete
+      }
+    ]}
+  >
+    <Modal.Section>
+      <Text>Are you sure you want to delete this product? This action cannot be undone.</Text>
+    </Modal.Section>
+  </Modal>
+</Page>
+```
+</TabItem>
+</Tabs>
+
+### Page actions with multiple secondary actions
+
+Provide multiple secondary actions when users have several options.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { PageActions, Card, FormLayout, TextField, Select, Page } from 'svelte-polaris';
+  
+  let orderNumber = '#1001';
+  let customerName = 'John Doe';
+  let orderStatus = 'pending';
+  
+  const statusOptions = [
+    { label: 'Pending', value: 'pending' },
+    { label: 'Processing', value: 'processing' },
+    { label: 'Shipped', value: 'shipped' },
+    { label: 'Delivered', value: 'delivered' },
+    { label: 'Cancelled', value: 'cancelled' }
+  ];
+  
+  function handleSave() {
+    console.log('Saving order');
+  }
+  
+  function handlePrint() {
+    console.log('Printing order');
+  }
+  
+  function handleEmail() {
+    console.log('Emailing order');
+  }
+  
+  function handleRefund() {
+    console.log('Processing refund');
+  }
+  
+  function handleCancel() {
+    console.log('Cancelling order');
+  }
+</script>
+
+<Page title="Order Details">
+  <Card>
+    <FormLayout>
+      <TextField
+        label="Order number"
+        bind:value={orderNumber}
+        disabled
+        autoComplete="off"
+      />
+      <TextField
+        label="Customer name"
+        bind:value={customerName}
+        autoComplete="name"
+      />
+      <Select
+        label="Order status"
+        options={statusOptions}
+        bind:value={orderStatus}
+      />
+    </FormLayout>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Save changes',
+      onAction: handleSave
+    }}
+    secondaryActions={[
+      {
+        content: 'Print order',
+        onAction: handlePrint
+      },
+      {
+        content: 'Email customer',
+        onAction: handleEmail
+      },
+      {
+        content: 'Process refund',
+        onAction: handleRefund
+      },
+      {
+        content: 'Cancel order',
+        onAction: handleCancel,
+        destructive: true
+      }
+    ]}
+  />
+</Page>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { PageActions, Card, FormLayout, TextField, Select, Page } from 'svelte-polaris';
+  
+  let orderNumber = '#1001';
+  let customerName = 'John Doe';
+  let orderStatus = 'pending';
+  
+  const statusOptions = [
+    { label: 'Pending', value: 'pending' },
+    { label: 'Processing', value: 'processing' },
+    { label: 'Shipped', value: 'shipped' },
+    { label: 'Delivered', value: 'delivered' },
+    { label: 'Cancelled', value: 'cancelled' }
+  ];
+  
+  function handleSave() {
+    console.log('Saving order');
+  }
+  
+  function handlePrint() {
+    console.log('Printing order');
+  }
+  
+  function handleEmail() {
+    console.log('Emailing order');
+  }
+  
+  function handleRefund() {
+    console.log('Processing refund');
+  }
+  
+  function handleCancel() {
+    console.log('Cancelling order');
+  }
+</script>
+
+<Page title="Order Details">
+  <Card>
+    <FormLayout>
+      <TextField
+        label="Order number"
+        bind:value={orderNumber}
+        disabled
+        autoComplete="off"
+      />
+      <TextField
+        label="Customer name"
+        bind:value={customerName}
+        autoComplete="name"
+      />
+      <Select
+        label="Order status"
+        options={statusOptions}
+        bind:value={orderStatus}
+      />
+    </FormLayout>
+  </Card>
+  
+  <PageActions
+    primaryAction={{
+      content: 'Save changes',
+      onAction: handleSave
+    }}
+    secondaryActions={[
+      {
+        content: 'Print order',
+        onAction: handlePrint
+      },
+      {
+        content: 'Email customer',
+        onAction: handleEmail
+      },
+      {
+        content: 'Process refund',
+        onAction: handleRefund
+      },
+      {
+        content: 'Cancel order',
+        onAction: handleCancel,
+        destructive: true
+      }
+    ]}
+  />
+</Page>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### PageActions props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `primaryAction` | `Action` | | Primary action button |
+| `secondaryActions` | `Action[]` | | Array of secondary actions |
+
+### Action type
+
+```typescript
+type Action = {
+  content: string;
+  onAction: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+  destructive?: boolean;
+  external?: boolean;
+  url?: string;
+  accessibilityLabel?: string;
+}
+```
+
+## Best practices
+
+- Always provide a primary action that represents the main task
+- Use clear, action-oriented labels for buttons
+- Place the most important action as the primary action
+- Limit secondary actions to avoid overwhelming users
+- Use loading states to provide feedback during processing
+- Disable actions when they're not available or valid
+- Use destructive styling for irreversible actions
+- Provide confirmation dialogs for destructive actions
+- Consider the order of secondary actions by importance
+- Test with keyboard navigation and screen readers
+
+## Accessibility
+
+- Actions are keyboard accessible with proper focus management
+- Button labels are descriptive and action-oriented
+- Loading states are announced to screen readers
+- Disabled states are properly communicated
+- Destructive actions are clearly identified
+- Focus returns appropriately after modal interactions
+- High contrast mode displays actions clearly
+- Touch targets meet minimum size requirements
+- Screen readers can navigate between actions effectively
+- Action states (loading, disabled) are announced
+
+## Layout behavior
+
+- PageActions stick to the bottom of the page content
+- Actions are right-aligned on desktop, full-width on mobile
+- Primary action appears first (rightmost) on desktop
+- Secondary actions are ordered by importance
+- Actions wrap to multiple lines on narrow screens
+- Proper spacing is maintained between actions
+- Actions remain accessible when content scrolls
+- Layout adapts to different screen sizes appropriately
+
+## Related components
+
+- Use [Button](/getting-started/button) for individual actions
+- Use [ButtonGroup](/getting-started/button-group) for grouped actions
+- Use [Modal](/getting-started/modal) for confirmation dialogs
+- Use [Toast](/getting-started/toast) for action feedback
+- Use [Page](/getting-started/page) as the container for PageActions
+- Use [Card](/getting-started/card) for page content sections

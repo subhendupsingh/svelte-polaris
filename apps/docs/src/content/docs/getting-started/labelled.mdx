@@ -1,0 +1,533 @@
+---
+title: Labelled
+description: Labelled provides a consistent layout for form controls with labels, help text, and error messages.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Labelled provides a consistent layout for form controls with labels, help text, and error messages. It handles the proper association between labels and controls while providing a standardized visual structure.
+
+## Examples
+
+### Basic labelled control
+
+Use Labelled to wrap form controls with consistent label styling and layout.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Labelled, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let email = '';
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Labelled id="email" label="Email address">
+      <TextField
+        type="email"
+        bind:value={email}
+        autoComplete="email"
+      />
+    </Labelled>
+    
+    <Labelled id="phone" label="Phone number" helpText="Include country code">
+      <TextField
+        type="tel"
+        autoComplete="tel"
+      />
+    </Labelled>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Labelled, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let email = '';
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Labelled id="email" label="Email address">
+      <TextField
+        type="email"
+        bind:value={email}
+        autoComplete="email"
+      />
+    </Labelled>
+    
+    <Labelled id="phone" label="Phone number" helpText="Include country code">
+      <TextField
+        type="tel"
+        autoComplete="tel"
+      />
+    </Labelled>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Required fields
+
+Show required indicators and handle validation states.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Labelled, TextField, Select, Card, FormLayout } from 'svelte-polaris';
+  
+  let firstName = '';
+  let lastName = '';
+  let country = '';
+  let errors = {};
+  
+  const countryOptions = [
+    { label: 'Select country', value: '' },
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+  
+  function validateField(field, value) {
+    const newErrors = { ...errors };
+    
+    if (field === 'firstName' && !value.trim()) {
+      newErrors.firstName = 'First name is required';
+    } else if (field === 'firstName') {
+      delete newErrors.firstName;
+    }
+    
+    if (field === 'lastName' && !value.trim()) {
+      newErrors.lastName = 'Last name is required';
+    } else if (field === 'lastName') {
+      delete newErrors.lastName;
+    }
+    
+    if (field === 'country' && !value) {
+      newErrors.country = 'Please select a country';
+    } else if (field === 'country') {
+      delete newErrors.country;
+    }
+    
+    errors = newErrors;
+  }
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group>
+      <Labelled 
+        id="first-name" 
+        label="First name" 
+        required
+        error={errors.firstName}
+      >
+        <TextField
+          bind:value={firstName}
+          onBlur={() => validateField('firstName', firstName)}
+          error={errors.firstName ? true : false}
+          autoComplete="given-name"
+        />
+      </Labelled>
+      
+      <Labelled 
+        id="last-name" 
+        label="Last name" 
+        required
+        error={errors.lastName}
+      >
+        <TextField
+          bind:value={lastName}
+          onBlur={() => validateField('lastName', lastName)}
+          error={errors.lastName ? true : false}
+          autoComplete="family-name"
+        />
+      </Labelled>
+    </FormLayout.Group>
+    
+    <Labelled 
+      id="country" 
+      label="Country" 
+      required
+      error={errors.country}
+      helpText="Select your country of residence"
+    >
+      <Select
+        options={countryOptions}
+        bind:value={country}
+        onChange={() => validateField('country', country)}
+        error={errors.country ? true : false}
+      />
+    </Labelled>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Labelled, TextField, Select, Card, FormLayout } from 'svelte-polaris';
+  
+  let firstName = '';
+  let lastName = '';
+  let country = '';
+  let errors = {};
+  
+  const countryOptions = [
+    { label: 'Select country', value: '' },
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+  
+  function validateField(field, value) {
+    const newErrors = { ...errors };
+    
+    if (field === 'firstName' && !value.trim()) {
+      newErrors.firstName = 'First name is required';
+    } else if (field === 'firstName') {
+      delete newErrors.firstName;
+    }
+    
+    if (field === 'lastName' && !value.trim()) {
+      newErrors.lastName = 'Last name is required';
+    } else if (field === 'lastName') {
+      delete newErrors.lastName;
+    }
+    
+    if (field === 'country' && !value) {
+      newErrors.country = 'Please select a country';
+    } else if (field === 'country') {
+      delete newErrors.country;
+    }
+    
+    errors = newErrors;
+  }
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group>
+      <Labelled 
+        id="first-name" 
+        label="First name" 
+        required
+        error={errors.firstName}
+      >
+        <TextField
+          bind:value={firstName}
+          onBlur={() => validateField('firstName', firstName)}
+          error={errors.firstName ? true : false}
+          autoComplete="given-name"
+        />
+      </Labelled>
+      
+      <Labelled 
+        id="last-name" 
+        label="Last name" 
+        required
+        error={errors.lastName}
+      >
+        <TextField
+          bind:value={lastName}
+          onBlur={() => validateField('lastName', lastName)}
+          error={errors.lastName ? true : false}
+          autoComplete="family-name"
+        />
+      </Labelled>
+    </FormLayout.Group>
+    
+    <Labelled 
+      id="country" 
+      label="Country" 
+      required
+      error={errors.country}
+      helpText="Select your country of residence"
+    >
+      <Select
+        options={countryOptions}
+        bind:value={country}
+        onChange={() => validateField('country', country)}
+        error={errors.country ? true : false}
+      />
+    </Labelled>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Hidden labels
+
+Use hidden labels when visual labels aren't needed but accessibility is required.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Labelled, TextField, Button, Card, InlineStack } from 'svelte-polaris';
+  
+  let searchQuery = '';
+  let filterQuery = '';
+  
+  function handleSearch() {
+    console.log('Searching for:', searchQuery);
+  }
+  
+  function handleFilter() {
+    console.log('Filtering by:', filterQuery);
+  }
+</script>
+
+<Card>
+  <InlineStack gap="200" align="end">
+    <div style="flex: 1;">
+      <Labelled id="search" label="Search products" labelHidden>
+        <TextField
+          placeholder="Search products..."
+          bind:value={searchQuery}
+          autoComplete="off"
+        />
+      </Labelled>
+    </div>
+    
+    <div style="flex: 1;">
+      <Labelled id="filter" label="Filter by category" labelHidden>
+        <TextField
+          placeholder="Filter by category..."
+          bind:value={filterQuery}
+          autoComplete="off"
+        />
+      </Labelled>
+    </div>
+    
+    <Button onClick={handleSearch}>Search</Button>
+  </InlineStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Labelled, TextField, Button, Card, InlineStack } from 'svelte-polaris';
+  
+  let searchQuery = '';
+  let filterQuery = '';
+  
+  function handleSearch() {
+    console.log('Searching for:', searchQuery);
+  }
+  
+  function handleFilter() {
+    console.log('Filtering by:', filterQuery);
+  }
+</script>
+
+<Card>
+  <InlineStack gap="200" align="end">
+    <div style="flex: 1;">
+      <Labelled id="search" label="Search products" labelHidden>
+        <TextField
+          placeholder="Search products..."
+          bind:value={searchQuery}
+          autoComplete="off"
+        />
+      </Labelled>
+    </div>
+    
+    <div style="flex: 1;">
+      <Labelled id="filter" label="Filter by category" labelHidden>
+        <TextField
+          placeholder="Filter by category..."
+          bind:value={filterQuery}
+          autoComplete="off"
+        />
+      </Labelled>
+    </div>
+    
+    <Button onClick={handleSearch}>Search</Button>
+  </InlineStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Label actions
+
+Add actions to labels for additional functionality.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Labelled, TextField, Button, Card, BlockStack } from 'svelte-polaris';
+  
+  let apiKey = '';
+  let showApiKey = false;
+  
+  function generateApiKey() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = 'sk_';
+    for (let i = 0; i < 32; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    apiKey = result;
+  }
+  
+  function toggleVisibility() {
+    showApiKey = !showApiKey;
+  }
+  
+  const labelAction = {
+    content: 'Generate new key',
+    onAction: generateApiKey
+  };
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Labelled 
+      id="api-key" 
+      label="API Key" 
+      helpText="Keep your API key secure and don't share it publicly"
+      action={labelAction}
+    >
+      <TextField
+        type={showApiKey ? 'text' : 'password'}
+        bind:value={apiKey}
+        autoComplete="off"
+        suffix={
+          <Button 
+            variant="plain" 
+            size="micro" 
+            onClick={toggleVisibility}
+          >
+            {showApiKey ? 'Hide' : 'Show'}
+          </Button>
+        }
+      />
+    </Labelled>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Labelled, TextField, Button, Card, BlockStack } from 'svelte-polaris';
+  
+  let apiKey = '';
+  let showApiKey = false;
+  
+  function generateApiKey() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = 'sk_';
+    for (let i = 0; i < 32; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    apiKey = result;
+  }
+  
+  function toggleVisibility() {
+    showApiKey = !showApiKey;
+  }
+  
+  const labelAction = {
+    content: 'Generate new key',
+    onAction: generateApiKey
+  };
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Labelled 
+      id="api-key" 
+      label="API Key" 
+      helpText="Keep your API key secure and don't share it publicly"
+      action={labelAction}
+    >
+      <TextField
+        type={showApiKey ? 'text' : 'password'}
+        bind:value={apiKey}
+        autoComplete="off"
+        suffix={
+          <Button 
+            variant="plain" 
+            size="micro" 
+            onClick={toggleVisibility}
+          >
+            {showApiKey ? 'Hide' : 'Show'}
+          </Button>
+        }
+      />
+    </Labelled>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Labelled props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | | Unique identifier for the labelled control |
+| `label` | `string` | | Text for the label |
+| `labelHidden` | `boolean` | `false` | Visually hide the label |
+| `required` | `boolean` | `false` | Show required indicator |
+| `helpText` | `string` | | Help text displayed below the control |
+| `error` | `string \| boolean` | | Error message or error state |
+| `action` | `Action` | | Action button displayed next to the label |
+
+### Action type
+
+```typescript
+type Action = {
+  content: string;
+  onAction: () => void;
+  disabled?: boolean;
+}
+```
+
+## Best practices
+
+- Use Labelled for consistent form control styling across your application
+- Provide clear, descriptive label text that explains the control's purpose
+- Include help text for complex or unfamiliar controls
+- Use required indicators for mandatory fields
+- Position error messages close to their associated controls
+- Keep help text concise but informative
+- Use label actions sparingly for truly helpful functionality
+- Test the layout with different content lengths
+- Ensure proper keyboard navigation between controls
+- Maintain consistent spacing and alignment
+
+## Accessibility
+
+- Labels are properly associated with form controls
+- Required state is communicated to screen readers
+- Error messages are announced when they appear
+- Help text is accessible via aria-describedby
+- Hidden labels remain accessible to assistive technologies
+- Focus management works correctly with label actions
+- Keyboard navigation flows logically through the form
+- Color is not the only indicator for required or error states
+- Text has sufficient contrast ratios
+- Screen readers announce all relevant information
+
+## Related components
+
+- Use [Label](/getting-started/label) for standalone label elements
+- Use [TextField](/getting-started/text-field) as common labelled controls
+- Use [Select](/getting-started/select) with Labelled for dropdowns
+- Use [FormLayout](/getting-started/form-layout) to organize labelled controls
+- Use [InlineError](/getting-started/inline-error) for field-specific errors
+- Use [Form](/getting-started/form) for overall form structure

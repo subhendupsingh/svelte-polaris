@@ -1,0 +1,674 @@
+---
+title: ResourceItem
+description: ResourceItem displays individual items in a list with consistent layout, actions, and selection capabilities.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+ResourceItem displays individual items in a list with consistent layout, actions, and selection capabilities. It's commonly used in ResourceList components to show products, customers, orders, and other data with a standardized format.
+
+## Examples
+
+### Basic resource item
+
+Use ResourceItem to display individual items with media, content, and actions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceItem, ResourceList, Avatar, Text, Badge, Button } from 'svelte-polaris';
+  
+  const customers = [
+    {
+      id: '1',
+      name: 'John Smith',
+      email: 'john.smith@example.com',
+      location: 'New York, NY',
+      orders: 12,
+      totalSpent: '$2,400.00',
+      status: 'active'
+    },
+    {
+      id: '2', 
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@example.com',
+      location: 'Los Angeles, CA',
+      orders: 8,
+      totalSpent: '$1,850.00',
+      status: 'active'
+    },
+    {
+      id: '3',
+      name: 'Mike Davis',
+      email: 'mike.davis@example.com', 
+      location: 'Chicago, IL',
+      orders: 3,
+      totalSpent: '$450.00',
+      status: 'inactive'
+    }
+  ];
+  
+  function handleCustomerClick(customerId) {
+    console.log('View customer:', customerId);
+  }
+  
+  function handleEditCustomer(customerId) {
+    console.log('Edit customer:', customerId);
+  }
+</script>
+
+<ResourceList>
+  {#each customers as customer}
+    <ResourceItem
+      id={customer.id}
+      onClick={() => handleCustomerClick(customer.id)}
+      media={<Avatar customer={{ firstName: customer.name.split(' ')[0], lastName: customer.name.split(' ')[1] }} />}
+      shortcutActions={[
+        {
+          content: 'Edit',
+          onAction: () => handleEditCustomer(customer.id)
+        }
+      ]}
+    >
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <Text variant="bodyMd" fontWeight="semibold">{customer.name}</Text>
+          <Text variant="bodySm" color="subdued">{customer.email}</Text>
+          <Text variant="bodySm" color="subdued">{customer.location}</Text>
+        </div>
+        <div style="text-align: right;">
+          <Text variant="bodySm">{customer.orders} orders</Text>
+          <Text variant="bodySm" fontWeight="semibold">{customer.totalSpent}</Text>
+          <Badge tone={customer.status === 'active' ? 'success' : 'critical'}>
+            {customer.status}
+          </Badge>
+        </div>
+      </div>
+    </ResourceItem>
+  {/each}
+</ResourceList>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceItem, ResourceList, Avatar, Text, Badge, Button } from 'svelte-polaris';
+  
+  const customers = [
+    {
+      id: '1',
+      name: 'John Smith',
+      email: 'john.smith@example.com',
+      location: 'New York, NY',
+      orders: 12,
+      totalSpent: '$2,400.00',
+      status: 'active'
+    },
+    {
+      id: '2', 
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@example.com',
+      location: 'Los Angeles, CA',
+      orders: 8,
+      totalSpent: '$1,850.00',
+      status: 'active'
+    },
+    {
+      id: '3',
+      name: 'Mike Davis',
+      email: 'mike.davis@example.com', 
+      location: 'Chicago, IL',
+      orders: 3,
+      totalSpent: '$450.00',
+      status: 'inactive'
+    }
+  ];
+  
+  function handleCustomerClick(customerId) {
+    console.log('View customer:', customerId);
+  }
+  
+  function handleEditCustomer(customerId) {
+    console.log('Edit customer:', customerId);
+  }
+</script>
+
+<ResourceList>
+  {#each customers as customer}
+    <ResourceItem
+      id={customer.id}
+      onClick={() => handleCustomerClick(customer.id)}
+      media={<Avatar customer={{ firstName: customer.name.split(' ')[0], lastName: customer.name.split(' ')[1] }} />}
+      shortcutActions={[
+        {
+          content: 'Edit',
+          onAction: () => handleEditCustomer(customer.id)
+        }
+      ]}
+    >
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <Text variant="bodyMd" fontWeight="semibold">{customer.name}</Text>
+          <Text variant="bodySm" color="subdued">{customer.email}</Text>
+          <Text variant="bodySm" color="subdued">{customer.location}</Text>
+        </div>
+        <div style="text-align: right;">
+          <Text variant="bodySm">{customer.orders} orders</Text>
+          <Text variant="bodySm" fontWeight="semibold">{customer.totalSpent}</Text>
+          <Badge tone={customer.status === 'active' ? 'success' : 'critical'}>
+            {customer.status}
+          </Badge>
+        </div>
+      </div>
+    </ResourceItem>
+  {/each}
+</ResourceList>
+```
+</TabItem>
+</Tabs>
+
+### Selectable resource items
+
+Allow users to select multiple items for bulk actions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceItem, ResourceList, Thumbnail, Text, Badge, Button, InlineStack } from 'svelte-polaris';
+  
+  let selectedItems = [];
+  
+  const products = [
+    {
+      id: '1',
+      name: 'Wireless Headphones',
+      sku: 'WH-001',
+      price: '$199.99',
+      inventory: 45,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop'
+    },
+    {
+      id: '2',
+      name: 'Bluetooth Speaker',
+      sku: 'BS-002', 
+      price: '$89.99',
+      inventory: 23,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=100&h=100&fit=crop'
+    },
+    {
+      id: '3',
+      name: 'USB Cable',
+      sku: 'UC-003',
+      price: '$12.99',
+      inventory: 0,
+      status: 'out_of_stock',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&h=100&fit=crop'
+    }
+  ];
+  
+  function handleSelectionChange(selected) {
+    selectedItems = selected;
+  }
+  
+  function handleProductClick(productId) {
+    console.log('View product:', productId);
+  }
+  
+  function handleEditProduct(productId) {
+    console.log('Edit product:', productId);
+  }
+  
+  function handleDuplicateProduct(productId) {
+    console.log('Duplicate product:', productId);
+  }
+  
+  function handleBulkEdit() {
+    console.log('Bulk edit products:', selectedItems);
+  }
+  
+  function handleBulkDelete() {
+    console.log('Bulk delete products:', selectedItems);
+  }
+</script>
+
+<div>
+  {#if selectedItems.length > 0}
+    <div style="margin-bottom: 16px;">
+      <InlineStack gap="200">
+        <Text>{selectedItems.length} items selected</Text>
+        <Button onClick={handleBulkEdit}>Edit selected</Button>
+        <Button onClick={handleBulkDelete} tone="critical">Delete selected</Button>
+      </InlineStack>
+    </div>
+  {/if}
+  
+  <ResourceList
+    selectedItems={selectedItems}
+    onSelectionChange={handleSelectionChange}
+    selectable
+  >
+    {#each products as product}
+      <ResourceItem
+        id={product.id}
+        onClick={() => handleProductClick(product.id)}
+        media={<Thumbnail source={product.image} alt={product.name} />}
+        shortcutActions={[
+          {
+            content: 'Edit',
+            onAction: () => handleEditProduct(product.id)
+          },
+          {
+            content: 'Duplicate',
+            onAction: () => handleDuplicateProduct(product.id)
+          }
+        ]}
+      >
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <Text variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+            <Text variant="bodySm" color="subdued">SKU: {product.sku}</Text>
+            <Text variant="bodySm" color="subdued">Inventory: {product.inventory} units</Text>
+          </div>
+          <div style="text-align: right;">
+            <Text variant="bodyMd" fontWeight="semibold">{product.price}</Text>
+            <Badge tone={product.status === 'active' ? 'success' : 'critical'}>
+              {product.status === 'out_of_stock' ? 'Out of stock' : product.status}
+            </Badge>
+          </div>
+        </div>
+      </ResourceItem>
+    {/each}
+  </ResourceList>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceItem, ResourceList, Thumbnail, Text, Badge, Button, InlineStack } from 'svelte-polaris';
+  
+  let selectedItems = [];
+  
+  const products = [
+    {
+      id: '1',
+      name: 'Wireless Headphones',
+      sku: 'WH-001',
+      price: '$199.99',
+      inventory: 45,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop'
+    },
+    {
+      id: '2',
+      name: 'Bluetooth Speaker',
+      sku: 'BS-002', 
+      price: '$89.99',
+      inventory: 23,
+      status: 'active',
+      image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=100&h=100&fit=crop'
+    },
+    {
+      id: '3',
+      name: 'USB Cable',
+      sku: 'UC-003',
+      price: '$12.99',
+      inventory: 0,
+      status: 'out_of_stock',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100&h=100&fit=crop'
+    }
+  ];
+  
+  function handleSelectionChange(selected) {
+    selectedItems = selected;
+  }
+  
+  function handleProductClick(productId) {
+    console.log('View product:', productId);
+  }
+  
+  function handleEditProduct(productId) {
+    console.log('Edit product:', productId);
+  }
+  
+  function handleDuplicateProduct(productId) {
+    console.log('Duplicate product:', productId);
+  }
+  
+  function handleBulkEdit() {
+    console.log('Bulk edit products:', selectedItems);
+  }
+  
+  function handleBulkDelete() {
+    console.log('Bulk delete products:', selectedItems);
+  }
+</script>
+
+<div>
+  {#if selectedItems.length > 0}
+    <div style="margin-bottom: 16px;">
+      <InlineStack gap="200">
+        <Text>{selectedItems.length} items selected</Text>
+        <Button onClick={handleBulkEdit}>Edit selected</Button>
+        <Button onClick={handleBulkDelete} tone="critical">Delete selected</Button>
+      </InlineStack>
+    </div>
+  {/if}
+  
+  <ResourceList
+    selectedItems={selectedItems}
+    onSelectionChange={handleSelectionChange}
+    selectable
+  >
+    {#each products as product}
+      <ResourceItem
+        id={product.id}
+        onClick={() => handleProductClick(product.id)}
+        media={<Thumbnail source={product.image} alt={product.name} />}
+        shortcutActions={[
+          {
+            content: 'Edit',
+            onAction: () => handleEditProduct(product.id)
+          },
+          {
+            content: 'Duplicate',
+            onAction: () => handleDuplicateProduct(product.id)
+          }
+        ]}
+      >
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <Text variant="bodyMd" fontWeight="semibold">{product.name}</Text>
+            <Text variant="bodySm" color="subdued">SKU: {product.sku}</Text>
+            <Text variant="bodySm" color="subdued">Inventory: {product.inventory} units</Text>
+          </div>
+          <div style="text-align: right;">
+            <Text variant="bodyMd" fontWeight="semibold">{product.price}</Text>
+            <Badge tone={product.status === 'active' ? 'success' : 'critical'}>
+              {product.status === 'out_of_stock' ? 'Out of stock' : product.status}
+            </Badge>
+          </div>
+        </div>
+      </ResourceItem>
+    {/each}
+  </ResourceList>
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Resource item with persistent actions
+
+Display actions that are always visible instead of hidden in a menu.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ResourceItem, ResourceList, Avatar, Text, Badge, Button, InlineStack } from 'svelte-polaris';
+  
+  const orders = [
+    {
+      id: '1001',
+      customer: 'John Smith',
+      date: '2024-01-15',
+      total: '$299.99',
+      status: 'pending',
+      items: 3
+    },
+    {
+      id: '1002',
+      customer: 'Sarah Johnson', 
+      date: '2024-01-14',
+      total: '$149.50',
+      status: 'shipped',
+      items: 2
+    },
+    {
+      id: '1003',
+      customer: 'Mike Davis',
+      date: '2024-01-13',
+      total: '$89.99',
+      status: 'delivered',
+      items: 1
+    }
+  ];
+  
+  function handleViewOrder(orderId) {
+    console.log('View order:', orderId);
+  }
+  
+  function handleFulfillOrder(orderId) {
+    console.log('Fulfill order:', orderId);
+  }
+  
+  function handleRefundOrder(orderId) {
+    console.log('Refund order:', orderId);
+  }
+  
+  function handlePrintOrder(orderId) {
+    console.log('Print order:', orderId);
+  }
+</script>
+
+<ResourceList>
+  {#each orders as order}
+    <ResourceItem
+      id={order.id}
+      onClick={() => handleViewOrder(order.id)}
+      persistActions
+    >
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <Text variant="bodyMd" fontWeight="semibold">Order #{order.id}</Text>
+          <Text variant="bodySm" color="subdued">{order.customer}</Text>
+          <Text variant="bodySm" color="subdued">{order.date} • {order.items} items</Text>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="text-align: right;">
+            <Text variant="bodyMd" fontWeight="semibold">{order.total}</Text>
+            <Badge tone={
+              order.status === 'delivered' ? 'success' : 
+              order.status === 'shipped' ? 'info' : 
+              order.status === 'pending' ? 'warning' : 'critical'
+            }>
+              {order.status}
+            </Badge>
+          </div>
+          
+          <InlineStack gap="100">
+            {#if order.status === 'pending'}
+              <Button size="slim" onClick={() => handleFulfillOrder(order.id)}>
+                Fulfill
+              </Button>
+            {/if}
+            <Button size="slim" variant="plain" onClick={() => handlePrintOrder(order.id)}>
+              Print
+            </Button>
+            <Button size="slim" variant="plain" tone="critical" onClick={() => handleRefundOrder(order.id)}>
+              Refund
+            </Button>
+          </InlineStack>
+        </div>
+      </div>
+    </ResourceItem>
+  {/each}
+</ResourceList>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ResourceItem, ResourceList, Avatar, Text, Badge, Button, InlineStack } from 'svelte-polaris';
+  
+  const orders = [
+    {
+      id: '1001',
+      customer: 'John Smith',
+      date: '2024-01-15',
+      total: '$299.99',
+      status: 'pending',
+      items: 3
+    },
+    {
+      id: '1002',
+      customer: 'Sarah Johnson', 
+      date: '2024-01-14',
+      total: '$149.50',
+      status: 'shipped',
+      items: 2
+    },
+    {
+      id: '1003',
+      customer: 'Mike Davis',
+      date: '2024-01-13',
+      total: '$89.99',
+      status: 'delivered',
+      items: 1
+    }
+  ];
+  
+  function handleViewOrder(orderId) {
+    console.log('View order:', orderId);
+  }
+  
+  function handleFulfillOrder(orderId) {
+    console.log('Fulfill order:', orderId);
+  }
+  
+  function handleRefundOrder(orderId) {
+    console.log('Refund order:', orderId);
+  }
+  
+  function handlePrintOrder(orderId) {
+    console.log('Print order:', orderId);
+  }
+</script>
+
+<ResourceList>
+  {#each orders as order}
+    <ResourceItem
+      id={order.id}
+      onClick={() => handleViewOrder(order.id)}
+      persistActions
+    >
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <Text variant="bodyMd" fontWeight="semibold">Order #{order.id}</Text>
+          <Text variant="bodySm" color="subdued">{order.customer}</Text>
+          <Text variant="bodySm" color="subdued">{order.date} • {order.items} items</Text>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="text-align: right;">
+            <Text variant="bodyMd" fontWeight="semibold">{order.total}</Text>
+            <Badge tone={
+              order.status === 'delivered' ? 'success' : 
+              order.status === 'shipped' ? 'info' : 
+              order.status === 'pending' ? 'warning' : 'critical'
+            }>
+              {order.status}
+            </Badge>
+          </div>
+          
+          <InlineStack gap="100">
+            {#if order.status === 'pending'}
+              <Button size="slim" onClick={() => handleFulfillOrder(order.id)}>
+                Fulfill
+              </Button>
+            {/if}
+            <Button size="slim" variant="plain" onClick={() => handlePrintOrder(order.id)}>
+              Print
+            </Button>
+            <Button size="slim" variant="plain" tone="critical" onClick={() => handleRefundOrder(order.id)}>
+              Refund
+            </Button>
+          </InlineStack>
+        </div>
+      </div>
+    </ResourceItem>
+  {/each}
+</ResourceList>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### ResourceItem props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | | Unique identifier for the item |
+| `onClick` | `() => void` | | Callback when item is clicked |
+| `media` | `ReactNode` | | Media element (avatar, thumbnail, etc.) |
+| `shortcutActions` | `Action[]` | | Actions available in overflow menu |
+| `persistActions` | `boolean` | `false` | Show actions persistently instead of in menu |
+| `accessibilityLabel` | `string` | | Label for screen readers |
+| `name` | `string` | | Name of the resource for accessibility |
+
+### Action type
+
+```typescript
+type Action = {
+  content: string;
+  onAction: () => void;
+  disabled?: boolean;
+  destructive?: boolean;
+  external?: boolean;
+  icon?: string;
+  accessibilityLabel?: string;
+}
+```
+
+## Best practices
+
+- Use consistent layout and information hierarchy across items
+- Include relevant media (avatars, thumbnails) to aid recognition
+- Provide clear primary information (name, title, identifier)
+- Show secondary information that helps users make decisions
+- Use badges and status indicators appropriately
+- Limit the number of shortcut actions to avoid clutter
+- Use persistent actions for frequently used operations
+- Make the entire item clickable for primary actions
+- Provide clear visual feedback for selection states
+- Test with different content lengths and screen sizes
+
+## Accessibility
+
+- Items are keyboard accessible and focusable
+- Screen readers can navigate between items effectively
+- Selection state is properly announced
+- Actions have descriptive labels and keyboard access
+- Media elements have appropriate alt text
+- Focus management works correctly with selection
+- High contrast mode displays items clearly
+- Touch targets meet minimum size requirements
+- Item content is structured with proper headings
+- Loading and error states are communicated clearly
+
+## Layout patterns
+
+- Use consistent spacing and alignment across items
+- Align similar information vertically for easy scanning
+- Place primary information prominently on the left
+- Position secondary information and actions on the right
+- Use appropriate text hierarchy and sizing
+- Ensure adequate touch targets for mobile devices
+- Handle long content gracefully with truncation
+- Maintain consistent item heights when possible
+
+## Related components
+
+- Use [ResourceList](/getting-started/resource-list) as the container for ResourceItem
+- Use [Avatar](/getting-started/avatar) for customer and user representations
+- Use [Thumbnail](/getting-started/thumbnail) for product and media representations
+- Use [Badge](/getting-started/badge) for status and category indicators
+- Use [Button](/getting-started/button) for item actions
+- Use [Text](/getting-started/text) for consistent typography
+- Use [Checkbox](/getting-started/checkbox) for item selection (handled by ResourceList)

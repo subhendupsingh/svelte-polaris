@@ -1,0 +1,389 @@
+---
+title: SettingAction
+description: SettingAction provides a consistent way to present settings with actions in a structured layout.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+SettingAction provides a consistent way to present settings with actions in a structured layout. It's commonly used in settings pages to display configuration options with their corresponding actions.
+
+## Examples
+
+### Basic setting action
+
+Use SettingAction to display a setting with an associated action.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+  
+  function handleAction() {
+    console.log('Setting action triggered');
+  }
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Customize',
+      onAction: handleAction
+    }}
+  >
+    <p><strong>Store details</strong></p>
+    <p>Shopify and your customers will use this information to contact you.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+  
+  function handleAction() {
+    console.log('Setting action triggered');
+  }
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Customize',
+      onAction: handleAction
+    }}
+  >
+    <p><strong>Store details</strong></p>
+    <p>Shopify and your customers will use this information to contact you.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Setting with destructive action
+
+Use a destructive action for settings that perform irreversible operations.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+  
+  function handleDelete() {
+    if (confirm('Are you sure you want to delete this data?')) {
+      console.log('Data deleted');
+    }
+  }
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Delete',
+      destructive: true,
+      onAction: handleDelete
+    }}
+  >
+    <p><strong>Delete all data</strong></p>
+    <p>Permanently remove all customer data from your store. This action cannot be undone.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+  
+  function handleDelete() {
+    if (confirm('Are you sure you want to delete this data?')) {
+      console.log('Data deleted');
+    }
+  }
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Delete',
+      destructive: true,
+      onAction: handleDelete
+    }}
+  >
+    <p><strong>Delete all data</strong></p>
+    <p>Permanently remove all customer data from your store. This action cannot be undone.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Setting with disabled action
+
+Use disabled actions when the setting is not currently available.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Configure',
+      disabled: true
+    }}
+  >
+    <p><strong>Advanced features</strong></p>
+    <p>Upgrade your plan to access advanced store features and customization options.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Configure',
+      disabled: true
+    }}
+  >
+    <p><strong>Advanced features</strong></p>
+    <p>Upgrade your plan to access advanced store features and customization options.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Multiple setting actions
+
+Use multiple SettingAction components to create a settings page layout.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { SettingAction, Card, BlockStack } from 'svelte-polaris';
+  
+  function handleStoreDetails() {
+    console.log('Store details action');
+  }
+  
+  function handlePayments() {
+    console.log('Payments action');
+  }
+  
+  function handleShipping() {
+    console.log('Shipping action');
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <SettingAction
+      action={{
+        content: 'Manage',
+        onAction: handleStoreDetails
+      }}
+    >
+      <p><strong>Store details</strong></p>
+      <p>Legal business name, address, and contact information.</p>
+    </SettingAction>
+    
+    <SettingAction
+      action={{
+        content: 'Configure',
+        onAction: handlePayments
+      }}
+    >
+      <p><strong>Payment providers</strong></p>
+      <p>Accept payments through credit cards, PayPal, and other providers.</p>
+    </SettingAction>
+    
+    <SettingAction
+      action={{
+        content: 'Set up',
+        onAction: handleShipping
+      }}
+    >
+      <p><strong>Shipping and delivery</strong></p>
+      <p>Manage how you ship orders to customers.</p>
+    </SettingAction>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { SettingAction, Card, BlockStack } from 'svelte-polaris';
+  
+  function handleStoreDetails() {
+    console.log('Store details action');
+  }
+  
+  function handlePayments() {
+    console.log('Payments action');
+  }
+  
+  function handleShipping() {
+    console.log('Shipping action');
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <SettingAction
+      action={{
+        content: 'Manage',
+        onAction: handleStoreDetails
+      }}
+    >
+      <p><strong>Store details</strong></p>
+      <p>Legal business name, address, and contact information.</p>
+    </SettingAction>
+    
+    <SettingAction
+      action={{
+        content: 'Configure',
+        onAction: handlePayments
+      }}
+    >
+      <p><strong>Payment providers</strong></p>
+      <p>Accept payments through credit cards, PayPal, and other providers.</p>
+    </SettingAction>
+    
+    <SettingAction
+      action={{
+        content: 'Set up',
+        onAction: handleShipping
+      }}
+    >
+      <p><strong>Shipping and delivery</strong></p>
+      <p>Manage how you ship orders to customers.</p>
+    </SettingAction>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Setting with loading action
+
+Show loading state while an action is being processed.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+  
+  let isLoading = false;
+  
+  async function handleSync() {
+    isLoading = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    isLoading = false;
+    console.log('Sync completed');
+  }
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Sync now',
+      loading: isLoading,
+      onAction: handleSync
+    }}
+  >
+    <p><strong>Data synchronization</strong></p>
+    <p>Sync your store data with external systems and services.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { SettingAction, Card } from 'svelte-polaris';
+  
+  let isLoading = false;
+  
+  async function handleSync() {
+    isLoading = true;
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    isLoading = false;
+    console.log('Sync completed');
+  }
+</script>
+
+<Card>
+  <SettingAction
+    action={{
+      content: 'Sync now',
+      loading: isLoading,
+      onAction: handleSync
+    }}
+  >
+    <p><strong>Data synchronization</strong></p>
+    <p>Sync your store data with external systems and services.</p>
+  </SettingAction>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| action | `Action` | - | The action to display alongside the setting content |
+
+### Action object
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| content | `string` | - | The text content of the action button |
+| onAction | `() => void` | - | Callback when the action is triggered |
+| disabled | `boolean` | `false` | Whether the action is disabled |
+| destructive | `boolean` | `false` | Whether the action is destructive |
+| loading | `boolean` | `false` | Whether the action is in a loading state |
+| accessibilityLabel | `string` | - | Accessibility label for the action |
+| url | `string` | - | URL to navigate to when action is triggered |
+| external | `boolean` | `false` | Whether the URL is external |
+
+## Best practices
+
+- Use clear, descriptive content for both the setting description and action button
+- Group related settings together using consistent spacing
+- Use destructive actions sparingly and always with confirmation
+- Provide loading states for actions that take time to complete
+- Ensure action buttons have descriptive labels that clearly indicate what will happen
+- Use disabled state when actions are not available rather than hiding them
+
+## Accessibility
+
+- Action buttons include proper ARIA labels and roles
+- Keyboard navigation is supported for all interactive elements
+- Screen readers can understand the relationship between settings and their actions
+- Focus management is handled appropriately for modal or navigation actions
+
+## Related components
+
+- [Card](/getting-started/card) for containing settings
+- [BlockStack](/getting-started/block-stack) for organizing multiple settings
+- [Button](/getting-started/button) for standalone actions
+- [Page](/getting-started/page) for settings page layouts

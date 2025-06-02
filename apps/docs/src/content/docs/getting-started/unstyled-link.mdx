@@ -1,0 +1,558 @@
+---
+title: UnstyledLink
+description: UnstyledLink provides link functionality without default styling, perfect for custom navigation elements.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+UnstyledLink provides link functionality without default styling, perfect for custom navigation elements. It maintains accessibility features and proper link semantics while giving you complete control over the appearance.
+
+## Examples
+
+### Basic unstyled link
+
+Use UnstyledLink when you need link functionality with custom styling.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledLink, Text } from 'svelte-polaris';
+</script>
+
+<UnstyledLink url="/products">
+  <div style="
+    padding: 12px 16px; 
+    background: #007acc; 
+    color: white; 
+    border-radius: 6px; 
+    text-decoration: none;
+    display: inline-block;
+  ">
+    <Text>Custom styled link</Text>
+  </div>
+</UnstyledLink>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledLink, Text } from 'svelte-polaris';
+</script>
+
+<UnstyledLink url="/products">
+  <div style="
+    padding: 12px 16px; 
+    background: #007acc; 
+    color: white; 
+    border-radius: 6px; 
+    text-decoration: none;
+    display: inline-block;
+  ">
+    <Text>Custom styled link</Text>
+  </div>
+</UnstyledLink>
+```
+</TabItem>
+</Tabs>
+
+### Navigation card
+
+Use UnstyledLink to make entire cards or complex layouts navigable.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledLink, Card, BlockStack, Text, Badge, InlineStack } from 'svelte-polaris';
+</script>
+
+<UnstyledLink url="/products/wireless-headphones">
+  <Card>
+    <BlockStack gap="200">
+      <InlineStack align="space-between">
+        <Text variant="headingMd" as="h3">Wireless Headphones</Text>
+        <Badge>New arrival</Badge>
+      </InlineStack>
+      <Text>Premium noise-cancelling wireless headphones with 30-hour battery life.</Text>
+      <Text variant="headingLg" as="p" tone="success">$299.99</Text>
+    </BlockStack>
+  </Card>
+</UnstyledLink>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledLink, Card, BlockStack, Text, Badge, InlineStack } from 'svelte-polaris';
+</script>
+
+<UnstyledLink url="/products/wireless-headphones">
+  <Card>
+    <BlockStack gap="200">
+      <InlineStack align="space-between">
+        <Text variant="headingMd" as="h3">Wireless Headphones</Text>
+        <Badge>New arrival</Badge>
+      </InlineStack>
+      <Text>Premium noise-cancelling wireless headphones with 30-hour battery life.</Text>
+      <Text variant="headingLg" as="p" tone="success">$299.99</Text>
+    </BlockStack>
+  </Card>
+</UnstyledLink>
+```
+</TabItem>
+</Tabs>
+
+### Custom navigation menu
+
+Use UnstyledLink for custom navigation elements with hover effects.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledLink, InlineStack, Icon, Text, BlockStack } from 'svelte-polaris';
+  
+  let hoveredItem = null;
+  
+  const navItems = [
+    { url: '/dashboard', label: 'Dashboard', icon: 'HomeIcon' },
+    { url: '/products', label: 'Products', icon: 'ProductIcon' },
+    { url: '/orders', label: 'Orders', icon: 'OrderIcon' },
+    { url: '/customers', label: 'Customers', icon: 'CustomerIcon' },
+    { url: '/analytics', label: 'Analytics', icon: 'AnalyticsIcon' }
+  ];
+</script>
+
+<div style="width: 200px; background: #f6f6f7; border-radius: 8px; padding: 8px;">
+  <BlockStack gap="100">
+    {#each navItems as item}
+      <UnstyledLink 
+        url={item.url}
+        onMouseEnter={() => hoveredItem = item.url}
+        onMouseLeave={() => hoveredItem = null}
+      >
+        <div style="
+          padding: 12px; 
+          border-radius: 6px; 
+          background: {hoveredItem === item.url ? '#e3e3e3' : 'transparent'};
+          transition: background-color 0.2s ease;
+          text-decoration: none;
+          color: inherit;
+        ">
+          <InlineStack gap="200" align="start">
+            <Icon source={item.icon} />
+            <Text>{item.label}</Text>
+          </InlineStack>
+        </div>
+      </UnstyledLink>
+    {/each}
+  </BlockStack>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledLink, InlineStack, Icon, Text, BlockStack } from 'svelte-polaris';
+  
+  let hoveredItem = null;
+  
+  const navItems = [
+    { url: '/dashboard', label: 'Dashboard', icon: 'HomeIcon' },
+    { url: '/products', label: 'Products', icon: 'ProductIcon' },
+    { url: '/orders', label: 'Orders', icon: 'OrderIcon' },
+    { url: '/customers', label: 'Customers', icon: 'CustomerIcon' },
+    { url: '/analytics', label: 'Analytics', icon: 'AnalyticsIcon' }
+  ];
+</script>
+
+<div style="width: 200px; background: #f6f6f7; border-radius: 8px; padding: 8px;">
+  <BlockStack gap="100">
+    {#each navItems as item}
+      <UnstyledLink 
+        url={item.url}
+        onMouseEnter={() => hoveredItem = item.url}
+        onMouseLeave={() => hoveredItem = null}
+      >
+        <div style="
+          padding: 12px; 
+          border-radius: 6px; 
+          background: {hoveredItem === item.url ? '#e3e3e3' : 'transparent'};
+          transition: background-color 0.2s ease;
+          text-decoration: none;
+          color: inherit;
+        ">
+          <InlineStack gap="200" align="start">
+            <Icon source={item.icon} />
+            <Text>{item.label}</Text>
+          </InlineStack>
+        </div>
+      </UnstyledLink>
+    {/each}
+  </BlockStack>
+</div>
+```
+</TabItem>
+</Tabs>
+
+### External links
+
+Use the external prop for links that navigate outside your application.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledLink, InlineStack, Icon, Text } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <UnstyledLink url="https://help.shopify.com" external>
+    <div style="
+      padding: 8px 12px; 
+      border: 1px solid #007acc; 
+      border-radius: 6px;
+      color: #007acc;
+      text-decoration: none;
+    ">
+      <InlineStack gap="100" align="center">
+        <Text>Help Center</Text>
+        <Icon source="ExternalIcon" />
+      </InlineStack>
+    </div>
+  </UnstyledLink>
+  
+  <UnstyledLink url="https://shopify.dev" external>
+    <div style="
+      padding: 8px 12px; 
+      border: 1px solid #007acc; 
+      border-radius: 6px;
+      color: #007acc;
+      text-decoration: none;
+    ">
+      <InlineStack gap="100" align="center">
+        <Text>Developer Docs</Text>
+        <Icon source="ExternalIcon" />
+      </InlineStack>
+    </div>
+  </UnstyledLink>
+</InlineStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledLink, InlineStack, Icon, Text } from 'svelte-polaris';
+</script>
+
+<InlineStack gap="400">
+  <UnstyledLink url="https://help.shopify.com" external>
+    <div style="
+      padding: 8px 12px; 
+      border: 1px solid #007acc; 
+      border-radius: 6px;
+      color: #007acc;
+      text-decoration: none;
+    ">
+      <InlineStack gap="100" align="center">
+        <Text>Help Center</Text>
+        <Icon source="ExternalIcon" />
+      </InlineStack>
+    </div>
+  </UnstyledLink>
+  
+  <UnstyledLink url="https://shopify.dev" external>
+    <div style="
+      padding: 8px 12px; 
+      border: 1px solid #007acc; 
+      border-radius: 6px;
+      color: #007acc;
+      text-decoration: none;
+    ">
+      <InlineStack gap="100" align="center">
+        <Text>Developer Docs</Text>
+        <Icon source="ExternalIcon" />
+      </InlineStack>
+    </div>
+  </UnstyledLink>
+</InlineStack>
+```
+</TabItem>
+</Tabs>
+
+### Image gallery navigation
+
+Use UnstyledLink for navigable image galleries and media content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledLink, InlineGrid, Text, BlockStack } from 'svelte-polaris';
+  
+  const products = [
+    { 
+      id: 1, 
+      url: '/products/laptop', 
+      image: 'https://via.placeholder.com/200x150/007acc/ffffff?text=Laptop',
+      title: 'Gaming Laptop',
+      price: '$1,299'
+    },
+    { 
+      id: 2, 
+      url: '/products/phone', 
+      image: 'https://via.placeholder.com/200x150/28a745/ffffff?text=Phone',
+      title: 'Smartphone',
+      price: '$699'
+    },
+    { 
+      id: 3, 
+      url: '/products/tablet', 
+      image: 'https://via.placeholder.com/200x150/dc3545/ffffff?text=Tablet',
+      title: 'Tablet Pro',
+      price: '$899'
+    },
+    { 
+      id: 4, 
+      url: '/products/watch', 
+      image: 'https://via.placeholder.com/200x150/ffc107/000000?text=Watch',
+      title: 'Smart Watch',
+      price: '$399'
+    }
+  ];
+</script>
+
+<InlineGrid columns={2} gap="200">
+  {#each products as product}
+    <UnstyledLink url={product.url}>
+      <div style="
+        border: 2px solid transparent; 
+        border-radius: 8px; 
+        overflow: hidden;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        color: inherit;
+      " 
+      onmouseenter={(e) => {
+        e.currentTarget.style.borderColor = '#007acc';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+      }}
+      onmouseleave={(e) => {
+        e.currentTarget.style.borderColor = 'transparent';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }}
+      >
+        <img 
+          src={product.image} 
+          alt={product.title}
+          style="width: 100%; height: 150px; object-fit: cover; display: block;"
+        />
+        <div style="padding: 12px;">
+          <BlockStack gap="100">
+            <Text variant="headingMd" as="h3">{product.title}</Text>
+            <Text variant="headingLg" tone="success">{product.price}</Text>
+          </BlockStack>
+        </div>
+      </div>
+    </UnstyledLink>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledLink, InlineGrid, Text, BlockStack } from 'svelte-polaris';
+  
+  const products = [
+    { 
+      id: 1, 
+      url: '/products/laptop', 
+      image: 'https://via.placeholder.com/200x150/007acc/ffffff?text=Laptop',
+      title: 'Gaming Laptop',
+      price: '$1,299'
+    },
+    { 
+      id: 2, 
+      url: '/products/phone', 
+      image: 'https://via.placeholder.com/200x150/28a745/ffffff?text=Phone',
+      title: 'Smartphone',
+      price: '$699'
+    },
+    { 
+      id: 3, 
+      url: '/products/tablet', 
+      image: 'https://via.placeholder.com/200x150/dc3545/ffffff?text=Tablet',
+      title: 'Tablet Pro',
+      price: '$899'
+    },
+    { 
+      id: 4, 
+      url: '/products/watch', 
+      image: 'https://via.placeholder.com/200x150/ffc107/000000?text=Watch',
+      title: 'Smart Watch',
+      price: '$399'
+    }
+  ];
+</script>
+
+<InlineGrid columns={2} gap="200">
+  {#each products as product}
+    <UnstyledLink url={product.url}>
+      <div style="
+        border: 2px solid transparent; 
+        border-radius: 8px; 
+        overflow: hidden;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        color: inherit;
+      " 
+      onmouseenter={(e) => {
+        e.currentTarget.style.borderColor = '#007acc';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+      }}
+      onmouseleave={(e) => {
+        e.currentTarget.style.borderColor = 'transparent';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }}
+      >
+        <img 
+          src={product.image} 
+          alt={product.title}
+          style="width: 100%; height: 150px; object-fit: cover; display: block;"
+        />
+        <div style="padding: 12px;">
+          <BlockStack gap="100">
+            <Text variant="headingMd" as="h3">{product.title}</Text>
+            <Text variant="headingLg" tone="success">{product.price}</Text>
+          </BlockStack>
+        </div>
+      </div>
+    </UnstyledLink>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+</Tabs>
+
+### Breadcrumb navigation
+
+Use UnstyledLink for custom breadcrumb navigation elements.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledLink, InlineStack, Icon, Text } from 'svelte-polaris';
+  
+  const breadcrumbs = [
+    { url: '/', label: 'Home' },
+    { url: '/products', label: 'Products' },
+    { url: '/products/electronics', label: 'Electronics' },
+    { url: null, label: 'Laptops' } // Current page
+  ];
+</script>
+
+<InlineStack gap="100" align="center">
+  {#each breadcrumbs as crumb, index}
+    {#if crumb.url}
+      <UnstyledLink url={crumb.url}>
+        <Text tone="subdued">{crumb.label}</Text>
+      </UnstyledLink>
+    {:else}
+      <Text>{crumb.label}</Text>
+    {/if}
+    
+    {#if index < breadcrumbs.length - 1}
+      <Icon source="ChevronRightIcon" />
+    {/if}
+  {/each}
+</InlineStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledLink, InlineStack, Icon, Text } from 'svelte-polaris';
+  
+  const breadcrumbs = [
+    { url: '/', label: 'Home' },
+    { url: '/products', label: 'Products' },
+    { url: '/products/electronics', label: 'Electronics' },
+    { url: null, label: 'Laptops' } // Current page
+  ];
+</script>
+
+<InlineStack gap="100" align="center">
+  {#each breadcrumbs as crumb, index}
+    {#if crumb.url}
+      <UnstyledLink url={crumb.url}>
+        <Text tone="subdued">{crumb.label}</Text>
+      </UnstyledLink>
+    {:else}
+      <Text>{crumb.label}</Text>
+    {/if}
+    
+    {#if index < breadcrumbs.length - 1}
+      <Icon source="ChevronRightIcon" />
+    {/if}
+  {/each}
+</InlineStack>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| url | `string` | - | The URL to navigate to |
+| external | `boolean` | `false` | Whether the link is external (opens in new tab) |
+| id | `string` | - | Unique identifier for the link |
+| accessibilityLabel | `string` | - | Accessibility label for screen readers |
+| onFocus | `() => void` | - | Callback when the link receives focus |
+| onBlur | `() => void` | - | Callback when the link loses focus |
+| onMouseEnter | `() => void` | - | Callback when mouse enters the link |
+| onMouseLeave | `() => void` | - | Callback when mouse leaves the link |
+
+## Best practices
+
+- Always provide meaningful accessibility labels for links with non-descriptive content
+- Use appropriate cursor styles to indicate link behavior
+- Implement hover and focus states for better user experience
+- Ensure sufficient color contrast for text and background
+- Make click targets at least 44px for touch devices
+- Use semantic HTML structure within the link content
+- Indicate external links with appropriate visual cues
+- Test with keyboard navigation and screen readers
+
+## Accessibility
+
+- Maintains proper link semantics and ARIA attributes
+- Supports keyboard navigation (Enter key)
+- Works with screen readers and assistive technology
+- Provides proper focus management and visual indicators
+- External links include appropriate accessibility attributes
+
+## When to use UnstyledLink
+
+- Creating custom navigation components with unique designs
+- Building complex navigable layouts that don't fit standard link patterns
+- Implementing custom breadcrumbs or navigation menus
+- Creating navigable cards, tiles, or media elements
+- When you need link functionality but want complete styling control
+
+## SEO considerations
+
+- UnstyledLink renders proper anchor tags for search engine crawling
+- Maintains proper link structure for SEO benefits
+- Supports proper URL handling and navigation
+- Works with client-side routing libraries
+
+## Related components
+
+- [Link](/getting-started/link) for standard link styling
+- [UnstyledButton](/getting-started/unstyled-button) for unstyled button elements
+- [Card](/getting-started/card) for containing navigable content
+- [Icon](/getting-started/icon) for link indicators and external link icons

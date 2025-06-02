@@ -1,0 +1,493 @@
+---
+title: OptionList
+description: OptionList displays a list of options that users can select from, commonly used in dropdowns and selection interfaces.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+OptionList displays a list of options that users can select from. It's commonly used in dropdowns, selection interfaces, and anywhere you need to present choices to users in a clean, organized way.
+
+## Examples
+
+### Basic option list
+
+Use OptionList to display a simple list of selectable options.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOptions = ['today'];
+  
+  const options = [
+    { value: 'today', label: 'Today' },
+    { value: 'yesterday', label: 'Yesterday' },
+    { value: 'last_week', label: 'Last week' },
+    { value: 'last_month', label: 'Last month' },
+    { value: 'last_year', label: 'Last year' }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Date Range</Text>
+    <OptionList
+      title="Select time period"
+      options={options}
+      selected={selectedOptions}
+      onChange={handleChange}
+    />
+    <Text>Selected: {selectedOptions.join(', ')}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOptions = ['today'];
+  
+  const options = [
+    { value: 'today', label: 'Today' },
+    { value: 'yesterday', label: 'Yesterday' },
+    { value: 'last_week', label: 'Last week' },
+    { value: 'last_month', label: 'Last month' },
+    { value: 'last_year', label: 'Last year' }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Date Range</Text>
+    <OptionList
+      title="Select time period"
+      options={options}
+      selected={selectedOptions}
+      onChange={handleChange}
+    />
+    <Text>Selected: {selectedOptions.join(', ')}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Multiple selection
+
+Allow users to select multiple options from the list.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack, InlineStack, Tag } from 'svelte-polaris';
+  
+  let selectedOptions = ['email', 'sms'];
+  
+  const options = [
+    { value: 'email', label: 'Email notifications' },
+    { value: 'sms', label: 'SMS notifications' },
+    { value: 'push', label: 'Push notifications' },
+    { value: 'in_app', label: 'In-app notifications' },
+    { value: 'browser', label: 'Browser notifications' }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+  
+  function removeOption(value) {
+    selectedOptions = selectedOptions.filter(option => option !== value);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Notification Preferences</Text>
+    
+    {#if selectedOptions.length > 0}
+      <div>
+        <Text variant="bodyMd">Selected notifications:</Text>
+        <InlineStack gap="100">
+          {#each selectedOptions as option}
+            <Tag onRemove={() => removeOption(option)}>
+              {options.find(opt => opt.value === option)?.label}
+            </Tag>
+          {/each}
+        </InlineStack>
+      </div>
+    {/if}
+    
+    <OptionList
+      title="Choose notification methods"
+      options={options}
+      selected={selectedOptions}
+      onChange={handleChange}
+      allowMultiple
+    />
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack, InlineStack, Tag } from 'svelte-polaris';
+  
+  let selectedOptions = ['email', 'sms'];
+  
+  const options = [
+    { value: 'email', label: 'Email notifications' },
+    { value: 'sms', label: 'SMS notifications' },
+    { value: 'push', label: 'Push notifications' },
+    { value: 'in_app', label: 'In-app notifications' },
+    { value: 'browser', label: 'Browser notifications' }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+  
+  function removeOption(value) {
+    selectedOptions = selectedOptions.filter(option => option !== value);
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Notification Preferences</Text>
+    
+    {#if selectedOptions.length > 0}
+      <div>
+        <Text variant="bodyMd">Selected notifications:</Text>
+        <InlineStack gap="100">
+          {#each selectedOptions as option}
+            <Tag onRemove={() => removeOption(option)}>
+              {options.find(opt => opt.value === option)?.label}
+            </Tag>
+          {/each}
+        </InlineStack>
+      </div>
+    {/if}
+    
+    <OptionList
+      title="Choose notification methods"
+      options={options}
+      selected={selectedOptions}
+      onChange={handleChange}
+      allowMultiple
+    />
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Options with sections
+
+Organize options into logical groups with section headers.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOptions = ['products'];
+  
+  const sections = [
+    {
+      title: 'Content',
+      options: [
+        { value: 'products', label: 'Products' },
+        { value: 'collections', label: 'Collections' },
+        { value: 'pages', label: 'Pages' },
+        { value: 'blog_posts', label: 'Blog posts' }
+      ]
+    },
+    {
+      title: 'Sales',
+      options: [
+        { value: 'orders', label: 'Orders' },
+        { value: 'customers', label: 'Customers' },
+        { value: 'discounts', label: 'Discounts' },
+        { value: 'gift_cards', label: 'Gift cards' }
+      ]
+    },
+    {
+      title: 'Analytics',
+      options: [
+        { value: 'reports', label: 'Reports' },
+        { value: 'live_view', label: 'Live view' },
+        { value: 'dashboards', label: 'Dashboards' }
+      ]
+    }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Export Data</Text>
+    {#each sections as section}
+      <OptionList
+        title={section.title}
+        options={section.options}
+        selected={selectedOptions}
+        onChange={handleChange}
+        allowMultiple
+      />
+    {/each}
+    <Text>Selected: {selectedOptions.join(', ')}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOptions = ['products'];
+  
+  const sections = [
+    {
+      title: 'Content',
+      options: [
+        { value: 'products', label: 'Products' },
+        { value: 'collections', label: 'Collections' },
+        { value: 'pages', label: 'Pages' },
+        { value: 'blog_posts', label: 'Blog posts' }
+      ]
+    },
+    {
+      title: 'Sales',
+      options: [
+        { value: 'orders', label: 'Orders' },
+        { value: 'customers', label: 'Customers' },
+        { value: 'discounts', label: 'Discounts' },
+        { value: 'gift_cards', label: 'Gift cards' }
+      ]
+    },
+    {
+      title: 'Analytics',
+      options: [
+        { value: 'reports', label: 'Reports' },
+        { value: 'live_view', label: 'Live view' },
+        { value: 'dashboards', label: 'Dashboards' }
+      ]
+    }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Export Data</Text>
+    {#each sections as section}
+      <OptionList
+        title={section.title}
+        options={section.options}
+        selected={selectedOptions}
+        onChange={handleChange}
+        allowMultiple
+      />
+    {/each}
+    <Text>Selected: {selectedOptions.join(', ')}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Options with descriptions
+
+Provide additional context for options with descriptions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOptions = ['standard'];
+  
+  const options = [
+    { 
+      value: 'express', 
+      label: 'Express Shipping',
+      description: '1-2 business days delivery'
+    },
+    { 
+      value: 'standard', 
+      label: 'Standard Shipping',
+      description: '3-5 business days delivery'
+    },
+    { 
+      value: 'economy', 
+      label: 'Economy Shipping',
+      description: '7-10 business days delivery'
+    },
+    { 
+      value: 'pickup', 
+      label: 'Store Pickup',
+      description: 'Available within 2 hours'
+    }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Shipping Options</Text>
+    <OptionList
+      title="Choose delivery method"
+      options={options}
+      selected={selectedOptions}
+      onChange={handleChange}
+    />
+    <Text>Selected: {selectedOptions.join(', ')}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { OptionList, Card, Text, BlockStack } from 'svelte-polaris';
+  
+  let selectedOptions = ['standard'];
+  
+  const options = [
+    { 
+      value: 'express', 
+      label: 'Express Shipping',
+      description: '1-2 business days delivery'
+    },
+    { 
+      value: 'standard', 
+      label: 'Standard Shipping',
+      description: '3-5 business days delivery'
+    },
+    { 
+      value: 'economy', 
+      label: 'Economy Shipping',
+      description: '7-10 business days delivery'
+    },
+    { 
+      value: 'pickup', 
+      label: 'Store Pickup',
+      description: 'Available within 2 hours'
+    }
+  ];
+  
+  function handleChange(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Shipping Options</Text>
+    <OptionList
+      title="Choose delivery method"
+      options={options}
+      selected={selectedOptions}
+      onChange={handleChange}
+    />
+    <Text>Selected: {selectedOptions.join(', ')}</Text>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### OptionList props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Title for the option list |
+| `options` | `Option[]` | `[]` | Array of options to display |
+| `selected` | `string[]` | `[]` | Array of selected option values |
+| `onChange` | `(selected: string[]) => void` | | Callback when selection changes |
+| `allowMultiple` | `boolean` | `false` | Allow multiple selections |
+| `id` | `string` | | Unique identifier for the option list |
+
+### Option type
+
+```typescript
+type Option = {
+  value: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+  media?: React.ReactNode;
+}
+```
+
+## Best practices
+
+- Use clear, descriptive labels for all options
+- Group related options together with section titles
+- Provide descriptions for options that need clarification
+- Keep option lists to a reasonable length (under 10 items when possible)
+- Use consistent language and formatting across options
+- Order options logically (alphabetical, by importance, etc.)
+- Indicate disabled options clearly and explain why they're unavailable
+- Use single selection for mutually exclusive choices
+- Use multiple selection only when users truly need to select multiple items
+- Test with keyboard navigation to ensure accessibility
+
+## Accessibility
+
+- Proper ARIA attributes for list semantics
+- Keyboard navigation support (arrow keys, space, enter)
+- Screen reader announcements for selection changes
+- Focus management handles disabled options correctly
+- Selected state is clearly communicated to assistive technologies
+- Option descriptions are properly associated with labels
+- High contrast mode displays options clearly
+- Focus indicators are visible and clear
+- Multi-select state is properly announced
+- Section headers provide proper content structure
+
+## Keyboard shortcuts
+
+- **Arrow Up/Down**: Navigate between options
+- **Space**: Toggle selection of focused option
+- **Enter**: Select focused option (single select mode)
+- **Home**: Move to first option
+- **End**: Move to last option
+- **Tab**: Move focus out of option list
+
+## Related components
+
+- Use [Listbox](/getting-started/listbox) for more advanced option lists with sections
+- Use [Select](/getting-started/select) for simple dropdown selection
+- Use [ChoiceList](/getting-started/choice-list) for radio button or checkbox style selections
+- Use [Combobox](/getting-started/combobox) for searchable option lists
+- Use [AutoComplete](/getting-started/autocomplete) for filtered suggestions
+- Use [ActionList](/getting-started/action-list) for action-oriented lists

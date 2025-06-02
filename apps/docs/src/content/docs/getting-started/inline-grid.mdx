@@ -1,0 +1,367 @@
+---
+title: InlineGrid
+description: InlineGrid creates responsive grid layouts with automatic column sizing and consistent spacing.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+InlineGrid creates responsive grid layouts with automatic column sizing and consistent spacing. It's perfect for creating card grids, product listings, and other content that needs to flow responsively across different screen sizes.
+
+## Examples
+
+### Basic inline grid
+
+Use inline grid to create responsive layouts with automatic column sizing.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<InlineGrid columns={3} gap="400">
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 1</Text>
+      <Text>Description of the first product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+  
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 2</Text>
+      <Text>Description of the second product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+  
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 3</Text>
+      <Text>Description of the third product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+  
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 4</Text>
+      <Text>Description of the fourth product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+</InlineGrid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<InlineGrid columns={3} gap="400">
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 1</Text>
+      <Text>Description of the first product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+  
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 2</Text>
+      <Text>Description of the second product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+  
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 3</Text>
+      <Text>Description of the third product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+  
+  <Card>
+    <BlockStack gap="200">
+      <Text variant="headingMd">Product 4</Text>
+      <Text>Description of the fourth product with some details about its features.</Text>
+    </BlockStack>
+  </Card>
+</InlineGrid>
+```
+</TabItem>
+</Tabs>
+
+### Responsive columns
+
+Create responsive grids that adapt to different screen sizes using responsive column values.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, Badge, BlockStack } from 'svelte-polaris';
+  
+  const products = [
+    { name: 'Wireless Headphones', status: 'active', price: '$99.99' },
+    { name: 'Smart Watch', status: 'draft', price: '$199.99' },
+    { name: 'Bluetooth Speaker', status: 'active', price: '$49.99' },
+    { name: 'Phone Case', status: 'active', price: '$19.99' },
+    { name: 'Laptop Stand', status: 'draft', price: '$79.99' },
+    { name: 'USB Cable', status: 'active', price: '$12.99' }
+  ];
+</script>
+
+<InlineGrid 
+  columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} 
+  gap="400"
+>
+  {#each products as product}
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">{product.name}</Text>
+        <Badge tone={product.status === 'active' ? 'success' : 'info'}>
+          {product.status}
+        </Badge>
+        <Text variant="headingLg">{product.price}</Text>
+      </BlockStack>
+    </Card>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, Badge, BlockStack } from 'svelte-polaris';
+  
+  const products = [
+    { name: 'Wireless Headphones', status: 'active', price: '$99.99' },
+    { name: 'Smart Watch', status: 'draft', price: '$199.99' },
+    { name: 'Bluetooth Speaker', status: 'active', price: '$49.99' },
+    { name: 'Phone Case', status: 'active', price: '$19.99' },
+    { name: 'Laptop Stand', status: 'draft', price: '$79.99' },
+    { name: 'USB Cable', status: 'active', price: '$12.99' }
+  ];
+</script>
+
+<InlineGrid 
+  columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} 
+  gap="400"
+>
+  {#each products as product}
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">{product.name}</Text>
+        <Badge tone={product.status === 'active' ? 'success' : 'info'}>
+          {product.status}
+        </Badge>
+        <Text variant="headingLg">{product.price}</Text>
+      </BlockStack>
+    </Card>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+</Tabs>
+
+### Different gap sizes
+
+Control spacing between grid items with different gap values.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="800">
+  <div>
+    <Text variant="headingMd">Tight spacing (gap="200")</Text>
+    <InlineGrid columns={4} gap="200">
+      <Card><Text>Item 1</Text></Card>
+      <Card><Text>Item 2</Text></Card>
+      <Card><Text>Item 3</Text></Card>
+      <Card><Text>Item 4</Text></Card>
+    </InlineGrid>
+  </div>
+  
+  <div>
+    <Text variant="headingMd">Default spacing (gap="400")</Text>
+    <InlineGrid columns={4} gap="400">
+      <Card><Text>Item 1</Text></Card>
+      <Card><Text>Item 2</Text></Card>
+      <Card><Text>Item 3</Text></Card>
+      <Card><Text>Item 4</Text></Card>
+    </InlineGrid>
+  </div>
+  
+  <div>
+    <Text variant="headingMd">Loose spacing (gap="800")</Text>
+    <InlineGrid columns={4} gap="800">
+      <Card><Text>Item 1</Text></Card>
+      <Card><Text>Item 2</Text></Card>
+      <Card><Text>Item 3</Text></Card>
+      <Card><Text>Item 4</Text></Card>
+    </InlineGrid>
+  </div>
+</BlockStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<BlockStack gap="800">
+  <div>
+    <Text variant="headingMd">Tight spacing (gap="200")</Text>
+    <InlineGrid columns={4} gap="200">
+      <Card><Text>Item 1</Text></Card>
+      <Card><Text>Item 2</Text></Card>
+      <Card><Text>Item 3</Text></Card>
+      <Card><Text>Item 4</Text></Card>
+    </InlineGrid>
+  </div>
+  
+  <div>
+    <Text variant="headingMd">Default spacing (gap="400")</Text>
+    <InlineGrid columns={4} gap="400">
+      <Card><Text>Item 1</Text></Card>
+      <Card><Text>Item 2</Text></Card>
+      <Card><Text>Item 3</Text></Card>
+      <Card><Text>Item 4</Text></Card>
+    </InlineGrid>
+  </div>
+  
+  <div>
+    <Text variant="headingMd">Loose spacing (gap="800")</Text>
+    <InlineGrid columns={4} gap="800">
+      <Card><Text>Item 1</Text></Card>
+      <Card><Text>Item 2</Text></Card>
+      <Card><Text>Item 3</Text></Card>
+      <Card><Text>Item 4</Text></Card>
+    </InlineGrid>
+  </div>
+</BlockStack>
+```
+</TabItem>
+</Tabs>
+
+### Auto-fit columns
+
+Use auto-fit to automatically size columns based on content and available space.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, BlockStack, Button } from 'svelte-polaris';
+  
+  const features = [
+    { title: 'Fast Shipping', description: 'Get your orders delivered quickly' },
+    { title: 'Secure Payments', description: 'Your transactions are protected' },
+    { title: '24/7 Support', description: 'We\'re here to help anytime' },
+    { title: 'Easy Returns', description: 'Hassle-free return policy' },
+    { title: 'Quality Guarantee', description: 'We stand behind our products' }
+  ];
+</script>
+
+<InlineGrid columns="auto-fit" gap="400">
+  {#each features as feature}
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd">{feature.title}</Text>
+        <Text>{feature.description}</Text>
+        <Button variant="plain">Learn more</Button>
+      </BlockStack>
+    </Card>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineGrid, Card, Text, BlockStack, Button } from 'svelte-polaris';
+  
+  const features = [
+    { title: 'Fast Shipping', description: 'Get your orders delivered quickly' },
+    { title: 'Secure Payments', description: 'Your transactions are protected' },
+    { title: '24/7 Support', description: 'We\'re here to help anytime' },
+    { title: 'Easy Returns', description: 'Hassle-free return policy' },
+    { title: 'Quality Guarantee', description: 'We stand behind our products' }
+  ];
+</script>
+
+<InlineGrid columns="auto-fit" gap="400">
+  {#each features as feature}
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd">{feature.title}</Text>
+        <Text>{feature.description}</Text>
+        <Button variant="plain">Learn more</Button>
+      </BlockStack>
+    </Card>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### InlineGrid props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `columns` | `number \| string \| ResponsiveValue` | `1` | Number of columns or responsive column configuration |
+| `gap` | `SpaceScale` | `"400"` | Space between grid items |
+
+### ResponsiveValue type
+
+```typescript
+type ResponsiveValue = {
+  xs?: number | string;
+  sm?: number | string;
+  md?: number | string;
+  lg?: number | string;
+  xl?: number | string;
+}
+```
+
+### SpaceScale values
+
+`"025"` \| `"050"` \| `"100"` \| `"150"` \| `"200"` \| `"300"` \| `"400"` \| `"500"` \| `"600"` \| `"800"` \| `"1000"` \| `"1200"` \| `"1600"` \| `"2000"` \| `"2400"` \| `"2800"` \| `"3200"`
+
+## Best practices
+
+- Use responsive column values to ensure good layouts on all screen sizes
+- Choose appropriate gap sizes based on content density and visual hierarchy
+- Consider using auto-fit for dynamic content that varies in length
+- Test grid layouts with different amounts of content
+- Use consistent spacing throughout your application
+- Consider the relationship between grid items when choosing gap sizes
+- Ensure grid items have similar visual weight for balanced layouts
+- Use semantic HTML elements within grid items for accessibility
+- Test with both minimum and maximum expected content amounts
+- Consider loading states for dynamic grid content
+
+## Accessibility
+
+- Grid items maintain proper reading order for screen readers
+- Focus management works correctly when navigating between grid items
+- Grid structure is announced to assistive technologies
+- Responsive behavior doesn't break keyboard navigation
+- Grid items have appropriate semantic markup
+- Color and spacing provide sufficient visual separation
+- Grid layouts work with browser zoom up to 200%
+- Content reflows appropriately on smaller screens
+
+## Related components
+
+- Use [Grid](/getting-started/grid) for more complex layout requirements
+- Use [BlockStack](/getting-started/block-stack) for vertical stacking
+- Use [InlineStack](/getting-started/inline-stack) for horizontal layouts
+- Use [Card](/getting-started/card) as common grid item containers
+- Use [Layout](/getting-started/layout) for page-level structure

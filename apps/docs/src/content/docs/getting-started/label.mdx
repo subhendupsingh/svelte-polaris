@@ -1,0 +1,412 @@
+---
+title: Label
+description: Label provides accessible labels for form controls and interactive elements.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Label provides accessible labels for form controls and interactive elements. It ensures proper association between labels and their corresponding inputs for screen readers and other assistive technologies.
+
+## Examples
+
+### Basic label
+
+Use label to provide accessible labels for form controls.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Label, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let email = '';
+</script>
+
+<Card>
+  <BlockStack gap="200">
+    <Label id="email-label" for="email-field">Email address</Label>
+    <TextField
+      id="email-field"
+      type="email"
+      bind:value={email}
+      autoComplete="email"
+    />
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Label, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let email = '';
+</script>
+
+<Card>
+  <BlockStack gap="200">
+    <Label id="email-label" for="email-field">Email address</Label>
+    <TextField
+      id="email-field"
+      type="email"
+      bind:value={email}
+      autoComplete="email"
+    />
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Required label
+
+Show required indicators for mandatory form fields.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Label, TextField, Select, Card, FormLayout } from 'svelte-polaris';
+  
+  let firstName = '';
+  let lastName = '';
+  let country = '';
+  
+  const countryOptions = [
+    { label: 'Select country', value: '' },
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group>
+      <div>
+        <Label id="first-name-label" for="first-name-field" required>
+          First name
+        </Label>
+        <TextField
+          id="first-name-field"
+          bind:value={firstName}
+          autoComplete="given-name"
+        />
+      </div>
+      
+      <div>
+        <Label id="last-name-label" for="last-name-field" required>
+          Last name
+        </Label>
+        <TextField
+          id="last-name-field"
+          bind:value={lastName}
+          autoComplete="family-name"
+        />
+      </div>
+    </FormLayout.Group>
+    
+    <div>
+      <Label id="country-label" for="country-field" required>
+        Country
+      </Label>
+      <Select
+        id="country-field"
+        options={countryOptions}
+        bind:value={country}
+      />
+    </div>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Label, TextField, Select, Card, FormLayout } from 'svelte-polaris';
+  
+  let firstName = '';
+  let lastName = '';
+  let country = '';
+  
+  const countryOptions = [
+    { label: 'Select country', value: '' },
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group>
+      <div>
+        <Label id="first-name-label" for="first-name-field" required>
+          First name
+        </Label>
+        <TextField
+          id="first-name-field"
+          bind:value={firstName}
+          autoComplete="given-name"
+        />
+      </div>
+      
+      <div>
+        <Label id="last-name-label" for="last-name-field" required>
+          Last name
+        </Label>
+        <TextField
+          id="last-name-field"
+          bind:value={lastName}
+          autoComplete="family-name"
+        />
+      </div>
+    </FormLayout.Group>
+    
+    <div>
+      <Label id="country-label" for="country-field" required>
+        Country
+      </Label>
+      <Select
+        id="country-field"
+        options={countryOptions}
+        bind:value={country}
+      />
+    </div>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Hidden label
+
+Use hidden labels when visual labels aren't needed but accessibility labels are required.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Label, TextField, Button, Card, InlineStack } from 'svelte-polaris';
+  
+  let searchQuery = '';
+  
+  function handleSearch() {
+    console.log('Searching for:', searchQuery);
+  }
+</script>
+
+<Card>
+  <InlineStack gap="200" align="end">
+    <div style="flex: 1;">
+      <Label id="search-label" for="search-field" hidden>
+        Search products
+      </Label>
+      <TextField
+        id="search-field"
+        placeholder="Search products..."
+        bind:value={searchQuery}
+        autoComplete="off"
+      />
+    </div>
+    <Button onClick={handleSearch}>Search</Button>
+  </InlineStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Label, TextField, Button, Card, InlineStack } from 'svelte-polaris';
+  
+  let searchQuery = '';
+  
+  function handleSearch() {
+    console.log('Searching for:', searchQuery);
+  }
+</script>
+
+<Card>
+  <InlineStack gap="200" align="end">
+    <div style="flex: 1;">
+      <Label id="search-label" for="search-field" hidden>
+        Search products
+      </Label>
+      <TextField
+        id="search-field"
+        placeholder="Search products..."
+        bind:value={searchQuery}
+        autoComplete="off"
+      />
+    </div>
+    <Button onClick={handleSearch}>Search</Button>
+  </InlineStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Label with actions
+
+Add actions to labels for additional functionality like help or reset options.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Label, TextField, Button, Card, BlockStack, InlineStack } from 'svelte-polaris';
+  
+  let password = '';
+  let showHelp = false;
+  
+  function toggleHelp() {
+    showHelp = !showHelp;
+  }
+  
+  function generatePassword() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 12; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    password = result;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="200">
+    <InlineStack align="space-between">
+      <Label id="password-label" for="password-field" required>
+        Password
+      </Label>
+      <InlineStack gap="200">
+        <Button variant="plain" size="micro" onClick={toggleHelp}>
+          {showHelp ? 'Hide help' : 'Show help'}
+        </Button>
+        <Button variant="plain" size="micro" onClick={generatePassword}>
+          Generate
+        </Button>
+      </InlineStack>
+    </InlineStack>
+    
+    <TextField
+      id="password-field"
+      type="password"
+      bind:value={password}
+      autoComplete="new-password"
+    />
+    
+    {#if showHelp}
+      <div style="padding: 12px; background: #f6f6f7; border-radius: 4px;">
+        <p style="margin: 0; font-size: 14px; color: #616161;">
+          Password must be at least 8 characters long and include uppercase, lowercase, and numbers.
+        </p>
+      </div>
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Label, TextField, Button, Card, BlockStack, InlineStack } from 'svelte-polaris';
+  
+  let password = '';
+  let showHelp = false;
+  
+  function toggleHelp() {
+    showHelp = !showHelp;
+  }
+  
+  function generatePassword() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 12; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    password = result;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="200">
+    <InlineStack align="space-between">
+      <Label id="password-label" for="password-field" required>
+        Password
+      </Label>
+      <InlineStack gap="200">
+        <Button variant="plain" size="micro" onClick={toggleHelp}>
+          {showHelp ? 'Hide help' : 'Show help'}
+        </Button>
+        <Button variant="plain" size="micro" onClick={generatePassword}>
+          Generate
+        </Button>
+      </InlineStack>
+    </InlineStack>
+    
+    <TextField
+      id="password-field"
+      type="password"
+      bind:value={password}
+      autoComplete="new-password"
+    />
+    
+    {#if showHelp}
+      <div style="padding: 12px; background: #f6f6f7; border-radius: 4px;">
+        <p style="margin: 0; font-size: 14px; color: #616161;">
+          Password must be at least 8 characters long and include uppercase, lowercase, and numbers.
+        </p>
+      </div>
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Label props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | | Unique identifier for the label |
+| `for` | `string` | | ID of the form control this label describes |
+| `required` | `boolean` | `false` | Show required indicator |
+| `hidden` | `boolean` | `false` | Visually hide the label while keeping it accessible |
+
+## Best practices
+
+- Always associate labels with their corresponding form controls using the `for` attribute
+- Use clear, descriptive label text that explains the purpose of the form control
+- Include required indicators for mandatory fields
+- Use hidden labels when visual labels aren't needed but accessibility is required
+- Keep label text concise but descriptive
+- Place labels above or to the left of their associated controls
+- Use consistent labeling patterns throughout your application
+- Avoid using placeholder text as the only label
+- Test labels with screen readers to ensure they're announced correctly
+- Consider the reading order when positioning labels and controls
+
+## Accessibility
+
+- Labels are properly associated with form controls via the `for` attribute
+- Required indicators are announced to screen readers
+- Hidden labels are accessible to assistive technologies but not visible
+- Label text provides clear context for the associated control
+- Required state is communicated through both visual and programmatic means
+- Labels work correctly with keyboard navigation
+- Screen readers announce label text when focus moves to the control
+- Color is not the only way to indicate required fields
+- Labels maintain proper contrast ratios
+- Label associations work with browser auto-fill features
+
+## Related components
+
+- Use [TextField](/getting-started/text-field) with labels for text input
+- Use [Select](/getting-started/select) with labels for dropdown controls
+- Use [Checkbox](/getting-started/checkbox) with built-in label support
+- Use [RadioButton](/getting-started/radio-button) with built-in label support
+- Use [Labelled](/getting-started/labelled) for more complex label layouts
+- Use [FormLayout](/getting-started/form-layout) to organize labeled form fields

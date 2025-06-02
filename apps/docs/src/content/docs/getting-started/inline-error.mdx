@@ -1,0 +1,546 @@
+---
+title: InlineError
+description: InlineError displays validation errors directly below form fields for immediate feedback.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+InlineError displays validation errors directly below form fields for immediate feedback. It provides contextual error messages that help users understand and fix form validation issues.
+
+## Examples
+
+### Basic inline error
+
+Use inline error to show validation messages below form fields.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineError, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let email = '';
+  let emailError = '';
+  
+  function validateEmail() {
+    if (!email.trim()) {
+      emailError = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      emailError = 'Please enter a valid email address';
+    } else {
+      emailError = '';
+    }
+  }
+</script>
+
+<Card>
+  <BlockStack gap="200">
+    <TextField
+      label="Email"
+      type="email"
+      bind:value={email}
+      onBlur={validateEmail}
+      error={emailError ? true : false}
+      autoComplete="email"
+    />
+    
+    {#if emailError}
+      <InlineError message={emailError} fieldID="email-field" />
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineError, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let email = '';
+  let emailError = '';
+  
+  function validateEmail() {
+    if (!email.trim()) {
+      emailError = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      emailError = 'Please enter a valid email address';
+    } else {
+      emailError = '';
+    }
+  }
+</script>
+
+<Card>
+  <BlockStack gap="200">
+    <TextField
+      label="Email"
+      type="email"
+      bind:value={email}
+      onBlur={validateEmail}
+      error={emailError ? true : false}
+      autoComplete="email"
+    />
+    
+    {#if emailError}
+      <InlineError message={emailError} fieldID="email-field" />
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Multiple field validation
+
+Show inline errors for multiple form fields with different validation rules.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineError, TextField, Select, Card, FormLayout } from 'svelte-polaris';
+  
+  let formData = {
+    firstName: '',
+    lastName: '',
+    country: '',
+    phone: ''
+  };
+  
+  let errors = {};
+  
+  const countryOptions = [
+    { label: 'Select country', value: '' },
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+  
+  function validateField(field) {
+    const newErrors = { ...errors };
+    
+    switch (field) {
+      case 'firstName':
+        if (!formData.firstName.trim()) {
+          newErrors.firstName = 'First name is required';
+        } else if (formData.firstName.length < 2) {
+          newErrors.firstName = 'First name must be at least 2 characters';
+        } else {
+          delete newErrors.firstName;
+        }
+        break;
+        
+      case 'lastName':
+        if (!formData.lastName.trim()) {
+          newErrors.lastName = 'Last name is required';
+        } else {
+          delete newErrors.lastName;
+        }
+        break;
+        
+      case 'country':
+        if (!formData.country) {
+          newErrors.country = 'Please select a country';
+        } else {
+          delete newErrors.country;
+        }
+        break;
+        
+      case 'phone':
+        if (formData.phone && !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
+          newErrors.phone = 'Please enter a valid phone number';
+        } else {
+          delete newErrors.phone;
+        }
+        break;
+    }
+    
+    errors = newErrors;
+  }
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group>
+      <div>
+        <TextField
+          label="First name"
+          bind:value={formData.firstName}
+          onBlur={() => validateField('firstName')}
+          error={errors.firstName ? true : false}
+          autoComplete="given-name"
+        />
+        {#if errors.firstName}
+          <InlineError message={errors.firstName} fieldID="first-name" />
+        {/if}
+      </div>
+      
+      <div>
+        <TextField
+          label="Last name"
+          bind:value={formData.lastName}
+          onBlur={() => validateField('lastName')}
+          error={errors.lastName ? true : false}
+          autoComplete="family-name"
+        />
+        {#if errors.lastName}
+          <InlineError message={errors.lastName} fieldID="last-name" />
+        {/if}
+      </div>
+    </FormLayout.Group>
+    
+    <div>
+      <Select
+        label="Country"
+        options={countryOptions}
+        bind:value={formData.country}
+        onChange={() => validateField('country')}
+        error={errors.country ? true : false}
+      />
+      {#if errors.country}
+        <InlineError message={errors.country} fieldID="country" />
+      {/if}
+    </div>
+    
+    <div>
+      <TextField
+        label="Phone number"
+        type="tel"
+        bind:value={formData.phone}
+        onBlur={() => validateField('phone')}
+        error={errors.phone ? true : false}
+        helpText="Optional"
+        autoComplete="tel"
+      />
+      {#if errors.phone}
+        <InlineError message={errors.phone} fieldID="phone" />
+      {/if}
+    </div>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineError, TextField, Select, Card, FormLayout } from 'svelte-polaris';
+  
+  let formData = {
+    firstName: '',
+    lastName: '',
+    country: '',
+    phone: ''
+  };
+  
+  let errors = {};
+  
+  const countryOptions = [
+    { label: 'Select country', value: '' },
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+  
+  function validateField(field) {
+    const newErrors = { ...errors };
+    
+    switch (field) {
+      case 'firstName':
+        if (!formData.firstName.trim()) {
+          newErrors.firstName = 'First name is required';
+        } else if (formData.firstName.length < 2) {
+          newErrors.firstName = 'First name must be at least 2 characters';
+        } else {
+          delete newErrors.firstName;
+        }
+        break;
+        
+      case 'lastName':
+        if (!formData.lastName.trim()) {
+          newErrors.lastName = 'Last name is required';
+        } else {
+          delete newErrors.lastName;
+        }
+        break;
+        
+      case 'country':
+        if (!formData.country) {
+          newErrors.country = 'Please select a country';
+        } else {
+          delete newErrors.country;
+        }
+        break;
+        
+      case 'phone':
+        if (formData.phone && !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
+          newErrors.phone = 'Please enter a valid phone number';
+        } else {
+          delete newErrors.phone;
+        }
+        break;
+    }
+    
+    errors = newErrors;
+  }
+</script>
+
+<Card>
+  <FormLayout>
+    <FormLayout.Group>
+      <div>
+        <TextField
+          label="First name"
+          bind:value={formData.firstName}
+          onBlur={() => validateField('firstName')}
+          error={errors.firstName ? true : false}
+          autoComplete="given-name"
+        />
+        {#if errors.firstName}
+          <InlineError message={errors.firstName} fieldID="first-name" />
+        {/if}
+      </div>
+      
+      <div>
+        <TextField
+          label="Last name"
+          bind:value={formData.lastName}
+          onBlur={() => validateField('lastName')}
+          error={errors.lastName ? true : false}
+          autoComplete="family-name"
+        />
+        {#if errors.lastName}
+          <InlineError message={errors.lastName} fieldID="last-name" />
+        {/if}
+      </div>
+    </FormLayout.Group>
+    
+    <div>
+      <Select
+        label="Country"
+        options={countryOptions}
+        bind:value={formData.country}
+        onChange={() => validateField('country')}
+        error={errors.country ? true : false}
+      />
+      {#if errors.country}
+        <InlineError message={errors.country} fieldID="country" />
+      {/if}
+    </div>
+    
+    <div>
+      <TextField
+        label="Phone number"
+        type="tel"
+        bind:value={formData.phone}
+        onBlur={() => validateField('phone')}
+        error={errors.phone ? true : false}
+        helpText="Optional"
+        autoComplete="tel"
+      />
+      {#if errors.phone}
+        <InlineError message={errors.phone} fieldID="phone" />
+      {/if}
+    </div>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Real-time validation
+
+Provide immediate feedback as users type with real-time validation.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { InlineError, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let password = '';
+  let confirmPassword = '';
+  let passwordErrors = [];
+  let confirmError = '';
+  
+  function validatePassword() {
+    const errors = [];
+    
+    if (password.length < 8) {
+      errors.push('Password must be at least 8 characters long');
+    }
+    
+    if (!/[A-Z]/.test(password)) {
+      errors.push('Password must contain at least one uppercase letter');
+    }
+    
+    if (!/[a-z]/.test(password)) {
+      errors.push('Password must contain at least one lowercase letter');
+    }
+    
+    if (!/\d/.test(password)) {
+      errors.push('Password must contain at least one number');
+    }
+    
+    passwordErrors = errors;
+  }
+  
+  function validateConfirmPassword() {
+    if (confirmPassword && confirmPassword !== password) {
+      confirmError = 'Passwords do not match';
+    } else {
+      confirmError = '';
+    }
+  }
+  
+  $: if (password) validatePassword();
+  $: if (confirmPassword) validateConfirmPassword();
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <div>
+      <TextField
+        label="Password"
+        type="password"
+        bind:value={password}
+        error={passwordErrors.length > 0}
+        autoComplete="new-password"
+      />
+      {#each passwordErrors as error}
+        <InlineError message={error} fieldID="password" />
+      {/each}
+    </div>
+    
+    <div>
+      <TextField
+        label="Confirm password"
+        type="password"
+        bind:value={confirmPassword}
+        error={confirmError ? true : false}
+        autoComplete="new-password"
+      />
+      {#if confirmError}
+        <InlineError message={confirmError} fieldID="confirm-password" />
+      {/if}
+    </div>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { InlineError, TextField, Card, BlockStack } from 'svelte-polaris';
+  
+  let password = '';
+  let confirmPassword = '';
+  let passwordErrors = [];
+  let confirmError = '';
+  
+  function validatePassword() {
+    const errors = [];
+    
+    if (password.length < 8) {
+      errors.push('Password must be at least 8 characters long');
+    }
+    
+    if (!/[A-Z]/.test(password)) {
+      errors.push('Password must contain at least one uppercase letter');
+    }
+    
+    if (!/[a-z]/.test(password)) {
+      errors.push('Password must contain at least one lowercase letter');
+    }
+    
+    if (!/\d/.test(password)) {
+      errors.push('Password must contain at least one number');
+    }
+    
+    passwordErrors = errors;
+  }
+  
+  function validateConfirmPassword() {
+    if (confirmPassword && confirmPassword !== password) {
+      confirmError = 'Passwords do not match';
+    } else {
+      confirmError = '';
+    }
+  }
+  
+  $: if (password) validatePassword();
+  $: if (confirmPassword) validateConfirmPassword();
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <div>
+      <TextField
+        label="Password"
+        type="password"
+        bind:value={password}
+        error={passwordErrors.length > 0}
+        autoComplete="new-password"
+      />
+      {#each passwordErrors as error}
+        <InlineError message={error} fieldID="password" />
+      {/each}
+    </div>
+    
+    <div>
+      <TextField
+        label="Confirm password"
+        type="password"
+        bind:value={confirmPassword}
+        error={confirmError ? true : false}
+        autoComplete="new-password"
+      />
+      {#if confirmError}
+        <InlineError message={confirmError} fieldID="confirm-password" />
+      {/if}
+    </div>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### InlineError props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `message` | `string` | | Error message to display |
+| `fieldID` | `string` | | ID of the associated form field |
+
+## Best practices
+
+- Show inline errors immediately after field validation
+- Use clear, specific error messages that explain how to fix the issue
+- Position errors directly below the related form field
+- Clear errors when users start correcting the input
+- Use consistent error message formatting across your application
+- Avoid technical jargon in error messages
+- Provide constructive guidance, not just what's wrong
+- Test error messages with real users for clarity
+- Consider the timing of when to show errors (on blur vs real-time)
+- Use inline errors for field-specific issues, banners for form-level errors
+
+## Accessibility
+
+- Error messages are associated with form fields via ARIA attributes
+- Screen readers announce errors when they appear
+- Error text has sufficient color contrast
+- Errors are announced when focus moves to the field
+- Error messages are programmatically associated with inputs
+- Keyboard navigation works correctly with error states
+- Error messages are persistent until resolved
+- High contrast mode displays errors clearly
+
+## Related components
+
+- Use [TextField](/getting-started/text-field) with error prop for field styling
+- Use [Select](/getting-started/select) with error prop for dropdown validation
+- Use [Banner](/getting-started/banner) for form-level error messages
+- Use [Form](/getting-started/form) for overall form structure and validation
+- Use [FormLayout](/getting-started/form-layout) to organize form fields with errors

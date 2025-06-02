@@ -1,0 +1,546 @@
+---
+title: Sticky
+description: Sticky makes content stick to the viewport during scrolling, useful for navigation and important actions.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Sticky makes content stick to the viewport during scrolling, useful for navigation and important actions. It provides a way to keep important interface elements visible as users scroll through content.
+
+## Examples
+
+### Basic sticky element
+
+Use Sticky to keep content visible during scrolling.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<div style="height: 200vh; padding: 16px;">
+  <Sticky>
+    <Card>
+      <Text variant="headingMd" as="h2">Sticky Header</Text>
+      <Text>This content will stick to the top when scrolling.</Text>
+    </Card>
+  </Sticky>
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        {#each Array(20) as _, i}
+          <Text>Content item {i + 1} - scroll to see the sticky behavior</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<div style="height: 200vh; padding: 16px;">
+  <Sticky>
+    <Card>
+      <Text variant="headingMd" as="h2">Sticky Header</Text>
+      <Text>This content will stick to the top when scrolling.</Text>
+    </Card>
+  </Sticky>
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        {#each Array(20) as _, i}
+          <Text>Content item {i + 1} - scroll to see the sticky behavior</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Sticky with custom offset
+
+Use the offset prop to control the distance from the viewport edge.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<div style="height: 200vh; padding: 16px;">
+  <Sticky offset={20}>
+    <Card>
+      <Text variant="headingMd" as="h2">Sticky with Offset</Text>
+      <Text>This content sticks 20px from the top of the viewport.</Text>
+    </Card>
+  </Sticky>
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        {#each Array(20) as _, i}
+          <Text>Content item {i + 1} - notice the offset from the top</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, Text } from 'svelte-polaris';
+</script>
+
+<div style="height: 200vh; padding: 16px;">
+  <Sticky offset={20}>
+    <Card>
+      <Text variant="headingMd" as="h2">Sticky with Offset</Text>
+      <Text>This content sticks 20px from the top of the viewport.</Text>
+    </Card>
+  </Sticky>
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        {#each Array(20) as _, i}
+          <Text>Content item {i + 1} - notice the offset from the top</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Sticky navigation
+
+Use Sticky for navigation elements that should remain accessible.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Sticky, Card, InlineStack, Button, BlockStack, Text } from 'svelte-polaris';
+  
+  let activeSection = 'overview';
+  
+  function scrollToSection(section) {
+    activeSection = section;
+    // In a real app, you would scroll to the section
+    console.log(`Scrolling to ${section}`);
+  }
+</script>
+
+<div style="height: 200vh;">
+  <Sticky>
+    <Card>
+      <InlineStack gap="200">
+        <Button 
+          variant={activeSection === 'overview' ? 'primary' : 'tertiary'}
+          onClick={() => scrollToSection('overview')}
+        >
+          Overview
+        </Button>
+        <Button 
+          variant={activeSection === 'details' ? 'primary' : 'tertiary'}
+          onClick={() => scrollToSection('details')}
+        >
+          Details
+        </Button>
+        <Button 
+          variant={activeSection === 'settings' ? 'primary' : 'tertiary'}
+          onClick={() => scrollToSection('settings')}
+        >
+          Settings
+        </Button>
+      </InlineStack>
+    </Card>
+  </Sticky>
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingLg" as="h2">Page Content</Text>
+        {#each Array(30) as _, i}
+          <Text>Content section {i + 1} - the navigation above stays visible</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Sticky, Card, InlineStack, Button, BlockStack, Text } from 'svelte-polaris';
+  
+  let activeSection = 'overview';
+  
+  function scrollToSection(section) {
+    activeSection = section;
+    // In a real app, you would scroll to the section
+    console.log(`Scrolling to ${section}`);
+  }
+</script>
+
+<div style="height: 200vh;">
+  <Sticky>
+    <Card>
+      <InlineStack gap="200">
+        <Button 
+          variant={activeSection === 'overview' ? 'primary' : 'tertiary'}
+          onClick={() => scrollToSection('overview')}
+        >
+          Overview
+        </Button>
+        <Button 
+          variant={activeSection === 'details' ? 'primary' : 'tertiary'}
+          onClick={() => scrollToSection('details')}
+        >
+          Details
+        </Button>
+        <Button 
+          variant={activeSection === 'settings' ? 'primary' : 'tertiary'}
+          onClick={() => scrollToSection('settings')}
+        >
+          Settings
+        </Button>
+      </InlineStack>
+    </Card>
+  </Sticky>
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingLg" as="h2">Page Content</Text>
+        {#each Array(30) as _, i}
+          <Text>Content section {i + 1} - the navigation above stays visible</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Sticky form actions
+
+Use Sticky for form actions that should remain accessible during long forms.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, TextField, Button, InlineStack } from 'svelte-polaris';
+  
+  let formData = {
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    address: '',
+    city: '',
+    country: '',
+    notes: ''
+  };
+  
+  function handleSave() {
+    console.log('Saving form data:', formData);
+  }
+  
+  function handleCancel() {
+    console.log('Cancelling form');
+  }
+</script>
+
+<div style="height: 150vh;">
+  <Card>
+    <BlockStack gap="400">
+      <TextField
+        label="Full name"
+        bind:value={formData.name}
+        autoComplete="name"
+      />
+      <TextField
+        label="Email"
+        type="email"
+        bind:value={formData.email}
+        autoComplete="email"
+      />
+      <TextField
+        label="Company"
+        bind:value={formData.company}
+        autoComplete="organization"
+      />
+      <TextField
+        label="Phone"
+        type="tel"
+        bind:value={formData.phone}
+        autoComplete="tel"
+      />
+      <TextField
+        label="Address"
+        bind:value={formData.address}
+        autoComplete="street-address"
+      />
+      <TextField
+        label="City"
+        bind:value={formData.city}
+        autoComplete="address-level2"
+      />
+      <TextField
+        label="Country"
+        bind:value={formData.country}
+        autoComplete="country"
+      />
+      <TextField
+        label="Notes"
+        multiline={4}
+        bind:value={formData.notes}
+        autoComplete="off"
+      />
+    </BlockStack>
+  </Card>
+  
+  <Sticky offset={16}>
+    <Card>
+      <InlineStack gap="200" align="end">
+        <Button onClick={handleCancel}>Cancel</Button>
+        <Button variant="primary" onClick={handleSave}>Save customer</Button>
+      </InlineStack>
+    </Card>
+  </Sticky>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, TextField, Button, InlineStack } from 'svelte-polaris';
+  
+  let formData = {
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    address: '',
+    city: '',
+    country: '',
+    notes: ''
+  };
+  
+  function handleSave() {
+    console.log('Saving form data:', formData);
+  }
+  
+  function handleCancel() {
+    console.log('Cancelling form');
+  }
+</script>
+
+<div style="height: 150vh;">
+  <Card>
+    <BlockStack gap="400">
+      <TextField
+        label="Full name"
+        bind:value={formData.name}
+        autoComplete="name"
+      />
+      <TextField
+        label="Email"
+        type="email"
+        bind:value={formData.email}
+        autoComplete="email"
+      />
+      <TextField
+        label="Company"
+        bind:value={formData.company}
+        autoComplete="organization"
+      />
+      <TextField
+        label="Phone"
+        type="tel"
+        bind:value={formData.phone}
+        autoComplete="tel"
+      />
+      <TextField
+        label="Address"
+        bind:value={formData.address}
+        autoComplete="street-address"
+      />
+      <TextField
+        label="City"
+        bind:value={formData.city}
+        autoComplete="address-level2"
+      />
+      <TextField
+        label="Country"
+        bind:value={formData.country}
+        autoComplete="country"
+      />
+      <TextField
+        label="Notes"
+        multiline={4}
+        bind:value={formData.notes}
+        autoComplete="off"
+      />
+    </BlockStack>
+  </Card>
+  
+  <Sticky offset={16}>
+    <Card>
+      <InlineStack gap="200" align="end">
+        <Button onClick={handleCancel}>Cancel</Button>
+        <Button variant="primary" onClick={handleSave}>Save customer</Button>
+      </InlineStack>
+    </Card>
+  </Sticky>
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Conditional sticky behavior
+
+Use conditional logic to control when content should be sticky.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, Text, Checkbox } from 'svelte-polaris';
+  
+  let enableSticky = true;
+</script>
+
+<div style="height: 200vh; padding: 16px;">
+  <Card>
+    <Checkbox
+      label="Enable sticky behavior"
+      bind:checked={enableSticky}
+    />
+  </Card>
+  
+  {#if enableSticky}
+    <Sticky>
+      <Card>
+        <Text variant="headingMd" as="h2">Conditionally Sticky</Text>
+        <Text>This content is sticky because the checkbox is checked.</Text>
+      </Card>
+    </Sticky>
+  {:else}
+    <Card>
+      <Text variant="headingMd" as="h2">Not Sticky</Text>
+      <Text>This content is not sticky because the checkbox is unchecked.</Text>
+    </Card>
+  {/if}
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        {#each Array(25) as _, i}
+          <Text>Content item {i + 1} - scroll to test sticky behavior</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Sticky, Card, BlockStack, Text, Checkbox } from 'svelte-polaris';
+  
+  let enableSticky = true;
+</script>
+
+<div style="height: 200vh; padding: 16px;">
+  <Card>
+    <Checkbox
+      label="Enable sticky behavior"
+      bind:checked={enableSticky}
+    />
+  </Card>
+  
+  {#if enableSticky}
+    <Sticky>
+      <Card>
+        <Text variant="headingMd" as="h2">Conditionally Sticky</Text>
+        <Text>This content is sticky because the checkbox is checked.</Text>
+      </Card>
+    </Sticky>
+  {:else}
+    <Card>
+      <Text variant="headingMd" as="h2">Not Sticky</Text>
+      <Text>This content is not sticky because the checkbox is unchecked.</Text>
+    </Card>
+  {/if}
+  
+  <div style="margin-top: 16px;">
+    <Card>
+      <BlockStack gap="400">
+        {#each Array(25) as _, i}
+          <Text>Content item {i + 1} - scroll to test sticky behavior</Text>
+        {/each}
+      </BlockStack>
+    </Card>
+  </div>
+</div>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| offset | `number` | `0` | Distance in pixels from the viewport edge |
+| disableWhenStacked | `boolean` | `false` | Disable sticky behavior when elements would stack |
+
+## Best practices
+
+- Use Sticky sparingly to avoid overwhelming the interface
+- Ensure sticky content doesn't obscure important page content
+- Consider the height of sticky elements on smaller screens
+- Provide adequate spacing between sticky elements and page content
+- Test sticky behavior across different screen sizes and orientations
+- Use appropriate z-index values to ensure proper layering
+
+## Accessibility
+
+- Sticky elements maintain proper focus management
+- Screen readers can navigate sticky content appropriately
+- Keyboard navigation works correctly with sticky elements
+- Sticky content doesn't interfere with assistive technology
+
+## Performance considerations
+
+- Sticky positioning is handled efficiently by the browser
+- Avoid putting complex content or many interactive elements in sticky containers
+- Consider the impact on scrolling performance, especially on mobile devices
+- Test performance with your specific content and layout
+
+## Related components
+
+- [Card](/getting-started/card) for containing sticky content
+- [Button](/getting-started/button) for sticky actions
+- [InlineStack](/getting-started/inline-stack) for arranging sticky elements
+- [Page](/getting-started/page) for page-level layouts with sticky elements

@@ -1,0 +1,523 @@
+---
+title: UnstyledButton
+description: UnstyledButton provides button functionality without default styling, perfect for custom interactive elements.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+UnstyledButton provides button functionality without default styling, perfect for custom interactive elements. It maintains accessibility features while giving you complete control over the appearance.
+
+## Examples
+
+### Basic unstyled button
+
+Use UnstyledButton when you need button functionality with custom styling.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledButton, Text } from 'svelte-polaris';
+  
+  function handleClick() {
+    console.log('Unstyled button clicked');
+  }
+</script>
+
+<UnstyledButton onClick={handleClick}>
+  <div style="padding: 12px 16px; background: #f6f6f7; border-radius: 6px; cursor: pointer;">
+    <Text>Custom styled button</Text>
+  </div>
+</UnstyledButton>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledButton, Text } from 'svelte-polaris';
+  
+  function handleClick() {
+    console.log('Unstyled button clicked');
+  }
+</script>
+
+<UnstyledButton onClick={handleClick}>
+  <div style="padding: 12px 16px; background: #f6f6f7; border-radius: 6px; cursor: pointer;">
+    <Text>Custom styled button</Text>
+  </div>
+</UnstyledButton>
+```
+</TabItem>
+</Tabs>
+
+### Interactive card
+
+Use UnstyledButton to make entire cards or complex layouts clickable.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledButton, Card, BlockStack, Text, Badge, InlineStack } from 'svelte-polaris';
+  
+  function handleProductClick() {
+    console.log('Product card clicked');
+  }
+</script>
+
+<UnstyledButton onClick={handleProductClick}>
+  <Card>
+    <BlockStack gap="200">
+      <InlineStack align="space-between">
+        <Text variant="headingMd" as="h3">Wireless Headphones</Text>
+        <Badge>In stock</Badge>
+      </InlineStack>
+      <Text>Premium noise-cancelling wireless headphones with 30-hour battery life.</Text>
+      <Text variant="headingLg" as="p">$299.99</Text>
+    </BlockStack>
+  </Card>
+</UnstyledButton>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledButton, Card, BlockStack, Text, Badge, InlineStack } from 'svelte-polaris';
+  
+  function handleProductClick() {
+    console.log('Product card clicked');
+  }
+</script>
+
+<UnstyledButton onClick={handleProductClick}>
+  <Card>
+    <BlockStack gap="200">
+      <InlineStack align="space-between">
+        <Text variant="headingMd" as="h3">Wireless Headphones</Text>
+        <Badge>In stock</Badge>
+      </InlineStack>
+      <Text>Premium noise-cancelling wireless headphones with 30-hour battery life.</Text>
+      <Text variant="headingLg" as="p">$299.99</Text>
+    </BlockStack>
+  </Card>
+</UnstyledButton>
+```
+</TabItem>
+</Tabs>
+
+### Custom navigation item
+
+Use UnstyledButton for custom navigation elements with hover effects.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledButton, InlineStack, Icon, Text } from 'svelte-polaris';
+  
+  let hoveredItem = null;
+  
+  function handleNavigation(page) {
+    console.log(`Navigating to ${page}`);
+  }
+  
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'HomeIcon' },
+    { id: 'products', label: 'Products', icon: 'ProductIcon' },
+    { id: 'orders', label: 'Orders', icon: 'OrderIcon' },
+    { id: 'customers', label: 'Customers', icon: 'CustomerIcon' }
+  ];
+</script>
+
+<div style="width: 200px; background: #f6f6f7; border-radius: 8px; padding: 8px;">
+  {#each navItems as item}
+    <UnstyledButton 
+      onClick={() => handleNavigation(item.id)}
+      onMouseEnter={() => hoveredItem = item.id}
+      onMouseLeave={() => hoveredItem = null}
+    >
+      <div style="
+        padding: 12px; 
+        border-radius: 6px; 
+        background: {hoveredItem === item.id ? '#e3e3e3' : 'transparent'};
+        transition: background-color 0.2s ease;
+        width: 100%;
+      ">
+        <InlineStack gap="200" align="start">
+          <Icon source={item.icon} />
+          <Text>{item.label}</Text>
+        </InlineStack>
+      </div>
+    </UnstyledButton>
+  {/each}
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledButton, InlineStack, Icon, Text } from 'svelte-polaris';
+  
+  let hoveredItem = null;
+  
+  function handleNavigation(page) {
+    console.log(`Navigating to ${page}`);
+  }
+  
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'HomeIcon' },
+    { id: 'products', label: 'Products', icon: 'ProductIcon' },
+    { id: 'orders', label: 'Orders', icon: 'OrderIcon' },
+    { id: 'customers', label: 'Customers', icon: 'CustomerIcon' }
+  ];
+</script>
+
+<div style="width: 200px; background: #f6f6f7; border-radius: 8px; padding: 8px;">
+  {#each navItems as item}
+    <UnstyledButton 
+      onClick={() => handleNavigation(item.id)}
+      onMouseEnter={() => hoveredItem = item.id}
+      onMouseLeave={() => hoveredItem = null}
+    >
+      <div style="
+        padding: 12px; 
+        border-radius: 6px; 
+        background: {hoveredItem === item.id ? '#e3e3e3' : 'transparent'};
+        transition: background-color 0.2s ease;
+        width: 100%;
+      ">
+        <InlineStack gap="200" align="start">
+          <Icon source={item.icon} />
+          <Text>{item.label}</Text>
+        </InlineStack>
+      </div>
+    </UnstyledButton>
+  {/each}
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Image gallery item
+
+Use UnstyledButton for interactive image galleries and media content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledButton, InlineGrid, Text } from 'svelte-polaris';
+  
+  function handleImageClick(imageId) {
+    console.log(`Image ${imageId} clicked`);
+  }
+  
+  const images = [
+    { id: 1, src: 'https://via.placeholder.com/150x150/007acc/ffffff?text=Image+1', alt: 'Product image 1' },
+    { id: 2, src: 'https://via.placeholder.com/150x150/28a745/ffffff?text=Image+2', alt: 'Product image 2' },
+    { id: 3, src: 'https://via.placeholder.com/150x150/dc3545/ffffff?text=Image+3', alt: 'Product image 3' },
+    { id: 4, src: 'https://via.placeholder.com/150x150/ffc107/000000?text=Image+4', alt: 'Product image 4' }
+  ];
+</script>
+
+<InlineGrid columns={2} gap="200">
+  {#each images as image}
+    <UnstyledButton onClick={() => handleImageClick(image.id)}>
+      <div style="
+        border: 2px solid transparent; 
+        border-radius: 8px; 
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+      " 
+      onmouseenter={(e) => e.target.style.borderColor = '#007acc'}
+      onmouseleave={(e) => e.target.style.borderColor = 'transparent'}
+      >
+        <img 
+          src={image.src} 
+          alt={image.alt}
+          style="width: 100%; height: 150px; object-fit: cover; display: block;"
+        />
+      </div>
+    </UnstyledButton>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledButton, InlineGrid, Text } from 'svelte-polaris';
+  
+  function handleImageClick(imageId) {
+    console.log(`Image ${imageId} clicked`);
+  }
+  
+  const images = [
+    { id: 1, src: 'https://via.placeholder.com/150x150/007acc/ffffff?text=Image+1', alt: 'Product image 1' },
+    { id: 2, src: 'https://via.placeholder.com/150x150/28a745/ffffff?text=Image+2', alt: 'Product image 2' },
+    { id: 3, src: 'https://via.placeholder.com/150x150/dc3545/ffffff?text=Image+3', alt: 'Product image 3' },
+    { id: 4, src: 'https://via.placeholder.com/150x150/ffc107/000000?text=Image+4', alt: 'Product image 4' }
+  ];
+</script>
+
+<InlineGrid columns={2} gap="200">
+  {#each images as image}
+    <UnstyledButton onClick={() => handleImageClick(image.id)}>
+      <div style="
+        border: 2px solid transparent; 
+        border-radius: 8px; 
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+      " 
+      onmouseenter={(e) => e.target.style.borderColor = '#007acc'}
+      onmouseleave={(e) => e.target.style.borderColor = 'transparent'}
+      >
+        <img 
+          src={image.src} 
+          alt={image.alt}
+          style="width: 100%; height: 150px; object-fit: cover; display: block;"
+        />
+      </div>
+    </UnstyledButton>
+  {/each}
+</InlineGrid>
+```
+</TabItem>
+</Tabs>
+
+### Disabled state
+
+Use the disabled prop to prevent interaction while maintaining visual consistency.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledButton, BlockStack, Text } from 'svelte-polaris';
+  
+  function handleClick() {
+    console.log('This should not fire when disabled');
+  }
+</script>
+
+<BlockStack gap="200">
+  <UnstyledButton onClick={handleClick}>
+    <div style="
+      padding: 12px 16px; 
+      background: #007acc; 
+      color: white; 
+      border-radius: 6px; 
+      text-align: center;
+      cursor: pointer;
+    ">
+      <Text>Enabled button</Text>
+    </div>
+  </UnstyledButton>
+  
+  <UnstyledButton onClick={handleClick} disabled>
+    <div style="
+      padding: 12px 16px; 
+      background: #e3e3e3; 
+      color: #999; 
+      border-radius: 6px; 
+      text-align: center;
+      cursor: not-allowed;
+    ">
+      <Text>Disabled button</Text>
+    </div>
+  </UnstyledButton>
+</BlockStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledButton, BlockStack, Text } from 'svelte-polaris';
+  
+  function handleClick() {
+    console.log('This should not fire when disabled');
+  }
+</script>
+
+<BlockStack gap="200">
+  <UnstyledButton onClick={handleClick}>
+    <div style="
+      padding: 12px 16px; 
+      background: #007acc; 
+      color: white; 
+      border-radius: 6px; 
+      text-align: center;
+      cursor: pointer;
+    ">
+      <Text>Enabled button</Text>
+    </div>
+  </UnstyledButton>
+  
+  <UnstyledButton onClick={handleClick} disabled>
+    <div style="
+      padding: 12px 16px; 
+      background: #e3e3e3; 
+      color: #999; 
+      border-radius: 6px; 
+      text-align: center;
+      cursor: not-allowed;
+    ">
+      <Text>Disabled button</Text>
+    </div>
+  </UnstyledButton>
+</BlockStack>
+```
+</TabItem>
+</Tabs>
+
+### With accessibility label
+
+Use accessibilityLabel for screen reader support when visual content isn't descriptive.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { UnstyledButton, Icon, InlineStack } from 'svelte-polaris';
+  
+  function handleClose() {
+    console.log('Close button clicked');
+  }
+  
+  function handleEdit() {
+    console.log('Edit button clicked');
+  }
+</script>
+
+<InlineStack gap="200">
+  <UnstyledButton 
+    onClick={handleClose}
+    accessibilityLabel="Close dialog"
+  >
+    <div style="
+      padding: 8px; 
+      border-radius: 4px; 
+      background: #f6f6f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <Icon source="XIcon" />
+    </div>
+  </UnstyledButton>
+  
+  <UnstyledButton 
+    onClick={handleEdit}
+    accessibilityLabel="Edit item"
+  >
+    <div style="
+      padding: 8px; 
+      border-radius: 4px; 
+      background: #f6f6f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <Icon source="EditIcon" />
+    </div>
+  </UnstyledButton>
+</InlineStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { UnstyledButton, Icon, InlineStack } from 'svelte-polaris';
+  
+  function handleClose() {
+    console.log('Close button clicked');
+  }
+  
+  function handleEdit() {
+    console.log('Edit button clicked');
+  }
+</script>
+
+<InlineStack gap="200">
+  <UnstyledButton 
+    onClick={handleClose}
+    accessibilityLabel="Close dialog"
+  >
+    <div style="
+      padding: 8px; 
+      border-radius: 4px; 
+      background: #f6f6f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <Icon source="XIcon" />
+    </div>
+  </UnstyledButton>
+  
+  <UnstyledButton 
+    onClick={handleEdit}
+    accessibilityLabel="Edit item"
+  >
+    <div style="
+      padding: 8px; 
+      border-radius: 4px; 
+      background: #f6f6f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <Icon source="EditIcon" />
+    </div>
+  </UnstyledButton>
+</InlineStack>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| onClick | `() => void` | - | Callback when the button is clicked |
+| disabled | `boolean` | `false` | Whether the button is disabled |
+| accessibilityLabel | `string` | - | Accessibility label for screen readers |
+| id | `string` | - | Unique identifier for the button |
+| type | `'button' \| 'submit' \| 'reset'` | `'button'` | Button type for form submission |
+| onFocus | `() => void` | - | Callback when the button receives focus |
+| onBlur | `() => void` | - | Callback when the button loses focus |
+| onMouseEnter | `() => void` | - | Callback when mouse enters the button |
+| onMouseLeave | `() => void` | - | Callback when mouse leaves the button |
+
+## Best practices
+
+- Always provide meaningful accessibility labels for icon-only buttons
+- Use appropriate cursor styles to indicate interactivity
+- Implement hover and focus states for better user experience
+- Ensure sufficient color contrast for text and background
+- Make click targets at least 44px for touch devices
+- Use semantic HTML structure within the button content
+- Test with keyboard navigation and screen readers
+
+## Accessibility
+
+- Maintains proper button semantics and ARIA attributes
+- Supports keyboard navigation (Enter and Space keys)
+- Works with screen readers and assistive technology
+- Respects user preferences for reduced motion
+- Provides proper focus management and visual indicators
+
+## When to use UnstyledButton
+
+- Creating custom interactive components with unique designs
+- Building complex clickable layouts that don't fit standard button patterns
+- Implementing custom navigation elements
+- Creating interactive cards, tiles, or media elements
+- When you need button functionality but want complete styling control
+
+## Related components
+
+- [Button](/getting-started/button) for standard button styling
+- [UnstyledLink](/getting-started/unstyled-link) for unstyled link elements
+- [Card](/getting-started/card) for containing clickable content
+- [Icon](/getting-started/icon) for icon-only buttons
