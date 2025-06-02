@@ -73,129 +73,87 @@ Allow users to select multiple options from the autocomplete list.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { AutoComplete, Tag, InlineStack } from 'svelte-polaris';
-
-  let selectedOptions = [];
-  let inputValue = '';
-
-  const options = [
-    { value: 'javascript', label: 'JavaScript' },
-    { value: 'typescript', label: 'TypeScript' },
-    { value: 'python', label: 'Python' },
-    { value: 'java', label: 'Java' },
-    { value: 'csharp', label: 'C#' },
-    { value: 'php', label: 'PHP' },
-    { value: 'ruby', label: 'Ruby' },
-    { value: 'go', label: 'Go' }
-  ];
-
-  function updateText(value) {
-    inputValue = value;
-  }
-
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
-
-  function removeTag(option) {
-    selectedOptions = selectedOptions.filter(
-      selectedOption => selectedOption.value !== option
-    );
-  }
-</script>
-
-<div>
-  <AutoComplete
-    allowMultiple
-    options={options}
-    selected={selectedOptions}
-    onSelect={updateSelection}
-    textField={{
-      onChange: updateText,
-      value: inputValue,
-      label: 'Programming languages',
-      placeholder: 'Search languages...',
-      autoComplete: 'off'
-    }}
-  />
-  
-  {#if selectedOptions.length > 0}
-    <div style="margin-top: 1rem;">
-      <InlineStack gap="200">
-        {#each selectedOptions as option}
-          <Tag onRemove={() => removeTag(option.value)}>
-            {option.label}
-          </Tag>
-        {/each}
-      </InlineStack>
-    </div>
-  {/if}
-</div>
-```
+<Preview src="autocomplete?type=autocomplete-with-multiple-sections" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
-<script>
-  import { AutoComplete, Tag, InlineStack } from 'svelte-polaris';
+<script lang="ts">
+  import { AutoComplete, Tag, InlineStack } from "svelte-polaris";
+  import SearchIcon from "@shopify/polaris-icons/dist/svg/SearchIcon.svg?component";
 
-  let selectedOptions = [];
-  let inputValue = '';
+  let selectedOptions: string[] = [];
+  let inputValue = "";
 
-  const options = [
-    { value: 'javascript', label: 'JavaScript' },
-    { value: 'typescript', label: 'TypeScript' },
-    { value: 'python', label: 'Python' },
-    { value: 'java', label: 'Java' },
-    { value: 'csharp', label: 'C#' },
-    { value: 'php', label: 'PHP' },
-    { value: 'ruby', label: 'Ruby' },
-    { value: 'go', label: 'Go' }
+  type Section = {
+    title: string;
+    options: {
+      value: string;
+      label: string;
+    }[];
+  };
+
+  const options: Section[] = [
+    {
+      title: "Frequently used",
+      options: [
+        { value: "ups", label: "UPS" },
+        { value: "usps", label: "USPS" },
+      ],
+    },
+    {
+      title: "All carriers",
+      options: [
+        { value: "dhl", label: "DHL Express" },
+        { value: "canada_post", label: "Canada Post" },
+      ],
+    },
   ];
 
-  function updateText(value) {
+  function updateText(value: string) {
     inputValue = value;
   }
 
-  function updateSelection(selected) {
+  function updateSelection(selected: string[]) {
     selectedOptions = selected;
   }
 
-  function removeTag(option) {
+  function removeTag(option: string) {
     selectedOptions = selectedOptions.filter(
-      selectedOption => selectedOption.value !== option
+      (selectedOption) => selectedOption !== option,
     );
   }
 </script>
 
-<div>
-  <AutoComplete
-    allowMultiple
-    options={options}
-    selected={selectedOptions}
-    onSelect={updateSelection}
-    textField={{
-      onChange: updateText,
-      value: inputValue,
-      label: 'Programming languages',
-      placeholder: 'Search languages...',
-      autoComplete: 'off'
-    }}
+{#snippet textField()}
+  <AutoComplete.TextField
+    onChange={updateText}
+    label="Programming languages"
+    value={inputValue}
+    prefix={SearchIcon}
+    placeholder="Search languages..."
+    autoComplete="off"
   />
-  
-  {#if selectedOptions.length > 0}
-    <div style="margin-top: 1rem;">
-      <InlineStack gap="200">
-        {#each selectedOptions as option}
-          <Tag onRemove={() => removeTag(option.value)}>
-            {option.label}
-          </Tag>
-        {/each}
-      </InlineStack>
-    </div>
-  {/if}
-</div>
+{/snippet}
+
+<AutoComplete
+  allowMultiple
+  {options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  {textField}
+/>
+
+{#if selectedOptions.length > 0}
+  <div style="margin-top: 1rem;">
+    <InlineStack gap="200">
+      {#each selectedOptions as option}
+        <Tag onRemove={() => removeTag(option)}>
+          {option}
+        </Tag>
+      {/each}
+    </InlineStack>
+  </div>
+{/if}
 ```
 </TabItem>
 </Tabs>
@@ -206,105 +164,55 @@ Show a loading state while fetching autocomplete options.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
-
-  let selectedOptions = [];
-  let inputValue = '';
-  let loading = false;
-  let options = [];
-
-  async function updateText(value) {
-    inputValue = value;
-    
-    if (value.length > 2) {
-      loading = true;
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      options = [
-        { value: 'option1', label: `Result for "${value}" - Option 1` },
-        { value: 'option2', label: `Result for "${value}" - Option 2` },
-        { value: 'option3', label: `Result for "${value}" - Option 3` }
-      ];
-      
-      loading = false;
-    } else {
-      options = [];
-    }
-  }
-
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
-</script>
-
-<AutoComplete
-  options={options}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  loading={loading}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Search with loading',
-    placeholder: 'Type at least 3 characters...',
-    autoComplete: 'off'
-  }}
-/>
-```
+  <Preview src="autocomplete?type=with-loading-state" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
+<script lang="ts">
+    import SearchIcon from "@shopify/polaris-icons/dist/svg/SearchIcon.svg?component";
+    import { AutoComplete } from "svelte-polaris";
 
-  let selectedOptions = [];
-  let inputValue = '';
-  let loading = false;
-  let options = [];
+    let selectedOptions: string[] = [];
+    let inputValue = "";
 
-  async function updateText(value) {
-    inputValue = value;
-    
-    if (value.length > 2) {
-      loading = true;
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      options = [
-        { value: 'option1', label: `Result for "${value}" - Option 1` },
-        { value: 'option2', label: `Result for "${value}" - Option 2` },
-        { value: 'option3', label: `Result for "${value}" - Option 3` }
-      ];
-      
-      loading = false;
-    } else {
-      options = [];
+    const options = [
+        { value: "apple", label: "Apple" },
+        { value: "banana", label: "Banana" },
+        { value: "cherry", label: "Cherry" },
+        { value: "date", label: "Date" },
+        { value: "elderberry", label: "Elderberry" },
+        { value: "fig", label: "Fig" },
+        { value: "grape", label: "Grape" },
+    ];
+
+    function updateText(value: string) {
+        inputValue = value;
     }
-  }
 
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
+    function updateSelection(selected: string[]) {
+        selectedOptions = selected;
+    }
 </script>
 
+{#snippet textField()}
+    <AutoComplete.TextField
+        onChange={updateText}
+        label="Tags"
+        value={inputValue}
+        prefix={SearchIcon}
+        placeholder="Search"
+        autoComplete="off"
+    />
+{/snippet}
+
 <AutoComplete
-  options={options}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  loading={loading}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Search with loading',
-    placeholder: 'Type at least 3 characters...',
-    autoComplete: 'off'
-  }}
+    {options}
+    loading={true}
+    selected={selectedOptions}
+    onSelect={updateSelection}
+    {textField}
 />
+
 ```
 </TabItem>
 </Tabs>
@@ -315,94 +223,54 @@ Provide helpful messaging when no options are available.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
-
-  let selectedOptions = [];
-  let inputValue = '';
-
-  const allOptions = [
-    { value: 'red', label: 'Red' },
-    { value: 'blue', label: 'Blue' },
-    { value: 'green', label: 'Green' }
-  ];
-
-  $: filteredOptions = allOptions.filter(option =>
-    option.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
-
-  function updateText(value) {
-    inputValue = value;
-  }
-
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
-</script>
-
-<AutoComplete
-  options={filteredOptions}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  emptyState={{
-    empty: true,
-    title: 'No colors found',
-    description: 'Try searching for red, blue, or green'
-  }}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Search colors',
-    placeholder: 'Type to search colors...',
-    autoComplete: 'off'
-  }}
-/>
-```
+  <Preview src="autocomplete?type=with-empty-state" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
+<script lang="ts">
+    import { BlockStack, Icon, Text, AutoComplete } from 'svelte-polaris';
+    import SearchIcon from "@shopify/polaris-icons/dist/svg/SearchIcon.svg?component";
 
-  let selectedOptions = [];
-  let inputValue = '';
+    let selectedOptions: string[] = [];
+    let inputValue = "";
 
-  const allOptions = [
-    { value: 'red', label: 'Red' },
-    { value: 'blue', label: 'Blue' },
-    { value: 'green', label: 'Green' }
-  ];
+    const options:[] = [
+    ];
 
-  $: filteredOptions = allOptions.filter(option =>
-    option.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
+    function updateText(value: string) {
+        inputValue = value;
+    }
 
-  function updateText(value) {
-    inputValue = value;
-  }
-
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
+    function updateSelection(selected: string[]) {
+        selectedOptions = selected;
+    }
 </script>
 
+{#snippet emptyState()}
+    <BlockStack gap="200">
+        <Icon source={SearchIcon} />
+        <Text variant="headingMd" as="h2">No colors found</Text>
+        <Text variant="bodyMd" as="p">Try searching for red, blue, or green</Text>
+    </BlockStack>
+{/snippet}
+
+{#snippet textField()}
+    <AutoComplete.TextField
+        onChange={updateText}
+        label="Tags"
+        value={inputValue}
+        prefix={SearchIcon}
+        placeholder="Search"
+        autoComplete="off"
+    />
+{/snippet}
+
 <AutoComplete
-  options={filteredOptions}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  emptyState={{
-    empty: true,
-    title: 'No colors found',
-    description: 'Try searching for red, blue, or green'
-  }}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Search colors',
-    placeholder: 'Type to search colors...',
-    autoComplete: 'off'
-  }}
+    {options}
+    selected={selectedOptions}
+    onSelect={updateSelection}
+    {textField}
+    {emptyState}
 />
 ```
 </TabItem>
@@ -414,102 +282,67 @@ Add an action to create new options when none exist.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
-
-  let selectedOptions = [];
-  let inputValue = '';
-  let options = [
-    { value: 'tag1', label: 'Existing Tag 1' },
-    { value: 'tag2', label: 'Existing Tag 2' }
-  ];
-
-  function updateText(value) {
-    inputValue = value;
-  }
-
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
-
-  function createNewTag() {
-    const newTag = {
-      value: inputValue.toLowerCase().replace(/\s+/g, '-'),
-      label: inputValue
-    };
-    
-    options = [...options, newTag];
-    selectedOptions = [...selectedOptions, newTag];
-    inputValue = '';
-  }
-</script>
-
-<AutoComplete
-  options={options}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  actionBefore={{
-    content: `Create "${inputValue}"`,
-    onAction: createNewTag
-  }}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Tags',
-    placeholder: 'Search or create tags...',
-    autoComplete: 'off'
-  }}
-/>
-```
+<Preview src="autocomplete?type=with-action" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
+<script lang="ts">
+    import PlusCircleIcon from "@shopify/polaris-icons/dist/svg/PlusCircleIcon.svg?component";
+    import SearchIcon from "@shopify/polaris-icons/dist/svg/SearchIcon.svg?component";
+    import { AutoComplete } from "svelte-polaris";
 
-  let selectedOptions = [];
-  let inputValue = '';
-  let options = [
-    { value: 'tag1', label: 'Existing Tag 1' },
-    { value: 'tag2', label: 'Existing Tag 2' }
-  ];
+    let selectedOptions: string[] = [];
+    let inputValue = "";
 
-  function updateText(value) {
-    inputValue = value;
-  }
+    const options = [
+        { value: "apple", label: "Apple" },
+        { value: "banana", label: "Banana" },
+        { value: "cherry", label: "Cherry" },
+        { value: "date", label: "Date" },
+        { value: "elderberry", label: "Elderberry" },
+        { value: "fig", label: "Fig" },
+        { value: "grape", label: "Grape" },
+    ];
 
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
+    function updateText(value: string) {
+        inputValue = value;
+    }
 
-  function createNewTag() {
-    const newTag = {
-      value: inputValue.toLowerCase().replace(/\s+/g, '-'),
-      label: inputValue
-    };
-    
-    options = [...options, newTag];
-    selectedOptions = [...selectedOptions, newTag];
-    inputValue = '';
-  }
+    function updateSelection(selected: string[]) {
+        selectedOptions = selected;
+    }
 </script>
 
+{#snippet textField()}
+    <AutoComplete.TextField
+        onChange={updateText}
+        label="Tags"
+        value={inputValue}
+        prefix={SearchIcon}
+        placeholder="Search"
+        autoComplete="off"
+    />
+{/snippet}
+
 <AutoComplete
-  options={options}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  actionBefore={{
-    content: `Create "${inputValue}"`,
-    onAction: createNewTag
-  }}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Tags',
-    placeholder: 'Search or create tags...',
-    autoComplete: 'off'
-  }}
+    {options}
+    selected={selectedOptions}
+    onSelect={updateSelection}
+    {textField}
+    actionBefore={{
+        accessibilityLabel: "Action label",
+        badge: {
+            tone: "new",
+            content: "New!",
+        },
+        content: "Action with long name",
+        ellipsis: true,
+        helpText: "Help text",
+        icon: PlusCircleIcon,
+        onAction: () => {
+            console.log("actionBefore clicked!");
+        },
+    }}
 />
 ```
 </TabItem>
