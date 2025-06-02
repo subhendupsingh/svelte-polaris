@@ -12,10 +12,16 @@ import Badge from "$lib/components/badge/badge.svelte";
 import BadgeWithTone from "$lib/components/badge/with-tone.svelte";
 import BadgeWithSize from "$lib/components/badge/with-size.svelte";
 import Bleed from "$lib/components/bleed/bleed.svelte";
+import ButtonTones from "$lib/components/button/button-tones.svelte";
+import ButtonSizes from "$lib/components/button/button-sizes.svelte";
+import ButtonGroup from "$lib/components/button-group/button-group.svelte";
+import Segmented from "$lib/components/button-group/segmented.svelte";
 
 export const componentsMap: Record<string, any> = {
     "button": {
-        "base": Button
+        "base": Button,
+        "tones": ButtonTones,
+        "sizes": ButtonSizes
     },
     "action-list": {
         "base": BaseActionList,
@@ -38,6 +44,10 @@ export const componentsMap: Record<string, any> = {
         "with-size": BadgeWithSize
     },
     "bleed": {
-        "base": Bleed
+        "base": Bleed,
+    },
+    "button-group": {
+        "base": ButtonGroup,
+        "segmented": Segmented
     }
 }

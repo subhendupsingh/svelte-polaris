@@ -4,20 +4,12 @@ description: ButtonGroup displays multiple related actions in a row to help with
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import Preview from '@doc-components/preview.svelte';
 
 # ButtonGroup
 
 ButtonGroup displays multiple related actions in a row to help with arrangement and spacing.
-
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `gap` | `'extraTight' \| 'tight' \| 'loose'` | - | Space between button group items |
-| `variant` | `'segmented'` | - | Styling variant for the group |
-| `fullWidth` | `boolean` | `false` | Buttons stretch to occupy full width |
-| `connectedTop` | `boolean` | `false` | Remove top left and right border radius |
-| `noWrap` | `boolean` | `false` | Prevent buttons from wrapping to next line |
 
 ## Basic Usage
 
@@ -25,8 +17,13 @@ ButtonGroup displays multiple related actions in a row to help with arrangement 
 
 Group related buttons with default spacing.
 
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="button-group" title="ButtonGroup preview" />
+</TabItem>
+<TabItem label="Code">
 ```svelte
-<script>
+<script lang="ts">
   import { ButtonGroup, Button } from 'svelte-polaris';
   
   function handleSave() {
@@ -43,34 +40,9 @@ Group related buttons with default spacing.
   <Button variant="primary" onclick={handleSave}>Save</Button>
 </ButtonGroup>
 ```
+</TabItem>
+</Tabs>
 
-### Multiple Actions
-
-Group multiple related actions together.
-
-```svelte
-<script>
-  import { ButtonGroup, Button } from 'svelte-polaris';
-  
-  function handleEdit() {
-    console.log('Edit clicked');
-  }
-  
-  function handleDuplicate() {
-    console.log('Duplicate clicked');
-  }
-  
-  function handleDelete() {
-    console.log('Delete clicked');
-  }
-</script>
-
-<ButtonGroup>
-  <Button onclick={handleEdit}>Edit</Button>
-  <Button onclick={handleDuplicate}>Duplicate</Button>
-  <Button tone="critical" onclick={handleDelete}>Delete</Button>
-</ButtonGroup>
-```
 
 ## Spacing Control
 
@@ -130,6 +102,11 @@ Increased space between buttons for better separation.
 
 Create a segmented control appearance where buttons are visually connected.
 
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="button-group?type=segmented" title="ButtonGroup segmented preview" />
+</TabItem>
+<TabItem label="Code">
 ```svelte
 <script>
   import { ButtonGroup, Button } from 'svelte-polaris';
@@ -162,6 +139,8 @@ Create a segmented control appearance where buttons are visually connected.
   </Button>
 </ButtonGroup>
 ```
+</TabItem>
+</Tabs>
 
 ### Segmented with Icons
 
@@ -488,6 +467,16 @@ Use button groups in modal dialogs for consistent action placement.
   </Text>
 </Modal>
 ```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `gap` | `'extraTight' \| 'tight' \| 'loose'` | - | Space between button group items |
+| `variant` | `'segmented'` | - | Styling variant for the group |
+| `fullWidth` | `boolean` | `false` | Buttons stretch to occupy full width |
+| `connectedTop` | `boolean` | `false` | Remove top left and right border radius |
+| `noWrap` | `boolean` | `false` | Prevent buttons from wrapping to next line |
 
 ## Accessibility
 
