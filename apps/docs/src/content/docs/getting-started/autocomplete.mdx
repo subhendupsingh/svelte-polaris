@@ -1,0 +1,614 @@
+---
+title: AutoComplete
+description: Autocomplete provides suggestions as users type in a text field.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Autocomplete provides suggestions as users type in a text field. It helps users complete their input faster and reduces errors by offering valid options.
+
+## Examples
+
+### Basic autocomplete
+
+Use autocomplete to help users find and select from a list of options.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const options = [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'cherry', label: 'Cherry' },
+    { value: 'date', label: 'Date' },
+    { value: 'elderberry', label: 'Elderberry' },
+    { value: 'fig', label: 'Fig' },
+    { value: 'grape', label: 'Grape' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<AutoComplete
+  options={options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Search fruits',
+    placeholder: 'Type to search...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const options = [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'cherry', label: 'Cherry' },
+    { value: 'date', label: 'Date' },
+    { value: 'elderberry', label: 'Elderberry' },
+    { value: 'fig', label: 'Fig' },
+    { value: 'grape', label: 'Grape' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<AutoComplete
+  options={options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Search fruits',
+    placeholder: 'Type to search...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+</Tabs>
+
+### Autocomplete with multiple selection
+
+Allow users to select multiple options from the autocomplete list.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { AutoComplete, Tag, InlineStack } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const options = [
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'python', label: 'Python' },
+    { value: 'java', label: 'Java' },
+    { value: 'csharp', label: 'C#' },
+    { value: 'php', label: 'PHP' },
+    { value: 'ruby', label: 'Ruby' },
+    { value: 'go', label: 'Go' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+
+  function removeTag(option) {
+    selectedOptions = selectedOptions.filter(
+      selectedOption => selectedOption.value !== option
+    );
+  }
+</script>
+
+<div>
+  <AutoComplete
+    allowMultiple
+    options={options}
+    selected={selectedOptions}
+    onSelect={updateSelection}
+    textField={{
+      onChange: updateText,
+      value: inputValue,
+      label: 'Programming languages',
+      placeholder: 'Search languages...',
+      autoComplete: 'off'
+    }}
+  />
+  
+  {#if selectedOptions.length > 0}
+    <div style="margin-top: 1rem;">
+      <InlineStack gap="200">
+        {#each selectedOptions as option}
+          <Tag onRemove={() => removeTag(option.value)}>
+            {option.label}
+          </Tag>
+        {/each}
+      </InlineStack>
+    </div>
+  {/if}
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { AutoComplete, Tag, InlineStack } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const options = [
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'python', label: 'Python' },
+    { value: 'java', label: 'Java' },
+    { value: 'csharp', label: 'C#' },
+    { value: 'php', label: 'PHP' },
+    { value: 'ruby', label: 'Ruby' },
+    { value: 'go', label: 'Go' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+
+  function removeTag(option) {
+    selectedOptions = selectedOptions.filter(
+      selectedOption => selectedOption.value !== option
+    );
+  }
+</script>
+
+<div>
+  <AutoComplete
+    allowMultiple
+    options={options}
+    selected={selectedOptions}
+    onSelect={updateSelection}
+    textField={{
+      onChange: updateText,
+      value: inputValue,
+      label: 'Programming languages',
+      placeholder: 'Search languages...',
+      autoComplete: 'off'
+    }}
+  />
+  
+  {#if selectedOptions.length > 0}
+    <div style="margin-top: 1rem;">
+      <InlineStack gap="200">
+        {#each selectedOptions as option}
+          <Tag onRemove={() => removeTag(option.value)}>
+            {option.label}
+          </Tag>
+        {/each}
+      </InlineStack>
+    </div>
+  {/if}
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Autocomplete with loading state
+
+Show a loading state while fetching autocomplete options.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+  let loading = false;
+  let options = [];
+
+  async function updateText(value) {
+    inputValue = value;
+    
+    if (value.length > 2) {
+      loading = true;
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      options = [
+        { value: 'option1', label: `Result for "${value}" - Option 1` },
+        { value: 'option2', label: `Result for "${value}" - Option 2` },
+        { value: 'option3', label: `Result for "${value}" - Option 3` }
+      ];
+      
+      loading = false;
+    } else {
+      options = [];
+    }
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<AutoComplete
+  options={options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  loading={loading}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Search with loading',
+    placeholder: 'Type at least 3 characters...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+  let loading = false;
+  let options = [];
+
+  async function updateText(value) {
+    inputValue = value;
+    
+    if (value.length > 2) {
+      loading = true;
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      options = [
+        { value: 'option1', label: `Result for "${value}" - Option 1` },
+        { value: 'option2', label: `Result for "${value}" - Option 2` },
+        { value: 'option3', label: `Result for "${value}" - Option 3` }
+      ];
+      
+      loading = false;
+    } else {
+      options = [];
+    }
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<AutoComplete
+  options={options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  loading={loading}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Search with loading',
+    placeholder: 'Type at least 3 characters...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+</Tabs>
+
+### Autocomplete with empty state
+
+Provide helpful messaging when no options are available.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const allOptions = [
+    { value: 'red', label: 'Red' },
+    { value: 'blue', label: 'Blue' },
+    { value: 'green', label: 'Green' }
+  ];
+
+  $: filteredOptions = allOptions.filter(option =>
+    option.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<AutoComplete
+  options={filteredOptions}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  emptyState={{
+    empty: true,
+    title: 'No colors found',
+    description: 'Try searching for red, blue, or green'
+  }}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Search colors',
+    placeholder: 'Type to search colors...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const allOptions = [
+    { value: 'red', label: 'Red' },
+    { value: 'blue', label: 'Blue' },
+    { value: 'green', label: 'Green' }
+  ];
+
+  $: filteredOptions = allOptions.filter(option =>
+    option.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+</script>
+
+<AutoComplete
+  options={filteredOptions}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  emptyState={{
+    empty: true,
+    title: 'No colors found',
+    description: 'Try searching for red, blue, or green'
+  }}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Search colors',
+    placeholder: 'Type to search colors...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+</Tabs>
+
+### Autocomplete with action
+
+Add an action to create new options when none exist.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+  let options = [
+    { value: 'tag1', label: 'Existing Tag 1' },
+    { value: 'tag2', label: 'Existing Tag 2' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+
+  function createNewTag() {
+    const newTag = {
+      value: inputValue.toLowerCase().replace(/\s+/g, '-'),
+      label: inputValue
+    };
+    
+    options = [...options, newTag];
+    selectedOptions = [...selectedOptions, newTag];
+    inputValue = '';
+  }
+</script>
+
+<AutoComplete
+  options={options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  actionBefore={{
+    content: `Create "${inputValue}"`,
+    onAction: createNewTag
+  }}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Tags',
+    placeholder: 'Search or create tags...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { AutoComplete } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+  let options = [
+    { value: 'tag1', label: 'Existing Tag 1' },
+    { value: 'tag2', label: 'Existing Tag 2' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOptions = selected;
+  }
+
+  function createNewTag() {
+    const newTag = {
+      value: inputValue.toLowerCase().replace(/\s+/g, '-'),
+      label: inputValue
+    };
+    
+    options = [...options, newTag];
+    selectedOptions = [...selectedOptions, newTag];
+    inputValue = '';
+  }
+</script>
+
+<AutoComplete
+  options={options}
+  selected={selectedOptions}
+  onSelect={updateSelection}
+  actionBefore={{
+    content: `Create "${inputValue}"`,
+    onAction: createNewTag
+  }}
+  textField={{
+    onChange: updateText,
+    value: inputValue,
+    label: 'Tags',
+    placeholder: 'Search or create tags...',
+    autoComplete: 'off'
+  }}
+/>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### AutoComplete props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `options` | `AutocompleteOption[]` | `[]` | Collection of options to display |
+| `selected` | `AutocompleteOption[]` | `[]` | Currently selected options |
+| `onSelect` | `(selected: AutocompleteOption[]) => void` | | Callback when selection changes |
+| `textField` | `TextFieldProps` | | Props for the text input field |
+| `allowMultiple` | `boolean` | `false` | Allow multiple selections |
+| `loading` | `boolean` | `false` | Show loading state |
+| `willLoadMoreResults` | `boolean` | `false` | Whether more results will load |
+| `emptyState` | `EmptyStateProps` | | Empty state configuration |
+| `actionBefore` | `ActionDescriptor` | | Action to show before options |
+| `preferredPosition` | `'above' \| 'below' \| 'mostSpace'` | `'below'` | Preferred popover position |
+| `listboxId` | `string` | | ID for the listbox |
+
+### AutocompleteOption props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | | Unique value for the option |
+| `label` | `string` | | Display text for the option |
+| `disabled` | `boolean` | `false` | Whether the option is disabled |
+
+### TextFieldProps (for textField prop)
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | | Current input value |
+| `onChange` | `(value: string) => void` | | Callback when input changes |
+| `label` | `string` | | Label for the input field |
+| `placeholder` | `string` | | Placeholder text |
+| `autoComplete` | `string` | | HTML autocomplete attribute |
+| `disabled` | `boolean` | `false` | Whether the input is disabled |
+| `error` | `string \| boolean` | | Error message or state |
+| `helpText` | `string` | | Help text below the input |
+
+## Best practices
+
+- Use autocomplete to help users find options quickly in large datasets
+- Provide clear, descriptive labels for options
+- Show loading states when fetching options asynchronously
+- Implement proper filtering to show relevant results
+- Use empty states to guide users when no results are found
+- Allow creation of new options when appropriate
+- Consider performance with large option lists
+- Provide keyboard navigation support
+- Use multiple selection sparingly and show selected items clearly
+
+## Accessibility
+
+- Autocomplete automatically manages ARIA attributes for screen readers
+- Keyboard navigation is built-in (arrow keys, Enter, Escape)
+- Selected options are announced to assistive technologies
+- Loading states are properly communicated
+- Focus management is handled automatically
+- Use descriptive labels and help text for better context
+
+## Related components
+
+- Use [Combobox](/getting-started/combobox) for single-selection dropdowns
+- Use [Select](/getting-started/select) for simple option selection
+- Use [TextField](/getting-started/text-field) for basic text input
+- Use [Tag](/getting-started/tag) to display selected options

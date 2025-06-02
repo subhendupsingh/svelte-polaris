@@ -1,0 +1,635 @@
+---
+title: EmptySearchResult
+description: EmptySearchResult displays a message when a search query returns no results, with suggestions for improving the search.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+EmptySearchResult displays a message when a search query returns no results, with suggestions for improving the search. It helps users understand why their search didn't return results and provides guidance on how to modify their query.
+
+## Examples
+
+### Basic empty search result
+
+Display a simple message when no search results are found.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { EmptySearchResult } from 'svelte-polaris';
+
+  let searchQuery = 'nonexistent product';
+</script>
+
+<EmptySearchResult
+  title="No results found"
+  description={`No results found for "${searchQuery}"`}
+  withIllustration
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { EmptySearchResult } from 'svelte-polaris';
+
+  let searchQuery = 'nonexistent product';
+</script>
+
+<EmptySearchResult
+  title="No results found"
+  description={`No results found for "${searchQuery}"`}
+  withIllustration
+/>
+```
+</TabItem>
+</Tabs>
+
+### Empty search result with suggestions
+
+Provide helpful suggestions to improve the search experience.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { EmptySearchResult, Button } from 'svelte-polaris';
+
+  let searchQuery = 'xyz123';
+
+  function clearSearch() {
+    searchQuery = '';
+    console.log('Search cleared');
+  }
+
+  function searchAll() {
+    console.log('Showing all products');
+  }
+</script>
+
+<EmptySearchResult
+  title={`No results found for "${searchQuery}"`}
+  description="Try changing or removing some of your search filters"
+  withIllustration
+>
+  <div style="margin-top: 1rem;">
+    <p style="margin-bottom: 1rem;">Suggestions:</p>
+    <ul style="margin-bottom: 1rem;">
+      <li>Check your spelling</li>
+      <li>Try different keywords</li>
+      <li>Remove some filters</li>
+      <li>Use more general terms</li>
+    </ul>
+    <div style="display: flex; gap: 0.5rem;">
+      <Button onClick={clearSearch}>Clear search</Button>
+      <Button variant="primary" onClick={searchAll}>Show all products</Button>
+    </div>
+  </div>
+</EmptySearchResult>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { EmptySearchResult, Button } from 'svelte-polaris';
+
+  let searchQuery = 'xyz123';
+
+  function clearSearch() {
+    searchQuery = '';
+    console.log('Search cleared');
+  }
+
+  function searchAll() {
+    console.log('Showing all products');
+  }
+</script>
+
+<EmptySearchResult
+  title={`No results found for "${searchQuery}"`}
+  description="Try changing or removing some of your search filters"
+  withIllustration
+>
+  <div style="margin-top: 1rem;">
+    <p style="margin-bottom: 1rem;">Suggestions:</p>
+    <ul style="margin-bottom: 1rem;">
+      <li>Check your spelling</li>
+      <li>Try different keywords</li>
+      <li>Remove some filters</li>
+      <li>Use more general terms</li>
+    </ul>
+    <div style="display: flex; gap: 0.5rem;">
+      <Button onClick={clearSearch}>Clear search</Button>
+      <Button variant="primary" onClick={searchAll}>Show all products</Button>
+    </div>
+  </div>
+</EmptySearchResult>
+```
+</TabItem>
+</Tabs>
+
+### Empty search result with actions
+
+Include primary and secondary actions to help users continue their workflow.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { EmptySearchResult } from 'svelte-polaris';
+
+  let searchQuery = 'discontinued item';
+
+  function createProduct() {
+    console.log('Creating new product');
+  }
+
+  function browseCategories() {
+    console.log('Browsing categories');
+  }
+
+  function contactSupport() {
+    console.log('Contacting support');
+  }
+</script>
+
+<EmptySearchResult
+  title="No products found"
+  description={`We couldn't find any products matching "${searchQuery}"`}
+  withIllustration
+  action={{
+    content: 'Add new product',
+    onAction: createProduct
+  }}
+  secondaryAction={{
+    content: 'Browse categories',
+    onAction: browseCategories
+  }}
+>
+  <div style="margin-top: 1rem;">
+    <p>Can't find what you're looking for?</p>
+    <button 
+      style="color: #006fbb; text-decoration: underline; background: none; border: none; cursor: pointer;"
+      on:click={contactSupport}
+    >
+      Contact support
+    </button>
+  </div>
+</EmptySearchResult>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { EmptySearchResult } from 'svelte-polaris';
+
+  let searchQuery = 'discontinued item';
+
+  function createProduct() {
+    console.log('Creating new product');
+  }
+
+  function browseCategories() {
+    console.log('Browsing categories');
+  }
+
+  function contactSupport() {
+    console.log('Contacting support');
+  }
+</script>
+
+<EmptySearchResult
+  title="No products found"
+  description={`We couldn't find any products matching "${searchQuery}"`}
+  withIllustration
+  action={{
+    content: 'Add new product',
+    onAction: createProduct
+  }}
+  secondaryAction={{
+    content: 'Browse categories',
+    onAction: browseCategories
+  }}
+>
+  <div style="margin-top: 1rem;">
+    <p>Can't find what you're looking for?</p>
+    <button 
+      style="color: #006fbb; text-decoration: underline; background: none; border: none; cursor: pointer;"
+      on:click={contactSupport}
+    >
+      Contact support
+    </button>
+  </div>
+</EmptySearchResult>
+```
+</TabItem>
+</Tabs>
+
+### Empty search result in data table
+
+Display empty search results within a data table context.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { EmptySearchResult, Card, TextField, Button, InlineStack } from 'svelte-polaris';
+
+  let searchQuery = 'inactive customers';
+  let filters = ['Status: Active', 'Location: US'];
+
+  function clearSearch() {
+    searchQuery = '';
+  }
+
+  function clearFilters() {
+    filters = [];
+  }
+
+  function clearAll() {
+    searchQuery = '';
+    filters = [];
+  }
+</script>
+
+<Card>
+  <div style="padding: 1rem;">
+    <div style="margin-bottom: 1rem;">
+      <TextField
+        value={searchQuery}
+        placeholder="Search customers"
+        autoComplete="off"
+      />
+    </div>
+    
+    {#if filters.length > 0}
+      <div style="margin-bottom: 1rem;">
+        <InlineStack gap="200">
+          {#each filters as filter}
+            <span style="background: #f1f2f3; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.875rem;">
+              {filter}
+            </span>
+          {/each}
+        </InlineStack>
+      </div>
+    {/if}
+
+    <EmptySearchResult
+      title="No customers found"
+      description={`No customers match your search and filters`}
+      action={{
+        content: 'Clear search',
+        onAction: clearSearch
+      }}
+      secondaryAction={{
+        content: 'Clear all filters',
+        onAction: clearAll
+      }}
+    />
+  </div>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { EmptySearchResult, Card, TextField, Button, InlineStack } from 'svelte-polaris';
+
+  let searchQuery = 'inactive customers';
+  let filters = ['Status: Active', 'Location: US'];
+
+  function clearSearch() {
+    searchQuery = '';
+  }
+
+  function clearFilters() {
+    filters = [];
+  }
+
+  function clearAll() {
+    searchQuery = '';
+    filters = [];
+  }
+</script>
+
+<Card>
+  <div style="padding: 1rem;">
+    <div style="margin-bottom: 1rem;">
+      <TextField
+        value={searchQuery}
+        placeholder="Search customers"
+        autoComplete="off"
+      />
+    </div>
+    
+    {#if filters.length > 0}
+      <div style="margin-bottom: 1rem;">
+        <InlineStack gap="200">
+          {#each filters as filter}
+            <span style="background: #f1f2f3; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.875rem;">
+              {filter}
+            </span>
+          {/each}
+        </InlineStack>
+      </div>
+    {/if}
+
+    <EmptySearchResult
+      title="No customers found"
+      description={`No customers match your search and filters`}
+      action={{
+        content: 'Clear search',
+        onAction: clearSearch
+      }}
+      secondaryAction={{
+        content: 'Clear all filters',
+        onAction: clearAll
+      }}
+    />
+  </div>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Empty search result with custom illustration
+
+Use a custom illustration or icon for specific contexts.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { EmptySearchResult, Icon } from 'svelte-polaris';
+
+  let searchQuery = 'archived orders';
+
+  function showActiveOrders() {
+    console.log('Showing active orders');
+  }
+
+  function createOrder() {
+    console.log('Creating new order');
+  }
+</script>
+
+<EmptySearchResult
+  title="No archived orders found"
+  description={`No archived orders match "${searchQuery}"`}
+  action={{
+    content: 'View active orders',
+    onAction: showActiveOrders
+  }}
+  secondaryAction={{
+    content: 'Create order',
+    onAction: createOrder
+  }}
+>
+  <div slot="illustration" style="margin-bottom: 1rem;">
+    <div style="display: flex; justify-content: center;">
+      <Icon source="ArchiveIcon" size="large" tone="subdued" />
+    </div>
+  </div>
+</EmptySearchResult>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { EmptySearchResult, Icon } from 'svelte-polaris';
+
+  let searchQuery = 'archived orders';
+
+  function showActiveOrders() {
+    console.log('Showing active orders');
+  }
+
+  function createOrder() {
+    console.log('Creating new order');
+  }
+</script>
+
+<EmptySearchResult
+  title="No archived orders found"
+  description={`No archived orders match "${searchQuery}"`}
+  action={{
+    content: 'View active orders',
+    onAction: showActiveOrders
+  }}
+  secondaryAction={{
+    content: 'Create order',
+    onAction: createOrder
+  }}
+>
+  <div slot="illustration" style="margin-bottom: 1rem;">
+    <div style="display: flex; justify-content: center;">
+      <Icon source="ArchiveIcon" size="large" tone="subdued" />
+    </div>
+  </div>
+</EmptySearchResult>
+```
+</TabItem>
+</Tabs>
+
+### Empty search result with loading state
+
+Show a loading state while search is being performed.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { EmptySearchResult, Spinner, TextField, Button } from 'svelte-polaris';
+
+  let searchQuery = '';
+  let isSearching = false;
+  let hasSearched = false;
+  let searchResults = [];
+
+  async function performSearch() {
+    if (!searchQuery.trim()) return;
+    
+    isSearching = true;
+    hasSearched = false;
+    
+    // Simulate search delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Simulate no results for demo
+    searchResults = [];
+    isSearching = false;
+    hasSearched = true;
+  }
+
+  function clearSearch() {
+    searchQuery = '';
+    hasSearched = false;
+    searchResults = [];
+  }
+</script>
+
+<div style="max-width: 600px;">
+  <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem;">
+    <TextField
+      bind:value={searchQuery}
+      placeholder="Search products..."
+      autoComplete="off"
+    />
+    <Button 
+      variant="primary" 
+      onClick={performSearch}
+      disabled={isSearching || !searchQuery.trim()}
+    >
+      Search
+    </Button>
+  </div>
+
+  {#if isSearching}
+    <div style="text-align: center; padding: 3rem;">
+      <Spinner size="large" />
+      <p style="margin-top: 1rem;">Searching...</p>
+    </div>
+  {:else if hasSearched && searchResults.length === 0}
+    <EmptySearchResult
+      title="No results found"
+      description={`No products found for "${searchQuery}"`}
+      withIllustration
+      action={{
+        content: 'Clear search',
+        onAction: clearSearch
+      }}
+    />
+  {/if}
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { EmptySearchResult, Spinner, TextField, Button } from 'svelte-polaris';
+
+  let searchQuery = '';
+  let isSearching = false;
+  let hasSearched = false;
+  let searchResults = [];
+
+  async function performSearch() {
+    if (!searchQuery.trim()) return;
+    
+    isSearching = true;
+    hasSearched = false;
+    
+    // Simulate search delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Simulate no results for demo
+    searchResults = [];
+    isSearching = false;
+    hasSearched = true;
+  }
+
+  function clearSearch() {
+    searchQuery = '';
+    hasSearched = false;
+    searchResults = [];
+  }
+</script>
+
+<div style="max-width: 600px;">
+  <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem;">
+    <TextField
+      bind:value={searchQuery}
+      placeholder="Search products..."
+      autoComplete="off"
+    />
+    <Button 
+      variant="primary" 
+      onClick={performSearch}
+      disabled={isSearching || !searchQuery.trim()}
+    >
+      Search
+    </Button>
+  </div>
+
+  {#if isSearching}
+    <div style="text-align: center; padding: 3rem;">
+      <Spinner size="large" />
+      <p style="margin-top: 1rem;">Searching...</p>
+    </div>
+  {:else if hasSearched && searchResults.length === 0}
+    <EmptySearchResult
+      title="No results found"
+      description={`No products found for "${searchQuery}"`}
+      withIllustration
+      action={{
+        content: 'Clear search',
+        onAction: clearSearch
+      }}
+    />
+  {/if}
+</div>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### EmptySearchResult props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Main heading text |
+| `description` | `string` | | Descriptive text below the title |
+| `withIllustration` | `boolean` | `false` | Show default illustration |
+| `action` | `Action` | | Primary action button |
+| `secondaryAction` | `Action` | | Secondary action button |
+| `fullWidth` | `boolean` | `false` | Take full width of container |
+
+### Action type
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `content` | `string` | Button text |
+| `onAction` | `() => void` | Click handler |
+| `url` | `string` | URL for link button |
+| `external` | `boolean` | Open link in new tab |
+
+### EmptySearchResult slots
+
+| Slot | Description |
+|------|-------------|
+| `default` | Additional content below description |
+| `illustration` | Custom illustration or icon |
+
+## Best practices
+
+- Use EmptySearchResult specifically for search scenarios, not general empty states
+- Include the search query in the title or description for context
+- Provide actionable suggestions to help users modify their search
+- Offer alternative actions like clearing search or browsing categories
+- Keep the message encouraging and helpful, not discouraging
+- Consider showing popular or recommended items as alternatives
+- Use appropriate illustrations that match the search context
+- Provide clear next steps for users to continue their workflow
+- Include filters information when applicable
+- Make it easy to start a new search or clear current filters
+
+## Accessibility
+
+- Uses semantic headings for proper document structure
+- Action buttons are keyboard accessible
+- Screen readers can navigate through all content
+- Focus management works correctly with actions
+- Alternative text is provided for illustrations
+- Color is not the only way to convey information
+- Text has sufficient contrast ratios
+
+## Related components
+
+- Use [EmptyState](/getting-started/empty-state) for general empty states
+- Use [Spinner](/getting-started/spinner) for loading states during search
+- Use [TextField](/getting-started/text-field) for search input
+- Use [Button](/getting-started/button) for search actions
+- Use [Card](/getting-started/card) to contain search interfaces
+- Use [Filters](/getting-started/filters) for search filtering options

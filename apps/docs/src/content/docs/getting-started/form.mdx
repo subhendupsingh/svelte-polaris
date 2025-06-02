@@ -1,0 +1,920 @@
+---
+title: Form
+description: Form provides structure and validation for collecting user input across multiple fields.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Form provides structure and validation for collecting user input across multiple fields. It handles form submission, validation, and error display in a consistent way.
+
+## Examples
+
+### Basic form
+
+Use form to collect and validate user input with proper structure.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Form, FormLayout, TextField, Button, Card } from 'svelte-polaris';
+
+  let formData = {
+    firstName: '',
+    lastName: '',
+    email: ''
+  };
+  let errors = {};
+  let isSubmitting = false;
+
+  function validateForm() {
+    const newErrors = {};
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+    
+    return newErrors;
+  }
+
+  async function handleSubmit() {
+    const validationErrors = validateForm();
+    errors = validationErrors;
+    
+    if (Object.keys(validationErrors).length === 0) {
+      isSubmitting = true;
+      
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('Form submitted:', formData);
+        
+        // Reset form on success
+        formData = { firstName: '', lastName: '', email: '' };
+        errors = {};
+      } catch (error) {
+        console.error('Submission error:', error);
+      } finally {
+        isSubmitting = false;
+      }
+    }
+  }
+
+  function handleFieldChange(field, value) {
+    formData[field] = value;
+    // Clear error when user starts typing
+    if (errors[field]) {
+      delete errors[field];
+      errors = { ...errors };
+    }
+  }
+</script>
+
+<Card>
+  <Form onSubmit={handleSubmit}>
+    <FormLayout>
+      <TextField
+        label="First name"
+        value={formData.firstName}
+        onChange={(value) => handleFieldChange('firstName', value)}
+        error={errors.firstName}
+        autoComplete="given-name"
+      />
+      
+      <TextField
+        label="Last name"
+        value={formData.lastName}
+        onChange={(value) => handleFieldChange('lastName', value)}
+        error={errors.lastName}
+        autoComplete="family-name"
+      />
+      
+      <TextField
+        label="Email"
+        type="email"
+        value={formData.email}
+        onChange={(value) => handleFieldChange('email', value)}
+        error={errors.email}
+        autoComplete="email"
+      />
+      
+      <Button 
+        variant="primary" 
+        submit 
+        loading={isSubmitting}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Submitting...' : 'Submit'}
+      </Button>
+    </FormLayout>
+  </Form>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Form, FormLayout, TextField, Button, Card } from 'svelte-polaris';
+
+  let formData = {
+    firstName: '',
+    lastName: '',
+    email: ''
+  };
+  let errors = {};
+  let isSubmitting = false;
+
+  function validateForm() {
+    const newErrors = {};
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+    
+    return newErrors;
+  }
+
+  async function handleSubmit() {
+    const validationErrors = validateForm();
+    errors = validationErrors;
+    
+    if (Object.keys(validationErrors).length === 0) {
+      isSubmitting = true;
+      
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('Form submitted:', formData);
+        
+        // Reset form on success
+        formData = { firstName: '', lastName: '', email: '' };
+        errors = {};
+      } catch (error) {
+        console.error('Submission error:', error);
+      } finally {
+        isSubmitting = false;
+      }
+    }
+  }
+
+  function handleFieldChange(field, value) {
+    formData[field] = value;
+    // Clear error when user starts typing
+    if (errors[field]) {
+      delete errors[field];
+      errors = { ...errors };
+    }
+  }
+</script>
+
+<Card>
+  <Form onSubmit={handleSubmit}>
+    <FormLayout>
+      <TextField
+        label="First name"
+        value={formData.firstName}
+        onChange={(value) => handleFieldChange('firstName', value)}
+        error={errors.firstName}
+        autoComplete="given-name"
+      />
+      
+      <TextField
+        label="Last name"
+        value={formData.lastName}
+        onChange={(value) => handleFieldChange('lastName', value)}
+        error={errors.lastName}
+        autoComplete="family-name"
+      />
+      
+      <TextField
+        label="Email"
+        type="email"
+        value={formData.email}
+        onChange={(value) => handleFieldChange('email', value)}
+        error={errors.email}
+        autoComplete="email"
+      />
+      
+      <Button 
+        variant="primary" 
+        submit 
+        loading={isSubmitting}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Submitting...' : 'Submit'}
+      </Button>
+    </FormLayout>
+  </Form>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Form with complex validation
+
+Implement complex validation rules and conditional fields.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Form, FormLayout, TextField, Select, Checkbox, Button, Card, Banner } from 'svelte-polaris';
+
+  let formData = {
+    companyName: '',
+    industry: '',
+    website: '',
+    employees: '',
+    hasExistingAccount: false,
+    existingEmail: '',
+    agreeToTerms: false
+  };
+  let errors = {};
+  let formErrors = [];
+
+  const industryOptions = [
+    { label: 'Select industry', value: '' },
+    { label: 'Technology', value: 'technology' },
+    { label: 'Retail', value: 'retail' },
+    { label: 'Healthcare', value: 'healthcare' },
+    { label: 'Finance', value: 'finance' },
+    { label: 'Education', value: 'education' },
+    { label: 'Other', value: 'other' }
+  ];
+
+  const employeeOptions = [
+    { label: 'Select company size', value: '' },
+    { label: '1-10 employees', value: '1-10' },
+    { label: '11-50 employees', value: '11-50' },
+    { label: '51-200 employees', value: '51-200' },
+    { label: '201-1000 employees', value: '201-1000' },
+    { label: '1000+ employees', value: '1000+' }
+  ];
+
+  function validateForm() {
+    const newErrors = {};
+    const newFormErrors = [];
+    
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = 'Company name is required';
+    }
+    
+    if (!formData.industry) {
+      newErrors.industry = 'Please select an industry';
+    }
+    
+    if (formData.website && !/^https?:\/\/.+/.test(formData.website)) {
+      newErrors.website = 'Please enter a valid URL (starting with http:// or https://)';
+    }
+    
+    if (!formData.employees) {
+      newErrors.employees = 'Please select company size';
+    }
+    
+    if (formData.hasExistingAccount) {
+      if (!formData.existingEmail.trim()) {
+        newErrors.existingEmail = 'Email is required when you have an existing account';
+      } else if (!/\S+@\S+\.\S+/.test(formData.existingEmail)) {
+        newErrors.existingEmail = 'Please enter a valid email';
+      }
+    }
+    
+    if (!formData.agreeToTerms) {
+      newFormErrors.push('You must agree to the terms and conditions');
+    }
+    
+    return { fieldErrors: newErrors, formErrors: newFormErrors };
+  }
+
+  async function handleSubmit() {
+    const { fieldErrors, formErrors: validationErrors } = validateForm();
+    errors = fieldErrors;
+    formErrors = validationErrors;
+    
+    if (Object.keys(fieldErrors).length === 0 && validationErrors.length === 0) {
+      console.log('Form submitted:', formData);
+    }
+  }
+
+  function handleFieldChange(field, value) {
+    formData[field] = value;
+    
+    // Clear field error when user starts typing
+    if (errors[field]) {
+      delete errors[field];
+      errors = { ...errors };
+    }
+    
+    // Clear form errors when user makes changes
+    if (formErrors.length > 0) {
+      formErrors = [];
+    }
+  }
+</script>
+
+<Card>
+  <Form onSubmit={handleSubmit}>
+    <FormLayout>
+      {#if formErrors.length > 0}
+        <Banner tone="critical">
+          <p>Please fix the following errors:</p>
+          <ul>
+            {#each formErrors as error}
+              <li>{error}</li>
+            {/each}
+          </ul>
+        </Banner>
+      {/if}
+
+      <TextField
+        label="Company name"
+        value={formData.companyName}
+        onChange={(value) => handleFieldChange('companyName', value)}
+        error={errors.companyName}
+        autoComplete="organization"
+      />
+      
+      <Select
+        label="Industry"
+        options={industryOptions}
+        value={formData.industry}
+        onChange={(value) => handleFieldChange('industry', value)}
+        error={errors.industry}
+      />
+      
+      <TextField
+        label="Website"
+        value={formData.website}
+        onChange={(value) => handleFieldChange('website', value)}
+        error={errors.website}
+        placeholder="https://example.com"
+        helpText="Optional: Your company website"
+        autoComplete="url"
+      />
+      
+      <Select
+        label="Company size"
+        options={employeeOptions}
+        value={formData.employees}
+        onChange={(value) => handleFieldChange('employees', value)}
+        error={errors.employees}
+      />
+      
+      <Checkbox
+        checked={formData.hasExistingAccount}
+        onChange={(checked) => handleFieldChange('hasExistingAccount', checked)}
+        label="I have an existing account"
+      />
+      
+      {#if formData.hasExistingAccount}
+        <TextField
+          label="Existing account email"
+          type="email"
+          value={formData.existingEmail}
+          onChange={(value) => handleFieldChange('existingEmail', value)}
+          error={errors.existingEmail}
+          autoComplete="email"
+        />
+      {/if}
+      
+      <Checkbox
+        checked={formData.agreeToTerms}
+        onChange={(checked) => handleFieldChange('agreeToTerms', checked)}
+        label="I agree to the terms and conditions"
+      />
+      
+      <Button variant="primary" submit>
+        Create Account
+      </Button>
+    </FormLayout>
+  </Form>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Form, FormLayout, TextField, Select, Checkbox, Button, Card, Banner } from 'svelte-polaris';
+
+  let formData = {
+    companyName: '',
+    industry: '',
+    website: '',
+    employees: '',
+    hasExistingAccount: false,
+    existingEmail: '',
+    agreeToTerms: false
+  };
+  let errors = {};
+  let formErrors = [];
+
+  const industryOptions = [
+    { label: 'Select industry', value: '' },
+    { label: 'Technology', value: 'technology' },
+    { label: 'Retail', value: 'retail' },
+    { label: 'Healthcare', value: 'healthcare' },
+    { label: 'Finance', value: 'finance' },
+    { label: 'Education', value: 'education' },
+    { label: 'Other', value: 'other' }
+  ];
+
+  const employeeOptions = [
+    { label: 'Select company size', value: '' },
+    { label: '1-10 employees', value: '1-10' },
+    { label: '11-50 employees', value: '11-50' },
+    { label: '51-200 employees', value: '51-200' },
+    { label: '201-1000 employees', value: '201-1000' },
+    { label: '1000+ employees', value: '1000+' }
+  ];
+
+  function validateForm() {
+    const newErrors = {};
+    const newFormErrors = [];
+    
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = 'Company name is required';
+    }
+    
+    if (!formData.industry) {
+      newErrors.industry = 'Please select an industry';
+    }
+    
+    if (formData.website && !/^https?:\/\/.+/.test(formData.website)) {
+      newErrors.website = 'Please enter a valid URL (starting with http:// or https://)';
+    }
+    
+    if (!formData.employees) {
+      newErrors.employees = 'Please select company size';
+    }
+    
+    if (formData.hasExistingAccount) {
+      if (!formData.existingEmail.trim()) {
+        newErrors.existingEmail = 'Email is required when you have an existing account';
+      } else if (!/\S+@\S+\.\S+/.test(formData.existingEmail)) {
+        newErrors.existingEmail = 'Please enter a valid email';
+      }
+    }
+    
+    if (!formData.agreeToTerms) {
+      newFormErrors.push('You must agree to the terms and conditions');
+    }
+    
+    return { fieldErrors: newErrors, formErrors: newFormErrors };
+  }
+
+  async function handleSubmit() {
+    const { fieldErrors, formErrors: validationErrors } = validateForm();
+    errors = fieldErrors;
+    formErrors = validationErrors;
+    
+    if (Object.keys(fieldErrors).length === 0 && validationErrors.length === 0) {
+      console.log('Form submitted:', formData);
+    }
+  }
+
+  function handleFieldChange(field, value) {
+    formData[field] = value;
+    
+    // Clear field error when user starts typing
+    if (errors[field]) {
+      delete errors[field];
+      errors = { ...errors };
+    }
+    
+    // Clear form errors when user makes changes
+    if (formErrors.length > 0) {
+      formErrors = [];
+    }
+  }
+</script>
+
+<Card>
+  <Form onSubmit={handleSubmit}>
+    <FormLayout>
+      {#if formErrors.length > 0}
+        <Banner tone="critical">
+          <p>Please fix the following errors:</p>
+          <ul>
+            {#each formErrors as error}
+              <li>{error}</li>
+            {/each}
+          </ul>
+        </Banner>
+      {/if}
+
+      <TextField
+        label="Company name"
+        value={formData.companyName}
+        onChange={(value) => handleFieldChange('companyName', value)}
+        error={errors.companyName}
+        autoComplete="organization"
+      />
+      
+      <Select
+        label="Industry"
+        options={industryOptions}
+        value={formData.industry}
+        onChange={(value) => handleFieldChange('industry', value)}
+        error={errors.industry}
+      />
+      
+      <TextField
+        label="Website"
+        value={formData.website}
+        onChange={(value) => handleFieldChange('website', value)}
+        error={errors.website}
+        placeholder="https://example.com"
+        helpText="Optional: Your company website"
+        autoComplete="url"
+      />
+      
+      <Select
+        label="Company size"
+        options={employeeOptions}
+        value={formData.employees}
+        onChange={(value) => handleFieldChange('employees', value)}
+        error={errors.employees}
+      />
+      
+      <Checkbox
+        checked={formData.hasExistingAccount}
+        onChange={(checked) => handleFieldChange('hasExistingAccount', checked)}
+        label="I have an existing account"
+      />
+      
+      {#if formData.hasExistingAccount}
+        <TextField
+          label="Existing account email"
+          type="email"
+          value={formData.existingEmail}
+          onChange={(value) => handleFieldChange('existingEmail', value)}
+          error={errors.existingEmail}
+          autoComplete="email"
+        />
+      {/if}
+      
+      <Checkbox
+        checked={formData.agreeToTerms}
+        onChange={(checked) => handleFieldChange('agreeToTerms', checked)}
+        label="I agree to the terms and conditions"
+      />
+      
+      <Button variant="primary" submit>
+        Create Account
+      </Button>
+    </FormLayout>
+  </Form>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Form with sections
+
+Organize complex forms into logical sections for better user experience.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Form, FormLayout, TextField, Select, Button, Card, Text, Divider } from 'svelte-polaris';
+
+  let personalInfo = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  };
+
+  let addressInfo = {
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: 'US'
+  };
+
+  let preferences = {
+    newsletter: false,
+    notifications: 'email'
+  };
+
+  const countryOptions = [
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+
+  const notificationOptions = [
+    { label: 'Email', value: 'email' },
+    { label: 'SMS', value: 'sms' },
+    { label: 'None', value: 'none' }
+  ];
+
+  function handleSubmit() {
+    const formData = {
+      personal: personalInfo,
+      address: addressInfo,
+      preferences: preferences
+    };
+    console.log('Form submitted:', formData);
+  }
+</script>
+
+<Card>
+  <Form onSubmit={handleSubmit}>
+    <FormLayout>
+      <Text variant="headingMd">Personal Information</Text>
+      
+      <FormLayout.Group>
+        <TextField
+          label="First name"
+          bind:value={personalInfo.firstName}
+          autoComplete="given-name"
+        />
+        <TextField
+          label="Last name"
+          bind:value={personalInfo.lastName}
+          autoComplete="family-name"
+        />
+      </FormLayout.Group>
+      
+      <FormLayout.Group>
+        <TextField
+          label="Email"
+          type="email"
+          bind:value={personalInfo.email}
+          autoComplete="email"
+        />
+        <TextField
+          label="Phone"
+          type="tel"
+          bind:value={personalInfo.phone}
+          autoComplete="tel"
+        />
+      </FormLayout.Group>
+      
+      <Divider />
+      
+      <Text variant="headingMd">Address</Text>
+      
+      <TextField
+        label="Street address"
+        bind:value={addressInfo.street}
+        autoComplete="street-address"
+      />
+      
+      <FormLayout.Group>
+        <TextField
+          label="City"
+          bind:value={addressInfo.city}
+          autoComplete="address-level2"
+        />
+        <TextField
+          label="State"
+          bind:value={addressInfo.state}
+          autoComplete="address-level1"
+        />
+        <TextField
+          label="ZIP code"
+          bind:value={addressInfo.zipCode}
+          autoComplete="postal-code"
+        />
+      </FormLayout.Group>
+      
+      <Select
+        label="Country"
+        options={countryOptions}
+        bind:value={addressInfo.country}
+      />
+      
+      <Divider />
+      
+      <Text variant="headingMd">Preferences</Text>
+      
+      <Select
+        label="Notification preference"
+        options={notificationOptions}
+        bind:value={preferences.notifications}
+      />
+      
+      <Button variant="primary" submit>
+        Save Profile
+      </Button>
+    </FormLayout>
+  </Form>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Form, FormLayout, TextField, Select, Button, Card, Text, Divider } from 'svelte-polaris';
+
+  let personalInfo = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  };
+
+  let addressInfo = {
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: 'US'
+  };
+
+  let preferences = {
+    newsletter: false,
+    notifications: 'email'
+  };
+
+  const countryOptions = [
+    { label: 'United States', value: 'US' },
+    { label: 'Canada', value: 'CA' },
+    { label: 'United Kingdom', value: 'UK' }
+  ];
+
+  const notificationOptions = [
+    { label: 'Email', value: 'email' },
+    { label: 'SMS', value: 'sms' },
+    { label: 'None', value: 'none' }
+  ];
+
+  function handleSubmit() {
+    const formData = {
+      personal: personalInfo,
+      address: addressInfo,
+      preferences: preferences
+    };
+    console.log('Form submitted:', formData);
+  }
+</script>
+
+<Card>
+  <Form onSubmit={handleSubmit}>
+    <FormLayout>
+      <Text variant="headingMd">Personal Information</Text>
+      
+      <FormLayout.Group>
+        <TextField
+          label="First name"
+          bind:value={personalInfo.firstName}
+          autoComplete="given-name"
+        />
+        <TextField
+          label="Last name"
+          bind:value={personalInfo.lastName}
+          autoComplete="family-name"
+        />
+      </FormLayout.Group>
+      
+      <FormLayout.Group>
+        <TextField
+          label="Email"
+          type="email"
+          bind:value={personalInfo.email}
+          autoComplete="email"
+        />
+        <TextField
+          label="Phone"
+          type="tel"
+          bind:value={personalInfo.phone}
+          autoComplete="tel"
+        />
+      </FormLayout.Group>
+      
+      <Divider />
+      
+      <Text variant="headingMd">Address</Text>
+      
+      <TextField
+        label="Street address"
+        bind:value={addressInfo.street}
+        autoComplete="street-address"
+      />
+      
+      <FormLayout.Group>
+        <TextField
+          label="City"
+          bind:value={addressInfo.city}
+          autoComplete="address-level2"
+        />
+        <TextField
+          label="State"
+          bind:value={addressInfo.state}
+          autoComplete="address-level1"
+        />
+        <TextField
+          label="ZIP code"
+          bind:value={addressInfo.zipCode}
+          autoComplete="postal-code"
+        />
+      </FormLayout.Group>
+      
+      <Select
+        label="Country"
+        options={countryOptions}
+        bind:value={addressInfo.country}
+      />
+      
+      <Divider />
+      
+      <Text variant="headingMd">Preferences</Text>
+      
+      <Select
+        label="Notification preference"
+        options={notificationOptions}
+        bind:value={preferences.notifications}
+      />
+      
+      <Button variant="primary" submit>
+        Save Profile
+      </Button>
+    </FormLayout>
+  </Form>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Form props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onSubmit` | `(event: Event) => void` | | Form submission handler |
+| `noValidate` | `boolean` | `false` | Disable browser validation |
+| `acceptCharset` | `string` | | Character encoding for form submission |
+| `action` | `string` | | Form action URL |
+| `autoComplete` | `'on' \| 'off'` | `'on'` | Form autocomplete behavior |
+| `encType` | `string` | | Form encoding type |
+| `method` | `'get' \| 'post'` | `'post'` | Form submission method |
+| `name` | `string` | | Form name |
+| `target` | `string` | | Form submission target |
+
+### Form slots
+
+| Slot | Description |
+|------|-------------|
+| `default` | Form content and fields |
+
+## Best practices
+
+- Use semantic form structure with proper labels and field types
+- Implement client-side validation with clear error messages
+- Provide immediate feedback when users interact with fields
+- Group related fields together using FormLayout.Group
+- Use appropriate input types (email, tel, url, etc.) for better UX
+- Include proper autocomplete attributes for accessibility
+- Show loading states during form submission
+- Clear errors when users start correcting them
+- Use progressive disclosure for complex forms
+- Provide clear success feedback after submission
+- Consider breaking long forms into multiple steps
+- Use consistent validation patterns across your application
+
+## Accessibility
+
+- Form uses semantic HTML form elements
+- All fields have proper labels associated with them
+- Error messages are announced to screen readers
+- Form submission is keyboard accessible
+- Focus management works correctly during validation
+- Required fields are properly indicated
+- Field descriptions and help text are accessible
+- Form structure is navigable with assistive technology
+
+## Related components
+
+- Use [FormLayout](/getting-started/form-layout) to structure form fields
+- Use [TextField](/getting-started/text-field) for text input
+- Use [Select](/getting-started/select) for dropdown selections
+- Use [Checkbox](/getting-started/checkbox) for boolean choices
+- Use [RadioButton](/getting-started/radio-button) for exclusive choices
+- Use [Button](/getting-started/button) for form actions
+- Use [Banner](/getting-started/banner) for form-level error messages
+- Use [Card](/getting-started/card) to contain forms

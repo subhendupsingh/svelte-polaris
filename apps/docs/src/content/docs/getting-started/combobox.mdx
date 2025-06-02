@@ -1,0 +1,702 @@
+---
+title: Combobox
+description: Combobox is an input field with an associated dropdown list that allows users to select an option or enter a custom value.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Combobox is an input field with an associated dropdown list that allows users to select an option or enter a custom value. It combines the functionality of a text input and a select dropdown.
+
+## Examples
+
+### Basic combobox
+
+Use combobox when users need to select from a list of options or enter a custom value.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Combobox } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+
+  const options = [
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Large' },
+    { value: 'extra-large', label: 'Extra Large' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    inputValue = options.find(option => option.value === selected)?.label || selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Size',
+    placeholder: 'Select or type a size...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#each options as option}
+      <Combobox.Option value={option.value}>
+        {option.label}
+      </Combobox.Option>
+    {/each}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Combobox } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+
+  const options = [
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Large' },
+    { value: 'extra-large', label: 'Extra Large' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    inputValue = options.find(option => option.value === selected)?.label || selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Size',
+    placeholder: 'Select or type a size...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#each options as option}
+      <Combobox.Option value={option.value}>
+        {option.label}
+      </Combobox.Option>
+    {/each}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+</Tabs>
+
+### Combobox with filtering
+
+Filter options based on user input to help users find what they're looking for.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Combobox } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+
+  const allOptions = [
+    { value: 'afghanistan', label: 'Afghanistan' },
+    { value: 'albania', label: 'Albania' },
+    { value: 'algeria', label: 'Algeria' },
+    { value: 'argentina', label: 'Argentina' },
+    { value: 'australia', label: 'Australia' },
+    { value: 'austria', label: 'Austria' },
+    { value: 'bangladesh', label: 'Bangladesh' },
+    { value: 'belgium', label: 'Belgium' },
+    { value: 'brazil', label: 'Brazil' },
+    { value: 'canada', label: 'Canada' }
+  ];
+
+  $: filteredOptions = allOptions.filter(option =>
+    option.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    const option = allOptions.find(opt => opt.value === selected);
+    inputValue = option ? option.label : selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Country',
+    placeholder: 'Search countries...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#each filteredOptions as option}
+      <Combobox.Option value={option.value}>
+        {option.label}
+      </Combobox.Option>
+    {/each}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Combobox } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+
+  const allOptions = [
+    { value: 'afghanistan', label: 'Afghanistan' },
+    { value: 'albania', label: 'Albania' },
+    { value: 'algeria', label: 'Algeria' },
+    { value: 'argentina', label: 'Argentina' },
+    { value: 'australia', label: 'Australia' },
+    { value: 'austria', label: 'Austria' },
+    { value: 'bangladesh', label: 'Bangladesh' },
+    { value: 'belgium', label: 'Belgium' },
+    { value: 'brazil', label: 'Brazil' },
+    { value: 'canada', label: 'Canada' }
+  ];
+
+  $: filteredOptions = allOptions.filter(option =>
+    option.label.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    const option = allOptions.find(opt => opt.value === selected);
+    inputValue = option ? option.label : selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Country',
+    placeholder: 'Search countries...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#each filteredOptions as option}
+      <Combobox.Option value={option.value}>
+        {option.label}
+      </Combobox.Option>
+    {/each}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+</Tabs>
+
+### Combobox with loading state
+
+Show a loading state while fetching options asynchronously.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Combobox, Spinner, InlineStack } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+  let loading = false;
+  let options = [];
+
+  async function updateText(value) {
+    inputValue = value;
+    
+    if (value.length > 2) {
+      loading = true;
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      options = [
+        { value: `${value}-1`, label: `${value} Option 1` },
+        { value: `${value}-2`, label: `${value} Option 2` },
+        { value: `${value}-3`, label: `${value} Option 3` }
+      ];
+      
+      loading = false;
+    } else {
+      options = [];
+    }
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    const option = options.find(opt => opt.value === selected);
+    inputValue = option ? option.label : selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Search with loading',
+    placeholder: 'Type at least 3 characters...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#if loading}
+      <div style="padding: 1rem; text-align: center;">
+        <InlineStack align="center" gap="200">
+          <Spinner size="small" />
+          <span>Loading options...</span>
+        </InlineStack>
+      </div>
+    {:else}
+      {#each options as option}
+        <Combobox.Option value={option.value}>
+          {option.label}
+        </Combobox.Option>
+      {/each}
+    {/if}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Combobox, Spinner, InlineStack } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+  let loading = false;
+  let options = [];
+
+  async function updateText(value) {
+    inputValue = value;
+    
+    if (value.length > 2) {
+      loading = true;
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      options = [
+        { value: `${value}-1`, label: `${value} Option 1` },
+        { value: `${value}-2`, label: `${value} Option 2` },
+        { value: `${value}-3`, label: `${value} Option 3` }
+      ];
+      
+      loading = false;
+    } else {
+      options = [];
+    }
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    const option = options.find(opt => opt.value === selected);
+    inputValue = option ? option.label : selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Search with loading',
+    placeholder: 'Type at least 3 characters...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#if loading}
+      <div style="padding: 1rem; text-align: center;">
+        <InlineStack align="center" gap="200">
+          <Spinner size="small" />
+          <span>Loading options...</span>
+        </InlineStack>
+      </div>
+    {:else}
+      {#each options as option}
+        <Combobox.Option value={option.value}>
+          {option.label}
+        </Combobox.Option>
+      {/each}
+    {/if}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+</Tabs>
+
+### Combobox with multiple selection
+
+Allow users to select multiple options from the combobox.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Combobox, Tag, InlineStack } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const options = [
+    { value: 'red', label: 'Red' },
+    { value: 'green', label: 'Green' },
+    { value: 'blue', label: 'Blue' },
+    { value: 'yellow', label: 'Yellow' },
+    { value: 'purple', label: 'Purple' },
+    { value: 'orange', label: 'Orange' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    if (!selectedOptions.includes(selected)) {
+      selectedOptions = [...selectedOptions, selected];
+    }
+    inputValue = '';
+  }
+
+  function removeSelection(valueToRemove) {
+    selectedOptions = selectedOptions.filter(value => value !== valueToRemove);
+  }
+
+  function getSelectedLabels() {
+    return selectedOptions.map(value => 
+      options.find(option => option.value === value)?.label || value
+    );
+  }
+</script>
+
+<div>
+  <Combobox
+    allowMultiple
+    activator={{
+      onChange: updateText,
+      onSelect: updateSelection,
+      value: inputValue,
+      label: 'Colors',
+      placeholder: 'Select colors...',
+      autoComplete: 'off'
+    }}
+  >
+    <Combobox.Listbox>
+      {#each options as option}
+        <Combobox.Option 
+          value={option.value}
+          selected={selectedOptions.includes(option.value)}
+        >
+          {option.label}
+        </Combobox.Option>
+      {/each}
+    </Combobox.Listbox>
+  </Combobox>
+
+  {#if selectedOptions.length > 0}
+    <div style="margin-top: 1rem;">
+      <InlineStack gap="200">
+        {#each getSelectedLabels() as label, index}
+          <Tag onRemove={() => removeSelection(selectedOptions[index])}>
+            {label}
+          </Tag>
+        {/each}
+      </InlineStack>
+    </div>
+  {/if}
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Combobox, Tag, InlineStack } from 'svelte-polaris';
+
+  let selectedOptions = [];
+  let inputValue = '';
+
+  const options = [
+    { value: 'red', label: 'Red' },
+    { value: 'green', label: 'Green' },
+    { value: 'blue', label: 'Blue' },
+    { value: 'yellow', label: 'Yellow' },
+    { value: 'purple', label: 'Purple' },
+    { value: 'orange', label: 'Orange' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    if (!selectedOptions.includes(selected)) {
+      selectedOptions = [...selectedOptions, selected];
+    }
+    inputValue = '';
+  }
+
+  function removeSelection(valueToRemove) {
+    selectedOptions = selectedOptions.filter(value => value !== valueToRemove);
+  }
+
+  function getSelectedLabels() {
+    return selectedOptions.map(value => 
+      options.find(option => option.value === value)?.label || value
+    );
+  }
+</script>
+
+<div>
+  <Combobox
+    allowMultiple
+    activator={{
+      onChange: updateText,
+      onSelect: updateSelection,
+      value: inputValue,
+      label: 'Colors',
+      placeholder: 'Select colors...',
+      autoComplete: 'off'
+    }}
+  >
+    <Combobox.Listbox>
+      {#each options as option}
+        <Combobox.Option 
+          value={option.value}
+          selected={selectedOptions.includes(option.value)}
+        >
+          {option.label}
+        </Combobox.Option>
+      {/each}
+    </Combobox.Listbox>
+  </Combobox>
+
+  {#if selectedOptions.length > 0}
+    <div style="margin-top: 1rem;">
+      <InlineStack gap="200">
+        {#each getSelectedLabels() as label, index}
+          <Tag onRemove={() => removeSelection(selectedOptions[index])}>
+            {label}
+          </Tag>
+        {/each}
+      </InlineStack>
+    </div>
+  {/if}
+</div>
+```
+</TabItem>
+</Tabs>
+
+### Combobox with custom content
+
+Add custom content to combobox options for richer displays.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Combobox, Avatar, InlineStack, Text } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+
+  const users = [
+    { value: 'john', name: 'John Doe', email: 'john@example.com', avatar: 'JD' },
+    { value: 'jane', name: 'Jane Smith', email: 'jane@example.com', avatar: 'JS' },
+    { value: 'bob', name: 'Bob Johnson', email: 'bob@example.com', avatar: 'BJ' },
+    { value: 'alice', name: 'Alice Brown', email: 'alice@example.com', avatar: 'AB' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    const user = users.find(u => u.value === selected);
+    inputValue = user ? user.name : selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Assign to user',
+    placeholder: 'Search users...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#each users as user}
+      <Combobox.Option value={user.value}>
+        <InlineStack gap="300" blockAlign="center">
+          <Avatar size="sm" initials={user.avatar} />
+          <div>
+            <Text variant="bodyMd">{user.name}</Text>
+            <Text variant="bodySm" tone="subdued">{user.email}</Text>
+          </div>
+        </InlineStack>
+      </Combobox.Option>
+    {/each}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Combobox, Avatar, InlineStack, Text } from 'svelte-polaris';
+
+  let selectedOption = '';
+  let inputValue = '';
+
+  const users = [
+    { value: 'john', name: 'John Doe', email: 'john@example.com', avatar: 'JD' },
+    { value: 'jane', name: 'Jane Smith', email: 'jane@example.com', avatar: 'JS' },
+    { value: 'bob', name: 'Bob Johnson', email: 'bob@example.com', avatar: 'BJ' },
+    { value: 'alice', name: 'Alice Brown', email: 'alice@example.com', avatar: 'AB' }
+  ];
+
+  function updateText(value) {
+    inputValue = value;
+  }
+
+  function updateSelection(selected) {
+    selectedOption = selected;
+    const user = users.find(u => u.value === selected);
+    inputValue = user ? user.name : selected;
+  }
+</script>
+
+<Combobox
+  activator={{
+    onChange: updateText,
+    onSelect: updateSelection,
+    value: inputValue,
+    label: 'Assign to user',
+    placeholder: 'Search users...',
+    autoComplete: 'off'
+  }}
+>
+  <Combobox.Listbox>
+    {#each users as user}
+      <Combobox.Option value={user.value}>
+        <InlineStack gap="300" blockAlign="center">
+          <Avatar size="sm" initials={user.avatar} />
+          <div>
+            <Text variant="bodyMd">{user.name}</Text>
+            <Text variant="bodySm" tone="subdued">{user.email}</Text>
+          </div>
+        </InlineStack>
+      </Combobox.Option>
+    {/each}
+  </Combobox.Listbox>
+</Combobox>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Combobox props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `activator` | `ComboboxTextFieldProps` | | Props for the text input activator |
+| `allowMultiple` | `boolean` | `false` | Allow multiple selections |
+| `preferredPosition` | `'above' \| 'below' \| 'mostSpace'` | `'below'` | Preferred popover position |
+| `listboxId` | `string` | | ID for the listbox element |
+| `willLoadMoreResults` | `boolean` | `false` | Whether more results will load |
+| `height` | `string` | | Height of the listbox |
+
+### ComboboxTextFieldProps (for activator prop)
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | | Current input value |
+| `onChange` | `(value: string) => void` | | Callback when input changes |
+| `onSelect` | `(value: string) => void` | | Callback when option is selected |
+| `label` | `string` | | Label for the input field |
+| `placeholder` | `string` | | Placeholder text |
+| `autoComplete` | `string` | | HTML autocomplete attribute |
+| `disabled` | `boolean` | `false` | Whether the input is disabled |
+| `error` | `string \| boolean` | | Error message or state |
+| `helpText` | `string` | | Help text below the input |
+
+### Combobox.Option props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | | Unique value for the option |
+| `selected` | `boolean` | `false` | Whether the option is selected |
+| `disabled` | `boolean` | `false` | Whether the option is disabled |
+
+## Best practices
+
+- Use combobox when users need both selection and custom input capabilities
+- Implement filtering to help users find options quickly
+- Provide clear labels and placeholder text
+- Show loading states for asynchronous option loading
+- Use custom content in options to provide additional context
+- Handle both keyboard and mouse interactions
+- Consider performance with large option lists
+- Provide clear feedback for selected options in multiple selection mode
+- Use appropriate ARIA labels for accessibility
+
+## Accessibility
+
+- Combobox automatically manages ARIA attributes and relationships
+- Keyboard navigation is built-in (arrow keys, Enter, Escape, Tab)
+- Screen readers announce option changes and selections
+- Focus management is handled automatically
+- Selected options are properly announced
+- Loading states are communicated to assistive technologies
+
+## Related components
+
+- Use [AutoComplete](/getting-started/autocomplete) for search-based selection with suggestions
+- Use [Select](/getting-started/select) for simple dropdown selection
+- Use [TextField](/getting-started/text-field) for basic text input
+- Use [Listbox](/getting-started/listbox) for standalone option lists

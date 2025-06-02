@@ -1,0 +1,364 @@
+---
+title: ActionList
+description: Action lists display a list of actions or selectable options.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Action lists display a list of actions or selectable options. They're commonly used in menus, dropdowns, and navigation components.
+
+## Examples
+
+### Basic action list
+
+Use action lists to present a set of actions in a vertical list format.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { content: 'Import file', onAction: () => console.log('Import file') },
+    { content: 'Export file', onAction: () => console.log('Export file') },
+    { content: 'Duplicate', onAction: () => console.log('Duplicate') },
+    { content: 'Print', onAction: () => console.log('Print') }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { content: 'Import file', onAction: () => console.log('Import file') },
+    { content: 'Export file', onAction: () => console.log('Export file') },
+    { content: 'Duplicate', onAction: () => console.log('Duplicate') },
+    { content: 'Print', onAction: () => console.log('Print') }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+</Tabs>
+
+### Action list with icons
+
+Add icons to action list items to provide visual context.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { 
+      content: 'Import file', 
+      icon: 'ImportIcon',
+      onAction: () => console.log('Import file') 
+    },
+    { 
+      content: 'Export file', 
+      icon: 'ExportIcon',
+      onAction: () => console.log('Export file') 
+    },
+    { 
+      content: 'Duplicate', 
+      icon: 'DuplicateIcon',
+      onAction: () => console.log('Duplicate') 
+    },
+    { 
+      content: 'Delete', 
+      icon: 'DeleteIcon',
+      destructive: true,
+      onAction: () => console.log('Delete') 
+    }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { 
+      content: 'Import file', 
+      icon: 'ImportIcon',
+      onAction: () => console.log('Import file') 
+    },
+    { 
+      content: 'Export file', 
+      icon: 'ExportIcon',
+      onAction: () => console.log('Export file') 
+    },
+    { 
+      content: 'Duplicate', 
+      icon: 'DuplicateIcon',
+      onAction: () => console.log('Duplicate') 
+    },
+    { 
+      content: 'Delete', 
+      icon: 'DeleteIcon',
+      destructive: true,
+      onAction: () => console.log('Delete') 
+    }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+</Tabs>
+
+### Action list with sections
+
+Group related actions using sections with optional titles.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const sections = [
+    {
+      title: 'File actions',
+      items: [
+        { content: 'Import', onAction: () => console.log('Import') },
+        { content: 'Export', onAction: () => console.log('Export') }
+      ]
+    },
+    {
+      title: 'Edit actions',
+      items: [
+        { content: 'Duplicate', onAction: () => console.log('Duplicate') },
+        { content: 'Edit', onAction: () => console.log('Edit') }
+      ]
+    },
+    {
+      items: [
+        { 
+          content: 'Delete', 
+          destructive: true,
+          onAction: () => console.log('Delete') 
+        }
+      ]
+    }
+  ];
+</script>
+
+<ActionList {sections} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const sections = [
+    {
+      title: 'File actions',
+      items: [
+        { content: 'Import', onAction: () => console.log('Import') },
+        { content: 'Export', onAction: () => console.log('Export') }
+      ]
+    },
+    {
+      title: 'Edit actions',
+      items: [
+        { content: 'Duplicate', onAction: () => console.log('Duplicate') },
+        { content: 'Edit', onAction: () => console.log('Edit') }
+      ]
+    },
+    {
+      items: [
+        { 
+          content: 'Delete', 
+          destructive: true,
+          onAction: () => console.log('Delete') 
+        }
+      ]
+    }
+  ];
+</script>
+
+<ActionList {sections} />
+```
+</TabItem>
+</Tabs>
+
+### Action list with disabled items
+
+Disable actions that are not currently available.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { content: 'Copy', onAction: () => console.log('Copy') },
+    { content: 'Paste', disabled: true },
+    { content: 'Cut', onAction: () => console.log('Cut') },
+    { content: 'Select all', onAction: () => console.log('Select all') }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { content: 'Copy', onAction: () => console.log('Copy') },
+    { content: 'Paste', disabled: true },
+    { content: 'Cut', onAction: () => console.log('Cut') },
+    { content: 'Select all', onAction: () => console.log('Select all') }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+</Tabs>
+
+### Action list with help text
+
+Provide additional context with help text for actions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { 
+      content: 'Publish product',
+      helpText: 'Make this product available in your online store',
+      onAction: () => console.log('Publish') 
+    },
+    { 
+      content: 'Unpublish product',
+      helpText: 'Hide this product from your online store',
+      onAction: () => console.log('Unpublish') 
+    },
+    { 
+      content: 'Archive product',
+      helpText: 'Remove this product from all sales channels',
+      destructive: true,
+      onAction: () => console.log('Archive') 
+    }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionList } from 'svelte-polaris';
+
+  const actions = [
+    { 
+      content: 'Publish product',
+      helpText: 'Make this product available in your online store',
+      onAction: () => console.log('Publish') 
+    },
+    { 
+      content: 'Unpublish product',
+      helpText: 'Hide this product from your online store',
+      onAction: () => console.log('Unpublish') 
+    },
+    { 
+      content: 'Archive product',
+      helpText: 'Remove this product from all sales channels',
+      destructive: true,
+      onAction: () => console.log('Archive') 
+    }
+  ];
+</script>
+
+<ActionList {actions} />
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### ActionList props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `actions` | `ActionListItemDescriptor[]` | `[]` | Collection of actions for list |
+| `sections` | `ActionListSection[]` | `[]` | Collection of sectioned action items |
+| `actionRole` | `string` | `'menuitem'` | Role of each action |
+| `allowFiltering` | `boolean` | `false` | Renders actions as filterable list |
+
+### ActionListItemDescriptor props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `content` | `string` | | Text content for the action |
+| `accessibilityLabel` | `string` | | Accessibility label for screen readers |
+| `helpText` | `string` | | Additional descriptive text |
+| `icon` | `string` | | Icon to display with the action |
+| `image` | `string` | | Image to display with the action |
+| `disabled` | `boolean` | `false` | Whether the action is disabled |
+| `destructive` | `boolean` | `false` | Whether the action is destructive |
+| `ellipsis` | `boolean` | `false` | Whether to truncate long content |
+| `active` | `boolean` | `false` | Whether the action is active/selected |
+| `role` | `string` | | ARIA role for the action |
+| `url` | `string` | | URL for navigation actions |
+| `external` | `boolean` | `false` | Whether URL is external |
+| `onAction` | `() => void` | | Callback when action is triggered |
+| `onMouseEnter` | `() => void` | | Callback when mouse enters action |
+| `onTouchStart` | `() => void` | | Callback when touch starts on action |
+
+### ActionListSection props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Section title |
+| `items` | `ActionListItemDescriptor[]` | `[]` | Actions in this section |
+
+## Best practices
+
+- Use action lists to present a set of actions in a consistent, scannable format
+- Group related actions using sections with descriptive titles
+- Use icons to provide visual context and improve scannability
+- Place destructive actions at the bottom and mark them as destructive
+- Provide help text for actions that need additional context
+- Disable actions that are not currently available rather than hiding them
+- Use consistent language and terminology across actions
+- Consider the order of actions based on frequency of use
+
+## Accessibility
+
+- Action lists automatically manage focus and keyboard navigation
+- Use `accessibilityLabel` for actions that need clearer descriptions
+- Destructive actions are automatically announced as such to screen readers
+- Disabled actions are properly announced and not focusable
+- Section titles are properly associated with their actions
+
+## Related components
+
+- Use [ActionMenu](/getting-started/action-menu) for actions triggered by a button
+- Use [Button](/getting-started/button) for primary actions
+- Use [ButtonGroup](/getting-started/button-group) for related actions in a horizontal layout

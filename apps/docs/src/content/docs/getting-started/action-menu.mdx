@@ -1,0 +1,515 @@
+---
+title: ActionMenu
+description: Action menus provide a way to present a set of actions in a compact dropdown format.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Action menus provide a way to present a set of actions in a compact dropdown format. They're ideal for secondary actions that don't require primary button placement.
+
+## Examples
+
+### Basic action menu
+
+Use action menus to group secondary actions behind a single trigger button.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate action')
+    },
+    {
+      content: 'Edit',
+      onAction: () => console.log('Edit action')
+    },
+    {
+      content: 'Delete',
+      destructive: true,
+      onAction: () => console.log('Delete action')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate action')
+    },
+    {
+      content: 'Edit',
+      onAction: () => console.log('Edit action')
+    },
+    {
+      content: 'Delete',
+      destructive: true,
+      onAction: () => console.log('Delete action')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} />
+```
+</TabItem>
+</Tabs>
+
+### Action menu with groups
+
+Organize actions into logical groups with optional group titles.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const groups = [
+    {
+      title: 'File actions',
+      actions: [
+        {
+          content: 'Import',
+          onAction: () => console.log('Import')
+        },
+        {
+          content: 'Export',
+          onAction: () => console.log('Export')
+        }
+      ]
+    },
+    {
+      title: 'Edit actions',
+      actions: [
+        {
+          content: 'Duplicate',
+          onAction: () => console.log('Duplicate')
+        },
+        {
+          content: 'Edit',
+          onAction: () => console.log('Edit')
+        }
+      ]
+    },
+    {
+      actions: [
+        {
+          content: 'Delete',
+          destructive: true,
+          onAction: () => console.log('Delete')
+        }
+      ]
+    }
+  ];
+</script>
+
+<ActionMenu {groups} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const groups = [
+    {
+      title: 'File actions',
+      actions: [
+        {
+          content: 'Import',
+          onAction: () => console.log('Import')
+        },
+        {
+          content: 'Export',
+          onAction: () => console.log('Export')
+        }
+      ]
+    },
+    {
+      title: 'Edit actions',
+      actions: [
+        {
+          content: 'Duplicate',
+          onAction: () => console.log('Duplicate')
+        },
+        {
+          content: 'Edit',
+          onAction: () => console.log('Edit')
+        }
+      ]
+    },
+    {
+      actions: [
+        {
+          content: 'Delete',
+          destructive: true,
+          onAction: () => console.log('Delete')
+        }
+      ]
+    }
+  ];
+</script>
+
+<ActionMenu {groups} />
+```
+</TabItem>
+</Tabs>
+
+### Action menu with icons
+
+Add icons to actions for better visual recognition.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Duplicate',
+      icon: 'DuplicateIcon',
+      onAction: () => console.log('Duplicate')
+    },
+    {
+      content: 'Edit',
+      icon: 'EditIcon',
+      onAction: () => console.log('Edit')
+    },
+    {
+      content: 'Archive',
+      icon: 'ArchiveIcon',
+      onAction: () => console.log('Archive')
+    },
+    {
+      content: 'Delete',
+      icon: 'DeleteIcon',
+      destructive: true,
+      onAction: () => console.log('Delete')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Duplicate',
+      icon: 'DuplicateIcon',
+      onAction: () => console.log('Duplicate')
+    },
+    {
+      content: 'Edit',
+      icon: 'EditIcon',
+      onAction: () => console.log('Edit')
+    },
+    {
+      content: 'Archive',
+      icon: 'ArchiveIcon',
+      onAction: () => console.log('Archive')
+    },
+    {
+      content: 'Delete',
+      icon: 'DeleteIcon',
+      destructive: true,
+      onAction: () => console.log('Delete')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} />
+```
+</TabItem>
+</Tabs>
+
+### Action menu with disabled actions
+
+Disable actions that are not currently available.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'View',
+      onAction: () => console.log('View')
+    },
+    {
+      content: 'Edit',
+      disabled: true
+    },
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate')
+    },
+    {
+      content: 'Delete',
+      destructive: true,
+      onAction: () => console.log('Delete')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'View',
+      onAction: () => console.log('View')
+    },
+    {
+      content: 'Edit',
+      disabled: true
+    },
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate')
+    },
+    {
+      content: 'Delete',
+      destructive: true,
+      onAction: () => console.log('Delete')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} />
+```
+</TabItem>
+</Tabs>
+
+### Action menu with rollup
+
+Control how many actions are shown before rolling up into a menu.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Edit',
+      onAction: () => console.log('Edit')
+    },
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate')
+    },
+    {
+      content: 'Archive',
+      onAction: () => console.log('Archive')
+    },
+    {
+      content: 'Move',
+      onAction: () => console.log('Move')
+    },
+    {
+      content: 'Delete',
+      destructive: true,
+      onAction: () => console.log('Delete')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} rollup={2} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionMenu } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Edit',
+      onAction: () => console.log('Edit')
+    },
+    {
+      content: 'Duplicate',
+      onAction: () => console.log('Duplicate')
+    },
+    {
+      content: 'Archive',
+      onAction: () => console.log('Archive')
+    },
+    {
+      content: 'Move',
+      onAction: () => console.log('Move')
+    },
+    {
+      content: 'Delete',
+      destructive: true,
+      onAction: () => console.log('Delete')
+    }
+  ];
+</script>
+
+<ActionMenu {actions} rollup={2} />
+```
+</TabItem>
+</Tabs>
+
+### Action menu in a card
+
+Use action menus in cards to provide contextual actions for content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { ActionMenu, Card, Text, InlineStack } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Edit product',
+      onAction: () => console.log('Edit product')
+    },
+    {
+      content: 'Duplicate product',
+      onAction: () => console.log('Duplicate product')
+    },
+    {
+      content: 'Archive product',
+      destructive: true,
+      onAction: () => console.log('Archive product')
+    }
+  ];
+</script>
+
+<Card>
+  <InlineStack align="space-between" blockAlign="center">
+    <div>
+      <Text variant="headingMd" as="h3">Product Title</Text>
+      <Text variant="bodyMd" tone="subdued">SKU: ABC-123</Text>
+    </div>
+    <ActionMenu {actions} />
+  </InlineStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { ActionMenu, Card, Text, InlineStack } from 'svelte-polaris';
+
+  const actions = [
+    {
+      content: 'Edit product',
+      onAction: () => console.log('Edit product')
+    },
+    {
+      content: 'Duplicate product',
+      onAction: () => console.log('Duplicate product')
+    },
+    {
+      content: 'Archive product',
+      destructive: true,
+      onAction: () => console.log('Archive product')
+    }
+  ];
+</script>
+
+<Card>
+  <InlineStack align="space-between" blockAlign="center">
+    <div>
+      <Text variant="headingMd" as="h3">Product Title</Text>
+      <Text variant="bodyMd" tone="subdued">SKU: ABC-123</Text>
+    </div>
+    <ActionMenu {actions} />
+  </InlineStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### ActionMenu props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `actions` | `MenuActionDescriptor[]` | `[]` | Collection of actions for menu |
+| `groups` | `MenuGroupDescriptor[]` | `[]` | Collection of grouped actions |
+| `rollup` | `number` | | Number of actions to show before rolling up |
+| `rollupActionsLabel` | `string` | `'More actions'` | Label for rollup actions button |
+| `onActionRollup` | `(hasActions: boolean) => void` | | Callback when actions are rolled up |
+
+### MenuActionDescriptor props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `content` | `string` | | Text content for the action |
+| `accessibilityLabel` | `string` | | Accessibility label for screen readers |
+| `helpText` | `string` | | Additional descriptive text |
+| `icon` | `string` | | Icon to display with the action |
+| `disabled` | `boolean` | `false` | Whether the action is disabled |
+| `destructive` | `boolean` | `false` | Whether the action is destructive |
+| `external` | `boolean` | `false` | Whether URL is external |
+| `url` | `string` | | URL for navigation actions |
+| `onAction` | `() => void` | | Callback when action is triggered |
+
+### MenuGroupDescriptor props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | | Group title |
+| `accessibilityLabel` | `string` | | Accessibility label for the group |
+| `actions` | `MenuActionDescriptor[]` | `[]` | Actions in this group |
+| `icon` | `string` | | Icon for the group |
+| `details` | `string` | | Additional details for the group |
+
+## Best practices
+
+- Use action menus for secondary actions that don't require primary placement
+- Group related actions together with descriptive titles
+- Place destructive actions at the bottom and mark them as destructive
+- Use rollup to prevent overwhelming users with too many visible actions
+- Provide clear, action-oriented labels for each menu item
+- Use icons consistently to improve scannability
+- Consider the frequency of use when ordering actions
+- Disable actions that are not currently available rather than hiding them
+
+## Accessibility
+
+- Action menus automatically manage focus and keyboard navigation
+- Use `accessibilityLabel` for actions that need clearer descriptions
+- Destructive actions are automatically announced as such to screen readers
+- The menu trigger button has proper ARIA attributes
+- Keyboard users can navigate through actions using arrow keys
+- The menu closes when focus leaves the component
+
+## Related components
+
+- Use [ActionList](/getting-started/action-list) for standalone action lists
+- Use [Button](/getting-started/button) for primary actions
+- Use [Popover](/getting-started/popover) for custom dropdown content
+- Use [ButtonGroup](/getting-started/button-group) for related actions in a horizontal layout

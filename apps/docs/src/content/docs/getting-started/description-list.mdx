@@ -1,0 +1,600 @@
+---
+title: DescriptionList
+description: DescriptionList displays a list of terms and their corresponding descriptions in a structured format.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+DescriptionList displays a list of terms and their corresponding descriptions in a structured format. It's ideal for displaying metadata, specifications, or any key-value pairs.
+
+## Examples
+
+### Basic description list
+
+Use description list to display terms and their descriptions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { DescriptionList } from 'svelte-polaris';
+
+  const items = [
+    {
+      term: 'Order number',
+      description: '#1001'
+    },
+    {
+      term: 'Customer',
+      description: 'John Smith'
+    },
+    {
+      term: 'Status',
+      description: 'Fulfilled'
+    },
+    {
+      term: 'Total',
+      description: '$125.00'
+    }
+  ];
+</script>
+
+<DescriptionList items={items} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { DescriptionList } from 'svelte-polaris';
+
+  const items = [
+    {
+      term: 'Order number',
+      description: '#1001'
+    },
+    {
+      term: 'Customer',
+      description: 'John Smith'
+    },
+    {
+      term: 'Status',
+      description: 'Fulfilled'
+    },
+    {
+      term: 'Total',
+      description: '$125.00'
+    }
+  ];
+</script>
+
+<DescriptionList items={items} />
+```
+</TabItem>
+</Tabs>
+
+### Description list with spacing
+
+Control the spacing between items for better visual hierarchy.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { DescriptionList } from 'svelte-polaris';
+
+  const productSpecs = [
+    {
+      term: 'Dimensions',
+      description: '10" × 8" × 2"'
+    },
+    {
+      term: 'Weight',
+      description: '1.5 lbs'
+    },
+    {
+      term: 'Material',
+      description: 'Premium leather'
+    },
+    {
+      term: 'Color',
+      description: 'Midnight black'
+    },
+    {
+      term: 'SKU',
+      description: 'BAG-001-BLK'
+    }
+  ];
+</script>
+
+<DescriptionList items={productSpecs} spacing="loose" />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { DescriptionList } from 'svelte-polaris';
+
+  const productSpecs = [
+    {
+      term: 'Dimensions',
+      description: '10" × 8" × 2"'
+    },
+    {
+      term: 'Weight',
+      description: '1.5 lbs'
+    },
+    {
+      term: 'Material',
+      description: 'Premium leather'
+    },
+    {
+      term: 'Color',
+      description: 'Midnight black'
+    },
+    {
+      term: 'SKU',
+      description: 'BAG-001-BLK'
+    }
+  ];
+</script>
+
+<DescriptionList items={productSpecs} spacing="loose" />
+```
+</TabItem>
+</Tabs>
+
+### Description list with rich content
+
+Include formatted text, links, and other components in descriptions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { DescriptionList, Badge, Link, Text } from 'svelte-polaris';
+
+  const orderDetails = [
+    {
+      term: 'Order status',
+      description: '<Badge tone="success">Fulfilled</Badge>'
+    },
+    {
+      term: 'Tracking number',
+      description: '<Link url="https://tracking.example.com/123456">123456789</Link>'
+    },
+    {
+      term: 'Shipping address',
+      description: `
+        <div>
+          <Text>John Smith</Text><br>
+          <Text>123 Main Street</Text><br>
+          <Text>New York, NY 10001</Text>
+        </div>
+      `
+    },
+    {
+      term: 'Payment method',
+      description: '<Text>Visa ending in 4242</Text>'
+    }
+  ];
+</script>
+
+<DescriptionList items={orderDetails} />
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { DescriptionList, Badge, Link, Text } from 'svelte-polaris';
+
+  const orderDetails = [
+    {
+      term: 'Order status',
+      description: '<Badge tone="success">Fulfilled</Badge>'
+    },
+    {
+      term: 'Tracking number',
+      description: '<Link url="https://tracking.example.com/123456">123456789</Link>'
+    },
+    {
+      term: 'Shipping address',
+      description: `
+        <div>
+          <Text>John Smith</Text><br>
+          <Text>123 Main Street</Text><br>
+          <Text>New York, NY 10001</Text>
+        </div>
+      `
+    },
+    {
+      term: 'Payment method',
+      description: '<Text>Visa ending in 4242</Text>'
+    }
+  ];
+</script>
+
+<DescriptionList items={orderDetails} />
+```
+</TabItem>
+</Tabs>
+
+### Description list in cards
+
+Use description lists within cards for organized information display.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { DescriptionList, Card, BlockStack, Text } from 'svelte-polaris';
+
+  const customerInfo = [
+    {
+      term: 'Name',
+      description: 'Sarah Johnson'
+    },
+    {
+      term: 'Email',
+      description: 'sarah.johnson@example.com'
+    },
+    {
+      term: 'Phone',
+      description: '+1 (555) 123-4567'
+    },
+    {
+      term: 'Member since',
+      description: 'January 2023'
+    }
+  ];
+
+  const billingInfo = [
+    {
+      term: 'Payment method',
+      description: 'Mastercard ending in 8765'
+    },
+    {
+      term: 'Billing address',
+      description: '456 Oak Avenue, Los Angeles, CA 90210'
+    },
+    {
+      term: 'Next billing date',
+      description: 'March 15, 2024'
+    }
+  ];
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Customer Information</Text>
+      <DescriptionList items={customerInfo} />
+    </BlockStack>
+  </Card>
+
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Billing Information</Text>
+      <DescriptionList items={billingInfo} />
+    </BlockStack>
+  </Card>
+</BlockStack>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { DescriptionList, Card, BlockStack, Text } from 'svelte-polaris';
+
+  const customerInfo = [
+    {
+      term: 'Name',
+      description: 'Sarah Johnson'
+    },
+    {
+      term: 'Email',
+      description: 'sarah.johnson@example.com'
+    },
+    {
+      term: 'Phone',
+      description: '+1 (555) 123-4567'
+    },
+    {
+      term: 'Member since',
+      description: 'January 2023'
+    }
+  ];
+
+  const billingInfo = [
+    {
+      term: 'Payment method',
+      description: 'Mastercard ending in 8765'
+    },
+    {
+      term: 'Billing address',
+      description: '456 Oak Avenue, Los Angeles, CA 90210'
+    },
+    {
+      term: 'Next billing date',
+      description: 'March 15, 2024'
+    }
+  ];
+</script>
+
+<BlockStack gap="400">
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Customer Information</Text>
+      <DescriptionList items={customerInfo} />
+    </BlockStack>
+  </Card>
+
+  <Card>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Billing Information</Text>
+      <DescriptionList items={billingInfo} />
+    </BlockStack>
+  </Card>
+</BlockStack>
+```
+</TabItem>
+</Tabs>
+
+### Description list with custom layout
+
+Customize the layout and appearance of terms and descriptions.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { DescriptionList } from 'svelte-polaris';
+
+  const systemInfo = [
+    {
+      term: 'Operating System',
+      description: 'macOS Sonoma 14.2'
+    },
+    {
+      term: 'Processor',
+      description: 'Apple M2 Pro'
+    },
+    {
+      term: 'Memory',
+      description: '16 GB'
+    },
+    {
+      term: 'Storage',
+      description: '512 GB SSD'
+    },
+    {
+      term: 'Graphics',
+      description: 'Apple M2 Pro 19-Core GPU'
+    }
+  ];
+</script>
+
+<DescriptionList 
+  items={systemInfo} 
+  layout="horizontal"
+  termWidth="narrow"
+  spacing="tight"
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { DescriptionList } from 'svelte-polaris';
+
+  const systemInfo = [
+    {
+      term: 'Operating System',
+      description: 'macOS Sonoma 14.2'
+    },
+    {
+      term: 'Processor',
+      description: 'Apple M2 Pro'
+    },
+    {
+      term: 'Memory',
+      description: '16 GB'
+    },
+    {
+      term: 'Storage',
+      description: '512 GB SSD'
+    },
+    {
+      term: 'Graphics',
+      description: 'Apple M2 Pro 19-Core GPU'
+    }
+  ];
+</script>
+
+<DescriptionList 
+  items={systemInfo} 
+  layout="horizontal"
+  termWidth="narrow"
+  spacing="tight"
+/>
+```
+</TabItem>
+</Tabs>
+
+### Description list with slots
+
+Use slots for complete control over term and description rendering.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { DescriptionList, Text, Badge, Icon } from 'svelte-polaris';
+
+  const features = [
+    {
+      term: 'SSL Certificate',
+      description: 'Active',
+      status: 'success',
+      icon: 'LockIcon'
+    },
+    {
+      term: 'Backup',
+      description: 'Daily at 2:00 AM',
+      status: 'info',
+      icon: 'ArchiveIcon'
+    },
+    {
+      term: 'Monitoring',
+      description: 'Enabled',
+      status: 'success',
+      icon: 'EyeIcon'
+    },
+    {
+      term: 'CDN',
+      description: 'Not configured',
+      status: 'warning',
+      icon: 'GlobeIcon'
+    }
+  ];
+</script>
+
+<DescriptionList>
+  {#each features as feature}
+    <DescriptionList.Item>
+      <svelte:fragment slot="term">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <Icon source={feature.icon} />
+          <Text>{feature.term}</Text>
+        </div>
+      </svelte:fragment>
+      <svelte:fragment slot="description">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <Text>{feature.description}</Text>
+          <Badge tone={feature.status} size="small">
+            {feature.status}
+          </Badge>
+        </div>
+      </svelte:fragment>
+    </DescriptionList.Item>
+  {/each}
+</DescriptionList>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { DescriptionList, Text, Badge, Icon } from 'svelte-polaris';
+
+  const features = [
+    {
+      term: 'SSL Certificate',
+      description: 'Active',
+      status: 'success',
+      icon: 'LockIcon'
+    },
+    {
+      term: 'Backup',
+      description: 'Daily at 2:00 AM',
+      status: 'info',
+      icon: 'ArchiveIcon'
+    },
+    {
+      term: 'Monitoring',
+      description: 'Enabled',
+      status: 'success',
+      icon: 'EyeIcon'
+    },
+    {
+      term: 'CDN',
+      description: 'Not configured',
+      status: 'warning',
+      icon: 'GlobeIcon'
+    }
+  ];
+</script>
+
+<DescriptionList>
+  {#each features as feature}
+    <DescriptionList.Item>
+      <svelte:fragment slot="term">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <Icon source={feature.icon} />
+          <Text>{feature.term}</Text>
+        </div>
+      </svelte:fragment>
+      <svelte:fragment slot="description">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <Text>{feature.description}</Text>
+          <Badge tone={feature.status} size="small">
+            {feature.status}
+          </Badge>
+        </div>
+      </svelte:fragment>
+    </DescriptionList.Item>
+  {/each}
+</DescriptionList>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### DescriptionList props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `items` | `DescriptionListItem[]` | | Array of items to display |
+| `spacing` | `'tight' \| 'loose'` | `'tight'` | Spacing between items |
+| `layout` | `'vertical' \| 'horizontal'` | `'vertical'` | Layout direction |
+| `termWidth` | `'narrow' \| 'wide'` | `'wide'` | Width of term column in horizontal layout |
+
+### DescriptionListItem type
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `term` | `string` | The term or label |
+| `description` | `string` | The description or value |
+
+### DescriptionList.Item props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `term` | `string` | Term text (when not using slot) |
+| `description` | `string` | Description text (when not using slot) |
+
+### DescriptionList.Item slots
+
+| Slot | Description |
+|------|-------------|
+| `term` | Custom content for the term |
+| `description` | Custom content for the description |
+
+## Best practices
+
+- Use description lists for structured key-value information
+- Keep terms concise and descriptive
+- Use consistent formatting for similar types of data
+- Group related information together
+- Consider using cards to separate different categories of information
+- Use appropriate spacing to improve readability
+- Include rich content in descriptions when it adds value
+- Ensure terms are scannable and easy to understand
+- Use horizontal layout for simple, short descriptions
+- Use vertical layout for longer or complex descriptions
+
+## Accessibility
+
+- Description lists use semantic HTML (`<dl>`, `<dt>`, `<dd>`) for proper structure
+- Screen readers can navigate between terms and descriptions
+- Terms are properly associated with their descriptions
+- Custom content maintains semantic meaning
+- Keyboard navigation works as expected
+- Focus management is handled automatically
+
+## Related components
+
+- Use [Text](/getting-started/text) for styling terms and descriptions
+- Use [Badge](/getting-started/badge) for status indicators in descriptions
+- Use [Link](/getting-started/link) for clickable content in descriptions
+- Use [Card](/getting-started/card) to group related description lists
+- Use [BlockStack](/getting-started/block-stack) for vertical spacing between lists

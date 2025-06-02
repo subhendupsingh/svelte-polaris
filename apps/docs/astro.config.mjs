@@ -14,112 +14,156 @@ export default defineConfig({
                 label: 'Getting Started',
                 items: [
                     {
-                        label: 'Installation',
-                        slug: 'getting-started/installation',
+                        label: 'ActionList',
+                        slug: 'getting-started/action-list',
                     },
                     {
-                        label: 'Set up',
-                        slug: 'getting-started/set-up',
+                        label: 'ActionMenu',
+                        slug: 'getting-started/action-menu',
                     },
                     {
-                        label: 'Button',
-                        slug: 'getting-started/button',
-                    },
-                    {
-                        label: 'Card',
-                        slug: 'getting-started/card',
-                    },
-                    {
-                        label: 'TextField',
-                        slug: 'getting-started/text-field',
-                    },
-                    {
-                        label: 'Select',
-                        slug: 'getting-started/select',
-                    },
-                    {
-                        label: 'ButtonGroup',
-                        slug: 'getting-started/button-group',
-                    },
-                    {
-                        label: 'FormLayout',
-                        slug: 'getting-started/form-layout',
-                    },
-                    {
-                        label: 'Checkbox',
-                        slug: 'getting-started/checkbox',
-                    },
-                    {
-                        label: 'Badge',
-                        slug: 'getting-started/badge',
+                        label: 'AutoComplete',
+                        slug: 'getting-started/autocomplete',
                     },
                     {
                         label: 'Avatar',
                         slug: 'getting-started/avatar',
                     },
                     {
-                        label: 'Text',
-                        slug: 'getting-started/text',
-                    },
-                    {
-                        label: 'Icon',
-                        slug: 'getting-started/icon',
-                    },
-                    {
-                        label: 'Spinner',
-                        slug: 'getting-started/spinner',
-                    },
-                    {
-                        label: 'Divider',
-                        slug: 'getting-started/divider',
-                    },
-                    {
-                        label: 'Box',
-                        slug: 'getting-started/box',
+                        label: 'Badge',
+                        slug: 'getting-started/badge',
                     },
                     {
                         label: 'BlockStack',
                         slug: 'getting-started/block-stack',
                     },
                     {
-                        label: 'InlineStack',
-                        slug: 'getting-started/inline-stack',
-                    },
-                    {
-                        label: 'Layout',
-                        slug: 'getting-started/layout',
-                    },
-                    {
-                        label: 'Tabs',
-                        slug: 'getting-started/tabs',
-                    },
-                    {
                         label: 'Bleed',
                         slug: 'getting-started/bleed',
+                    },
+                    {
+                        label: 'Box',
+                        slug: 'getting-started/box',
+                    },
+                    {
+                        label: 'Button',
+                        slug: 'getting-started/button',
+                    },
+                    {
+                        label: 'ButtonGroup',
+                        slug: 'getting-started/button-group',
+                    },
+                    {
+                        label: 'CalloutCard',
+                        slug: 'getting-started/callout-card',
+                    },
+                    {
+                        label: 'Card',
+                        slug: 'getting-started/card',
+                    },
+                    {
+                        label: 'Checkbox',
+                        slug: 'getting-started/checkbox',
                     },
                     {
                         label: 'ChoiceList',
                         slug: 'getting-started/choice-list',
                     },
                     {
+                        label: 'Combobox',
+                        slug: 'getting-started/combobox',
+                    },
+                    {
+                        label: 'Datepicker',
+                        slug: 'getting-started/datepicker',
+                    },
+                    {
+                        label: 'DescriptionList',
+                        slug: 'getting-started/description-list',
+                    },
+                    {
+                        label: 'Divider',
+                        slug: 'getting-started/divider',
+                    },
+                    {
+                        label: 'EmptySearchResult',
+                        slug: 'getting-started/empty-search-result',
+                    },
+                    {
+                        label: 'EmptyState',
+                        slug: 'getting-started/empty-state',
+                    },
+                    {
+                        label: 'Filters',
+                        slug: 'getting-started/filters',
+                    },
+                    {
+                        label: 'FormLayout',
+                        slug: 'getting-started/form-layout',
+                    },
+                    {
+                        label: 'Icon',
+                        slug: 'getting-started/icon',
+                    },
+                    {
+                        label: 'InlineStack',
+                        slug: 'getting-started/inline-stack',
+                    },
+                    {
+                        label: 'Installation',
+                        slug: 'getting-started/installation',
+                    },
+                    {
+                        label: 'Layout',
+                        slug: 'getting-started/layout',
+                    },
+                    {
                         label: 'Link',
                         slug: 'getting-started/link',
-                    },
-                    {
-                        label: 'Page',
-                        slug: 'getting-started/page',
-                    },
-                    {
-                        label: 'RadioButton',
-                        slug: 'getting-started/radio-button',
                     },
                     {
                         label: 'List',
                         slug: 'getting-started/list',
                     },
                     {
+                        label: 'Page',
+                        slug: 'getting-started/page',
+                    },
+                    {
+                        label: 'Pagination',
+                        slug: 'getting-started/pagination',
+                    },
+                    {
+                        label: 'RadioButton',
+                        slug: 'getting-started/radio-button',
+                    },
+                    {
+                        label: 'Select',
+                        slug: 'getting-started/select',
+                    },
+                    {
+                        label: 'Set up',
+                        slug: 'getting-started/set-up',
+                    },
+                    {
+                        label: 'Spinner',
+                        slug: 'getting-started/spinner',
+                    },
+                    {
+                        label: 'Tabs',
+                        slug: 'getting-started/tabs',
+                    },
+                    {
                         label: 'Tag',
                         slug: 'getting-started/tag',
+                    },
+                    {
+                        label: 'Text',
+                        slug: 'getting-started/text',
+                    },
+                    {
+                        label: 'TextField',
+                        slug: 'getting-started/text-field',
                     },
                     {
                         label: 'Thumbnail',
@@ -129,20 +173,8 @@ export default defineConfig({
                         label: 'Tooltip',
                         slug: 'getting-started/tooltip',
                     },
-                    {
-                        label: 'Pagination',
-                        slug: 'getting-started/pagination',
-                    },
-                    {
-                        label: 'EmptyState',
-                        slug: 'getting-started/empty-state',
-                    },
-                    {
-                        label: 'CalloutCard',
-                        slug: 'getting-started/callout-card',
-                    }
                 ],
-            }
+            },
         ],
     }), svelte()],
 });

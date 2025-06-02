@@ -1,0 +1,599 @@
+---
+title: Datepicker
+description: Datepicker allows users to select dates and date ranges using a calendar interface.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Datepicker allows users to select dates and date ranges using a calendar interface. It provides an intuitive way for users to input dates without typing.
+
+## Examples
+
+### Basic datepicker
+
+Use datepicker for single date selection with a calendar interface.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedDate = null;
+
+  function handleDateChange(date) {
+    selectedDate = date;
+    console.log('Selected date:', date);
+  }
+</script>
+
+<Datepicker
+  selected={selectedDate}
+  onSelect={handleDateChange}
+  placeholder="Select a date"
+/>
+
+{#if selectedDate}
+  <p>Selected: {selectedDate.toLocaleDateString()}</p>
+{/if}
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedDate = null;
+
+  function handleDateChange(date) {
+    selectedDate = date;
+    console.log('Selected date:', date);
+  }
+</script>
+
+<Datepicker
+  selected={selectedDate}
+  onSelect={handleDateChange}
+  placeholder="Select a date"
+/>
+
+{#if selectedDate}
+  <p>Selected: {selectedDate.toLocaleDateString()}</p>
+{/if}
+```
+</TabItem>
+</Tabs>
+
+### Date range picker
+
+Allow users to select a date range with start and end dates.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedRange = { start: null, end: null };
+
+  function handleRangeChange(range) {
+    selectedRange = range;
+    console.log('Selected range:', range);
+  }
+</script>
+
+<Datepicker
+  selected={selectedRange}
+  onSelect={handleRangeChange}
+  allowRange
+  placeholder="Select date range"
+/>
+
+{#if selectedRange.start && selectedRange.end}
+  <p>
+    Range: {selectedRange.start.toLocaleDateString()} - {selectedRange.end.toLocaleDateString()}
+  </p>
+{/if}
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedRange = { start: null, end: null };
+
+  function handleRangeChange(range) {
+    selectedRange = range;
+    console.log('Selected range:', range);
+  }
+</script>
+
+<Datepicker
+  selected={selectedRange}
+  onSelect={handleRangeChange}
+  allowRange
+  placeholder="Select date range"
+/>
+
+{#if selectedRange.start && selectedRange.end}
+  <p>
+    Range: {selectedRange.start.toLocaleDateString()} - {selectedRange.end.toLocaleDateString()}
+  </p>
+{/if}
+```
+</TabItem>
+</Tabs>
+
+### Datepicker with disabled dates
+
+Disable specific dates or date ranges to prevent selection.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedDate = null;
+
+  function handleDateChange(date) {
+    selectedDate = date;
+  }
+
+  function isDateDisabled(date) {
+    const day = date.getDay();
+    // Disable weekends (Saturday = 6, Sunday = 0)
+    return day === 0 || day === 6;
+  }
+
+  function isDateInDisabledRange(date) {
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    // Disable next week
+    return date >= today && date <= nextWeek;
+  }
+</script>
+
+<Datepicker
+  selected={selectedDate}
+  onSelect={handleDateChange}
+  disableDatesBefore={new Date()}
+  disableDatesAfter={new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)}
+  disableSpecificDates={isDateDisabled}
+  placeholder="Select a weekday"
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedDate = null;
+
+  function handleDateChange(date) {
+    selectedDate = date;
+  }
+
+  function isDateDisabled(date) {
+    const day = date.getDay();
+    // Disable weekends (Saturday = 6, Sunday = 0)
+    return day === 0 || day === 6;
+  }
+
+  function isDateInDisabledRange(date) {
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    // Disable next week
+    return date >= today && date <= nextWeek;
+  }
+</script>
+
+<Datepicker
+  selected={selectedDate}
+  onSelect={handleDateChange}
+  disableDatesBefore={new Date()}
+  disableDatesAfter={new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)}
+  disableSpecificDates={isDateDisabled}
+  placeholder="Select a weekday"
+/>
+```
+</TabItem>
+</Tabs>
+
+### Datepicker with custom month/year navigation
+
+Allow users to quickly navigate to specific months and years.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedDate = null;
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+
+  function handleDateChange(date) {
+    selectedDate = date;
+  }
+
+  function handleMonthChange(month, year) {
+    currentMonth = month;
+    currentYear = year;
+  }
+</script>
+
+<Datepicker
+  selected={selectedDate}
+  onSelect={handleDateChange}
+  month={currentMonth}
+  year={currentYear}
+  onMonthChange={handleMonthChange}
+  allowMonthChange
+  allowYearChange
+  placeholder="Select a date"
+/>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Datepicker } from 'svelte-polaris';
+
+  let selectedDate = null;
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+
+  function handleDateChange(date) {
+    selectedDate = date;
+  }
+
+  function handleMonthChange(month, year) {
+    currentMonth = month;
+    currentYear = year;
+  }
+</script>
+
+<Datepicker
+  selected={selectedDate}
+  onSelect={handleDateChange}
+  month={currentMonth}
+  year={currentYear}
+  onMonthChange={handleMonthChange}
+  allowMonthChange
+  allowYearChange
+  placeholder="Select a date"
+/>
+```
+</TabItem>
+</Tabs>
+
+### Datepicker in a form
+
+Integrate datepicker with form validation and labels.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Datepicker, FormLayout, Button, Card } from 'svelte-polaris';
+
+  let startDate = null;
+  let endDate = null;
+  let errors = {};
+
+  function handleStartDateChange(date) {
+    startDate = date;
+    if (errors.startDate) {
+      delete errors.startDate;
+      errors = { ...errors };
+    }
+  }
+
+  function handleEndDateChange(date) {
+    endDate = date;
+    if (errors.endDate) {
+      delete errors.endDate;
+      errors = { ...errors };
+    }
+  }
+
+  function handleSubmit() {
+    const newErrors = {};
+    
+    if (!startDate) {
+      newErrors.startDate = 'Start date is required';
+    }
+    
+    if (!endDate) {
+      newErrors.endDate = 'End date is required';
+    }
+    
+    if (startDate && endDate && startDate > endDate) {
+      newErrors.endDate = 'End date must be after start date';
+    }
+    
+    errors = newErrors;
+    
+    if (Object.keys(errors).length === 0) {
+      console.log('Form submitted:', { startDate, endDate });
+    }
+  }
+</script>
+
+<Card>
+  <FormLayout>
+    <Datepicker
+      selected={startDate}
+      onSelect={handleStartDateChange}
+      label="Start date"
+      error={errors.startDate}
+      placeholder="Select start date"
+    />
+    
+    <Datepicker
+      selected={endDate}
+      onSelect={handleEndDateChange}
+      label="End date"
+      error={errors.endDate}
+      placeholder="Select end date"
+      disableDatesBefore={startDate}
+    />
+    
+    <Button variant="primary" onClick={handleSubmit}>
+      Submit
+    </Button>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Datepicker, FormLayout, Button, Card } from 'svelte-polaris';
+
+  let startDate = null;
+  let endDate = null;
+  let errors = {};
+
+  function handleStartDateChange(date) {
+    startDate = date;
+    if (errors.startDate) {
+      delete errors.startDate;
+      errors = { ...errors };
+    }
+  }
+
+  function handleEndDateChange(date) {
+    endDate = date;
+    if (errors.endDate) {
+      delete errors.endDate;
+      errors = { ...errors };
+    }
+  }
+
+  function handleSubmit() {
+    const newErrors = {};
+    
+    if (!startDate) {
+      newErrors.startDate = 'Start date is required';
+    }
+    
+    if (!endDate) {
+      newErrors.endDate = 'End date is required';
+    }
+    
+    if (startDate && endDate && startDate > endDate) {
+      newErrors.endDate = 'End date must be after start date';
+    }
+    
+    errors = newErrors;
+    
+    if (Object.keys(errors).length === 0) {
+      console.log('Form submitted:', { startDate, endDate });
+    }
+  }
+</script>
+
+<Card>
+  <FormLayout>
+    <Datepicker
+      selected={startDate}
+      onSelect={handleStartDateChange}
+      label="Start date"
+      error={errors.startDate}
+      placeholder="Select start date"
+    />
+    
+    <Datepicker
+      selected={endDate}
+      onSelect={handleEndDateChange}
+      label="End date"
+      error={errors.endDate}
+      placeholder="Select end date"
+      disableDatesBefore={startDate}
+    />
+    
+    <Button variant="primary" onClick={handleSubmit}>
+      Submit
+    </Button>
+  </FormLayout>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Datepicker with preset ranges
+
+Provide common date range presets for quick selection.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Datepicker, Button, InlineStack } from 'svelte-polaris';
+
+  let selectedRange = { start: null, end: null };
+
+  function handleRangeChange(range) {
+    selectedRange = range;
+  }
+
+  function setPresetRange(days) {
+    const end = new Date();
+    const start = new Date(end.getTime() - days * 24 * 60 * 60 * 1000);
+    selectedRange = { start, end };
+  }
+
+  function setThisMonth() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    selectedRange = { start, end };
+  }
+
+  function setLastMonth() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const end = new Date(now.getFullYear(), now.getMonth(), 0);
+    selectedRange = { start, end };
+  }
+</script>
+
+<div>
+  <div style="margin-bottom: 1rem;">
+    <InlineStack gap="200">
+      <Button onClick={() => setPresetRange(7)}>Last 7 days</Button>
+      <Button onClick={() => setPresetRange(30)}>Last 30 days</Button>
+      <Button onClick={() => setThisMonth()}>This month</Button>
+      <Button onClick={() => setLastMonth()}>Last month</Button>
+    </InlineStack>
+  </div>
+
+  <Datepicker
+    selected={selectedRange}
+    onSelect={handleRangeChange}
+    allowRange
+    placeholder="Select date range or use presets"
+  />
+</div>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Datepicker, Button, InlineStack } from 'svelte-polaris';
+
+  let selectedRange = { start: null, end: null };
+
+  function handleRangeChange(range) {
+    selectedRange = range;
+  }
+
+  function setPresetRange(days) {
+    const end = new Date();
+    const start = new Date(end.getTime() - days * 24 * 60 * 60 * 1000);
+    selectedRange = { start, end };
+  }
+
+  function setThisMonth() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    selectedRange = { start, end };
+  }
+
+  function setLastMonth() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const end = new Date(now.getFullYear(), now.getMonth(), 0);
+    selectedRange = { start, end };
+  }
+</script>
+
+<div>
+  <div style="margin-bottom: 1rem;">
+    <InlineStack gap="200">
+      <Button onClick={() => setPresetRange(7)}>Last 7 days</Button>
+      <Button onClick={() => setPresetRange(30)}>Last 30 days</Button>
+      <Button onClick={() => setThisMonth()}>This month</Button>
+      <Button onClick={() => setLastMonth()}>Last month</Button>
+    </InlineStack>
+  </div>
+
+  <Datepicker
+    selected={selectedRange}
+    onSelect={handleRangeChange}
+    allowRange
+    placeholder="Select date range or use presets"
+  />
+</div>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Datepicker props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `selected` | `Date \| Range` | | Currently selected date or range |
+| `onSelect` | `(date: Date \| Range) => void` | | Callback when date is selected |
+| `allowRange` | `boolean` | `false` | Allow date range selection |
+| `placeholder` | `string` | | Placeholder text for input |
+| `label` | `string` | | Label for the datepicker |
+| `error` | `string \| boolean` | | Error message or state |
+| `helpText` | `string` | | Help text below the input |
+| `disabled` | `boolean` | `false` | Whether the datepicker is disabled |
+| `readOnly` | `boolean` | `false` | Whether the datepicker is read-only |
+| `month` | `number` | | Currently displayed month (0-11) |
+| `year` | `number` | | Currently displayed year |
+| `onMonthChange` | `(month: number, year: number) => void` | | Callback when month changes |
+| `allowMonthChange` | `boolean` | `true` | Allow month navigation |
+| `allowYearChange` | `boolean` | `true` | Allow year navigation |
+| `disableDatesBefore` | `Date` | | Disable dates before this date |
+| `disableDatesAfter` | `Date` | | Disable dates after this date |
+| `disableSpecificDates` | `(date: Date) => boolean` | | Function to disable specific dates |
+| `weekStartsOn` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `0` | First day of week (0 = Sunday) |
+| `multiMonth` | `number` | `1` | Number of months to display |
+
+### Range type
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `start` | `Date \| null` | Start date of the range |
+| `end` | `Date \| null` | End date of the range |
+
+## Best practices
+
+- Use datepicker when users need to select specific dates rather than typing them
+- Provide clear labels and placeholder text
+- Use date ranges for filtering data by time periods
+- Disable dates that are not valid for the context (e.g., past dates for future events)
+- Consider providing preset date ranges for common selections
+- Validate date selections and provide clear error messages
+- Use appropriate date formats for your locale
+- Consider the context when setting default dates
+- Provide keyboard navigation support for accessibility
+
+## Accessibility
+
+- Datepicker automatically manages focus and keyboard navigation
+- Arrow keys navigate through calendar dates
+- Enter key selects the focused date
+- Escape key closes the calendar
+- Screen readers announce date changes and selections
+- Disabled dates are properly announced
+- Month and year navigation is keyboard accessible
+- Use clear labels and help text for better context
+
+## Related components
+
+- Use [TextField](/getting-started/text-field) for manual date input
+- Use [Select](/getting-started/select) for simple date part selection
+- Use [Button](/getting-started/button) for date range presets
+- Use [FormLayout](/getting-started/form-layout) for form integration

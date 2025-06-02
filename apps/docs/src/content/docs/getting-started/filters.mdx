@@ -1,0 +1,1020 @@
+---
+title: Filters
+description: Filters help users narrow down content by applying multiple criteria to find what they're looking for.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Filters help users narrow down content by applying multiple criteria to find what they're looking for. They provide an organized way to control what data is displayed in lists, tables, or search results.
+
+## Examples
+
+### Basic filters
+
+Use filters to allow users to narrow down content with simple criteria.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Filters, TextField, Button, Card } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let availableFilters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Active', value: 'active' },
+          { label: 'Inactive', value: 'inactive' },
+          { label: 'Pending', value: 'pending' }
+        ]
+      }
+    },
+    {
+      key: 'location',
+      label: 'Location',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'United States', value: 'us' },
+          { label: 'Canada', value: 'ca' },
+          { label: 'United Kingdom', value: 'uk' }
+        ]
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+    console.log('Query changed:', value);
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+    console.log('Filters changed:', filters);
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+  }
+</script>
+
+<Card>
+  <Filters
+    queryValue={queryValue}
+    filters={availableFilters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search customers"
+  />
+  
+  <div style="padding: 1rem;">
+    <p>Query: {queryValue || 'None'}</p>
+    <p>Applied filters: {appliedFilters.length}</p>
+  </div>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Filters, TextField, Button, Card } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let availableFilters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Active', value: 'active' },
+          { label: 'Inactive', value: 'inactive' },
+          { label: 'Pending', value: 'pending' }
+        ]
+      }
+    },
+    {
+      key: 'location',
+      label: 'Location',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'United States', value: 'us' },
+          { label: 'Canada', value: 'ca' },
+          { label: 'United Kingdom', value: 'uk' }
+        ]
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+    console.log('Query changed:', value);
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+    console.log('Filters changed:', filters);
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+  }
+</script>
+
+<Card>
+  <Filters
+    queryValue={queryValue}
+    filters={availableFilters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search customers"
+  />
+  
+  <div style="padding: 1rem;">
+    <p>Query: {queryValue || 'None'}</p>
+    <p>Applied filters: {appliedFilters.length}</p>
+  </div>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Filters with multiple types
+
+Use different filter types for various data types and user needs.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Filters, Card } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let filters = [
+    {
+      key: 'product_type',
+      label: 'Product type',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'T-shirt', value: 'tshirt' },
+          { label: 'Accessories', value: 'accessories' },
+          { label: 'Gift card', value: 'giftcard' }
+        ]
+      }
+    },
+    {
+      key: 'price_range',
+      label: 'Price range',
+      filter: {
+        type: 'range_slider',
+        min: 0,
+        max: 500,
+        step: 10,
+        prefix: '$'
+      }
+    },
+    {
+      key: 'date_created',
+      label: 'Date created',
+      filter: {
+        type: 'date_picker'
+      }
+    },
+    {
+      key: 'tags',
+      label: 'Tagged with',
+      filter: {
+        type: 'text_field'
+      }
+    },
+    {
+      key: 'vendor',
+      label: 'Vendor',
+      filter: {
+        type: 'choice_list',
+        choices: [
+          { label: 'Shopify', value: 'shopify' },
+          { label: 'Apple', value: 'apple' },
+          { label: 'Google', value: 'google' },
+          { label: 'Microsoft', value: 'microsoft' }
+        ]
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+  }
+</script>
+
+<Card>
+  <Filters
+    queryValue={queryValue}
+    filters={filters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search products"
+  />
+  
+  <div style="padding: 1rem;">
+    <h3>Applied Filters:</h3>
+    {#if appliedFilters.length === 0}
+      <p>No filters applied</p>
+    {:else}
+      <ul>
+        {#each appliedFilters as filter}
+          <li>{filter.key}: {JSON.stringify(filter.value)}</li>
+        {/each}
+      </ul>
+    {/if}
+  </div>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Filters, Card } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let filters = [
+    {
+      key: 'product_type',
+      label: 'Product type',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'T-shirt', value: 'tshirt' },
+          { label: 'Accessories', value: 'accessories' },
+          { label: 'Gift card', value: 'giftcard' }
+        ]
+      }
+    },
+    {
+      key: 'price_range',
+      label: 'Price range',
+      filter: {
+        type: 'range_slider',
+        min: 0,
+        max: 500,
+        step: 10,
+        prefix: '$'
+      }
+    },
+    {
+      key: 'date_created',
+      label: 'Date created',
+      filter: {
+        type: 'date_picker'
+      }
+    },
+    {
+      key: 'tags',
+      label: 'Tagged with',
+      filter: {
+        type: 'text_field'
+      }
+    },
+    {
+      key: 'vendor',
+      label: 'Vendor',
+      filter: {
+        type: 'choice_list',
+        choices: [
+          { label: 'Shopify', value: 'shopify' },
+          { label: 'Apple', value: 'apple' },
+          { label: 'Google', value: 'google' },
+          { label: 'Microsoft', value: 'microsoft' }
+        ]
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+  }
+</script>
+
+<Card>
+  <Filters
+    queryValue={queryValue}
+    filters={filters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search products"
+  />
+  
+  <div style="padding: 1rem;">
+    <h3>Applied Filters:</h3>
+    {#if appliedFilters.length === 0}
+      <p>No filters applied</p>
+    {:else}
+      <ul>
+        {#each appliedFilters as filter}
+          <li>{filter.key}: {JSON.stringify(filter.value)}</li>
+        {/each}
+      </ul>
+    {/if}
+  </div>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Filters with saved searches
+
+Allow users to save and reuse filter combinations.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Filters, Card, Button, InlineStack, Tag } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let savedSearches = [
+    { name: 'Active customers', query: '', filters: [{ key: 'status', value: 'active' }] },
+    { name: 'US orders', query: 'order', filters: [{ key: 'location', value: 'us' }] },
+    { name: 'High value', query: '', filters: [{ key: 'amount', value: { min: 1000 } }] }
+  ];
+
+  let filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Active', value: 'active' },
+          { label: 'Inactive', value: 'inactive' }
+        ]
+      }
+    },
+    {
+      key: 'location',
+      label: 'Location',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'United States', value: 'us' },
+          { label: 'Canada', value: 'ca' }
+        ]
+      }
+    },
+    {
+      key: 'amount',
+      label: 'Order amount',
+      filter: {
+        type: 'range_slider',
+        min: 0,
+        max: 5000,
+        step: 100,
+        prefix: '$'
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+  }
+
+  function applySavedSearch(search) {
+    queryValue = search.query;
+    appliedFilters = [...search.filters];
+  }
+
+  function saveCurrentSearch() {
+    if (queryValue || appliedFilters.length > 0) {
+      const name = prompt('Enter a name for this search:');
+      if (name) {
+        savedSearches = [...savedSearches, {
+          name,
+          query: queryValue,
+          filters: [...appliedFilters]
+        }];
+      }
+    }
+  }
+
+  function removeSavedSearch(index) {
+    savedSearches = savedSearches.filter((_, i) => i !== index);
+  }
+</script>
+
+<Card>
+  <div style="padding: 1rem; border-bottom: 1px solid #e1e3e5;">
+    <div style="margin-bottom: 1rem;">
+      <h4 style="margin: 0 0 0.5rem 0;">Saved searches</h4>
+      <InlineStack gap="200">
+        {#each savedSearches as search, index}
+          <Tag
+            onClick={() => applySavedSearch(search)}
+            onRemove={() => removeSavedSearch(index)}
+          >
+            {search.name}
+          </Tag>
+        {/each}
+        <Button size="slim" onClick={saveCurrentSearch}>
+          Save current search
+        </Button>
+      </InlineStack>
+    </div>
+  </div>
+
+  <Filters
+    queryValue={queryValue}
+    filters={filters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search orders"
+  />
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Filters, Card, Button, InlineStack, Tag } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let savedSearches = [
+    { name: 'Active customers', query: '', filters: [{ key: 'status', value: 'active' }] },
+    { name: 'US orders', query: 'order', filters: [{ key: 'location', value: 'us' }] },
+    { name: 'High value', query: '', filters: [{ key: 'amount', value: { min: 1000 } }] }
+  ];
+
+  let filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Active', value: 'active' },
+          { label: 'Inactive', value: 'inactive' }
+        ]
+      }
+    },
+    {
+      key: 'location',
+      label: 'Location',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'United States', value: 'us' },
+          { label: 'Canada', value: 'ca' }
+        ]
+      }
+    },
+    {
+      key: 'amount',
+      label: 'Order amount',
+      filter: {
+        type: 'range_slider',
+        min: 0,
+        max: 5000,
+        step: 100,
+        prefix: '$'
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+  }
+
+  function applySavedSearch(search) {
+    queryValue = search.query;
+    appliedFilters = [...search.filters];
+  }
+
+  function saveCurrentSearch() {
+    if (queryValue || appliedFilters.length > 0) {
+      const name = prompt('Enter a name for this search:');
+      if (name) {
+        savedSearches = [...savedSearches, {
+          name,
+          query: queryValue,
+          filters: [...appliedFilters]
+        }];
+      }
+    }
+  }
+
+  function removeSavedSearch(index) {
+    savedSearches = savedSearches.filter((_, i) => i !== index);
+  }
+</script>
+
+<Card>
+  <div style="padding: 1rem; border-bottom: 1px solid #e1e3e5;">
+    <div style="margin-bottom: 1rem;">
+      <h4 style="margin: 0 0 0.5rem 0;">Saved searches</h4>
+      <InlineStack gap="200">
+        {#each savedSearches as search, index}
+          <Tag
+            onClick={() => applySavedSearch(search)}
+            onRemove={() => removeSavedSearch(index)}
+          >
+            {search.name}
+          </Tag>
+        {/each}
+        <Button size="slim" onClick={saveCurrentSearch}>
+          Save current search
+        </Button>
+      </InlineStack>
+    </div>
+  </div>
+
+  <Filters
+    queryValue={queryValue}
+    filters={filters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search orders"
+  />
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Filters with custom filter controls
+
+Create custom filter controls for specific use cases.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Filters, Card, Checkbox, RadioButton, TextField, Button, BlockStack, InlineStack } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let showCustomFilters = false;
+
+  // Custom filter state
+  let includeArchived = false;
+  let sortBy = 'date';
+  let customTag = '';
+
+  let filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Published', value: 'published' },
+          { label: 'Draft', value: 'draft' },
+          { label: 'Archived', value: 'archived' }
+        ]
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+    includeArchived = false;
+    sortBy = 'date';
+    customTag = '';
+  }
+
+  function toggleCustomFilters() {
+    showCustomFilters = !showCustomFilters;
+  }
+
+  function applyCustomFilters() {
+    const customFilters = [];
+    
+    if (includeArchived) {
+      customFilters.push({ key: 'include_archived', value: true });
+    }
+    
+    if (sortBy !== 'date') {
+      customFilters.push({ key: 'sort_by', value: sortBy });
+    }
+    
+    if (customTag.trim()) {
+      customFilters.push({ key: 'custom_tag', value: customTag.trim() });
+    }
+    
+    appliedFilters = [...appliedFilters.filter(f => !['include_archived', 'sort_by', 'custom_tag'].includes(f.key)), ...customFilters];
+  }
+</script>
+
+<Card>
+  <Filters
+    queryValue={queryValue}
+    filters={filters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search products"
+  >
+    <div slot="customFilters">
+      <Button onClick={toggleCustomFilters} disclosure={showCustomFilters ? 'up' : 'down'}>
+        Advanced filters
+      </Button>
+    </div>
+  </Filters>
+
+  {#if showCustomFilters}
+    <div style="padding: 1rem; border-top: 1px solid #e1e3e5; background: #f9fafb;">
+      <BlockStack gap="300">
+        <Checkbox
+          bind:checked={includeArchived}
+          label="Include archived items"
+        />
+        
+        <div>
+          <p style="margin: 0 0 0.5rem 0; font-weight: 500;">Sort by:</p>
+          <BlockStack gap="200">
+            <RadioButton
+              bind:group={sortBy}
+              value="date"
+              label="Date created"
+            />
+            <RadioButton
+              bind:group={sortBy}
+              value="name"
+              label="Product name"
+            />
+            <RadioButton
+              bind:group={sortBy}
+              value="price"
+              label="Price"
+            />
+          </BlockStack>
+        </div>
+        
+        <TextField
+          bind:value={customTag}
+          label="Custom tag"
+          placeholder="Enter custom tag"
+          autoComplete="off"
+        />
+        
+        <InlineStack gap="200">
+          <Button variant="primary" onClick={applyCustomFilters}>
+            Apply advanced filters
+          </Button>
+          <Button onClick={toggleCustomFilters}>
+            Close
+          </Button>
+        </InlineStack>
+      </BlockStack>
+    </div>
+  {/if}
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Filters, Card, Checkbox, RadioButton, TextField, Button, BlockStack, InlineStack } from 'svelte-polaris';
+
+  let queryValue = '';
+  let appliedFilters = [];
+  let showCustomFilters = false;
+
+  // Custom filter state
+  let includeArchived = false;
+  let sortBy = 'date';
+  let customTag = '';
+
+  let filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: {
+        type: 'select',
+        options: [
+          { label: 'Published', value: 'published' },
+          { label: 'Draft', value: 'draft' },
+          { label: 'Archived', value: 'archived' }
+        ]
+      }
+    }
+  ];
+
+  function handleQueryChange(value) {
+    queryValue = value;
+  }
+
+  function handleFiltersChange(filters) {
+    appliedFilters = filters;
+  }
+
+  function handleQueryClear() {
+    queryValue = '';
+  }
+
+  function handleFiltersClear() {
+    appliedFilters = [];
+    includeArchived = false;
+    sortBy = 'date';
+    customTag = '';
+  }
+
+  function toggleCustomFilters() {
+    showCustomFilters = !showCustomFilters;
+  }
+
+  function applyCustomFilters() {
+    const customFilters = [];
+    
+    if (includeArchived) {
+      customFilters.push({ key: 'include_archived', value: true });
+    }
+    
+    if (sortBy !== 'date') {
+      customFilters.push({ key: 'sort_by', value: sortBy });
+    }
+    
+    if (customTag.trim()) {
+      customFilters.push({ key: 'custom_tag', value: customTag.trim() });
+    }
+    
+    appliedFilters = [...appliedFilters.filter(f => !['include_archived', 'sort_by', 'custom_tag'].includes(f.key)), ...customFilters];
+  }
+</script>
+
+<Card>
+  <Filters
+    queryValue={queryValue}
+    filters={filters}
+    appliedFilters={appliedFilters}
+    onQueryChange={handleQueryChange}
+    onFiltersChange={handleFiltersChange}
+    onQueryClear={handleQueryClear}
+    onFiltersClear={handleFiltersClear}
+    queryPlaceholder="Search products"
+  >
+    <div slot="customFilters">
+      <Button onClick={toggleCustomFilters} disclosure={showCustomFilters ? 'up' : 'down'}>
+        Advanced filters
+      </Button>
+    </div>
+  </Filters>
+
+  {#if showCustomFilters}
+    <div style="padding: 1rem; border-top: 1px solid #e1e3e5; background: #f9fafb;">
+      <BlockStack gap="300">
+        <Checkbox
+          bind:checked={includeArchived}
+          label="Include archived items"
+        />
+        
+        <div>
+          <p style="margin: 0 0 0.5rem 0; font-weight: 500;">Sort by:</p>
+          <BlockStack gap="200">
+            <RadioButton
+              bind:group={sortBy}
+              value="date"
+              label="Date created"
+            />
+            <RadioButton
+              bind:group={sortBy}
+              value="name"
+              label="Product name"
+            />
+            <RadioButton
+              bind:group={sortBy}
+              value="price"
+              label="Price"
+            />
+          </BlockStack>
+        </div>
+        
+        <TextField
+          bind:value={customTag}
+          label="Custom tag"
+          placeholder="Enter custom tag"
+          autoComplete="off"
+        />
+        
+        <InlineStack gap="200">
+          <Button variant="primary" onClick={applyCustomFilters}>
+            Apply advanced filters
+          </Button>
+          <Button onClick={toggleCustomFilters}>
+            Close
+          </Button>
+        </InlineStack>
+      </BlockStack>
+    </div>
+  {/if}
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Filters props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `queryValue` | `string` | `''` | Current search query |
+| `filters` | `FilterDefinition[]` | `[]` | Available filter definitions |
+| `appliedFilters` | `AppliedFilter[]` | `[]` | Currently applied filters |
+| `onQueryChange` | `(value: string) => void` | | Callback when query changes |
+| `onFiltersChange` | `(filters: AppliedFilter[]) => void` | | Callback when filters change |
+| `onQueryClear` | `() => void` | | Callback when query is cleared |
+| `onFiltersClear` | `() => void` | | Callback when all filters are cleared |
+| `queryPlaceholder` | `string` | `'Search'` | Placeholder text for search input |
+| `disabled` | `boolean` | `false` | Whether filters are disabled |
+| `hideQueryField` | `boolean` | `false` | Hide the search query field |
+| `hideFilters` | `boolean` | `false` | Hide filter controls |
+
+### FilterDefinition type
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `key` | `string` | Unique identifier for the filter |
+| `label` | `string` | Display label for the filter |
+| `filter` | `FilterControl` | Filter control configuration |
+
+### FilterControl types
+
+#### Select filter
+| Prop | Type | Description |
+|------|------|-------------|
+| `type` | `'select'` | Filter type |
+| `options` | `Option[]` | Available options |
+
+#### Text field filter
+| Prop | Type | Description |
+|------|------|-------------|
+| `type` | `'text_field'` | Filter type |
+| `placeholder` | `string` | Input placeholder |
+
+#### Date picker filter
+| Prop | Type | Description |
+|------|------|-------------|
+| `type` | `'date_picker'` | Filter type |
+| `placeholder` | `string` | Input placeholder |
+
+#### Range slider filter
+| Prop | Type | Description |
+|------|------|-------------|
+| `type` | `'range_slider'` | Filter type |
+| `min` | `number` | Minimum value |
+| `max` | `number` | Maximum value |
+| `step` | `number` | Step increment |
+| `prefix` | `string` | Value prefix (e.g., '$') |
+| `suffix` | `string` | Value suffix (e.g., '%') |
+
+#### Choice list filter
+| Prop | Type | Description |
+|------|------|-------------|
+| `type` | `'choice_list'` | Filter type |
+| `choices` | `Choice[]` | Available choices |
+| `allowMultiple` | `boolean` | Allow multiple selections |
+
+### AppliedFilter type
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `key` | `string` | Filter key |
+| `value` | `any` | Filter value |
+| `label` | `string` | Display label |
+
+### Filters slots
+
+| Slot | Description |
+|------|-------------|
+| `customFilters` | Additional filter controls |
+
+## Best practices
+
+- Use clear, descriptive labels for filters
+- Group related filters together logically
+- Provide appropriate filter types for different data types
+- Show the number of applied filters when multiple are active
+- Allow users to clear individual filters or all filters at once
+- Consider providing saved search functionality for complex filter combinations
+- Use progressive disclosure for advanced or less common filters
+- Ensure filter controls are accessible and keyboard navigable
+- Provide immediate feedback when filters are applied
+- Consider the performance impact of real-time filtering vs. apply buttons
+
+## Accessibility
+
+- All filter controls are keyboard accessible
+- Screen readers can navigate and understand filter structure
+- Filter labels are properly associated with their controls
+- Applied filters are announced when changed
+- Clear buttons have appropriate labels
+- Focus management works correctly when opening/closing filter panels
+- Color is not the only way to indicate active filters
+
+## Related components
+
+- Use [TextField](/getting-started/text-field) for search queries
+- Use [Select](/getting-started/select) for dropdown filters
+- Use [Checkbox](/getting-started/checkbox) for boolean filters
+- Use [RadioButton](/getting-started/radio-button) for exclusive choice filters
+- Use [Tag](/getting-started/tag) for displaying applied filters
+- Use [Button](/getting-started/button) for filter actions
+- Use [Card](/getting-started/card) to contain filter interfaces
