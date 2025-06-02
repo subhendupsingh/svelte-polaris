@@ -1,17 +1,17 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Welcome to Svelte Polaris
+description: Get started building your docs site with Svelte Polaris.
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Shopify's design system to build Shopify apps.
   image:
-    file: ../../assets/houston.webp
+    file: ../../../public/shopify-logo.svg
   actions:
-    - text: Example Guide
+    - text: Get Started
       icon: right-arrow
-      link: /getting-started/button
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+      link: /getting-started/installation
+    - text: Shopify Polaris docs
+      link: https://polaris-react.shopify.com/
       icon: external
       variant: minimal
 ---
@@ -20,17 +20,17 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## Next steps
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+<CardGrid>
+	<Card title="Install Package" icon="pencil">
+		Install `svelte-polaris` package using npm, pnpm or yarn.
 	</Card>
 	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+		Learn more in [the Svelte Polaris docs](/getting-started/installation).
+	</Card>
+	<Card title="Star the repo" icon="star">
+		Star the [repo](https://github.com/subhendupsingh/svelte-polaris).
+	</Card>
+	<Card title="Buy me a coffee" icon="information">
+		Buy me a coffee [here](https://buymeacoffee.com/spsbuilds).
 	</Card>
 </CardGrid>

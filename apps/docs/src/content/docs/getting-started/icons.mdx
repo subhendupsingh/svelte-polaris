@@ -1,0 +1,58 @@
+---
+title: Icons
+description: How to use polaris icons in Svelte
+---
+
+## Install `@poppanator/sveltekit-svg` ([link](https://www.npmjs.com/package/@poppanator/sveltekit-svg)) package
+
+This package converts svg files to svelte components.
+
+```bash
+pnpm add @poppanator/sveltekit-svg
+```
+
+Add `@poppanator/sveltekit-svg` to your `vite.config.ts` file
+
+```ts
+import svg from '@poppanator/sveltekit-svg'
+
+export default defineConfig({
+	plugins: [
+		sveltekit(),
+		svg({
+			type: "component",
+			svgoOptions: {
+				multipass: true,
+				plugins: [
+					{
+						name: 'preset-default',
+						params: { overrides: { removeViewBox: false } },
+					},
+					{ name: 'removeAttrs', params: { attrs: '(fill|stroke)' } },
+				],
+			},
+		}
+	]
+})
+```
+
+## Install Shopify Polaris Icons
+
+```bash
+pnpm add @shopify/polaris-icons
+```
+
+Import it from the `@shopify/polaris-icons` package. Note the `svg?component` suffix.
+
+```svelte
+import { InfoIcon } from '@shopify/polaris-icons/dist/svg/InfoIcon.svg?component';
+```
+
+And use it like this:
+
+```svelte
+<Icon source={InfoIcon} />
+```
+
+
+

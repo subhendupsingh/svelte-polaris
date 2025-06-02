@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "svelte-polaris-docs",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,12 +10,16 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.5.3",
     "@astrojs/starlight": "^0.34.3",
     "@astrojs/svelte": "^7.1.0",
     "astro": "^5.6.1",
     "sharp": "^0.32.5",
     "svelte": "^5.33.10",
-    "typescript": "^5.8.3",
-    "svelte-polaris": "workspace:*"
+    "svelte-polaris": "workspace:*",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.18.0"
   }
 }
