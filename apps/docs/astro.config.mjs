@@ -11,6 +11,35 @@ export default defineConfig({
   site: "https://svelte-polaris-docs.storebud.workers.dev",
   integrations: [starlight({
       title: 'Svelte Polaris',
+      head: [
+        {
+            tag: "link",
+            attrs: {
+                rel: "icon",
+                href: "/favicon.ico"
+            },
+            content: `
+                <!-- Primary Meta Tags -->
+                <title>Svelte Polaris</title>
+                <meta name="title" content="Svelte Polaris" />
+                <meta name="description" content="Svelte port of Shopify Polaris design system" />
+
+                <!-- Open Graph / Facebook -->
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://svelte-polaris-docs.storebud.workers.dev" />
+                <meta property="og:title" content="Svelte Polaris" />
+                <meta property="og:description" content="Svelte port of Shopify Polaris design system" />
+                <meta property="og:image" content="https://res.cloudinary.com/curead/image/upload/v1748893623/Screenshot_2025-06-03_at_1.14.51_AM.png" />
+
+                <!-- Twitter -->
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://svelte-polaris-docs.storebud.workers.dev" />
+                <meta property="twitter:title" content="Svelte Polaris" />
+                <meta property="twitter:description" content="Svelte port of Shopify Polaris design system" />
+                <meta property="twitter:image" content="https://res.cloudinary.com/curead/image/upload/v1748893623/Screenshot_2025-06-03_at_1.14.51_AM.png" />
+            `
+        }
+      ],
       social: [
           { icon: 'twitter', label: 'X', href: 'https://x.com/spsbuilds' },
           { icon: 'github', label: 'GitHub', href: 'https://github.com/subhendupsingh/svelte-polaris' },

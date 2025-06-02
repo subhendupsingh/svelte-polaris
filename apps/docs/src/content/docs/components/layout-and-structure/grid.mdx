@@ -23,19 +23,19 @@ Use grid to create simple column layouts with automatic spacing.
 <Grid>
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
-      <Text>Column 1</Text>
+      <Text as="h2">Column 1</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
-      <Text>Column 2</Text>
+      <Text as="h2">Column 2</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
-      <Text>Column 3</Text>
+      <Text as="h2">Column 3</Text>
     </Card>
   </Grid.Cell>
 </Grid>
@@ -50,19 +50,19 @@ Use grid to create simple column layouts with automatic spacing.
 <Grid>
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
-      <Text>Column 1</Text>
+      <Text as="h2">Column 1</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
-      <Text>Column 2</Text>
+      <Text as="h2">Column 2</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
-      <Text>Column 3</Text>
+      <Text as="h2">Column 3</Text>
     </Card>
   </Grid.Cell>
 </Grid>
@@ -85,8 +85,8 @@ Create responsive layouts that adapt to different screen sizes.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
     <Card>
       <BlockStack gap="200">
-        <Text variant="headingMd">Main Content</Text>
-        <Text>
+        <Text as="h2" variant="headingMd">Main Content</Text>
+        <Text as="p">
           This is the main content area that takes up most of the space on larger screens
           but becomes full width on mobile devices.
         </Text>
@@ -97,8 +97,8 @@ Create responsive layouts that adapt to different screen sizes.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
       <BlockStack gap="200">
-        <Text variant="headingMd">Sidebar</Text>
-        <Text>
+        <Text as="h2" variant="headingMd">Sidebar</Text>
+        <Text as="p">
           This sidebar content stacks below the main content on mobile
           and appears alongside it on larger screens.
         </Text>
@@ -118,8 +118,8 @@ Create responsive layouts that adapt to different screen sizes.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
     <Card>
       <BlockStack gap="200">
-        <Text variant="headingMd">Main Content</Text>
-        <Text>
+        <Text as="h2" variant="headingMd">Main Content</Text>
+        <Text as="p">
           This is the main content area that takes up most of the space on larger screens
           but becomes full width on mobile devices.
         </Text>
@@ -130,8 +130,8 @@ Create responsive layouts that adapt to different screen sizes.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
       <BlockStack gap="200">
-        <Text variant="headingMd">Sidebar</Text>
-        <Text>
+        <Text as="h2" variant="headingMd">Sidebar</Text>
+        <Text as="p">
           This sidebar content stacks below the main content on mobile
           and appears alongside it on larger screens.
         </Text>
@@ -157,25 +157,25 @@ Control spacing between grid items with custom gap values.
 <Grid gap={{ xs: '400', sm: '500', md: '600', lg: '800', xl: '1000' }}>
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 1</Text>
+      <Text as="h2">Card 1</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 2</Text>
+      <Text as="h2">Card 2</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 3</Text>
+      <Text as="h2">Card 3</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 4</Text>
+      <Text as="h2">Card 4</Text>
     </Card>
   </Grid.Cell>
 </Grid>
@@ -190,25 +190,25 @@ Control spacing between grid items with custom gap values.
 <Grid gap={{ xs: '400', sm: '500', md: '600', lg: '800', xl: '1000' }}>
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 1</Text>
+      <Text as="h2">Card 1</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 2</Text>
+      <Text as="h2">Card 2</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 3</Text>
+      <Text as="h2">Card 3</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
     <Card>
-      <Text>Card 4</Text>
+      <Text as="h2">Card 4</Text>
     </Card>
   </Grid.Cell>
 </Grid>
@@ -240,8 +240,8 @@ Create complex dashboard layouts using grid for precise control.
     <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
       <Card>
         <BlockStack gap="200">
-          <Text variant="bodyMd" tone="subdued">{metric.label}</Text>
-          <Text variant="headingLg">{metric.value}</Text>
+          <Text as="h2" variant="bodyMd" tone="subdued">{metric.label}</Text>
+          <Text as="h2" variant="headingLg">{metric.value}</Text>
           <Badge tone={metric.trend === 'up' ? 'success' : 'critical'}>
             {metric.change}
           </Badge>
@@ -254,7 +254,7 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Sales Overview</Text>
+        <Text as="h2" variant="headingMd">Sales Overview</Text>
         <div style="height: 300px; background: #f6f6f7; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
           <Text tone="subdued">Chart placeholder</Text>
         </div>
@@ -266,19 +266,19 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Recent Activity</Text>
+        <Text as="h2" variant="headingMd">Recent Activity</Text>
         <BlockStack gap="300">
           <div>
-            <Text variant="bodyMd">New order #1234</Text>
-            <Text variant="bodySm" tone="subdued">2 minutes ago</Text>
+            <Text as="h2" variant="bodyMd">New order #1234</Text>
+            <Text as="h2" variant="bodySm" tone="subdued">2 minutes ago</Text>
           </div>
           <div>
-            <Text variant="bodyMd">Customer registered</Text>
-            <Text variant="bodySm" tone="subdued">5 minutes ago</Text>
+            <Text as="h2" variant="bodyMd">Customer registered</Text>
+            <Text as="h2" variant="bodySm" tone="subdued">5 minutes ago</Text>
           </div>
           <div>
-            <Text variant="bodyMd">Product updated</Text>
-            <Text variant="bodySm" tone="subdued">10 minutes ago</Text>
+            <Text as="h2" variant="bodyMd">Product updated</Text>
+            <Text as="h2" variant="bodySm" tone="subdued">10 minutes ago</Text>
           </div>
         </BlockStack>
         <Button>View all activity</Button>
@@ -290,7 +290,7 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Quick Actions</Text>
+        <Text as="h2" variant="headingMd">Quick Actions</Text>
         <Grid gap="200">
           <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
             <Button variant="primary" fullWidth>Add Product</Button>
@@ -307,7 +307,7 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Store Settings</Text>
+        <Text as="h2" variant="headingMd">Store Settings</Text>
         <BlockStack gap="200">
           <Button variant="plain">Payment settings</Button>
           <Button variant="plain">Shipping settings</Button>
@@ -338,8 +338,8 @@ Create complex dashboard layouts using grid for precise control.
     <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
       <Card>
         <BlockStack gap="200">
-          <Text variant="bodyMd" tone="subdued">{metric.label}</Text>
-          <Text variant="headingLg">{metric.value}</Text>
+          <Text as="h2" variant="bodyMd" tone="subdued">{metric.label}</Text>
+          <Text as="h2" variant="headingLg">{metric.value}</Text>
           <Badge tone={metric.trend === 'up' ? 'success' : 'critical'}>
             {metric.change}
           </Badge>
@@ -352,7 +352,7 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Sales Overview</Text>
+        <Text as="h2" variant="headingMd">Sales Overview</Text>
         <div style="height: 300px; background: #f6f6f7; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
           <Text tone="subdued">Chart placeholder</Text>
         </div>
@@ -364,19 +364,19 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Recent Activity</Text>
+        <Text as="h2" variant="headingMd">Recent Activity</Text>
         <BlockStack gap="300">
           <div>
-            <Text variant="bodyMd">New order #1234</Text>
-            <Text variant="bodySm" tone="subdued">2 minutes ago</Text>
+            <Text as="h2" variant="bodyMd">New order #1234</Text>
+            <Text as="h2" variant="bodySm" tone="subdued">2 minutes ago</Text>
           </div>
           <div>
-            <Text variant="bodyMd">Customer registered</Text>
-            <Text variant="bodySm" tone="subdued">5 minutes ago</Text>
+            <Text as="h2" variant="bodyMd">Customer registered</Text>
+            <Text as="h2" variant="bodySm" tone="subdued">5 minutes ago</Text>
           </div>
           <div>
-            <Text variant="bodyMd">Product updated</Text>
-            <Text variant="bodySm" tone="subdued">10 minutes ago</Text>
+            <Text as="h2" variant="bodyMd">Product updated</Text>
+            <Text as="h2" variant="bodySm" tone="subdued">10 minutes ago</Text>
           </div>
         </BlockStack>
         <Button>View all activity</Button>
@@ -388,7 +388,7 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Quick Actions</Text>
+        <Text as="h2" variant="headingMd">Quick Actions</Text>
         <Grid gap="200">
           <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
             <Button variant="primary" fullWidth>Add Product</Button>
@@ -405,7 +405,7 @@ Create complex dashboard layouts using grid for precise control.
   <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
     <Card>
       <BlockStack gap="400">
-        <Text variant="headingMd">Store Settings</Text>
+        <Text as="h2" variant="headingMd">Store Settings</Text>
         <BlockStack gap="200">
           <Button variant="plain">Payment settings</Button>
           <Button variant="plain">Shipping settings</Button>
@@ -443,14 +443,14 @@ Use named grid areas for complex layouts with semantic structure.
 >
   <Grid.Cell area="header">
     <Card>
-      <Text variant="headingLg">Header</Text>
+      <Text as="h2" variant="headingLg">Header</Text>
     </Card>
   </Grid.Cell>
   
   <Grid.Cell area="nav">
     <Card>
       <BlockStack gap="200">
-        <Text variant="headingMd">Navigation</Text>
+        <Text as="h2" variant="headingMd">Navigation</Text>
         <Text>Dashboard</Text>
         <Text>Products</Text>
         <Text>Orders</Text>
@@ -462,7 +462,7 @@ Use named grid areas for complex layouts with semantic structure.
   <Grid.Cell area="main">
     <Card>
       <BlockStack gap="200">
-        <Text variant="headingMd">Main Content</Text>
+        <Text as="h2" variant="headingMd">Main Content</Text>
         <Text>
           This is the primary content area where the main application
           content would be displayed.
