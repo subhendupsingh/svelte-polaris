@@ -19,7 +19,7 @@ pnpm add svelte-polaris
 
 ## Usage
 
-Read [documentation](https://example.com)
+Read [documentation](https://svelte-polaris-docs.storebud.workers.dev/)
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/spsbuilds)
 
