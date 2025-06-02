@@ -44,7 +44,56 @@ export default defineConfig({
         },
         {
             label: 'Components',
-            autogenerate: { directory: 'components' },
+            items: [
+                {
+                    label: "Actions",
+                    autogenerate: { directory: 'components/actions' }
+                },
+                {
+                    label: "Layout and structure",
+                    autogenerate: { directory: 'components/layout-and-structure' }
+                },
+                {
+                    label: "Selection and input",
+                    autogenerate: { directory: 'components/selection-and-input' }
+                },
+                {
+                    label: "Images and icons",
+                    autogenerate: { directory: 'components/images-and-icons' }
+                },
+                {
+                    label: "Feedback indicators",
+                    autogenerate: { directory: 'components/feedback-indicators' }
+                },
+                {
+                    label: "Typography",
+                    autogenerate: { directory: 'components/typography' }
+                },
+                {
+                    label: "Tables",
+                    autogenerate: { directory: 'components/tables' }
+                },
+                {
+                    label: "Lists",
+                    autogenerate: { directory: 'components/lists' }
+                },
+                {
+                    label: "Navigation",
+                    autogenerate: { directory: 'components/navigation' }
+                },
+                {
+                    label: "Overlays",
+                    autogenerate: { directory: 'components/overlays' }
+                },
+                {
+                    label: "Legacy",
+                    autogenerate: { directory: 'components/legacy' }
+                },
+                {
+                    label: "Others",
+                    autogenerate: { directory: 'components/others' }
+                }
+            ]
         },
       ]
      /*  sidebar: [

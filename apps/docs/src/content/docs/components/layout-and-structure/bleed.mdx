@@ -3,6 +3,9 @@ title: Bleed
 description: Use Bleed to allow content to extend beyond the normal container boundaries by applying negative margins.
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import Preview from '@doc-components/preview.svelte';
+
 ```svelte
 import { Bleed } from 'svelte-polaris';
 ```
@@ -15,6 +18,11 @@ The Bleed component applies negative margins to allow content to extend beyond i
 
 Use Bleed to extend content beyond its container with negative margins.
 
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="bleed" />
+</TabItem>
+<TabItem label="Code">
 ```svelte
 <script>
   import { Bleed, Card, Box, Text } from 'svelte-polaris';
@@ -23,8 +31,8 @@ Use Bleed to extend content beyond its container with negative margins.
 <Card>
   <Box padding="400">
     <Text as="p">This content is contained within the card padding.</Text>
-    <Bleed marginInline="400">
-      <Box background="bg-surface-secondary" padding="400">
+    <Bleed marginInline="800">
+      <Box background="bg-fill-info" padding="400">
         <Text as="p">This content bleeds beyond the card padding horizontally.</Text>
       </Box>
     </Bleed>
@@ -32,6 +40,8 @@ Use Bleed to extend content beyond its container with negative margins.
   </Box>
 </Card>
 ```
+</TabItem>
+</Tabs>
 
 ### Horizontal bleed
 
@@ -45,8 +55,8 @@ Apply negative horizontal margins to extend content to the edges.
 <Card>
   <Box padding="400">
     <Text as="h2" variant="headingMd">Product Details</Text>
-    <Bleed marginInline="400">
-      <Box background="bg-surface-secondary" padding="400">
+    <Bleed marginInline="800">
+      <Box background="bg-fill-info" padding="400">
         <Text as="p">Full-width content section</Text>
       </Box>
     </Bleed>
@@ -73,7 +83,7 @@ Apply negative vertical margins to extend content vertically.
   
   <Bleed marginBlock="200">
     <Card>
-      <Box padding="400" background="bg-surface-secondary">
+      <Box padding="400" background="bg-fill-info">
         <Text as="p">This card bleeds vertically, reducing spacing between cards</Text>
       </Box>
     </Card>
@@ -100,72 +110,23 @@ Apply negative margins to specific directions.
   <Box padding="400">
     <Text as="h2" variant="headingMd">Settings</Text>
     
-    <Bleed marginInlineStart="400">
-      <Box background="bg-surface-secondary" padding="400">
+    <Bleed marginInlineStart="800">
+      <Box background="bg-fill-info" padding="400">
         <Text as="p">This content bleeds to the left edge only</Text>
       </Box>
     </Bleed>
     
-    <Bleed marginInlineEnd="400">
-      <Box background="bg-surface-warning" padding="400">
+    <Bleed marginInlineEnd="800">
+      <Box background="bg-fill-warning" padding="400">
         <Text as="p">This content bleeds to the right edge only</Text>
       </Box>
     </Bleed>
     
-    <Bleed marginBlockEnd="400">
-      <Box background="bg-surface-success" padding="400">
+    <Bleed marginBlockEnd="800">
+      <Box background="bg-fill-success" padding="400">
         <Text as="p">This content bleeds to the bottom edge</Text>
       </Box>
     </Bleed>
-  </Box>
-</Card>
-```
-
-### Responsive bleed
-
-Use responsive values to apply different bleed amounts at different screen sizes.
-
-```svelte
-<script>
-  import { Bleed, Card, Box, Text } from 'svelte-polaris';
-</script>
-
-<Card>
-  <Box padding="400">
-    <Text as="h2" variant="headingMd">Responsive Content</Text>
-    <Bleed marginInline={{xs: '200', md: '400', lg: '600'}}>
-      <Box background="bg-surface-secondary" padding="400">
-        <Text as="p">This content has different bleed amounts on different screen sizes</Text>
-      </Box>
-    </Bleed>
-  </Box>
-</Card>
-```
-
-### Full bleed layout
-
-Create a full-width section within a constrained layout.
-
-```svelte
-<script>
-  import { Bleed, Card, Box, Text, Button, BlockStack, InlineStack } from 'svelte-polaris';
-</script>
-
-<Card>
-  <Box padding="400">
-    <BlockStack gap="400">
-      <Text as="h2" variant="headingMd">Product Information</Text>
-      <Text as="p">Standard product details go here with normal padding.</Text>
-      
-      <Bleed marginInline="400" marginBlockEnd="400">
-        <Box background="bg-surface-critical" padding="400">
-          <InlineStack align="space-between" blockAlign="center">
-            <Text as="p" tone="critical">Important: This product is discontinued</Text>
-            <Button variant="primary" tone="critical">Learn more</Button>
-          </InlineStack>
-        </Box>
-      </Bleed>
-    </BlockStack>
   </Box>
 </Card>
 ```

@@ -3,8 +3,11 @@ title: Badge
 description: Badges are used to inform merchants of the status of an object or of an action that's been taken.
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import Preview from '@doc-components/preview.svelte';
+
 ```svelte
-import { Badge, Card, InlineStack, BlockStack, Text } from 'svelte-polaris';
+import { Badge } from 'svelte-polaris';
 ```
 
 Badges are used to inform merchants of the status of an object or of an action that's been taken. They provide quick recognition of important information.
@@ -15,16 +18,28 @@ Badges are used to inform merchants of the status of an object or of an action t
 
 Use to give a non-critical status update on a piece of information or action.
 
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="badge" />
+</TabItem>
+<TabItem label="Code">
 ```svelte
 <Badge>Default</Badge>
 ```
+</TabItem>
+</Tabs>
 
 ### Badge with tone
 
 Use different tones to convey the urgency or importance of the information.
 
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="badge?type=with-tone" />
+</TabItem>
+<TabItem label="Code">
 ```svelte
-<InlineStack gap="4">
+<InlineStack gap="400">
   <Badge>Default</Badge>
   <Badge tone="info">Info</Badge>
   <Badge tone="success">Success</Badge>
@@ -34,110 +49,29 @@ Use different tones to convey the urgency or importance of the information.
   <Badge tone="new">New</Badge>
 </InlineStack>
 ```
+</TabItem>
+</Tabs>
 
 ### Badge with size
 
 Use different sizes to match the context and hierarchy of your interface.
 
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="badge?type=with-size" />
+</TabItem>
+<TabItem label="Code">
 ```svelte
-<InlineStack gap="4" align="center">
+<InlineStack gap="400" align="center">
   <Badge size="small">Small</Badge>
   <Badge>Medium</Badge>
   <Badge size="large">Large</Badge>
 </InlineStack>
 ```
+</TabItem>
+</Tabs>
 
-### Badge with progress
 
-Use to show incomplete or in-progress states.
-
-```svelte
-<InlineStack gap="4">
-  <Badge progress="incomplete">Incomplete</Badge>
-  <Badge progress="partiallyComplete">Partially complete</Badge>
-  <Badge progress="complete">Complete</Badge>
-</InlineStack>
-```
-
-### Status badges for orders
-
-Use badges to show order status information.
-
-```svelte
-<Card>
-  <BlockStack gap="4">
-    <Text variant="headingMd">Order Status Examples</Text>
-    <InlineStack gap="4">
-      <Badge tone="info">Draft</Badge>
-      <Badge tone="attention">Pending</Badge>
-      <Badge tone="warning">Partially fulfilled</Badge>
-      <Badge tone="success">Fulfilled</Badge>
-      <Badge tone="critical">Cancelled</Badge>
-    </InlineStack>
-  </BlockStack>
-</Card>
-```
-
-### Product status badges
-
-Use badges to show product availability and status.
-
-```svelte
-<Card>
-  <BlockStack gap="4">
-    <Text variant="headingMd">Product Status Examples</Text>
-    <InlineStack gap="4">
-      <Badge tone="success">Active</Badge>
-      <Badge>Draft</Badge>
-      <Badge tone="critical">Archived</Badge>
-      <Badge tone="warning">Low stock</Badge>
-      <Badge tone="critical">Out of stock</Badge>
-    </InlineStack>
-  </BlockStack>
-</Card>
-```
-
-### Payment status badges
-
-Use badges to show payment and financial status.
-
-```svelte
-<Card>
-  <BlockStack gap="4">
-    <Text variant="headingMd">Payment Status Examples</Text>
-    <InlineStack gap="4">
-      <Badge tone="success">Paid</Badge>
-      <Badge tone="warning">Partially paid</Badge>
-      <Badge tone="attention">Pending</Badge>
-      <Badge tone="critical">Overdue</Badge>
-      <Badge tone="critical">Refunded</Badge>
-    </InlineStack>
-  </BlockStack>
-</Card>
-```
-
-### Small badges in lists
-
-Use small badges in compact layouts like tables or lists.
-
-```svelte
-<Card>
-  <BlockStack gap="3">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <Text>Order #1001</Text>
-      <Badge size="small" tone="success">Fulfilled</Badge>
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <Text>Order #1002</Text>
-      <Badge size="small" tone="warning">Partially fulfilled</Badge>
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <Text>Order #1003</Text>
-      <Badge size="small" tone="attention">Pending</Badge>
-    </div>
-  </BlockStack>
-</Card>
-```
 
 ## Props
 

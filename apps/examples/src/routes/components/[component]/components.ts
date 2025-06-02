@@ -7,6 +7,11 @@ import AutocompleteWithMultipleSections from "$lib/components/autocomplete/autoc
 import AutocompleteWithLoadingState from "$lib/components/autocomplete/with-loading-state.svelte";
 import AutocompleteWithEmptyState from "$lib/components/autocomplete/with-empty-state.svelte";
 import AutocompleteWithAction from "$lib/components/autocomplete/with-action.svelte";
+import Avatar from "$lib/components/avatar/avatar.svelte";
+import Badge from "$lib/components/badge/badge.svelte";
+import BadgeWithTone from "$lib/components/badge/with-tone.svelte";
+import BadgeWithSize from "$lib/components/badge/with-size.svelte";
+import Bleed from "$lib/components/bleed/bleed.svelte";
 
 export const componentsMap: Record<string, any> = {
     "button": {
@@ -23,5 +28,16 @@ export const componentsMap: Record<string, any> = {
         "with-loading-state": AutocompleteWithLoadingState,
         "with-empty-state": AutocompleteWithEmptyState,
         "with-action": AutocompleteWithAction
+    },
+    "avatar": {
+        "base": Avatar
+    },
+    "badge": {
+        "base": Badge,
+        "with-tone": BadgeWithTone,
+        "with-size": BadgeWithSize
+    },
+    "bleed": {
+        "base": Bleed
     }
 }

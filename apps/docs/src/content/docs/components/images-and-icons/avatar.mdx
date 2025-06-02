@@ -1,0 +1,104 @@
+---
+title: Avatar
+description: Avatars are used to show a thumbnail representation of an individual or business in the interface.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import Preview from '@doc-components/preview.svelte';
+
+```svelte
+import { Avatar } from 'svelte-polaris';
+```
+
+Avatars are used to show a thumbnail representation of an individual or business in the interface. They can display an image, initials, or an icon.
+
+## Examples
+
+### Default avatar
+
+Use when you have a customer's name but no profile picture.
+
+<Tabs>
+<TabItem label="Preview">
+  <Preview src="avatar" />
+</TabItem>
+<TabItem label="Code">
+```svelte
+<Avatar customer name="John Smith" />
+```
+</TabItem>
+</Tabs>
+
+
+### Avatar sizes
+
+Use different sizes based on the context and importance in your interface.
+
+```svelte
+<InlineStack gap="4" align="center">
+  <Avatar customer name="John Smith" size="xs" />
+  <Avatar customer name="John Smith" size="sm" />
+  <Avatar customer name="John Smith" size="md" />
+  <Avatar customer name="John Smith" size="lg" />
+  <Avatar customer name="John Smith" size="xl" />
+</InlineStack>
+```
+
+### Avatar with initials
+
+Avatars automatically generate initials from the name when no image is provided.
+
+```svelte
+<InlineStack gap="4">
+  <Avatar initials="WW" name="Woluwayemisi Weun-Jung" />
+</InlineStack>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Size of the avatar |
+| `name` | `string` | - | Name of the person or business |
+| `initials` | `string` | - | Custom initials to display (overrides name-based initials) |
+| `customer` | `boolean` | `false` | Whether the avatar represents a customer |
+| `source` | `string` | - | URL for the avatar image |
+| `shape` | `'round' \| 'square'` | `'round'` | Shape of the avatar |
+| `accessibilityLabel` | `string` | - | Alternative text for screen readers |
+
+## Accessibility
+
+- Avatars include appropriate alt text for screen readers
+- When using images, ensure they have sufficient contrast
+- The avatar component handles focus states appropriately
+- Use descriptive names that help identify the person or business
+
+## Best practices
+
+### Do
+- Use avatars to help users quickly identify people or businesses
+- Provide meaningful names that generate clear initials
+- Use consistent avatar sizes within the same context
+- Choose appropriate shapes based on your design system
+- Use high-quality, well-cropped images when available
+
+### Don't
+- Don't use avatars for decorative purposes
+- Don't use low-quality or poorly cropped images
+- Don't make avatars too small to be recognizable
+- Don't use avatars for non-person entities (use appropriate icons instead)
+- Don't forget to provide alternative text for accessibility
+
+## Size guidelines
+
+- **xs (24px)**: Use in compact lists or as secondary elements
+- **sm (32px)**: Use in standard lists and tables
+- **md (40px)**: Use as the default size for most interfaces
+- **lg (48px)**: Use for featured content or important sections
+- **xl (56px)**: Use for profile pages or detailed views
+
+## Related components
+
+- [Thumbnail](/getting-started/thumbnail): For product or content images
+- [Icon](/getting-started/icon): For symbolic representations
+- [Image](/getting-started/image): For general image display
