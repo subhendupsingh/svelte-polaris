@@ -1,0 +1,620 @@
+---
+title: Grid
+description: Grid provides a flexible layout system for organizing content in rows and columns with responsive behavior.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Grid provides a flexible layout system for organizing content in rows and columns with responsive behavior. It offers precise control over layout while maintaining consistency across different screen sizes.
+
+## Examples
+
+### Basic grid
+
+Use grid to create simple column layouts with automatic spacing.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Grid, Card, Text } from 'svelte-polaris';
+</script>
+
+<Grid>
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Text>Column 1</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Text>Column 2</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Text>Column 3</Text>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Grid, Card, Text } from 'svelte-polaris';
+</script>
+
+<Grid>
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Text>Column 1</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Text>Column 2</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Text>Column 3</Text>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+</Tabs>
+
+### Responsive grid layout
+
+Create responsive layouts that adapt to different screen sizes.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Grid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Grid>
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Main Content</Text>
+        <Text>
+          This is the main content area that takes up most of the space on larger screens
+          but becomes full width on mobile devices.
+        </Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Sidebar</Text>
+        <Text>
+          This sidebar content stacks below the main content on mobile
+          and appears alongside it on larger screens.
+        </Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Grid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Grid>
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Main Content</Text>
+        <Text>
+          This is the main content area that takes up most of the space on larger screens
+          but becomes full width on mobile devices.
+        </Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Sidebar</Text>
+        <Text>
+          This sidebar content stacks below the main content on mobile
+          and appears alongside it on larger screens.
+        </Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+</Tabs>
+
+### Grid with custom gaps
+
+Control spacing between grid items with custom gap values.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Grid, Card, Text } from 'svelte-polaris';
+</script>
+
+<Grid gap={{ xs: '400', sm: '500', md: '600', lg: '800', xl: '1000' }}>
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 1</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 2</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 3</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 4</Text>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Grid, Card, Text } from 'svelte-polaris';
+</script>
+
+<Grid gap={{ xs: '400', sm: '500', md: '600', lg: '800', xl: '1000' }}>
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 1</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 2</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 3</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+    <Card>
+      <Text>Card 4</Text>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+</Tabs>
+
+### Dashboard layout with grid
+
+Create complex dashboard layouts using grid for precise control.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Grid, Card, Text, BlockStack, Badge, Button } from 'svelte-polaris';
+
+  const metrics = [
+    { label: 'Total Sales', value: '$12,345', change: '+12%', trend: 'up' },
+    { label: 'Orders', value: '1,234', change: '+5%', trend: 'up' },
+    { label: 'Customers', value: '567', change: '-2%', trend: 'down' },
+    { label: 'Conversion', value: '3.2%', change: '+0.5%', trend: 'up' }
+  ];
+</script>
+
+<Grid gap="400">
+  <!-- Metrics Row -->
+  {#each metrics as metric}
+    <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+      <Card>
+        <BlockStack gap="200">
+          <Text variant="bodyMd" tone="subdued">{metric.label}</Text>
+          <Text variant="headingLg">{metric.value}</Text>
+          <Badge tone={metric.trend === 'up' ? 'success' : 'critical'}>
+            {metric.change}
+          </Badge>
+        </BlockStack>
+      </Card>
+    </Grid.Cell>
+  {/each}
+  
+  <!-- Main Chart Area -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Sales Overview</Text>
+        <div style="height: 300px; background: #f6f6f7; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+          <Text tone="subdued">Chart placeholder</Text>
+        </div>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <!-- Recent Activity -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Recent Activity</Text>
+        <BlockStack gap="300">
+          <div>
+            <Text variant="bodyMd">New order #1234</Text>
+            <Text variant="bodySm" tone="subdued">2 minutes ago</Text>
+          </div>
+          <div>
+            <Text variant="bodyMd">Customer registered</Text>
+            <Text variant="bodySm" tone="subdued">5 minutes ago</Text>
+          </div>
+          <div>
+            <Text variant="bodyMd">Product updated</Text>
+            <Text variant="bodySm" tone="subdued">10 minutes ago</Text>
+          </div>
+        </BlockStack>
+        <Button>View all activity</Button>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <!-- Quick Actions -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Quick Actions</Text>
+        <Grid gap="200">
+          <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+            <Button variant="primary" fullWidth>Add Product</Button>
+          </Grid.Cell>
+          <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+            <Button fullWidth>Create Order</Button>
+          </Grid.Cell>
+        </Grid>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <!-- Settings -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Store Settings</Text>
+        <BlockStack gap="200">
+          <Button variant="plain">Payment settings</Button>
+          <Button variant="plain">Shipping settings</Button>
+          <Button variant="plain">Tax settings</Button>
+        </BlockStack>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Grid, Card, Text, BlockStack, Badge, Button } from 'svelte-polaris';
+
+  const metrics = [
+    { label: 'Total Sales', value: '$12,345', change: '+12%', trend: 'up' },
+    { label: 'Orders', value: '1,234', change: '+5%', trend: 'up' },
+    { label: 'Customers', value: '567', change: '-2%', trend: 'down' },
+    { label: 'Conversion', value: '3.2%', change: '+0.5%', trend: 'up' }
+  ];
+</script>
+
+<Grid gap="400">
+  <!-- Metrics Row -->
+  {#each metrics as metric}
+    <Grid.Cell columnSpan={{ xs: 6, sm: 3, md: 3, lg: 3, xl: 3 }}>
+      <Card>
+        <BlockStack gap="200">
+          <Text variant="bodyMd" tone="subdued">{metric.label}</Text>
+          <Text variant="headingLg">{metric.value}</Text>
+          <Badge tone={metric.trend === 'up' ? 'success' : 'critical'}>
+            {metric.change}
+          </Badge>
+        </BlockStack>
+      </Card>
+    </Grid.Cell>
+  {/each}
+  
+  <!-- Main Chart Area -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 8, lg: 8, xl: 8 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Sales Overview</Text>
+        <div style="height: 300px; background: #f6f6f7; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+          <Text tone="subdued">Chart placeholder</Text>
+        </div>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <!-- Recent Activity -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Recent Activity</Text>
+        <BlockStack gap="300">
+          <div>
+            <Text variant="bodyMd">New order #1234</Text>
+            <Text variant="bodySm" tone="subdued">2 minutes ago</Text>
+          </div>
+          <div>
+            <Text variant="bodyMd">Customer registered</Text>
+            <Text variant="bodySm" tone="subdued">5 minutes ago</Text>
+          </div>
+          <div>
+            <Text variant="bodyMd">Product updated</Text>
+            <Text variant="bodySm" tone="subdued">10 minutes ago</Text>
+          </div>
+        </BlockStack>
+        <Button>View all activity</Button>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <!-- Quick Actions -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Quick Actions</Text>
+        <Grid gap="200">
+          <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+            <Button variant="primary" fullWidth>Add Product</Button>
+          </Grid.Cell>
+          <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+            <Button fullWidth>Create Order</Button>
+          </Grid.Cell>
+        </Grid>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <!-- Settings -->
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}>
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd">Store Settings</Text>
+        <BlockStack gap="200">
+          <Button variant="plain">Payment settings</Button>
+          <Button variant="plain">Shipping settings</Button>
+          <Button variant="plain">Tax settings</Button>
+        </BlockStack>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+</Tabs>
+
+### Grid with areas
+
+Use named grid areas for complex layouts with semantic structure.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Grid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Grid
+  areas={{
+    xs: ['header', 'nav', 'main', 'sidebar', 'footer'],
+    sm: ['header header', 'nav main', 'nav sidebar', 'footer footer'],
+    md: ['header header header', 'nav main sidebar', 'footer footer footer'],
+    lg: ['header header header', 'nav main sidebar', 'footer footer footer'],
+    xl: ['header header header', 'nav main sidebar', 'footer footer footer']
+  }}
+  columns={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }}
+  gap="400"
+>
+  <Grid.Cell area="header">
+    <Card>
+      <Text variant="headingLg">Header</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="nav">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Navigation</Text>
+        <Text>Dashboard</Text>
+        <Text>Products</Text>
+        <Text>Orders</Text>
+        <Text>Customers</Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="main">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Main Content</Text>
+        <Text>
+          This is the primary content area where the main application
+          content would be displayed.
+        </Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="sidebar">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Sidebar</Text>
+        <Text>Additional tools and information.</Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="footer">
+    <Card>
+      <Text>Footer content</Text>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Grid, Card, Text, BlockStack } from 'svelte-polaris';
+</script>
+
+<Grid
+  areas={{
+    xs: ['header', 'nav', 'main', 'sidebar', 'footer'],
+    sm: ['header header', 'nav main', 'nav sidebar', 'footer footer'],
+    md: ['header header header', 'nav main sidebar', 'footer footer footer'],
+    lg: ['header header header', 'nav main sidebar', 'footer footer footer'],
+    xl: ['header header header', 'nav main sidebar', 'footer footer footer']
+  }}
+  columns={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }}
+  gap="400"
+>
+  <Grid.Cell area="header">
+    <Card>
+      <Text variant="headingLg">Header</Text>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="nav">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Navigation</Text>
+        <Text>Dashboard</Text>
+        <Text>Products</Text>
+        <Text>Orders</Text>
+        <Text>Customers</Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="main">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Main Content</Text>
+        <Text>
+          This is the primary content area where the main application
+          content would be displayed.
+        </Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="sidebar">
+    <Card>
+      <BlockStack gap="200">
+        <Text variant="headingMd">Sidebar</Text>
+        <Text>Additional tools and information.</Text>
+      </BlockStack>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell area="footer">
+    <Card>
+      <Text>Footer content</Text>
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Grid props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `gap` | `ResponsiveValue<Space>` | `'400'` | Gap between grid items |
+| `columns` | `ResponsiveValue<Columns>` | `{ xs: 6, sm: 6, md: 12, lg: 12, xl: 12 }` | Number of columns in grid |
+| `areas` | `ResponsiveValue<GridAreas>` | | Named grid areas for layout |
+
+### Grid.Cell props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `columnSpan` | `ResponsiveValue<number>` | | Number of columns to span |
+| `area` | `string` | | Named grid area to occupy |
+
+### ResponsiveValue type
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `xs` | `T` | Value for extra small screens |
+| `sm` | `T` | Value for small screens |
+| `md` | `T` | Value for medium screens |
+| `lg` | `T` | Value for large screens |
+| `xl` | `T` | Value for extra large screens |
+
+### Space values
+
+Valid space values: `'025'`, `'050'`, `'100'`, `'150'`, `'200'`, `'300'`, `'400'`, `'500'`, `'600'`, `'800'`, `'1000'`, `'1200'`, `'1600'`, `'2000'`, `'2400'`, `'2800'`, `'3200'`
+
+### Columns type
+
+Number from 1 to 12 representing grid columns.
+
+## Best practices
+
+- Use responsive column spans to create layouts that work on all screen sizes
+- Start with mobile-first design and progressively enhance for larger screens
+- Use consistent gap values throughout your application
+- Consider using named grid areas for complex layouts
+- Keep grid structures simple and predictable
+- Test layouts on various screen sizes
+- Use semantic column spans (e.g., 6 for half-width, 4 for third-width)
+- Combine Grid with other layout components like BlockStack and InlineStack
+- Consider performance when creating deeply nested grids
+- Use Grid for precise layout control, Layout for page structure
+
+## Accessibility
+
+- Grid maintains proper document flow and reading order
+- Content remains accessible when grid layout changes responsively
+- Keyboard navigation works correctly across grid items
+- Screen readers can navigate grid content logically
+- Grid areas provide semantic structure when used appropriately
+- Focus management is preserved during responsive changes
+
+## Related components
+
+- Use [Layout](/getting-started/layout) for page-level structure
+- Use [BlockStack](/getting-started/block-stack) for vertical spacing within grid cells
+- Use [InlineStack](/getting-started/inline-stack) for horizontal spacing within grid cells
+- Use [Card](/getting-started/card) to contain grid cell content
+- Use [Box](/getting-started/box) for additional spacing and styling control

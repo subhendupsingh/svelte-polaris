@@ -1,0 +1,449 @@
+---
+title: IndexTable
+description: IndexTable displays structured data in rows and columns with selection, sorting, and bulk actions.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+IndexTable displays structured data in rows and columns with selection, sorting, and bulk actions. It's ideal for managing lists of items like products, orders, or customers.
+
+## Examples
+
+### Basic table
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { IndexTable, Card, Text, Badge } from 'svelte-polaris';
+
+  const orders = [
+    { id: '1001', customer: 'John Doe', total: '$24.90', status: 'paid' },
+    { id: '1002', customer: 'Jane Smith', total: '$18.50', status: 'pending' },
+    { id: '1003', customer: 'Bob Johnson', total: '$31.20', status: 'paid' }
+  ];
+
+  const headings = [
+    { title: 'Order' },
+    { title: 'Customer' },
+    { title: 'Total' },
+    { title: 'Status' }
+  ];
+</script>
+
+<Card>
+  <IndexTable
+    itemCount={orders.length}
+    headings={headings}
+    selectable={false}
+  >
+    {#each orders as order}
+      <IndexTable.Row id={order.id} position={orders.indexOf(order)}>
+        <IndexTable.Cell>
+          <Text fontWeight="semibold">#{order.id}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{order.customer}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{order.total}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Badge tone={order.status === 'paid' ? 'success' : 'warning'}>
+            {order.status}
+          </Badge>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    {/each}
+  </IndexTable>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { IndexTable, Card, Text, Badge } from 'svelte-polaris';
+
+  const orders = [
+    { id: '1001', customer: 'John Doe', total: '$24.90', status: 'paid' },
+    { id: '1002', customer: 'Jane Smith', total: '$18.50', status: 'pending' },
+    { id: '1003', customer: 'Bob Johnson', total: '$31.20', status: 'paid' }
+  ];
+
+  const headings = [
+    { title: 'Order' },
+    { title: 'Customer' },
+    { title: 'Total' },
+    { title: 'Status' }
+  ];
+</script>
+
+<Card>
+  <IndexTable
+    itemCount={orders.length}
+    headings={headings}
+    selectable={false}
+  >
+    {#each orders as order}
+      <IndexTable.Row id={order.id} position={orders.indexOf(order)}>
+        <IndexTable.Cell>
+          <Text fontWeight="semibold">#{order.id}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{order.customer}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{order.total}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Badge tone={order.status === 'paid' ? 'success' : 'warning'}>
+            {order.status}
+          </Badge>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    {/each}
+  </IndexTable>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Table with selection and bulk actions
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { IndexTable, Card, Text, Button, ButtonGroup } from 'svelte-polaris';
+
+  const products = [
+    { id: 'p1', name: 'T-Shirt', price: '$19.99', inventory: 45 },
+    { id: 'p2', name: 'Jeans', price: '$49.99', inventory: 23 },
+    { id: 'p3', name: 'Sneakers', price: '$79.99', inventory: 12 }
+  ];
+
+  let selectedItems = [];
+
+  const headings = [
+    { title: 'Product' },
+    { title: 'Price' },
+    { title: 'Inventory' }
+  ];
+
+  function handleSelectionChange(selection) {
+    selectedItems = selection;
+  }
+
+  function handleBulkEdit() {
+    console.log('Bulk edit:', selectedItems);
+  }
+
+  function handleBulkDelete() {
+    console.log('Bulk delete:', selectedItems);
+  }
+</script>
+
+<Card>
+  <IndexTable
+    itemCount={products.length}
+    headings={headings}
+    selectedItemsCount={selectedItems.length}
+    onSelectionChange={handleSelectionChange}
+    promotedBulkActions={[
+      {
+        content: 'Edit products',
+        onAction: handleBulkEdit
+      }
+    ]}
+    bulkActions={[
+      {
+        content: 'Delete products',
+        onAction: handleBulkDelete
+      }
+    ]}
+  >
+    {#each products as product}
+      <IndexTable.Row 
+        id={product.id} 
+        position={products.indexOf(product)}
+        selected={selectedItems.includes(product.id)}
+      >
+        <IndexTable.Cell>
+          <Text fontWeight="semibold">{product.name}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{product.price}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{product.inventory} in stock</Text>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    {/each}
+  </IndexTable>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { IndexTable, Card, Text, Button, ButtonGroup } from 'svelte-polaris';
+
+  const products = [
+    { id: 'p1', name: 'T-Shirt', price: '$19.99', inventory: 45 },
+    { id: 'p2', name: 'Jeans', price: '$49.99', inventory: 23 },
+    { id: 'p3', name: 'Sneakers', price: '$79.99', inventory: 12 }
+  ];
+
+  let selectedItems = [];
+
+  const headings = [
+    { title: 'Product' },
+    { title: 'Price' },
+    { title: 'Inventory' }
+  ];
+
+  function handleSelectionChange(selection) {
+    selectedItems = selection;
+  }
+
+  function handleBulkEdit() {
+    console.log('Bulk edit:', selectedItems);
+  }
+
+  function handleBulkDelete() {
+    console.log('Bulk delete:', selectedItems);
+  }
+</script>
+
+<Card>
+  <IndexTable
+    itemCount={products.length}
+    headings={headings}
+    selectedItemsCount={selectedItems.length}
+    onSelectionChange={handleSelectionChange}
+    promotedBulkActions={[
+      {
+        content: 'Edit products',
+        onAction: handleBulkEdit
+      }
+    ]}
+    bulkActions={[
+      {
+        content: 'Delete products',
+        onAction: handleBulkDelete
+      }
+    ]}
+  >
+    {#each products as product}
+      <IndexTable.Row 
+        id={product.id} 
+        position={products.indexOf(product)}
+        selected={selectedItems.includes(product.id)}
+      >
+        <IndexTable.Cell>
+          <Text fontWeight="semibold">{product.name}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{product.price}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{product.inventory} in stock</Text>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    {/each}
+  </IndexTable>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Sortable table
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { IndexTable, Card, Text } from 'svelte-polaris';
+
+  let customers = [
+    { id: 'c1', name: 'Alice Brown', email: 'alice@example.com', orders: 12 },
+    { id: 'c2', name: 'Bob Wilson', email: 'bob@example.com', orders: 8 },
+    { id: 'c3', name: 'Carol Davis', email: 'carol@example.com', orders: 15 }
+  ];
+
+  let sortedBy = null;
+  let sortDirection = 'ascending';
+
+  const headings = [
+    { title: 'Name' },
+    { title: 'Email' },
+    { title: 'Orders', sortable: true }
+  ];
+
+  function handleSort(index, direction) {
+    sortedBy = index;
+    sortDirection = direction;
+    
+    if (index === 2) { // Orders column
+      customers = [...customers].sort((a, b) => {
+        const multiplier = direction === 'ascending' ? 1 : -1;
+        return (a.orders - b.orders) * multiplier;
+      });
+    }
+  }
+</script>
+
+<Card>
+  <IndexTable
+    itemCount={customers.length}
+    headings={headings}
+    selectable={false}
+    sortable={[false, false, true]}
+    sortedColumnIndex={sortedBy}
+    sortDirection={sortDirection}
+    onSort={handleSort}
+  >
+    {#each customers as customer}
+      <IndexTable.Row id={customer.id} position={customers.indexOf(customer)}>
+        <IndexTable.Cell>
+          <Text fontWeight="semibold">{customer.name}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{customer.email}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{customer.orders}</Text>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    {/each}
+  </IndexTable>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { IndexTable, Card, Text } from 'svelte-polaris';
+
+  let customers = [
+    { id: 'c1', name: 'Alice Brown', email: 'alice@example.com', orders: 12 },
+    { id: 'c2', name: 'Bob Wilson', email: 'bob@example.com', orders: 8 },
+    { id: 'c3', name: 'Carol Davis', email: 'carol@example.com', orders: 15 }
+  ];
+
+  let sortedBy = null;
+  let sortDirection = 'ascending';
+
+  const headings = [
+    { title: 'Name' },
+    { title: 'Email' },
+    { title: 'Orders', sortable: true }
+  ];
+
+  function handleSort(index, direction) {
+    sortedBy = index;
+    sortDirection = direction;
+    
+    if (index === 2) { // Orders column
+      customers = [...customers].sort((a, b) => {
+        const multiplier = direction === 'ascending' ? 1 : -1;
+        return (a.orders - b.orders) * multiplier;
+      });
+    }
+  }
+</script>
+
+<Card>
+  <IndexTable
+    itemCount={customers.length}
+    headings={headings}
+    selectable={false}
+    sortable={[false, false, true]}
+    sortedColumnIndex={sortedBy}
+    sortDirection={sortDirection}
+    onSort={handleSort}
+  >
+    {#each customers as customer}
+      <IndexTable.Row id={customer.id} position={customers.indexOf(customer)}>
+        <IndexTable.Cell>
+          <Text fontWeight="semibold">{customer.name}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{customer.email}</Text>
+        </IndexTable.Cell>
+        <IndexTable.Cell>
+          <Text>{customer.orders}</Text>
+        </IndexTable.Cell>
+      </IndexTable.Row>
+    {/each}
+  </IndexTable>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### IndexTable props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `headings` | `IndexTableHeading[]` | | Column headings |
+| `itemCount` | `number` | | Total number of items |
+| `selectedItemsCount` | `number` | `0` | Number of selected items |
+| `selectable` | `boolean` | `true` | Enable row selection |
+| `sortable` | `boolean[]` | | Which columns are sortable |
+| `sortedColumnIndex` | `number` | | Currently sorted column |
+| `sortDirection` | `'ascending' \| 'descending'` | | Sort direction |
+| `onSelectionChange` | `(selection: string[]) => void` | | Selection change handler |
+| `onSort` | `(index: number, direction: string) => void` | | Sort handler |
+| `promotedBulkActions` | `BulkAction[]` | | Primary bulk actions |
+| `bulkActions` | `BulkAction[]` | | Secondary bulk actions |
+
+### IndexTable.Row props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | | Unique row identifier |
+| `position` | `number` | | Row position |
+| `selected` | `boolean` | `false` | Row selection state |
+| `disabled` | `boolean` | `false` | Disable row selection |
+
+### IndexTable.Cell props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `flush` | `boolean` | `false` | Remove cell padding |
+
+## Best practices
+
+- Use clear, descriptive column headings
+- Implement sorting for numerical and date columns
+- Provide bulk actions for common operations
+- Use consistent data formatting across columns
+- Show loading states during data fetching
+- Handle empty states gracefully
+- Use appropriate column widths for content
+- Implement pagination for large datasets
+- Provide clear selection feedback
+- Use semantic row identifiers
+
+## Accessibility
+
+- Table uses proper semantic HTML structure
+- Column headers are properly associated with data
+- Keyboard navigation works correctly
+- Screen readers can navigate table structure
+- Sort controls are accessible
+- Selection state is announced
+- Bulk actions are keyboard accessible
+- Focus management works during interactions
+
+## Related components
+
+- Use [Card](/getting-started/card) to contain tables
+- Use [Pagination](/getting-started/pagination) for large datasets
+- Use [Filters](/getting-started/filters) for data filtering
+- Use [EmptySearchResult](/getting-started/empty-search-result) for empty states
+- Use [Badge](/getting-started/badge) for status indicators
+- Use [Button](/getting-started/button) for actions

@@ -98,12 +98,32 @@ export default defineConfig({
                         slug: 'getting-started/filters',
                     },
                     {
+                        label: 'Form',
+                        slug: 'getting-started/form',
+                    },
+                    {
                         label: 'FormLayout',
                         slug: 'getting-started/form-layout',
                     },
                     {
+                        label: 'Grid',
+                        slug: 'getting-started/grid',
+                    },
+                    {
                         label: 'Icon',
                         slug: 'getting-started/icon',
+                    },
+                    {
+                        label: 'Image',
+                        slug: 'getting-started/image',
+                    },
+                    {
+                        label: 'IndexTable',
+                        slug: 'getting-started/index-table',
+                    },
+                    {
+                        label: 'Indicator',
+                        slug: 'getting-started/indicator',
                     },
                     {
                         label: 'InlineStack',

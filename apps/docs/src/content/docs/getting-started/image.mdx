@@ -1,0 +1,640 @@
+---
+title: Image
+description: Image displays images with built-in loading states, error handling, and accessibility features.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Image displays images with built-in loading states, error handling, and accessibility features. It provides consistent image rendering across your application with proper fallbacks.
+
+## Examples
+
+### Basic image
+
+Use image to display pictures with proper alt text for accessibility.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Image, Card } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Image
+    source="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+    alt="Empty state illustration"
+    width={200}
+    height={200}
+  />
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Image, Card } from 'svelte-polaris';
+</script>
+
+<Card>
+  <Image
+    source="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+    alt="Empty state illustration"
+    width={200}
+    height={200}
+  />
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Image with loading state
+
+Show loading indicators while images are being fetched.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Image, Card, BlockStack, Text } from 'svelte-polaris';
+  
+  let imageLoaded = false;
+  
+  function handleLoad() {
+    imageLoaded = true;
+  }
+  
+  function handleError() {
+    console.log('Image failed to load');
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Product Image</Text>
+    
+    <Image
+      source="https://cdn.shopify.com/s/files/1/0757/9955/files/product-image.jpg"
+      alt="Product showcase"
+      width={300}
+      height={300}
+      onLoad={handleLoad}
+      onError={handleError}
+    />
+    
+    {#if imageLoaded}
+      <Text tone="success">Image loaded successfully</Text>
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Image, Card, BlockStack, Text } from 'svelte-polaris';
+  
+  let imageLoaded = false;
+  
+  function handleLoad() {
+    imageLoaded = true;
+  }
+  
+  function handleError() {
+    console.log('Image failed to load');
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Product Image</Text>
+    
+    <Image
+      source="https://cdn.shopify.com/s/files/1/0757/9955/files/product-image.jpg"
+      alt="Product showcase"
+      width={300}
+      height={300}
+      onLoad={handleLoad}
+      onError={handleError}
+    />
+    
+    {#if imageLoaded}
+      <Text tone="success">Image loaded successfully</Text>
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Responsive image
+
+Create images that adapt to different screen sizes and containers.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Image, Card, Grid } from 'svelte-polaris';
+</script>
+
+<Grid gap="400">
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Image
+        source="https://cdn.shopify.com/s/files/1/0757/9955/files/banner-1.jpg"
+        alt="Banner image 1"
+        width="100%"
+        height={200}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Image
+        source="https://cdn.shopify.com/s/files/1/0757/9955/files/banner-2.jpg"
+        alt="Banner image 2"
+        width="100%"
+        height={200}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Image
+        source="https://cdn.shopify.com/s/files/1/0757/9955/files/banner-3.jpg"
+        alt="Banner image 3"
+        width="100%"
+        height={200}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Image, Card, Grid } from 'svelte-polaris';
+</script>
+
+<Grid gap="400">
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Image
+        source="https://cdn.shopify.com/s/files/1/0757/9955/files/banner-1.jpg"
+        alt="Banner image 1"
+        width="100%"
+        height={200}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Image
+        source="https://cdn.shopify.com/s/files/1/0757/9955/files/banner-2.jpg"
+        alt="Banner image 2"
+        width="100%"
+        height={200}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+    <Card>
+      <Image
+        source="https://cdn.shopify.com/s/files/1/0757/9955/files/banner-3.jpg"
+        alt="Banner image 3"
+        width="100%"
+        height={200}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </Card>
+  </Grid.Cell>
+</Grid>
+```
+</TabItem>
+</Tabs>
+
+### Product gallery
+
+Create image galleries with thumbnails and main display.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Image, Card, BlockStack, InlineStack, Button } from 'svelte-polaris';
+  
+  let selectedImage = 0;
+  
+  const productImages = [
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-1.jpg",
+      alt: "Product front view"
+    },
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-2.jpg", 
+      alt: "Product side view"
+    },
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-3.jpg",
+      alt: "Product back view"
+    },
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-4.jpg",
+      alt: "Product detail view"
+    }
+  ];
+  
+  function selectImage(index) {
+    selectedImage = index;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <!-- Main Image -->
+    <div style="text-align: center;">
+      <Image
+        source={productImages[selectedImage].source}
+        alt={productImages[selectedImage].alt}
+        width={400}
+        height={400}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </div>
+    
+    <!-- Thumbnail Gallery -->
+    <InlineStack gap="200" align="center">
+      {#each productImages as image, index}
+        <Button
+          variant={selectedImage === index ? 'primary' : 'secondary'}
+          onClick={() => selectImage(index)}
+          size="slim"
+        >
+          <div style="width: 60px; height: 60px; overflow: hidden; border-radius: 4px;">
+            <Image
+              source={image.source}
+              alt={image.alt}
+              width={60}
+              height={60}
+              style="object-fit: cover;"
+            />
+          </div>
+        </Button>
+      {/each}
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Image, Card, BlockStack, InlineStack, Button } from 'svelte-polaris';
+  
+  let selectedImage = 0;
+  
+  const productImages = [
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-1.jpg",
+      alt: "Product front view"
+    },
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-2.jpg", 
+      alt: "Product side view"
+    },
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-3.jpg",
+      alt: "Product back view"
+    },
+    {
+      source: "https://cdn.shopify.com/s/files/1/0757/9955/files/product-4.jpg",
+      alt: "Product detail view"
+    }
+  ];
+  
+  function selectImage(index) {
+    selectedImage = index;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <!-- Main Image -->
+    <div style="text-align: center;">
+      <Image
+        source={productImages[selectedImage].source}
+        alt={productImages[selectedImage].alt}
+        width={400}
+        height={400}
+        style="object-fit: cover; border-radius: 8px;"
+      />
+    </div>
+    
+    <!-- Thumbnail Gallery -->
+    <InlineStack gap="200" align="center">
+      {#each productImages as image, index}
+        <Button
+          variant={selectedImage === index ? 'primary' : 'secondary'}
+          onClick={() => selectImage(index)}
+          size="slim"
+        >
+          <div style="width: 60px; height: 60px; overflow: hidden; border-radius: 4px;">
+            <Image
+              source={image.source}
+              alt={image.alt}
+              width={60}
+              height={60}
+              style="object-fit: cover;"
+            />
+          </div>
+        </Button>
+      {/each}
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Image with error handling
+
+Handle image loading errors gracefully with fallback content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Image, Card, BlockStack, Text, Icon } from 'svelte-polaris';
+  import { ImageIcon } from '@shopify/polaris-icons';
+  
+  let hasError = false;
+  
+  function handleError() {
+    hasError = true;
+  }
+  
+  function handleLoad() {
+    hasError = false;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Image with Error Handling</Text>
+    
+    {#if hasError}
+      <div style="
+        width: 300px; 
+        height: 200px; 
+        background: #f6f6f7; 
+        border: 2px dashed #c9cccf; 
+        border-radius: 8px; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 8px;
+      ">
+        <Icon source={ImageIcon} tone="subdued" />
+        <Text tone="subdued">Image failed to load</Text>
+      </div>
+    {:else}
+      <Image
+        source="https://invalid-url-that-will-fail.jpg"
+        alt="This image will fail to load"
+        width={300}
+        height={200}
+        onError={handleError}
+        onLoad={handleLoad}
+      />
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Image, Card, BlockStack, Text, Icon } from 'svelte-polaris';
+  import { ImageIcon } from '@shopify/polaris-icons';
+  
+  let hasError = false;
+  
+  function handleError() {
+    hasError = true;
+  }
+  
+  function handleLoad() {
+    hasError = false;
+  }
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Image with Error Handling</Text>
+    
+    {#if hasError}
+      <div style="
+        width: 300px; 
+        height: 200px; 
+        background: #f6f6f7; 
+        border: 2px dashed #c9cccf; 
+        border-radius: 8px; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 8px;
+      ">
+        <Icon source={ImageIcon} tone="subdued" />
+        <Text tone="subdued">Image failed to load</Text>
+      </div>
+    {:else}
+      <Image
+        source="https://invalid-url-that-will-fail.jpg"
+        alt="This image will fail to load"
+        width={300}
+        height={200}
+        onError={handleError}
+        onLoad={handleLoad}
+      />
+    {/if}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Avatar and profile images
+
+Use images for user avatars and profile pictures with proper sizing.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Image, Card, BlockStack, InlineStack, Text } from 'svelte-polaris';
+  
+  const teamMembers = [
+    {
+      name: "Alex Johnson",
+      role: "Product Manager",
+      avatar: "https://cdn.shopify.com/s/files/1/0757/9955/files/avatar-1.jpg"
+    },
+    {
+      name: "Sarah Chen", 
+      role: "Designer",
+      avatar: "https://cdn.shopify.com/s/files/1/0757/9955/files/avatar-2.jpg"
+    },
+    {
+      name: "Mike Rodriguez",
+      role: "Developer", 
+      avatar: "https://cdn.shopify.com/s/files/1/0757/9955/files/avatar-3.jpg"
+    }
+  ];
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Team Members</Text>
+    
+    <BlockStack gap="300">
+      {#each teamMembers as member}
+        <InlineStack gap="300" align="center">
+          <Image
+            source={member.avatar}
+            alt={`${member.name} avatar`}
+            width={48}
+            height={48}
+            style="border-radius: 50%; object-fit: cover;"
+          />
+          <BlockStack gap="050">
+            <Text variant="bodyMd" fontWeight="semibold">{member.name}</Text>
+            <Text variant="bodySm" tone="subdued">{member.role}</Text>
+          </BlockStack>
+        </InlineStack>
+      {/each}
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Image, Card, BlockStack, InlineStack, Text } from 'svelte-polaris';
+  
+  const teamMembers = [
+    {
+      name: "Alex Johnson",
+      role: "Product Manager",
+      avatar: "https://cdn.shopify.com/s/files/1/0757/9955/files/avatar-1.jpg"
+    },
+    {
+      name: "Sarah Chen", 
+      role: "Designer",
+      avatar: "https://cdn.shopify.com/s/files/1/0757/9955/files/avatar-2.jpg"
+    },
+    {
+      name: "Mike Rodriguez",
+      role: "Developer", 
+      avatar: "https://cdn.shopify.com/s/files/1/0757/9955/files/avatar-3.jpg"
+    }
+  ];
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">Team Members</Text>
+    
+    <BlockStack gap="300">
+      {#each teamMembers as member}
+        <InlineStack gap="300" align="center">
+          <Image
+            source={member.avatar}
+            alt={`${member.name} avatar`}
+            width={48}
+            height={48}
+            style="border-radius: 50%; object-fit: cover;"
+          />
+          <BlockStack gap="050">
+            <Text variant="bodyMd" fontWeight="semibold">{member.name}</Text>
+            <Text variant="bodySm" tone="subdued">{member.role}</Text>
+          </BlockStack>
+        </InlineStack>
+      {/each}
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Image props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `source` | `string` | | Image source URL |
+| `alt` | `string` | | Alternative text for accessibility |
+| `width` | `number \| string` | | Image width |
+| `height` | `number \| string` | | Image height |
+| `style` | `string` | | Custom CSS styles |
+| `crossOrigin` | `'anonymous' \| 'use-credentials'` | | Cross-origin resource sharing |
+| `loading` | `'eager' \| 'lazy'` | `'lazy'` | Loading behavior |
+| `onLoad` | `() => void` | | Callback when image loads |
+| `onError` | `() => void` | | Callback when image fails to load |
+
+### Image slots
+
+| Slot | Description |
+|------|-------------|
+| `default` | Fallback content when image fails to load |
+
+## Best practices
+
+- Always provide meaningful alt text for accessibility
+- Use appropriate image dimensions to avoid layout shifts
+- Implement error handling for failed image loads
+- Use lazy loading for images below the fold
+- Optimize image sizes for different screen densities
+- Consider using responsive images for different viewports
+- Use object-fit CSS property for consistent aspect ratios
+- Provide fallback content for broken images
+- Use proper image formats (WebP, AVIF) when supported
+- Implement loading states for better user experience
+- Use CDN URLs for better performance
+- Consider accessibility when using decorative images
+
+## Accessibility
+
+- Image requires alt text for screen readers
+- Decorative images should have empty alt attributes
+- Loading states are announced to assistive technology
+- Error states provide meaningful feedback
+- Images maintain proper focus order in the document
+- High contrast mode is supported
+- Images work with screen magnification tools
+- Keyboard navigation is not affected by image loading
+
+## Related components
+
+- Use [Avatar](/getting-started/avatar) for user profile pictures
+- Use [Thumbnail](/getting-started/thumbnail) for small preview images
+- Use [Card](/getting-started/card) to contain images
+- Use [BlockStack](/getting-started/block-stack) for vertical image layouts
+- Use [InlineStack](/getting-started/inline-stack) for horizontal image layouts
+- Use [Grid](/getting-started/grid) for image galleries
+- Use [Spinner](/getting-started/spinner) for loading states

@@ -1,0 +1,395 @@
+---
+title: Indicator
+description: Indicator displays a small visual cue to draw attention to specific content or show status.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Indicator displays a small visual cue to draw attention to specific content or show status. It's commonly used for notifications, badges, and status indicators.
+
+## Examples
+
+### Basic indicator
+
+Use indicator to show simple status or notification badges.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Indicator, Card, Text, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <InlineStack gap="400" align="center">
+    <div style="position: relative; display: inline-block;">
+      <Text>Messages</Text>
+      <Indicator />
+    </div>
+    
+    <div style="position: relative; display: inline-block;">
+      <Text>Notifications</Text>
+      <Indicator pulse />
+    </div>
+    
+    <div style="position: relative; display: inline-block;">
+      <Text>Orders</Text>
+      <Indicator tone="critical" />
+    </div>
+  </InlineStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Indicator, Card, Text, InlineStack } from 'svelte-polaris';
+</script>
+
+<Card>
+  <InlineStack gap="400" align="center">
+    <div style="position: relative; display: inline-block;">
+      <Text>Messages</Text>
+      <Indicator />
+    </div>
+    
+    <div style="position: relative; display: inline-block;">
+      <Text>Notifications</Text>
+      <Indicator pulse />
+    </div>
+    
+    <div style="position: relative; display: inline-block;">
+      <Text>Orders</Text>
+      <Indicator tone="critical" />
+    </div>
+  </InlineStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Navigation with indicators
+
+Show indicators on navigation items to highlight new content.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Indicator, Card, BlockStack, InlineStack, Text, Button } from 'svelte-polaris';
+  
+  const navItems = [
+    { label: 'Dashboard', hasIndicator: false },
+    { label: 'Orders', hasIndicator: true, tone: 'success' },
+    { label: 'Products', hasIndicator: false },
+    { label: 'Customers', hasIndicator: true, tone: 'warning' },
+    { label: 'Analytics', hasIndicator: true, tone: 'critical', pulse: true }
+  ];
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Navigation</Text>
+    
+    {#each navItems as item}
+      <div style="position: relative; display: inline-block;">
+        <Button variant="plain" textAlign="left" fullWidth>
+          <InlineStack gap="200" align="space-between">
+            <Text>{item.label}</Text>
+            {#if item.hasIndicator}
+              <Indicator tone={item.tone} pulse={item.pulse} />
+            {/if}
+          </InlineStack>
+        </Button>
+      </div>
+    {/each}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Indicator, Card, BlockStack, InlineStack, Text, Button } from 'svelte-polaris';
+  
+  const navItems = [
+    { label: 'Dashboard', hasIndicator: false },
+    { label: 'Orders', hasIndicator: true, tone: 'success' },
+    { label: 'Products', hasIndicator: false },
+    { label: 'Customers', hasIndicator: true, tone: 'warning' },
+    { label: 'Analytics', hasIndicator: true, tone: 'critical', pulse: true }
+  ];
+</script>
+
+<Card>
+  <BlockStack gap="300">
+    <Text variant="headingMd">Navigation</Text>
+    
+    {#each navItems as item}
+      <div style="position: relative; display: inline-block;">
+        <Button variant="plain" textAlign="left" fullWidth>
+          <InlineStack gap="200" align="space-between">
+            <Text>{item.label}</Text>
+            {#if item.hasIndicator}
+              <Indicator tone={item.tone} pulse={item.pulse} />
+            {/if}
+          </InlineStack>
+        </Button>
+      </div>
+    {/each}
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Status indicators
+
+Use indicators to show different status states with appropriate colors.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Indicator, Card, BlockStack, InlineStack, Text } from 'svelte-polaris';
+  
+  const statusItems = [
+    { label: 'System Online', tone: 'success', description: 'All services running normally' },
+    { label: 'Maintenance Mode', tone: 'warning', description: 'Scheduled maintenance in progress' },
+    { label: 'Service Error', tone: 'critical', description: 'Payment gateway unavailable', pulse: true },
+    { label: 'New Feature', tone: 'info', description: 'Recently deployed feature', pulse: true }
+  ];
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">System Status</Text>
+    
+    <BlockStack gap="300">
+      {#each statusItems as status}
+        <InlineStack gap="300" align="start">
+          <Indicator tone={status.tone} pulse={status.pulse} />
+          <BlockStack gap="050">
+            <Text variant="bodyMd" fontWeight="semibold">{status.label}</Text>
+            <Text variant="bodySm" tone="subdued">{status.description}</Text>
+          </BlockStack>
+        </InlineStack>
+      {/each}
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Indicator, Card, BlockStack, InlineStack, Text } from 'svelte-polaris';
+  
+  const statusItems = [
+    { label: 'System Online', tone: 'success', description: 'All services running normally' },
+    { label: 'Maintenance Mode', tone: 'warning', description: 'Scheduled maintenance in progress' },
+    { label: 'Service Error', tone: 'critical', description: 'Payment gateway unavailable', pulse: true },
+    { label: 'New Feature', tone: 'info', description: 'Recently deployed feature', pulse: true }
+  ];
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <Text variant="headingMd">System Status</Text>
+    
+    <BlockStack gap="300">
+      {#each statusItems as status}
+        <InlineStack gap="300" align="start">
+          <Indicator tone={status.tone} pulse={status.pulse} />
+          <BlockStack gap="050">
+            <Text variant="bodyMd" fontWeight="semibold">{status.label}</Text>
+            <Text variant="bodySm" tone="subdued">{status.description}</Text>
+          </BlockStack>
+        </InlineStack>
+      {/each}
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+### Interactive indicators
+
+Combine indicators with interactive elements for dynamic feedback.
+
+<Tabs>
+<TabItem label="Preview">
+```svelte
+<script>
+  import { Indicator, Card, BlockStack, InlineStack, Text, Button } from 'svelte-polaris';
+  
+  let notifications = [
+    { id: 1, title: 'New order received', read: false },
+    { id: 2, title: 'Payment processed', read: false },
+    { id: 3, title: 'Inventory low', read: true }
+  ];
+  
+  function markAsRead(id) {
+    notifications = notifications.map(n => 
+      n.id === id ? { ...n, read: true } : n
+    );
+  }
+  
+  function markAllAsRead() {
+    notifications = notifications.map(n => ({ ...n, read: true }));
+  }
+  
+  $: unreadCount = notifications.filter(n => !n.read).length;
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <InlineStack gap="200" align="space-between">
+      <div style="position: relative; display: inline-block;">
+        <Text variant="headingMd">Notifications</Text>
+        {#if unreadCount > 0}
+          <Indicator tone="critical" pulse />
+        {/if}
+      </div>
+      
+      {#if unreadCount > 0}
+        <Button size="slim" onClick={markAllAsRead}>
+          Mark all as read
+        </Button>
+      {/if}
+    </InlineStack>
+    
+    <BlockStack gap="200">
+      {#each notifications as notification}
+        <InlineStack gap="300" align="space-between">
+          <InlineStack gap="200" align="center">
+            {#if !notification.read}
+              <Indicator tone="info" />
+            {/if}
+            <Text variant={notification.read ? 'bodyMd' : 'bodyMd'} 
+                  tone={notification.read ? 'subdued' : undefined}>
+              {notification.title}
+            </Text>
+          </InlineStack>
+          
+          {#if !notification.read}
+            <Button size="slim" variant="plain" onClick={() => markAsRead(notification.id)}>
+              Mark as read
+            </Button>
+          {/if}
+        </InlineStack>
+      {/each}
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+<TabItem label="Code">
+```svelte
+<script>
+  import { Indicator, Card, BlockStack, InlineStack, Text, Button } from 'svelte-polaris';
+  
+  let notifications = [
+    { id: 1, title: 'New order received', read: false },
+    { id: 2, title: 'Payment processed', read: false },
+    { id: 3, title: 'Inventory low', read: true }
+  ];
+  
+  function markAsRead(id) {
+    notifications = notifications.map(n => 
+      n.id === id ? { ...n, read: true } : n
+    );
+  }
+  
+  function markAllAsRead() {
+    notifications = notifications.map(n => ({ ...n, read: true }));
+  }
+  
+  $: unreadCount = notifications.filter(n => !n.read).length;
+</script>
+
+<Card>
+  <BlockStack gap="400">
+    <InlineStack gap="200" align="space-between">
+      <div style="position: relative; display: inline-block;">
+        <Text variant="headingMd">Notifications</Text>
+        {#if unreadCount > 0}
+          <Indicator tone="critical" pulse />
+        {/if}
+      </div>
+      
+      {#if unreadCount > 0}
+        <Button size="slim" onClick={markAllAsRead}>
+          Mark all as read
+        </Button>
+      {/if}
+    </InlineStack>
+    
+    <BlockStack gap="200">
+      {#each notifications as notification}
+        <InlineStack gap="300" align="space-between">
+          <InlineStack gap="200" align="center">
+            {#if !notification.read}
+              <Indicator tone="info" />
+            {/if}
+            <Text variant={notification.read ? 'bodyMd' : 'bodyMd'} 
+                  tone={notification.read ? 'subdued' : undefined}>
+              {notification.title}
+            </Text>
+          </InlineStack>
+          
+          {#if !notification.read}
+            <Button size="slim" variant="plain" onClick={() => markAsRead(notification.id)}>
+              Mark as read
+            </Button>
+          {/if}
+        </InlineStack>
+      {/each}
+    </BlockStack>
+  </BlockStack>
+</Card>
+```
+</TabItem>
+</Tabs>
+
+## Props
+
+### Indicator props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `tone` | `'success' \| 'warning' \| 'critical' \| 'info'` | `'info'` | Visual tone of the indicator |
+| `pulse` | `boolean` | `false` | Enable pulsing animation |
+
+## Best practices
+
+- Use indicators sparingly to avoid visual clutter
+- Choose appropriate tones that match the content's urgency
+- Use pulse animation for time-sensitive notifications
+- Position indicators consistently across your interface
+- Ensure indicators are large enough to be easily noticed
+- Provide alternative ways to access the information for accessibility
+- Use indicators to supplement, not replace, clear labeling
+- Consider the context when choosing indicator placement
+- Test indicator visibility across different backgrounds
+- Use consistent indicator styles throughout your application
+
+## Accessibility
+
+- Indicators should not be the only way to convey information
+- Use appropriate color contrast for visibility
+- Provide text alternatives for screen readers when necessary
+- Ensure indicators work with high contrast mode
+- Consider users with color vision deficiencies
+- Pulsing animations respect user motion preferences
+- Indicators maintain visibility when zoomed
+- Focus states work correctly with interactive indicators
+
+## Related components
+
+- Use [Badge](/getting-started/badge) for text-based status indicators
+- Use [Banner](/getting-started/banner) for prominent notifications
+- Use [Toast](/getting-started/toast) for temporary notifications
+- Use [Button](/getting-started/button) for interactive elements with indicators
+- Use [Navigation](/getting-started/navigation) for menu items with indicators
