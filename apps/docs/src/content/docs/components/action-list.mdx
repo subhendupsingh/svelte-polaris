@@ -4,8 +4,10 @@ description: Action lists display a list of actions or selectable options.
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
+import Preview from '../../../doc-components/preview.svelte';
 
 Action lists display a list of actions or selectable options. They're commonly used in menus, dropdowns, and navigation components.
+Refer <a href="https://polaris-react.shopify.com/components/lists/action-list" target="_blank">Shopify's docs</a> for more information on how to use this component.
 
 ## Examples
 
@@ -15,20 +17,7 @@ Use action lists to present a set of actions in a vertical list format.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { ActionList } from 'svelte-polaris';
-
-  const actions = [
-    { content: 'Import file', onAction: () => console.log('Import file') },
-    { content: 'Export file', onAction: () => console.log('Export file') },
-    { content: 'Duplicate', onAction: () => console.log('Duplicate') },
-    { content: 'Print', onAction: () => console.log('Print') }
-  ];
-</script>
-
-<ActionList {actions} />
-```
+  <Preview src="/components/action-list/" title="Action list preview" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
@@ -43,7 +32,7 @@ Use action lists to present a set of actions in a vertical list format.
   ];
 </script>
 
-<ActionList {actions} />
+<ActionList items={actions} />
 ```
 </TabItem>
 </Tabs>
@@ -54,37 +43,7 @@ Add icons to action list items to provide visual context.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { ActionList } from 'svelte-polaris';
-
-  const actions = [
-    { 
-      content: 'Import file', 
-      icon: 'ImportIcon',
-      onAction: () => console.log('Import file') 
-    },
-    { 
-      content: 'Export file', 
-      icon: 'ExportIcon',
-      onAction: () => console.log('Export file') 
-    },
-    { 
-      content: 'Duplicate', 
-      icon: 'DuplicateIcon',
-      onAction: () => console.log('Duplicate') 
-    },
-    { 
-      content: 'Delete', 
-      icon: 'DeleteIcon',
-      destructive: true,
-      onAction: () => console.log('Delete') 
-    }
-  ];
-</script>
-
-<ActionList {actions} />
-```
+  <Preview src="/components/action-list?type=action-list-with-icons" title="Action list with icons preview" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
@@ -116,7 +75,7 @@ Add icons to action list items to provide visual context.
   ];
 </script>
 
-<ActionList {actions} />
+<ActionList items={actions} />
 ```
 </TabItem>
 </Tabs>
@@ -127,39 +86,7 @@ Group related actions using sections with optional titles.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { ActionList } from 'svelte-polaris';
-
-  const sections = [
-    {
-      title: 'File actions',
-      items: [
-        { content: 'Import', onAction: () => console.log('Import') },
-        { content: 'Export', onAction: () => console.log('Export') }
-      ]
-    },
-    {
-      title: 'Edit actions',
-      items: [
-        { content: 'Duplicate', onAction: () => console.log('Duplicate') },
-        { content: 'Edit', onAction: () => console.log('Edit') }
-      ]
-    },
-    {
-      items: [
-        { 
-          content: 'Delete', 
-          destructive: true,
-          onAction: () => console.log('Delete') 
-        }
-      ]
-    }
-  ];
-</script>
-
-<ActionList {sections} />
-```
+  <Preview src="/components/action-list?type=action-list-with-sections" title="Action list with sections preview" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
@@ -193,7 +120,7 @@ Group related actions using sections with optional titles.
   ];
 </script>
 
-<ActionList {sections} />
+<ActionList sections={sections} />
 ```
 </TabItem>
 </Tabs>
@@ -216,7 +143,7 @@ Disable actions that are not currently available.
   ];
 </script>
 
-<ActionList {actions} />
+<ActionList items={actions} />
 ```
 </TabItem>
 <TabItem label="Code">
@@ -232,7 +159,7 @@ Disable actions that are not currently available.
   ];
 </script>
 
-<ActionList {actions} />
+<ActionList items={actions} />
 ```
 </TabItem>
 </Tabs>
@@ -267,7 +194,7 @@ Provide additional context with help text for actions.
   ];
 </script>
 
-<ActionList {actions} />
+<ActionList items={actions} />
 ```
 </TabItem>
 <TabItem label="Code">

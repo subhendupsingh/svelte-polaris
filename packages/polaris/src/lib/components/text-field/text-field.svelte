@@ -13,6 +13,8 @@
 	import Labelled from '../labelled/labelled.svelte';
 	import Connected from '../connected/connected.svelte';
 	import Spinner from './components/spinner/spinner.svelte';
+	import RenderVueNode from '../render-vue-node.svelte';
+	import { isComponent, isSnippet } from '$utilities/is-svelte-component.js';
 
 	let {
 		prefix,
@@ -497,12 +499,12 @@
 			class={classNames(styles.Prefix, styles.PrefixIcon)}
 			id={`${id}-Prefix`}
 			bind:this={prefixRef}>
-			{#if  typeof prefix === "string"}
-				<Text as="span" variant="bodyMd">
-					{prefix}
-				</Text>
-			{:else}
+			{#if isComponent(prefix)}
+				<Icon source={prefix} />
+			{:else if isSnippet(prefix)}
 				{@render prefix()}
+			{:else}
+				{prefix}
 			{/if}
 		</div>
 	{/if}
