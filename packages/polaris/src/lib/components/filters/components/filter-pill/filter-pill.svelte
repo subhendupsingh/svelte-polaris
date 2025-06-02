@@ -14,7 +14,7 @@
 	import Popover from '$lib/components/popover/index.js';
 	import BlockStack from '$lib/components/block-stack/block-stack.svelte';
 	import { getContext, type Snippet } from 'svelte';
-	import type { VueNode } from '$utilities/types.js';
+	import type { SvelteNode } from '$utilities/types.js';
 	import { isSvelteConstruct } from '$lib/components/page/components/page-header/types.js';
 
 	let {
@@ -164,11 +164,11 @@
 	{/if}
 {/snippet}
 
-{#snippet renderVueNode(vueNode: VueNode)}
-	{#if isSvelteConstruct(vueNode)}
-		{@render vueNode()}
+{#snippet renderSvelteNode(SvelteNode: SvelteNode)}
+	{#if isSvelteConstruct(SvelteNode)}
+		{@render SvelteNode()}
 	{:else}
-		{vueNode}
+		{SvelteNode}
 	{/if}
 {/snippet}
 
@@ -188,7 +188,7 @@
 			<div class={styles.PopoverWrapper}>
 				<Popover.Section>
 					<BlockStack gap="100">
-						{@render renderVueNode(filter)}
+						{@render renderSvelteNode(filter)}
 						{@render clearButtonMarkup()}
 					</BlockStack>
 				</Popover.Section>

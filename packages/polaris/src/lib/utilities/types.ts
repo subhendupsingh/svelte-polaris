@@ -3,7 +3,7 @@ export type Target = '_blank' | '_self' | '_parent' | '_top';
 
 export type IconSource = Component;
 
-export type VueNode = string | number | boolean | Snippet | Element | Function | null | undefined;
+export type SvelteNode = string | Snippet | Component;
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
@@ -208,7 +208,7 @@ export interface IconableAction extends Action {
 
 export interface TooltipAction {
   /** Text content to render in a tooltip */
-  helpText?: VueNode;
+  helpText?: SvelteNode;
 }
 
 export interface LoadableAction extends Action {
@@ -248,7 +248,7 @@ export interface MenuGroupDescriptor extends BadgeAction {
   /** Icon to display */
   icon?: IconableAction['icon'];
   /** Action details */
-  details?: VueNode;
+  details?: SvelteNode;
   /** Disables action button */
   disabled?: boolean;
   /** Zero-indexed numerical position. Overrides the group's order in the menu. */
@@ -294,9 +294,9 @@ export interface ActionListItemDescriptor
     content: string;
   };
   /** Prefix source */
-  prefix?: VueNode;
+  prefix?: SvelteNode;
   /** Suffix source */
-  suffix?: VueNode;
+  suffix?: SvelteNode;
   /** Additional hint text to display with item */
   helpText?: string;
   /** @deprecated Source of the icon */
@@ -377,7 +377,7 @@ export interface OptionDescriptor {
   /** Display label for the option */
   label: string,
   /** Media to display to the left of the option content */
-  media?: VueNode;
+  media?: SvelteNode;
 }
 
 export interface SectionDescriptor {
@@ -443,7 +443,7 @@ export interface FilterInterface {
   /** The label for the filter */
   label: string;
   /** The markup for the given filter */
-  filter: VueNode;
+  filter: SvelteNode;
   /** Whether or not the filter should have a shortcut popover displayed */
   shortcut?: boolean;
   /** Whether or not the filter should be pinned, permanently displaying the filter */
@@ -458,7 +458,7 @@ export interface FilterInterface {
   /** Optional callback when filter is pressed */
   onAction?: () => void;
   /** Suffix source */
-  suffix?: VueNode;
+  suffix?: SvelteNode;
   /** Optional section heading that this filter will go under  */
   section?: string;
   /** Optional: hides the filter from the dropdown  */

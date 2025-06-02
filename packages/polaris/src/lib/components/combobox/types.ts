@@ -2,7 +2,7 @@ import type { Snippet } from "svelte";
 import type { PopoverProps } from "../popover/types.js";
 import type { ListboxProps } from "../listbox/types.js";
 import type { TextFieldProps } from "../text-field/types.js";
-import type { VueNode } from "$utilities/types.js";
+import type { SvelteNode } from "$utilities/types.js";
 
 export interface ComboboxProps {
     /** The text field component to activate the Popover */
@@ -10,7 +10,7 @@ export interface ComboboxProps {
     /** Allows more than one option to be selected */
     allowMultiple?: boolean;
     /** The content to display inside the popover */
-    children?: VueNode;
+    children?: SvelteNode;
     /** The preferred direction to open the popover */
     preferredPosition?: PopoverProps['preferredPosition'];
     /** Whether or not more options are available to lazy load when the bottom of the listbox reached. Use the hasMoreResults boolean provided by the GraphQL API of the paginated data. */

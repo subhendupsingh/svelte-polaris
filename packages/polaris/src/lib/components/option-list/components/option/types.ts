@@ -2,7 +2,7 @@ import type { AvatarProps } from "$lib/components/avatar/types.js";
 import type { IconProps } from "$lib/components/icon/types.js";
 import type { Component, Snippet } from "svelte";
 import type { ThumbnailProps } from "$lib/components/thumbnail/types.js";
-import type { VueNode } from "$utilities/types.js";
+import type { SvelteNode } from "$utilities/types.js";
 
 export type Alignment = 'top' | 'center' | 'bottom';
 
@@ -12,7 +12,7 @@ export interface OptionProps {
   value: string;
   section: number;
   index: number;
-  media?: VueNode;
+  media?: SvelteNode;
   disabled?: boolean;
   active?: boolean;
   select?: boolean;

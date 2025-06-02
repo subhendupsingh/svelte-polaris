@@ -10,6 +10,7 @@
 	import { helpTextID, type ChoiceProps } from './types.js';
 	import Text from '../text/text.svelte';
 	import InlineError from '../inline-error/inline-error.svelte';
+	import RenderSvelteNode from '../render-svelte-node.svelte';
 	let {
 		id,
 		label,
@@ -62,7 +63,7 @@
 		<span class={styles.Control}>{@render children?.()}</span>
 		<span class={styles.Label}>
 			<Text as="span" variant="bodyMd">
-				{label}
+				<RenderSvelteNode node={label} />
 			</Text>
 		</span>
 	</label>

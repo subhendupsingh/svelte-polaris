@@ -9,12 +9,17 @@
 	import Icon from '$lib/components/icon/icon.svelte';
 	import CheckIcon from '@shopify/polaris-icons/dist/svg/CheckIcon.svg?component';
 	import Checkbox from '$lib/components/checkbox/checkbox.svelte';
-	import { COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY, type ComboboxListboxOptionType } from '$utilities/combobox/types.js';
+	import {
+		COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY,
+		type ComboboxListboxOptionType
+	} from '$utilities/combobox/types.js';
+	import Text from '$lib/components/text/text.svelte';
 
 	let { children, selected, disabled }: TextOptionProps = $props();
 
 	//const { allowMultiple } = useContext<ComboboxListboxOptionType>(COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY) || {};
-	const comboboxListboxOptionContext = useContext<ComboboxListboxOptionType>(COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY) || {};
+	const comboboxListboxOptionContext =
+		useContext<ComboboxListboxOptionType>(COMBOBOX_LIST_BOX_OPTION_CONTEXT_KEY) || {};
 	const actionContext = useContext<boolean>(ACTION_CONTEXT_KEY) || false;
 
 	const textOptionClassName = $derived(
@@ -29,11 +34,11 @@
 </script>
 
 {#snippet renderChildren()}
-    {#if typeof children === 'string'}
-        {children}
-    {:else}
-        {@render children()}
-    {/if}
+	{#if typeof children === 'string'}
+		{children}
+	{:else}
+		{@render children()}
+	{/if}
 {/snippet}
 
 {#snippet optionMarkup()}
@@ -55,9 +60,7 @@
 	<div class={styles.Content}>
 		{#if comboboxListboxOptionContext()?.allowMultiple && !actionContext()}
 			<div class={styles.Checkbox}>
-				{#if typeof children === 'string'}
-					<Checkbox {disabled} checked={selected} label={children} />
-				{/if}
+				<Checkbox {disabled} checked={selected} label={children} />
 			</div>
 		{:else}
 			{@render optionMarkup()}

@@ -53,9 +53,6 @@
 			return;
 		}
 
-		const choice = {
-
-		}
 		onChange(inputNode.checked, id);
 		inputNode.focus();
 	};

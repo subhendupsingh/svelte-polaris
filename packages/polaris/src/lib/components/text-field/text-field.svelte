@@ -13,7 +13,6 @@
 	import Labelled from '../labelled/labelled.svelte';
 	import Connected from '../connected/connected.svelte';
 	import Spinner from './components/spinner/spinner.svelte';
-	import RenderVueNode from '../render-vue-node.svelte';
 	import { isComponent, isSnippet } from '$utilities/is-svelte-component.js';
 
 	let {

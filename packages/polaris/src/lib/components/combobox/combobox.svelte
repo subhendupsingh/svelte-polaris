@@ -11,7 +11,7 @@
 	import ComboboxListboxContextProvider from '../app-provider/combobox-list-box-context-provider.svelte';
 	import ComboboxListboxOptionContextProvider from '../app-provider/combobox-list-box-option-context-provider.svelte';
 	import Popover from '../popover/index.js';
-	import type { VueNode } from '$utilities/types.js';
+	import type { SvelteNode } from '$utilities/types.js';
 	import { isSvelteConstruct } from '../page/components/page-header/types.js';
 
 	let {
@@ -105,7 +105,7 @@
 	</ComboboxTextFieldContextProvider>
 {/snippet}
 
-{#snippet renderVueNode(node: VueNode)}
+{#snippet renderSvelteNode(node: SvelteNode)}
 	{#if isSvelteConstruct(node)}
 		{@render node()}
 	{:else}
@@ -127,7 +127,7 @@
 		<ComboboxListboxContextProvider value={listboxContextValue}>
 			<ComboboxListboxOptionContextProvider value={listboxOptionContextValue}>
 				<div class={styles.Listbox}>
-					{@render renderVueNode(children)}
+					{@render renderSvelteNode(children)}
 				</div>
 			</ComboboxListboxOptionContextProvider>
 		</ComboboxListboxContextProvider>

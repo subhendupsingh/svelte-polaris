@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { AutoComplete, Tag, InlineStack } from '$lib/index.js';
+    import { AutoComplete, Tag, InlineStack } from 'svelte-polaris';
     import SearchIcon from "@shopify/polaris-icons/dist/svg/SearchIcon.svg?component";
   
     let selectedOptions: string[] = [];
@@ -13,7 +13,7 @@
         }[];
     };
   
-    const options: Section[] = [
+    const options = [
       {
         title: 'Frequently used',
         options: [

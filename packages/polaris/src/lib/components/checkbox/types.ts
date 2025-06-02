@@ -1,5 +1,5 @@
 import type { ResponsiveProp } from "$utilities/css.js";
-import type { CheckboxHandles } from "$utilities/types.js";
+import type { CheckboxHandles, SvelteNode } from "$utilities/types.js";
 import type { ChoiceBleedProps } from "../choice/types.js";
 
 export interface CheckboxProps extends ChoiceBleedProps {
@@ -8,7 +8,7 @@ export interface CheckboxProps extends ChoiceBleedProps {
     /** Indicates the ID of the element that describes the checkbox */
     ariaDescribedBy?: string;
     /** Label for the checkbox */
-    label: string;
+    label: SvelteNode;
     /** Visually hide the label */
     labelHidden?: boolean;
     /** Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox */

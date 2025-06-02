@@ -52,6 +52,9 @@ importers:
       '@sveltejs/adapter-auto':
         specifier: ^6.0.0
         version: 6.0.1(@sveltejs/kit@2.21.1)
+      '@sveltejs/adapter-cloudflare':
+        specifier: ^7.0.3
+        version: 7.0.3(@sveltejs/kit@2.21.1)(wrangler@4.18.0)
       '@sveltejs/kit':
         specifier: ^2.16.0
         version: 2.21.1(@sveltejs/vite-plugin-svelte@5.0.3)(svelte@5.33.10)(vite@6.3.5)
@@ -70,6 +73,9 @@ importers:
       vite:
         specifier: ^6.2.6
         version: 6.3.5(@types/node@22.15.29)(sass@1.89.1)
+      wrangler:
+        specifier: ^4.18.0
+        version: 4.18.0(@cloudflare/workers-types@4.20250601.0)
 
   packages/polaris:
     dependencies:
@@ -1872,6 +1878,18 @@ packages:
       '@sveltejs/kit': ^2.0.0
     dependencies:
       '@sveltejs/kit': 2.21.1(@sveltejs/vite-plugin-svelte@5.0.3)(svelte@5.33.10)(vite@6.3.5)
+    dev: true
+
+  /@sveltejs/adapter-cloudflare@7.0.3(@sveltejs/kit@2.21.1)(wrangler@4.18.0):
+    resolution: {integrity: sha512-hEbaEukbHuTUtq4a+CPb57YnyQdx+iWVuLZAmNzaJwGSsAgMafY+GY4UblsIACjSYpX5tZuhjBck+X5IoWLIWw==}
+    peerDependencies:
+      '@sveltejs/kit': ^2.0.0
+      wrangler: ^4.0.0
+    dependencies:
+      '@cloudflare/workers-types': 4.20250601.0
+      '@sveltejs/kit': 2.21.1(@sveltejs/vite-plugin-svelte@5.0.3)(svelte@5.33.10)(vite@6.3.5)
+      worktop: 0.8.0-next.18
+      wrangler: 4.18.0(@cloudflare/workers-types@4.20250601.0)
     dev: true
 
   /@sveltejs/adapter-node@5.2.12(@sveltejs/kit@2.21.1):
@@ -5556,6 +5574,11 @@ packages:
       regex-utilities: 2.3.0
     dev: false
 
+  /regexparam@3.0.0:
+    resolution: {integrity: sha512-RSYAtP31mvYLkAHrOlh25pCNQ5hWnT106VukGaaFfuJrZFkGRX5GhUAdPqpSDXxOhA2c4akmRuplv1mRqnBn6Q==}
+    engines: {node: '>=8'}
+    dev: true
+
   /rehype-expressive-code@0.41.2:
     resolution: {integrity: sha512-vHYfWO9WxAw6kHHctddOt+P4266BtyT1mrOIuxJD+1ELuvuJAa5uBIhYt0OVMyOhlvf57hzWOXJkHnMhpaHyxw==}
     dependencies:
@@ -6712,6 +6735,14 @@ packages:
       '@cloudflare/workerd-linux-64': 1.20250525.0
       '@cloudflare/workerd-linux-arm64': 1.20250525.0
       '@cloudflare/workerd-windows-64': 1.20250525.0
+
+  /worktop@0.8.0-next.18:
+    resolution: {integrity: sha512-+TvsA6VAVoMC3XDKR5MoC/qlLqDixEfOBysDEKnPIPou/NvoPWCAuXHXMsswwlvmEuvX56lQjvELLyLuzTKvRw==}
+    engines: {node: '>=12'}
+    dependencies:
+      mrmime: 2.0.1
+      regexparam: 3.0.0
+    dev: true
 
   /wrangler@4.18.0(@cloudflare/workers-types@4.20250601.0):
     resolution: {integrity: sha512-/ng0KI9io97SNsBU1rheADBLLTE5Djybgsi4gXuvH1RBKJGpyj1xWvZ2fuWu8vAonit3EiZkwtERTm6kESHP3A==}

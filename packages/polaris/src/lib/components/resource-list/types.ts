@@ -1,7 +1,7 @@
 import type { Snippet } from "svelte";
 import type { PaginationProps } from "../pagination/types.js";
 import type { BulkActionsProps } from "../bulk-actions/types.js";
-import type { ResourceListSelectedItems, VueNode } from "$utilities/types.js";
+import type { ResourceListSelectedItems, SvelteNode } from "$utilities/types.js";
 import type { SelectOption } from "../select/types.js";
 
 export const SMALL_SPINNER_HEIGHT = 28;
@@ -55,7 +55,7 @@ export interface ResourceListProps<
     /** Collection of sort options to choose from */
     sortOptions?: SelectOption[];
     /** ReactNode to display instead of the sort control */
-    alternateTool?: VueNode;
+    alternateTool?: SvelteNode;
     /** Custom header text displayed above the list instead of the resource count. */
     headerContent?: string;
     /** Callback when sort option is changed */

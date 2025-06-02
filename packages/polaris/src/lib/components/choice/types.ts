@@ -1,4 +1,5 @@
 import type { ResponsiveProp } from "$utilities/css.js";
+import type { SvelteNode } from "$utilities/types.js";
 import type { SpaceScale } from "@shopify/polaris-tokens";
 import type { Snippet } from "svelte";
 
@@ -41,7 +42,7 @@ export interface ChoiceProps extends ChoiceBleedProps {
     /** A unique identifier for the choice */
     id: string;
     /**	Label for the choice */
-    label: string;
+    label: SvelteNode;
     /** Whether the associated form control is disabled */
     disabled?: boolean;
     /** Visually hide the label */

@@ -4,6 +4,7 @@ description: Autocomplete provides suggestions as users type in a text field.
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
+import Preview from '../../../doc-components/preview.svelte';
 
 Autocomplete provides suggestions as users type in a text field. It helps users complete their input faster and reduces errors by offering valid options.
 
@@ -15,50 +16,13 @@ Use autocomplete to help users find and select from a list of options.
 
 <Tabs>
 <TabItem label="Preview">
-```svelte
-<script>
-  import { AutoComplete } from 'svelte-polaris';
-
-  let selectedOptions = [];
-  let inputValue = '';
-
-  const options = [
-    { value: 'apple', label: 'Apple' },
-    { value: 'banana', label: 'Banana' },
-    { value: 'cherry', label: 'Cherry' },
-    { value: 'date', label: 'Date' },
-    { value: 'elderberry', label: 'Elderberry' },
-    { value: 'fig', label: 'Fig' },
-    { value: 'grape', label: 'Grape' }
-  ];
-
-  function updateText(value) {
-    inputValue = value;
-  }
-
-  function updateSelection(selected) {
-    selectedOptions = selected;
-  }
-</script>
-
-<AutoComplete
-  options={options}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Search fruits',
-    placeholder: 'Type to search...',
-    autoComplete: 'off'
-  }}
-/>
-```
+  <Preview src="autocomplete" />
 </TabItem>
 <TabItem label="Code">
 ```svelte
 <script>
   import { AutoComplete } from 'svelte-polaris';
+  import SearchIcon from "@shopify/polaris-icons/dist/svg/SearchIcon.svg?component";
 
   let selectedOptions = [];
   let inputValue = '';
@@ -82,17 +46,22 @@ Use autocomplete to help users find and select from a list of options.
   }
 </script>
 
+{#snippet textField()}
+    <AutoComplete.TextField
+        onChange={updateText}
+        label="Tags"
+        value={inputValue}
+        prefix={SearchIcon}
+        placeholder="Search"
+        autoComplete="off"
+    />
+{/snippet}
+
 <AutoComplete
-  options={options}
-  selected={selectedOptions}
-  onSelect={updateSelection}
-  textField={{
-    onChange: updateText,
-    value: inputValue,
-    label: 'Search fruits',
-    placeholder: 'Type to search...',
-    autoComplete: 'off'
-  }}
+    {options}
+    selected={selectedOptions}
+    onSelect={updateSelection}
+    {textField}
 />
 ```
 </TabItem>

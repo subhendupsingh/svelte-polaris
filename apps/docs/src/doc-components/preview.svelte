@@ -2,7 +2,7 @@
     let { src, title } = $props();
 
     const isDev = import.meta.env.DEV;
-    let finalUrl = $derived(isDev ? `http://localhost:5173${src}` : `https://localhost:5173${src}`);
+    let finalUrl = $derived(isDev ? `http://localhost:5173/components/${src}` : `https://svelte-polaris-examples.storebud.workers.dev/components/${src}`);
     
 </script>
 

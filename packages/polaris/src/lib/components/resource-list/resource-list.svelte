@@ -12,7 +12,7 @@
 	import { applyStyles, classNames } from '$utilities/css.js';
 	import BulkActions from '../bulk-actions/bulk-actions.svelte';
 	import Select from '../select/select.svelte';
-	import type { VueNode } from '$utilities/types.js';
+	import type { SvelteNode } from '$utilities/types.js';
 	import { onMount, type Component } from 'svelte';
 	import { isSvelteConstruct } from '../page/components/page-header/types.js';
 	import Text from '../text/text.svelte';
@@ -461,11 +461,11 @@
 	</div>
 {/snippet}
 
-{#snippet renderVueNode(vueNode: VueNode)}
-	{#if isSvelteConstruct(vueNode)}
-		{@render vueNode()}
+{#snippet renderSvelteNode(SvelteNode: SvelteNode)}
+	{#if isSvelteConstruct(SvelteNode)}
+		{@render SvelteNode()}
 	{:else}
-		{vueNode}
+		{SvelteNode}
 	{/if}
 {/snippet}
 
@@ -488,7 +488,7 @@
 {#snippet alternateToolMarkup()}
 	{#if alternateTool && !sortOptions}
 		<div class={styles.AlternateToolWrapper}>
-			{@render renderVueNode(alternateTool)}
+			{@render renderSvelteNode(alternateTool)}
 		</div>
 	{/if}
 {/snippet}

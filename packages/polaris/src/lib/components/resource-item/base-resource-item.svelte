@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SELECT_ALL_ITEMS } from '$utilities/index-provider/types.js';
-	import type { ResourceListSelectedItems, VueNode } from '$utilities/types.js';
+	import type { ResourceListSelectedItems, SvelteNode } from '$utilities/types.js';
 	import type { Alignment, CombinedProps, State } from './types.js';
 	import Checkbox from '../checkbox/checkbox.svelte';
 	import styles from './resource-item.module.css';
@@ -239,11 +239,11 @@
 	{/if}
 {/snippet}
 
-{#snippet renderVueNode(vueNode: VueNode)}
-	{#if isSvelteConstruct(vueNode)}
-		{@render vueNode()}
+{#snippet renderSvelteNode(SvelteNode: SvelteNode)}
+	{#if isSvelteConstruct(SvelteNode)}
+		{@render SvelteNode()}
 	{:else}
-		{vueNode}
+		{SvelteNode}
 	{/if}
 {/snippet}
 
@@ -255,7 +255,7 @@
 		>
 			{@render handleMarkup()}
 			{#if media}
-				{@render renderVueNode(media)}
+				{@render renderSvelteNode(media)}
 			{/if}
 		</InlineStack>
 	{/if}
