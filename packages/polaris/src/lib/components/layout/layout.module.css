@@ -45,6 +45,12 @@
     min-width: 0;
 }
 
+.Section-oneFourth {
+    /* stylelint-disable-next-line -- polaris custom global property */
+    flex: 1 1 var(--pg-layout-width-one-fourth-width-base);
+    min-width: 0;
+}
+
 .AnnotatedSection {
     min-width: 0;
     flex: 1 1 100%;

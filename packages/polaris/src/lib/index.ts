@@ -100,7 +100,7 @@ import RadioButton from "./components/radio-button/radio-button.svelte";
 import type { RadioButtonProps } from "./components/radio-button/types.js";
 import ResourceItem from "./components/resource-item/resource-item.svelte";
 import type { ResourceItemProps } from "./components/resource-item/types.js";
-import ResourceList from "./components/resource-list/resource-list.svelte";
+import ResourceList from "./components/resource-list/index.js";
 import type { ResourceListProps } from "./components/resource-list/types.js";
 import Scrollable from "./components/scrollable/scrollable.svelte";
 import type { ScrollableProps } from "./components/scrollable/types.js";
@@ -132,6 +132,13 @@ import UnstyledLink from "./components/unstyled-link/unstyled-link.svelte";
 import type { UnstyledLinkProps } from "./components/unstyled-link/types.js";
 import UnstyledButton from "./components/button/unstyled-button.svelte";
 import type { UnstyledButtonProps } from "./components/button/unstyled-button.types.js";
+import type { RangeSliderProps } from "./components/range-slider/types.js";
+import RangeSlider from "./components/range-slider/range-slider.svelte";
+import SkeletonBodyText from "./components/skeleton-body-text/skeleton-body-text.svelte";
+import SkeletonDisplayText from "./components/skeleton-display-text/skeleton-display-text.svelte";
+import SkeletonPage from "./components/skeleton-page/skeleton-page.svelte";
+import SkeletonTabs from "./components/skeleton-tabs/skeleton-tabs.svelte";
+import SkeletonThumbnail from "./components/skeleton-thumbnail/skeleton-thumbnail.svelte";
 
 export { PolarisAppProvider };
 export { AccountConnection, type AccountConnectionProps };
@@ -199,6 +206,12 @@ export { Thumbnail, type ThumbnailProps }
 export { Tooltip, type TooltipProps }
 export { UnstyledButton, type UnstyledButtonProps }
 export { UnstyledLink, type UnstyledLinkProps }
+export { RangeSlider, type RangeSliderProps }
+export { SkeletonBodyText }
+export { SkeletonDisplayText }
+export { SkeletonPage }
+export { SkeletonTabs }
+export { SkeletonThumbnail }
 
 
 export type {

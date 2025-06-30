@@ -9,7 +9,7 @@ export interface AnnotatedSectionProps {
 
 export interface SectionProps {
     children?: Snippet;
-    variant?: 'oneHalf' | 'oneThird' | 'fullWidth';
+    variant?: 'oneHalf' | 'oneThird' | 'oneFourth' | 'fullWidth';
 }
 
 export interface LayoutProps {

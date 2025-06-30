@@ -18,6 +18,7 @@
     --pg-layout-width-secondary-max: 320px;
     --pg-layout-width-one-half-width-base: 450px;
     --pg-layout-width-one-third-width-base: 240px;
+    --pg-layout-width-one-fourth-width-base: 180px;
     --pg-layout-width-nav-base: var(--pg-navigation-width);
     --pg-layout-width-page-content-partially-condensed: 450px;
     --pg-layout-width-inner-spacing-base: var(--pg-dangerous-magic-space-4);

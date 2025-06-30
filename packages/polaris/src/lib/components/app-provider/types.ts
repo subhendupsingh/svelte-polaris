@@ -1,7 +1,7 @@
 export interface MediaQueryState {
-    isNavigationCollapsed: boolean;
-    // Add other media query states you might need, e.g., isMobile, isTablet, etc.
-    // isMobile: boolean;
+  isNavigationCollapsed: boolean;
+  // Add other media query states you might need, e.g., isMobile, isTablet, etc.
+  // isMobile: boolean;
 }
 
 // Unique key for the Svelte context
@@ -22,3 +22,11 @@ export interface EphemeralPresenceManagerContextType {
   addPresence: (key: EphemeralPresenceKey) => void;
   removePresence: (key: EphemeralPresenceKey) => void;
 }
+
+export const FEATURES_CONTEXT_KEY = 'FEATURESCONTEXT';
+
+export interface FeaturesConfig {
+  [key: string]: boolean | undefined;
+}
+
+export interface Features { }

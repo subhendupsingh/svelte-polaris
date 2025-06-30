@@ -99,7 +99,7 @@
 		}
 		return newDescribedByArray;
 	});
-	const labelledBy: string[] = $derived.by(()=>{
+	const labelledBy: string[] = $derived.by(() => {
 		const newLabelledByArray: string[] = [];
 		if (prefix) {
 			newLabelledByArray.push(`${id}-Prefix`);
@@ -118,11 +118,7 @@
 	});
 
 	const isSupportedInputType = $derived(
-		type === 'text' ||
-		type === 'tel' ||
-		type === 'search' ||
-		type === 'url' ||
-		type === 'password'
+		type === 'text' || type === 'tel' || type === 'search' || type === 'url' || type === 'password'
 	);
 
 	const getInputRef = () => {
@@ -136,7 +132,6 @@
 	function labelID(id: string) {
 		return `${id}Label`;
 	}
-
 
 	let normalizedValue = $derived(suggestion ? suggestion : value);
 	const normalizedStep = $derived(step != null ? step : 1);
@@ -418,7 +413,7 @@
 	}
 
 	function handleChange(event: Event) {
-		if(inputRef && suggestion){
+		if (inputRef && suggestion) {
 			inputRef.value = suggestion;
 			inputRef.setSelectionRange(value.length, suggestion.length);
 		}
@@ -473,7 +468,7 @@
 			// Dashlane disable data attribute
 			'data-form-type': autoComplete === 'off' ? 'other' : undefined
 		};
-		
+
 		if (!multiline) {
 			props.type = inputType;
 			props.size = autoSize ? 1 : undefined;
@@ -485,10 +480,12 @@
 	});
 
 	const characterCount = $derived(normalizedValue.length);
-	const characterCountLabel = $derived(maxLength
-		? `${characterCount} of ${maxLength} characters used`
-		: `${characterCount} characters`);
-	const characterCountText = $derived(!maxLength ? characterCount : `${characterCount}/${maxLength}`);
+	const characterCountLabel = $derived(
+		maxLength ? `${characterCount} of ${maxLength} characters used` : `${characterCount} characters`
+	);
+	const characterCountText = $derived(
+		!maxLength ? characterCount : `${characterCount}/${maxLength}`
+	);
 	const clearButtonVisible = $derived(normalizedValue !== '');
 </script>
 
@@ -497,7 +494,8 @@
 		<div
 			class={classNames(styles.Prefix, styles.PrefixIcon)}
 			id={`${id}-Prefix`}
-			bind:this={prefixRef}>
+			bind:this={prefixRef}
+		>
 			{#if isComponent(prefix)}
 				<Icon source={prefix} />
 			{:else if isSnippet(prefix)}
@@ -512,7 +510,7 @@
 {#snippet suffixMarkup()}
 	{#if suffix}
 		<div class={styles.Suffix} id={`${id}-Suffix`} bind:this={suffixRef}>
-			{#if typeof suffix === "string"}
+			{#if typeof suffix === 'string'}
 				<Text as="span" variant="bodyMd">
 					{suffix}
 				</Text>
@@ -558,7 +556,7 @@
 
 {#snippet spinnerMarkup()}
 	{#if isNumericType && step !== 0 && !disabled && !readOnly}
-		<Spinner 
+		<Spinner
 			onClick={handleClickChild}
 			onChange={handleNumberChange}
 			onMouseDown={handleSpinnerButtonPress}

@@ -2,7 +2,7 @@
   This mixin exists because we can't have comma separated selector lists for browser prefixes
   REASON UNKNOWN
 */
-const duplicate = require('./duplicate');
+const duplicate = require('./duplicate.cjs');
 
 module.exports = (_) =>
   duplicate(
