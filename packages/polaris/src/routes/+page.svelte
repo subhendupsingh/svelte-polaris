@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Tabs from '$lib/components/tabs/tabs.svelte';
-	import { Button, Card, Layout, Page, RangeSlider } from '$lib/index.js';
+	import { Button, Card, Layout, Listbox, Page, RangeSlider } from '$lib/index.js';
 	import ChevronUpIcon from '@shopify/polaris-icons/dist/svg/ChevronUpIcon.svg?component';
 	let sliderValue = $state(0);
 	$inspect("sliderValue", sliderValue)
@@ -8,6 +8,9 @@
 
 
 <Page>
-	<Button icon={ChevronUpIcon}>Button</Button>
-	<RangeSlider step={1} label="Range Slider" output bind:value={sliderValue} onChange={(value) => sliderValue = Number(value)} />
+	<Listbox enableKeyboardControl={false}>
+		<Listbox.Action value="1">Option 1</Listbox.Action>
+		<Listbox.Action value="2">Option 2</Listbox.Action>
+		<Listbox.Action value="3">Option 3</Listbox.Action>
+	</Listbox>
 </Page>

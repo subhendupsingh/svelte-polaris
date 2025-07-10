@@ -177,6 +177,7 @@ export interface NonMutuallyExclusiveProps {
   /** Callback fired when input is blurred */
   onBlur?(event?: FocusEvent): void;
   /** Indicates the tone of the text field */
+  onInput?: (event?: InputEvent) => void;
   tone?: 'magic';
   /** Whether the TextField will grow as the text within the input changes */
   autoSize?: boolean;

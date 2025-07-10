@@ -14,17 +14,17 @@
 
 		// Event handlers: Svelte 5 uses lowercase direct properties or on:event
 		// We'll assume they are passed in lowercase if spread, or handle specific ones.
-		onfocus?: (e: FocusEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
-		onblur?: (e: FocusEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
-		onclick?: (e: MouseEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
-		onkeypress?: (
+		onFocus?: (e: FocusEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
+		onBlur?: (e: FocusEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
+		onClick?: (e: MouseEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
+		onKeyPress?: (
 			e: KeyboardEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }
 		) => void;
-		onkeydown?: (
+		onKeyDown?: (
 			e: KeyboardEvent & { currentTarget: HTMLInputElement | HTMLTextAreaElement }
 		) => void;
-		oninput?: (e: Event & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void; // More specific: InputEvent
-		onchange?: (e: Event & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
+		onInput?: (e: Event & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void; // More specific: InputEvent
+		onChange?: (e: Event & { currentTarget: HTMLInputElement | HTMLTextAreaElement }) => void;
 
 		// All other HTML attributes (name, id, disabled, readOnly, type, aria-*, data-*, etc.)
 		// will be caught by {...restProps}
@@ -46,13 +46,13 @@
 		elementRef = $bindable(),
 		// Event handlers can be destructured if special logic is needed,
 		// otherwise they'll be in restProps.
-		onfocus,
-		onblur,
-		onclick,
-		onkeypress,
-		onkeydown,
-		oninput,
-		onchange,
+		onFocus,
+		onBlur,
+		onClick,
+		onKeyPress,
+		onKeyDown,
+		onInput,
+		onChange,
 		...restProps // Captures all other attributes like name, id, type, aria-*, data-*, etc.
 	}: AllProps = $props();
 
@@ -65,13 +65,13 @@
 		class={className}
 		bind:value={currentValue}
 		{...restProps}
-		{onfocus}
-		{onblur}
-		{onclick}
-		{onkeypress}
-		{onkeydown}
-		{oninput}
-		{onchange}
+		onfocus={onFocus}
+		onblur={onBlur}
+		onclick={onClick}
+		onkeypress={onKeyPress}
+		onkeydown={onKeyDown}
+		oninput={onInput}
+		onchange={onChange}
 	/>
 {:else if tagName == 'textarea'}
 	<textarea
@@ -79,12 +79,12 @@
 		class={className}
 		bind:value={currentValue}
 		{...restProps}
-		{onfocus}
-		{onblur}
-		{onclick}
-		{onkeypress}
-		{onkeydown}
-		{oninput}
-		{onchange}
+		onfocus={onFocus}
+		onblur={onBlur}
+		onclick={onClick}
+		onkeypress={onKeyPress}
+		onkeydown={onKeyDown}
+		oninput={onInput}
+		onchange={onChange}
 	></textarea>
 {/if}

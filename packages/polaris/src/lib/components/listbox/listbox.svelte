@@ -43,17 +43,6 @@
 	const enableKeyboardEvents = keyboardEventsEnabled.setTrue;
 	const disableKeyboardEvents = keyboardEventsEnabled.setFalse;
 
-	/* const {
-		listboxId,
-		textFieldLabelId,
-		textFieldFocused,
-		willLoadMoreOptions,
-		setActiveOptionId,
-		setListboxId,
-		onOptionSelected,
-		onKeyToBottom
-	} = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY) || {}; */
-
 	const comboboxListBoxContext = useContext<ComboboxListboxType>(COMBOBOX_LIST_BOX_CONTEXT_KEY) || {};
 
 	const inCombobox = Boolean(comboboxListBoxContext()?.setActiveOptionId);
@@ -213,11 +202,15 @@
 		}
 	});
 
-	$effect(() => {
-		if (enableKeyboardControl && !keyboardEventsEnabled) {
+	/* $effect(() => {
+		//console.log("enableKeyboardControl", enableKeyboardControl);
+		//console.log("keyboardEventsEnabled", keyboardEventsEnabled.value);
+		if (enableKeyboardControl && !keyboardEventsEnabled.value) {
 			enableKeyboardEvents();
+		}else{
+			disableKeyboardEvents();
 		}
-	});
+	}); */
 
 	const onOptionSelect = (option: NavigableOption) => {
 		handleChangeActiveOption(option);
@@ -311,7 +304,7 @@
 
 	const handleBlur = (event: FocusEvent) => {
 		event.stopPropagation();
-		if (keyboardEventsEnabled) {
+		if (keyboardEventsEnabled.value) {
 			const nextActiveOption = getFirstNavigableOption(currentOptions);
 
 			if (nextActiveOption) {
@@ -335,7 +328,7 @@
 </script>
 
 {#snippet listeners()}
-	{#if keyboardEventsEnabled || comboboxListBoxContext()?.textFieldFocused}
+	{#if keyboardEventsEnabled.value || comboboxListBoxContext()?.textFieldFocused}
 		<KeypressListener keyEvent="keydown" keyCode={Key.DownArrow} handler={handleDownArrow} />
 		<KeypressListener keyEvent="keydown" keyCode={Key.UpArrow} handler={handleUpArrow} />
 		<KeypressListener keyEvent="keydown" keyCode={Key.Enter} handler={handleEnter} />

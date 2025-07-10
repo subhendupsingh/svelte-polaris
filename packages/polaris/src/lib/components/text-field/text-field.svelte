@@ -20,7 +20,7 @@
 		suffix,
 		verticalContent,
 		placeholder,
-		value = $bindable(''),
+		value = $bindable(),
 		helpText,
 		label,
 		labelAction,
@@ -415,7 +415,7 @@
 	function handleChange(event: Event) {
 		if (inputRef && suggestion) {
 			inputRef.value = suggestion;
-			inputRef.setSelectionRange(value.length, suggestion.length);
+			inputRef.setSelectionRange(value?.length ?? null, suggestion.length);
 		}
 		onChange && onChange((event.target as HTMLInputElement).value, id);
 	}
@@ -479,7 +479,7 @@
 		return props;
 	});
 
-	const characterCount = $derived(normalizedValue.length);
+	const characterCount = $derived(normalizedValue?.length);
 	const characterCountLabel = $derived(
 		maxLength ? `${characterCount} of ${maxLength} characters used` : `${characterCount} characters`
 	);
