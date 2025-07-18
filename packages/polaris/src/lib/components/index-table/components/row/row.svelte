@@ -29,7 +29,7 @@
 	}: RowProps = $props();
 
 	const useIndexRow = useContext<IndexRowContextType>(INDEX_ROW_CONTEXT_KEY);
-	const { selectable: tableIsSelectable, selectMode, condensed } = $derived(useIndexRow());
+	const { selectable: tableIsSelectable, selectMode, condensed } = $derived(useIndexRow()!);
 	const rowIsSelectable = $derived(tableIsSelectable && !hideSelectable);
 	const useIndexSelectionChange = useContext<HandleSelectionChange>(INDEX_SELECTION_CHANGE_CONTEXT_KEY);
 	const onSelectionChange = $derived(useIndexSelectionChange());
@@ -84,7 +84,7 @@
 			rowType === 'child' && styles['TableRow-child'],
 			rowIsSelectable && condensed && styles.condensedRow,
 			selected && styles['TableRow-selected'],
-			hovered && !condensed && styles['TableRow-hovered'],
+			hovered.value && !condensed && styles['TableRow-hovered'],
 			disabled && styles['TableRow-disabled'],
 			tone && styles[variationName('tone', tone)],
 			!rowIsSelectable && !onClick && !primaryLinkElement && styles['TableRow-unclickable']

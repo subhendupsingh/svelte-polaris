@@ -54,7 +54,7 @@ import type { IconProps } from "./components/icon/types.js";
 import Image from "./components/image/image.svelte";
 import type { ImageProps } from "./components/image/types.js";
 import IndexTable from "./components/index-table/index.js";
-import type { IndexTableProps } from "./components/index-table/types.js";
+import type { IndexTableHeading, IndexTableProps } from "./components/index-table/types.js";
 import Indicator from "./components/indicator/indicator.svelte";
 import type { IndicatorProps } from "./components/indicator/types.js";
 import InlineError from "./components/inline-error/inline-error.svelte";
@@ -139,6 +139,7 @@ import SkeletonDisplayText from "./components/skeleton-display-text/skeleton-dis
 import SkeletonPage from "./components/skeleton-page/skeleton-page.svelte";
 import SkeletonTabs from "./components/skeleton-tabs/skeleton-tabs.svelte";
 import SkeletonThumbnail from "./components/skeleton-thumbnail/skeleton-thumbnail.svelte";
+import { SelectionType } from "$utilities/index-provider/types.js";
 
 export { PolarisAppProvider };
 export { AccountConnection, type AccountConnectionProps };
@@ -168,7 +169,7 @@ export { FormLayout, type FormLayoutProps }
 export { Grid, type GridProps, type CellProps as GridCellProps }
 export { Icon, type IconProps}
 export { Image, type ImageProps }
-export { IndexTable, type IndexTableProps as IndexTableRowProps }
+export { IndexTable, type IndexTableProps as IndexTableRowProps, SelectionType, type IndexTableHeading }
 export { Indicator, type IndicatorProps }
 export { InlineError, type InlineErrorProps }
 export { InlineGrid, type InlineGridProps }

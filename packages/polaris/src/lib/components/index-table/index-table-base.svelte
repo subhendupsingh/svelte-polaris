@@ -51,20 +51,6 @@
 		...restProps
 	}: IndexTableBaseProps = $props();
 
-	/* const {
-		loading,
-		bulkSelectState,
-		resourceName,
-		bulkActionsAccessibilityLabel,
-		selectMode,
-		selectable = restProps.selectable,
-		paginatedSelectAllText,
-		itemCount,
-		hasMoreItems,
-		selectedItemsCount,
-		condensed
-	} = useIndexValue(); */
-
 	const indexValueContext = useContext<IndexContextType>(INDEX_CONTEXT_KEY);
 	const {
 		loading,
@@ -78,7 +64,7 @@
 		hasMoreItems,
 		selectedItemsCount,
 		condensed
-	} = $derived(indexValueContext());
+	} = $derived(indexValueContext()!);
 
 	//const handleSelectionChange = useIndexSelectionChange();
 	const handleSelectionChangeContext = useContext<HandleSelectionChange>(
@@ -133,14 +119,14 @@
 	}
 
 	function handleSelectModeToggle() {
-		handleSelectionChange(SelectionType.All, false);
+		handleSelectionChange?.(SelectionType.All, false);
 	}
 
 	let selectAllActionsLabel = $derived(`${selectedItemsCountValue} selected`);
 	let paginatedSelectAllAction = $derived(getPaginatedSelectAllAction());
 
 	const handleTogglePage = () => {
-		handleSelectionChange(SelectionType.Page, Boolean(!bulkSelectState));
+		handleSelectionChange?.(SelectionType.Page, Boolean(!bulkSelectState));
 	};
 
 	$effect(() => {
@@ -169,7 +155,7 @@
 	};
 
 	const handleSelectAllItemsInStore = () => {
-		handleSelectionChange(
+		handleSelectionChange?.(
 			selectedItemsCount === SELECT_ALL_ITEMS ? SelectionType.Page : SelectionType.All,
 			true
 		);
@@ -292,7 +278,7 @@
 			stickyHeaderElement.scrollLeft = scrollableContainerElement.scrollLeft;
 		}
 
-		if ((canScrollLeft && !hasMoreLeftColumns) || (!canScrollLeft && hasMoreLeftColumns)) {
+		if ((canScrollLeft && !hasMoreLeftColumns.value) || (!canScrollLeft && hasMoreLeftColumns.value)) {
 			toggleHasMoreLeftColumns();
 		}
 
@@ -327,13 +313,13 @@
 	});
 
 	function handleSelectPage(checked: boolean) {
-		handleSelectionChange(SelectionType.Page, checked);
+		handleSelectionChange?.(SelectionType.Page, checked);
 	}
 
 	const stickyTableClassNames = $derived(
 		classNames(
 			styles.StickyTable,
-			hasMoreLeftColumns && styles['StickyTable-scrolling'],
+			hasMoreLeftColumns.value && styles['StickyTable-scrolling'],
 			condensed && styles['StickyTable-condensed']
 		)
 	);
@@ -349,7 +335,7 @@
 			// Has a sticky left column enabled
 			canFitStickyColumn && styles['StickyTableHeader-sticky'],
 			// ie; is scrolled to the right
-			hasMoreLeftColumns && styles['StickyTableHeader-scrolling'],
+			hasMoreLeftColumns.value && styles['StickyTableHeader-scrolling'],
 			// Has a sticky right column enabled
 			canFitStickyColumn && lastColumnSticky && styles['StickyTableHeader-sticky-last'],
 			// ie; is scrolled to the left
@@ -391,7 +377,7 @@
 	const tableClassNames = $derived(
 		classNames(
 			styles.Table,
-			hasMoreLeftColumns && styles['Table-scrolling'],
+			hasMoreLeftColumns.value && styles['Table-scrolling'],
 			selectMode && styles.disableTextSelection,
 			!selectable && styles['Table-unselectable'],
 			canFitStickyColumn && styles['Table-sticky'],

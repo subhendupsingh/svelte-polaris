@@ -35,7 +35,7 @@
 		defaultPaginatedSelectAllText
 	}));
 
-	const handleSelection = new HandleBulkSelection({ onSelectionChange });
+	const handleSelection = $derived(onSelectionChange ? new HandleBulkSelection({ onSelectionChange }) : undefined);
 
 	const contextValue = $derived({
 		itemCount,
@@ -61,7 +61,7 @@
 
 <IndexContextProvider value={contextValue}>
 	<IndexRowContextProvider value={rowContextValue}>
-		<IndexSelectionChangeContextProvider value={handleSelection.handleSelectionChange}>
+		<IndexSelectionChangeContextProvider value={handleSelection?.handleSelectionChange}>
 			{@render children?.()}
 		</IndexSelectionChangeContextProvider>
 	</IndexRowContextProvider>

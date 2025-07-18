@@ -169,7 +169,7 @@
 			<Text
 				as="span"
 				variant="bodyMd"
-				tone={tone && tone === 'magic' && !focused ? 'magic-subdued' : 'subdued'}
+				tone={tone && tone === 'magic' && !focused.value ? 'magic-subdued' : 'subdued'}
 				truncate
 			>
 				{#if typeof label === 'string'}

@@ -72,18 +72,9 @@
 
 	const useIndexValue = useContext<IndexContextType>(INDEX_CONTEXT_KEY);
 	const {
-		loading,
-		bulkSelectState,
-		resourceName,
-		bulkActionsAccessibilityLabel,
 		selectMode,
-		selectable,
-		paginatedSelectAllText,
-		itemCount,
-		hasMoreItems,
 		selectedItemsCount,
-		condensed
-	} = $derived(useIndexValue());
+	} = $derived(useIndexValue()!);
 	const isCurrentlySorted = index === sortColumnIndex;
 	const tooltipDirection = isCurrentlySorted ? sortDirection! : newDirection;
 	const sortTooltipContent = sortToggleLabels?.[index][tooltipDirection];

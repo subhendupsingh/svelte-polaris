@@ -13,8 +13,6 @@ export enum SelectionType {
     Range = 'range',
 }
 
-//export type Range = [number, number];
-
 export interface IndexProviderProps {
     children?: Snippet;
     selectable?: boolean;

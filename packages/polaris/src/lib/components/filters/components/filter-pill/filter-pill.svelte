@@ -81,7 +81,7 @@
 			styles.FilterButton,
 			selected && styles.ActiveFilterButton,
 			popoverActive && styles.FocusFilterButton,
-			focused && styles.focusedFilterButton
+			focused.value && styles.focusedFilterButton
 		)
 	);
 

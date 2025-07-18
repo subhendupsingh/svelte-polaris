@@ -41,7 +41,7 @@
 
 	let activatorNode = $state<HTMLDivElement>();
 	const useEphemeralPresenceManager = useContext<EphemeralPresenceManagerContextType>(EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY)
-	const { presenceList, addPresence, removePresence } = $derived(useEphemeralPresenceManager());
+	const { presenceList, addPresence, removePresence } = $derived(useEphemeralPresenceManager()!);
 	const id = $props.id();
 	let activatorContainer = $state<HTMLDivElement>();
 	let mouseEntered = $state(false);

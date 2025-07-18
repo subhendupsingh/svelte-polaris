@@ -11,7 +11,7 @@
 
 	let { children }: { children: Snippet } = $props();
 	const rowContext = useContext<RowContextType>(ROW_CONTEXT_KEY);
-	const { position } = $derived(rowContext());
+	const { position } = $derived(rowContext()!);
 	let checkboxNode = $state<HTMLTableDataCellElement | null>(null);
 
 	const handleResize = debounce(() => {

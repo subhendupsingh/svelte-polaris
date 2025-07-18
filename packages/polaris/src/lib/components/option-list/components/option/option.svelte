@@ -55,7 +55,7 @@
 	const singleSelectClassName = $derived(
 		classNames(
 			styles.SingleSelectOption,
-			focused && styles.focused,
+			focused.value && styles.focused,
 			disabled && styles.disabled,
 			select && styles.select,
 			active && styles.active,

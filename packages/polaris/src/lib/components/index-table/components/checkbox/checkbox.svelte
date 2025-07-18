@@ -12,7 +12,7 @@
 
 	let { accessibilityLabel }: CheckboxProps = $props();
 	const indexContext = useContext<IndexContextType>(INDEX_CONTEXT_KEY);
-	const { resourceName } = $derived(indexContext());
+	const { resourceName } = $derived(indexContext()!);
 
 	const rowContext = getContext<Function>(ROW_CONTEXT_KEY);
 	const { itemId, selected, disabled, onInteraction } = $derived(rowContext());
