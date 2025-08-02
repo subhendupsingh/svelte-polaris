@@ -1,10 +1,9 @@
 <script lang="ts">
 	import type { EmptySearchResultProps } from './types.js';
-	import Image from '../image/image.svelte';
 	import Text from '../text/text.svelte';
 	import BlockStack from '../block-stack/block-stack.svelte';
+	import EmptySearchIcon from './empty-search-icon.svelte';
 	let { title, description, withIllustration }: EmptySearchResultProps = $props();
-	const altText = 'Empty search results';
 </script>
 
 {#snippet descriptionMarkup()}
@@ -15,7 +14,7 @@
 
 {#snippet illustrationMarkup()}
 	{#if withIllustration}
-		<Image alt={altText} source="empty-search.svg" draggable={false} />
+		<EmptySearchIcon size="30" />
 	{/if}
 {/snippet}
 

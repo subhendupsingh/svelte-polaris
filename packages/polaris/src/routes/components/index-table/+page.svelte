@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { IndexTable, Page, SelectionType } from '$lib/index.js';
 
-	const orders = [
+	/* const orders = [
 		{
 			id: '1020',
 			order: '#1020',
@@ -23,7 +23,9 @@
 			customer: 'Leo Carder',
 			total: '$798.24'
 		}
-	];
+	]; */
+
+	const orders = $state([]);
 
 	const resourceName = {
 		singular: 'order',
