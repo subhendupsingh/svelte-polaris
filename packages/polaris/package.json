@@ -1,6 +1,6 @@
 {
 	"name": "svelte-polaris",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Svelte Polaris is the port of Shopify Polaris to Svelte.",
 	"scripts": {
 		"dev": "vite dev",

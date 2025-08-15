@@ -62,7 +62,6 @@
 	);
 
 	$effect(() => {
-		//console.log('Setting ephemeral presence manager context', value);
 		setContext(
 			EPHEMERAL_PRESENCE_MANAGER_CONTEXT_KEY,
 			() => value

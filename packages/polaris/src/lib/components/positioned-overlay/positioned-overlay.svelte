@@ -4,7 +4,7 @@
 	import styles from './positioned-overlay.module.css';
 	import type { PositionedOverlayProps, Positioning, State } from './types.js';
 	import { forNode } from '../scrollable/types.js';
-	import { applyStyles, classNames } from '$utilities/css.js';
+	import { classNames } from '$utilities/css.js';
 	import EventListener from '../event-listener/event-listener.svelte';
 	import { dataPolarisTopBar, layer } from '$utilities/shared.js';
 	import {

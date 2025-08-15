@@ -62,6 +62,6 @@
 			data-portal-id={portalId}
 		>
 			{@render children?.()}
-		</ThemeProvider>,
+		</ThemeProvider>
 	</div>
 {/if}

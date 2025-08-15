@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { PropsWithChildren } from '$utilities/props-with-children.js';
 	import type { PolarisContainerProps } from './types.js';
 
 

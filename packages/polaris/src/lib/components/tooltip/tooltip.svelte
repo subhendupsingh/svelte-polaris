@@ -15,7 +15,7 @@
 		children,
 		content,
 		dismissOnMouseOut,
-		active: originalActive = false,
+		active: originalActive,
 		hoverDelay,
 		preferredPosition = 'above',
 		activatorWrapper = 'span',
@@ -200,6 +200,7 @@
 			togglePersisting();
 		}
 	}}
+	onkeyup={handleKeyUp}
 	onmouseleave={handleMouseLeave}
 	onmouseover={handleMouseEnterFix}
 	onmousedown={persistOnClick ? togglePersisting : undefined}
