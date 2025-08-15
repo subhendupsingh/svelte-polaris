@@ -148,9 +148,11 @@
 			<Icon source={icon} />
 		</span>
 	{/if}
-	<Text as="span" variant={textVariant()} fontWeight={textFontWeight()}>
-		{@render children?.()}
-	</Text>
+	{#if children}
+		<Text as="span" variant={textVariant()} fontWeight={textFontWeight()}>
+			{@render children?.()}
+		</Text>
+	{/if}
 	{#if disclosure}
 		<span class={loading ? styles.hidden : styles.Icon}>
 			<!--svelte-ignore svelte_component_deprecated -->
