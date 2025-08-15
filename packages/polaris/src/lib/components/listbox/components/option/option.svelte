@@ -64,11 +64,11 @@
 
 {#snippet content()}
 	{#if typeof children === 'string'}
-		<TextOption {selected} {disabled}>
-			{children}
-		</TextOption>
+		{children}
 	{:else}
-		{@render children?.()}
+		<TextOption {selected} {disabled}>
+			{@render children?.()}
+		</TextOption>
 	{/if}
 {/snippet}
 
