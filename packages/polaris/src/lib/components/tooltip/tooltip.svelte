@@ -175,9 +175,13 @@
 				{zIndexOverride}
 				instant={!shouldAnimate}
 			>
-				<Text as="span" variant="bodyMd">
-					{content}
-				</Text>
+				{#if typeof content === 'string'}
+					<Text as="span" variant="bodyMd">
+						{content}
+					</Text>
+				{:else}
+					{@render content()}
+				{/if}
 			</TooltipOverlay>
 		</Portal>
 	{/if}
